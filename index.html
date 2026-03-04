@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khu Vườn Game Của Tôi - Ghibli Style</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <title>Khu Vườn Học Tập Của Nga - Ghibli Style</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
         :root {
             --ghibli-green: #9dc183;
@@ -21,7 +21,7 @@
             font-family: 'Quicksand', sans-serif;
             background: var(--ghibli-sky);
             background-image: 
-                linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0)),
+                linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0)),
                 url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-attachment: fixed;
@@ -35,11 +35,14 @@
         header {
             text-align: center;
             padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(255, 255, 255, 0.75);
             width: 100%;
             margin-bottom: 30px;
             border-bottom: 5px solid var(--ghibli-green);
             backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
@@ -49,34 +52,52 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* Khung tiêu đề phụ "Nga Học" */
+        /* Khung tiêu đề phụ "Nga Học HSK" */
         .sub-title-box {
             display: inline-block;
             margin-top: 15px;
-            padding: 5px 20px;
+            padding: 8px 25px;
             border: 2px dashed var(--ghibli-dark-green);
             border-radius: 15px;
-            background-color: rgba(255, 183, 197, 0.2);
+            background-color: rgba(255, 183, 197, 0.3);
             color: var(--ghibli-dark-green);
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             position: relative;
         }
 
         .sub-title-box::before {
             content: '🌸';
             position: absolute;
-            left: -15px;
+            left: -18px;
             top: -5px;
         }
 
-        /* Câu quote tiếng Trung */
-        p.chinese-quote {
-            font-family: 'ZCOOL XiaoWei', serif;
+        .sub-title-box::after {
+            content: '🌸';
+            position: absolute;
+            right: -18px;
+            top: -5px;
+        }
+
+        /* Câu quote tiếng Việt */
+        p.vietnamese-quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
             font-size: 1.2rem;
             color: #444;
-            margin-top: 15px;
-            letter-spacing: 1px;
+            margin-top: 20px;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        /* Hình minh họa Ghibli */
+        .ghibli-illustration {
+            max-width: 300px;
+            width: 80%;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-top: 25px;
         }
 
         .container {
@@ -134,11 +155,13 @@
     <h1>Khu Vườn Tiếng Trung 🌿</h1>
     
     <div class="sub-title-box">
-        Nga Học
+        Nga Học HSK
     </div>
 
-    <p class="chinese-quote">
-        学如逆水行舟，不进则退。
+    <img src="https://i.pinimg.com/originals/1e/8c/11/1e8c119253457a4128f7d9ff96a40a85.jpg" alt="Totoro Garden" class="ghibli-illustration">
+
+    <p class="vietnamese-quote">
+        "Trên bước đường thành công không có dấu chân của kẻ lười biếng."
     </p>
 </header>
 
@@ -185,7 +208,7 @@
 </div>
 
 <footer>
-    © 2024 - Made with ❤️ and Gemini - Studio Ghibli Theme
+    © 2024 - Made with ❤️ for Nga Học HSK - Ghibli Inspired
 </footer>
 
 </body>
