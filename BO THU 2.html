@@ -29,6 +29,39 @@
             padding: 15px;
         }
 
+        /* --- PHẦN STYLE MỚI CHO NÚT BACK --- */
+        .btn-back-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: white;
+            border: 3px solid var(--primary-blue);
+            border-radius: 50px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-blue);
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 5px 0 var(--primary-blue);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-back-home:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-back-home:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 var(--primary-blue);
+        }
+        /* ---------------------------------- */
+
         .game-wrapper {
             width: 100%;
             max-width: 850px;
@@ -157,18 +190,21 @@
         @media (max-width: 700px) {
             .game-layout { grid-template-columns: 1fr; }
             .visual-hint { height: 120px; font-size: 50px; order: -1; }
+            .btn-back-home { top: 10px; left: 10px; padding: 8px 15px; font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
-<!-- Âm thanh -->
+<a href="index.html" class="btn-back-home" onclick="goBack(event)">
+    <i class="fa-solid fa-leaf"></i> Quay về vườn
+</a>
+
 <audio id="s-correct" src="https://assets.mixkit.co/active_storage/sfx/2012/2012-preview.mp3"></audio>
 <audio id="s-wrong" src="https://assets.mixkit.co/active_storage/sfx/251/251-preview.mp3"></audio>
 <audio id="s-pop" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
 
 <div class="game-wrapper">
-    <!-- MÀN HÌNH CHÀO -->
     <div id="welcome-screen" class="screen active">
         <div class="logo">🏘️</div>
         <h1 class="main-title">BIỆT ĐỘI GIẢI MÃ BỘ THỦ 2</h1>
@@ -177,7 +213,6 @@
         <p style="margin-top: 20px; color: #64748b; font-size: 14px;">Giáo án độc quyền: <b>Nga Học HSK</b></p>
     </div>
 
-    <!-- MÀN HÌNH CHƠI -->
     <div id="game-screen" class="screen">
         <div class="header">
             <div class="badge">Nga Học HSK</div>
@@ -205,7 +240,6 @@
         </div>
     </div>
 
-    <!-- MÀN HÌNH KẾT QUẢ -->
     <div id="result-screen" class="screen">
         <div style="font-size:80px">🎊</div>
         <h2 style="color:var(--primary-blue)">HOÀN THÀNH THỬ THÁCH!</h2>
@@ -220,150 +254,42 @@
 
 <script>
     const quizData = [
-        { 
-            q: "Chữ '家' (jiā - nhà) có bộ Miên (宀). Hình ảnh bộ này tượng trưng cho điều gì?", 
-            options: ["Mái nhà che chở", "Mái hiên rộng", "Cánh cửa", "Hang động"], 
-            a: "Mái nhà che chở", 
-            expl: "Bộ Miên (宀) vẽ hình mái nhà có nóc và tường che chắn, biểu thị nơi cư ngụ ấm áp.", 
-            icon: "🏠" 
-        },
-        { 
-            q: "Trong chữ '店' (diàn - cửa hàng), bộ Nghiễm (广) biểu thị điều gì?", 
-            options: ["Nhà dựa vào sườn núi (mái hiên)", "Mái nhà kín", "Khu chợ", "Cái miệng"], 
-            a: "Nhà dựa vào sườn núi (mái hiên)", 
-            expl: "Bộ Nghiễm (广) khác bộ Miên ở chỗ nó khuyết một bên tường, tượng trưng cho những tòa nhà lớn hoặc mái hiên.", 
-            icon: "🏪" 
-        },
-        { 
-            q: "Chữ '问' (wèn - hỏi) có bộ Môn (门) bao quanh. Tại sao?", 
-            options: ["Vì muốn hỏi phải đến cửa", "Vì tiếng cửa kêu", "Vì cửa bị hỏng", "Vì người đứng cạnh cửa"], 
-            a: "Vì muốn hỏi phải đến cửa", 
-            expl: "Chữ Vấn gồm bộ Môn (cửa) và chữ Khẩu (miệng). Hình ảnh cái miệng đặt ở cửa để hỏi han.", 
-            icon: "🚪" 
-        },
-        { 
-            q: "Trong từ '邻居' (línjū - hàng xóm), bộ 阝 (ấp) nằm bên PHẢI chữ '邻' chỉ điều gì?", 
-            options: ["Vùng đất, làng xóm", "Gò đất cao", "Con người", "Cái tai"], 
-            a: "Vùng đất, làng xóm", 
-            expl: "Bộ 阝 khi nằm bên phải là biến thể của bộ Ấp (邑), liên quan đến địa danh, làng mạc.", 
-            icon: "🏘️" 
-        },
-        { 
-            q: "Bộ Phụ (阝) khi nằm bên TRÁI như trong chữ '院' (yuàn - cái viện/sân) chỉ ý nghĩa gì?", 
-            options: ["Gò đất, nơi cao ráo", "Khu dân cư", "Bàn chân", "Cái thang"], 
-            a: "Gò đất, nơi cao ráo", 
-            expl: "Bộ 阝 nằm bên trái là biến thể của bộ Phụ (阜), thường chỉ địa hình núi non, gò đất cao hoặc các công trình lớn.", 
-            icon: "⛰️" 
-        },
-        { 
-            q: "Chữ '园' (yuán - vườn) có bộ Vi (囗) bao quanh. Bộ Vi mang nghĩa là gì?", 
-            options: ["Vây quanh, bao bọc", "Cái miệng rộng", "Bốn phương", "Mảnh đất"], 
-            a: "Vây quanh, bao bọc", 
-            expl: "Bộ Vi (囗) vẽ một không gian khép kín, chỉ những nơi có rào chắn như công viên, vương quốc.", 
-            icon: "🌳" 
-        },
-        { 
-            q: "Bộ Lý (里) trong chữ '野' (yě - hoang dã) chỉ đơn vị đo lường hoặc nơi chốn nào?", 
-            options: ["Dặm, làng xóm", "Cái miệng", "Mặt trời", "Cánh đồng"], 
-            a: "Dặm, làng xóm", 
-            expl: "Bộ Lý (里) gồm bộ Điền (ruộng) và bộ Thổ (đất). Nơi có ruộng đất là nơi người dân lập làng.", 
-            icon: "🛣️" 
-        },
-        { 
-            q: "Chữ '图' (tú - bản đồ/hình vẽ) có bộ Vi (囗). Tại sao?", 
-            options: ["Vì bản đồ được vẽ trong khung", "Vì bản đồ hình tròn", "Vì liên quan thức ăn", "Vì bản đồ làm từ giấy"], 
-            a: "Vì bản đồ được vẽ trong khung", 
-            expl: "Bản đồ hay tranh vẽ thường nằm trong một phạm vi giới hạn, do đó dùng bộ Vi bao quanh.", 
-            icon: "🗺️" 
-        },
-        { 
-            q: "Chữ '安' (ān - an toàn/yên tĩnh) gồm bộ Miên (宀) và bộ Nữ (女). Ý nghĩa là gì?", 
-            options: ["Người phụ nữ trong nhà thì yên ổn", "Phụ nữ đi vắng", "Nhà có nhiều người", "Phụ nữ đang nấu ăn"], 
-            a: "Người phụ nữ trong nhà thì yên ổn", 
-            expl: "Quan niệm xưa cho rằng phụ nữ ở trong nhà (dưới mái nhà) mang lại sự bình yên, ấm cúng.", 
-            icon: "🧘" 
-        },
-        { 
-            q: "Bộ Thạch (石) thường xuất hiện trong các chữ chỉ điều gì?", 
-            options: ["Đá, vật cứng", "Cây cối", "Đất đai", "Nước"], 
-            a: "Đá, vật cứng", 
-            expl: "Bộ Thạch vẽ hình hòn đá rơi dưới sườn núi, chỉ các vật liệu cứng hoặc đồ vật làm từ đá.", 
-            icon: "🪨" 
-        },
-        { 
-            q: "Chữ '回' (huí - quay về) gồm hai bộ Vi lồng vào nhau, gợi hình ảnh gì?", 
-            options: ["Dòng nước xoáy quay về", "Hai cái miệng", "Cánh cửa mở", "Con đường thẳng"], 
-            a: "Dòng nước xoáy quay về", 
-            expl: "Hình ảnh vòng tròn lồng nhau tượng trưng cho sự vận động quay trở lại tâm điểm.", 
-            icon: "🔄" 
-        },
-        { 
-            q: "Chữ '客' (kè - khách) có bộ Miên (宀). 'Khách' là người như thế nào?", 
-            options: ["Người đến nhà người khác", "Người đi ngoài đường", "Người bán hàng", "Người đang ngủ"], 
-            a: "Người đến nhà người khác", 
-            expl: "Chữ Khách gồm bộ Miên (nhà) và chữ Truy (đến). Người từ nơi khác đi đến nhà mình gọi là khách.", 
-            icon: "🤝" 
-        },
-        { 
-            q: "Bộ Thổ (土) trong chữ '地' (dì - đất) biểu thị điều gì?", 
-            options: ["Đất đai, thổ nhưỡng", "Cái cây", "Mặt trời", "Con đường"], 
-            a: "Đất đai, thổ nhưỡng", 
-            expl: "Bộ Thổ vẽ hình mầm cây nhú lên từ mặt đất, chỉ đất đai nói chung.", 
-            icon: "🌍" 
-        },
-        { 
-            q: "Bộ Tự (自) trong chữ 'sát' hoặc nghĩa gốc là gì?", 
-            options: ["Cái mũi", "Con mắt", "Bàn tay", "Cái miệng"], 
-            a: "Cái mũi", 
-            expl: "Người Trung Quốc xưa khi chỉ vào mình (tự mình) thường chỉ vào mũi. Bộ Tự vốn vẽ hình cái mũi.", 
-            icon: "👃" 
-        },
-        { 
-            q: "Chữ '室' (shì - phòng) có bộ Miên (宀) và chữ Chí (至 - đến). Nghĩa là?", 
-            options: ["Nơi đi đến và dừng lại (phòng)", "Người đang đi", "Nhà không có cửa", "Mái hiên rộng"], 
-            a: "Nơi đi đến và dừng lại (phòng)", 
-            expl: "Phòng là nơi ta đi đến để nghỉ ngơi hoặc làm việc lâu dài.", 
-            icon: "🛌" 
-        },
-        { 
-            q: "Bộ Quảng (广) và bộ Miên (宀) khác nhau điểm cơ bản nào?", 
-            options: ["Quảng hở 1 bên, Miên kín 2 bên", "Quảng to hơn Miên", "Miên dành cho vua", "Không khác nhau"], 
-            a: "Quảng hở 1 bên, Miên kín 2 bên", 
-            expl: "Quảng (广) tượng trưng cho mái hiên hoặc tòa nhà lớn dựa vào sườn núi, Miên (宀) là mái nhà ở dân dụng kín đáo.", 
-            icon: "📐" 
-        },
-        { 
-            q: "Chữ '国' (guó - quốc gia) có bộ Vi (囗) bao quanh chữ Ngọc (玉). Nghĩa là?", 
-            options: ["Bảo vệ báu vật trong biên giới", "Quốc gia làm từ ngọc", "Vua thích ngọc", "Mảnh đất hình tròn"], 
-            a: "Bảo vệ báu vật trong biên giới", 
-            expl: "Một quốc gia phải có biên giới (Vi) và bảo vệ những thứ quý giá như ngọc quý hoặc con dân.", 
-            icon: "🇻🇳" 
-        },
-        { 
-            q: "Bộ Môn (门) vẽ hình cái gì?", 
-            options: ["Cánh cửa hai cánh", "Bức tường", "Cái cửa sổ", "Cái thang"], 
-            a: "Cánh cửa hai cánh", 
-            expl: "Chữ Môn vẽ hình hai cánh cửa khép mở của ngôi nhà xưa.", 
-            icon: "🚪" 
-        },
-        { 
-            q: "Chữ '字' (zì - chữ) gồm bộ Miên (宀) và bộ Tử (子 - con). Tại sao?", 
-            options: ["Chữ cái nảy nở như con cái trong nhà", "Trẻ em đi học", "Dạy con viết chữ", "Chữ cái là con của mái nhà"], 
-            a: "Chữ cái nảy nở như con cái trong nhà", 
-            expl: "Thời xưa, chữ Hán được coi là sự sinh sôi nảy nở của tri thức, giống như con cái sinh ra dưới mái nhà.", 
-            icon: "✍️" 
-        },
-        { 
-            q: "Nhóm bộ thủ Nhà cửa giúp chúng ta nhận diện loại từ nào dễ nhất?", 
-            options: ["Địa danh, công trình, nơi ở", "Cảm xúc con người", "Các loài động vật", "Hành động bằng tay"], 
-            a: "Địa danh, công trình, nơi ở", 
-            expl: "Hầu hết các từ về nhà ở, cửa hàng, khu vườn, quốc gia đều chứa các bộ Miên, Quảng, Vi, Môn.", 
-            icon: "🎯" 
-        }
+        // ... (Dữ liệu câu hỏi giữ nguyên như cũ của bạn)
+        { q: "Chữ '家' (jiā - nhà) có bộ Miên (宀). Hình ảnh bộ này tượng trưng cho điều gì?", options: ["Mái nhà che chở", "Mái hiên rộng", "Cánh cửa", "Hang động"], a: "Mái nhà che chở", expl: "Bộ Miên (宀) vẽ hình mái nhà có nóc và tường che chắn, biểu thị nơi cư ngụ ấm áp.", icon: "🏠" },
+        { q: "Trong chữ '店' (diàn - cửa hàng), bộ Nghiễm (广) biểu thị điều gì?", options: ["Nhà dựa vào sườn núi (mái hiên)", "Mái nhà kín", "Khu chợ", "Cái miệng"], a: "Nhà dựa vào sườn núi (mái hiên)", expl: "Bộ Nghiễm (广) khác bộ Miên ở chỗ nó khuyết một bên tường, tượng trưng cho những tòa nhà lớn hoặc mái hiên.", icon: "🏪" },
+        { q: "Chữ '问' (wèn - hỏi) có bộ Môn (门) bao quanh. Tại sao?", options: ["Vì muốn hỏi phải đến cửa", "Vì tiếng cửa kêu", "Vì cửa bị hỏng", "Vì người đứng cạnh cửa"], a: "Vì muốn hỏi phải đến cửa", expl: "Chữ Vấn gồm bộ Môn (cửa) và chữ Khẩu (miệng). Hình ảnh cái miệng đặt ở cửa để hỏi han.", icon: "🚪" },
+        { q: "Trong từ '邻居' (línjū - hàng xóm), bộ 阝 (ấp) nằm bên PHẢI chữ '邻' chỉ điều gì?", options: ["Vùng đất, làng xóm", "Gò đất cao", "Con người", "Cái tai"], a: "Vùng đất, làng xóm", expl: "Bộ 阝 khi nằm bên phải là biến thể của bộ Ấp (邑), liên quan đến địa danh, làng mạc.", icon: "🏘️" },
+        { q: "Bộ Phụ (阝) khi nằm bên TRÁI như trong chữ '院' (yuàn - cái viện/sân) chỉ ý nghĩa gì?", options: ["Gò đất, nơi cao ráo", "Khu dân cư", "Bàn chân", "Cái thang"], a: "Gò đất, nơi cao ráo", expl: "Bộ 阝 nằm bên trái là biến thể của bộ Phụ (阜), thường chỉ địa hình núi non, gò đất cao hoặc các công trình lớn.", icon: "⛰️" },
+        { q: "Chữ '园' (yuàn - vườn) có bộ Vi (囗) bao quanh. Bộ Vi mang nghĩa là gì?", options: ["Vây quanh, bao bọc", "Cái miệng rộng", "Bốn phương", "Mảnh đất"], a: "Vây quanh, bao bọc", expl: "Bộ Vi (囗) vẽ một không gian khép kín, chỉ những nơi có rào chắn như công viên, vương quốc.", icon: "🌳" },
+        { q: "Bộ Lý (里) trong chữ '野' (yě - hoang dã) chỉ đơn vị đo lường hoặc nơi chốn nào?", options: ["Dặm, làng xóm", "Cái miệng", "Mặt trời", "Cánh đồng"], a: "Dặm, làng xóm", expl: "Bộ Lý (里) gồm bộ Điền (ruộng) và bộ Thổ (đất). Nơi có ruộng đất là nơi người dân lập làng.", icon: "🛣️" },
+        { q: "Chữ '图' (tú - bản đồ/hình vẽ) có bộ Vi (囗). Tại sao?", options: ["Vì bản đồ được vẽ trong khung", "Vì bản đồ hình tròn", "Vì liên quan thức ăn", "Vì bản đồ làm từ giấy"], a: "Vì bản đồ được vẽ trong khung", expl: "Bản đồ hay tranh vẽ thường nằm trong một phạm vi giới hạn, do đó dùng bộ Vi bao quanh.", icon: "🗺️" },
+        { q: "Chữ '安' (ān - an toàn/yên tĩnh) gồm bộ Miên (宀) và bộ Nữ (女). Ý nghĩa là gì?", options: ["Người phụ nữ trong nhà thì yên ổn", "Phụ nữ đi vắng", "Nhà có nhiều người", "Phụ nữ đang nấu ăn"], a: "Người phụ nữ trong nhà thì yên ổn", expl: "Quan niệm xưa cho rằng phụ nữ ở trong nhà (dưới mái nhà) mang lại sự bình yên, ấm cúng.", icon: "🧘" },
+        { q: "Bộ Thạch (石) thường xuất hiện trong các chữ chỉ điều gì?", options: ["Đá, vật cứng", "Cây cối", "Đất đai", "Nước"], a: "Đá, vật cứng", expl: "Bộ Thạch vẽ hình hòn đá rơi dưới sườn núi, chỉ các vật liệu cứng hoặc đồ vật làm từ đá.", icon: "🪨" },
+        { q: "Chữ '回' (huí - quay về) gồm hai bộ Vi lồng vào nhau, gợi hình ảnh gì?", options: ["Dòng nước xoáy quay về", "Hai cái miệng", "Cánh cửa mở", "Con đường thẳng"], a: "Dòng nước xoáy quay về", expl: "Hình ảnh vòng tròn lồng nhau tượng trưng cho sự vận động quay trở lại tâm điểm.", icon: "🔄" },
+        { q: "Chữ '客' (kè - khách) có bộ Miên (宀). 'Khách' là người như thế nào?", options: ["Người đến nhà người khác", "Người đi ngoài đường", "Người bán hàng", "Người đang ngủ"], a: "Người đến nhà người khác", expl: "Chữ Khách gồm bộ Miên (nhà) và chữ Truy (đến). Người từ nơi khác đi đến nhà mình gọi là khách.", icon: "🤝" },
+        { q: "Bộ Thổ (土) trong chữ '地' (dì - đất) biểu thị điều gì?", options: ["Đất đai, thổ nhưỡng", "Cái cây", "Mặt trời", "Con đường"], a: "Đất đai, thổ nhưỡng", expl: "Bộ Thổ vẽ hình mầm cây nhú lên từ mặt đất, chỉ đất đai nói chung.", icon: "🌍" },
+        { q: "Bộ Tự (自) trong chữ 'sát' hoặc nghĩa gốc là gì?", options: ["Cái mũi", "Con mắt", "Bàn tay", "Cái miệng"], a: "Cái mũi", expl: "Người Trung Quốc xưa khi chỉ vào mình (tự mình) thường chỉ vào mũi. Bộ Tự vốn vẽ hình cái mũi.", icon: "👃" },
+        { q: "Chữ '室' (shì - phòng) có bộ Miên (宀) và chữ Chí (至 - đến). Nghĩa là?", options: ["Nơi đi đến và dừng lại (phòng)", "Người đang đi", "Nhà không có cửa", "Mái hiên rộng"], a: "Nơi đi đến và dừng lại (phòng)", expl: "Phòng là nơi ta đi đến để nghỉ ngơi hoặc làm việc lâu dài.", icon: "🛌" },
+        { q: "Bộ Quảng (广) và bộ Miên (宀) khác nhau điểm cơ bản nào?", options: ["Quảng hở 1 bên, Miên kín 2 bên", "Quảng to hơn Miên", "Miên dành cho vua", "Không khác nhau"], a: "Quảng hở 1 bên, Miên kín 2 bên", expl: "Quảng (广) tượng trưng cho mái hiên hoặc tòa nhà lớn dựa vào sườn núi, Miên (宀) là mái nhà ở dân dụng kín đáo.", icon: "📐" },
+        { q: "Chữ '国' (guó - quốc gia) có bộ Vi (囗) bao quanh chữ Ngọc (玉). Nghĩa là?", options: ["Bảo vệ báu vật trong biên giới", "Quốc gia làm từ ngọc", "Vua thích ngọc", "Mảnh đất hình tròn"], a: "Bảo vệ báu vật trong biên giới", expl: "Một quốc gia phải có biên giới (Vi) và bảo vệ những thứ quý giá như ngọc quý hoặc con dân.", icon: "🇻🇳" },
+        { q: "Bộ Môn (门) vẽ hình cái gì?", options: ["Cánh cửa hai cánh", "Bức tường", "Cái cửa sổ", "Cái thang"], a: "Cánh cửa hai cánh", expl: "Chữ Môn vẽ hình hai cánh cửa khép mở của ngôi nhà xưa.", icon: "🚪" },
+        { q: "Chữ '字' (zì - chữ) gồm bộ Miên (宀) và bộ Tử (子 - con). Tại sao?", options: ["Chữ cái nảy nở như con cái trong nhà", "Trẻ em đi học", "Dạy con viết chữ", "Chữ cái là con của mái nhà"], a: "Chữ cái nảy nở như con cái trong nhà", expl: "Thời xưa, chữ Hán được coi là sự sinh sôi nảy nở của tri thức, giống như con cái sinh ra dưới mái nhà.", icon: "✍️" },
+        { q: "Nhóm bộ thủ Nhà cửa giúp chúng ta nhận diện loại từ nào dễ nhất?", options: ["Địa danh, công trình, nơi ở", "Cảm xúc con người", "Các loài động vật", "Hành động bằng tay"], a: "Địa danh, công trình, nơi ở", expl: "Hầu hết các từ về nhà ở, cửa hàng, khu vườn, quốc gia đều chứa các bộ Miên, Quảng, Vi, Môn.", icon: "🎯" }
     ];
 
     let currentQ = 0;
     let score = 0;
+
+    // Hàm xử lý Back có âm thanh
+    function goBack(e) {
+        e.preventDefault(); // Ngừng chuyển trang ngay lập tức
+        playSfx('s-pop'); // Phát tiếng Pop
+        
+        // Đợi 200ms cho tiếng chuông kêu xong rồi mới chuyển trang
+        setTimeout(() => {
+            window.location.href = e.currentTarget.href;
+        }, 200);
+    }
 
     function shuffle(array) {
         return array.sort(() => Math.random() - 0.5);
@@ -402,11 +328,9 @@
             optionsDiv.appendChild(btn);
         });
 
-        // Reset UI
         document.getElementById('expl-box').style.display = "none";
         document.getElementById('next-btn').style.display = "none";
         
-        // Progress bar
         const progress = (currentQ / quizData.length) * 100;
         document.getElementById('progress-fill').style.width = progress + "%";
     }
@@ -423,13 +347,11 @@
         } else {
             btn.classList.add('wrong');
             playSfx('s-wrong');
-            // Show correct one
             allBtns.forEach(b => {
                 if (b.innerText.includes(data.a)) b.classList.add('correct');
             });
         }
 
-        // Show explanation
         document.getElementById('expl-text').innerText = data.expl;
         document.getElementById('expl-box').style.display = "block";
         document.getElementById('next-btn').style.display = "block";
