@@ -29,7 +29,7 @@
             padding: 15px;
         }
 
-        /* --- PHẦN STYLE MỚI CHO NÚT BACK --- */
+        /* STYLE NÚT QUAY VỀ VƯỜN */
         .btn-back-home {
             position: fixed;
             top: 20px;
@@ -60,7 +60,6 @@
             transform: translateY(3px);
             box-shadow: 0 2px 0 var(--primary-blue);
         }
-        /* ---------------------------------- */
 
         .game-wrapper {
             width: 100%;
@@ -196,7 +195,7 @@
 </head>
 <body>
 
-<a href="index.html" class="btn-back-home" onclick="goBack(event)">
+<a href="index.html" class="btn-back-home" onmousedown="playSfx('s-pop')">
     <i class="fa-solid fa-leaf"></i> Quay về vườn
 </a>
 
@@ -254,7 +253,6 @@
 
 <script>
     const quizData = [
-        // ... (Dữ liệu câu hỏi giữ nguyên như cũ của bạn)
         { q: "Chữ '家' (jiā - nhà) có bộ Miên (宀). Hình ảnh bộ này tượng trưng cho điều gì?", options: ["Mái nhà che chở", "Mái hiên rộng", "Cánh cửa", "Hang động"], a: "Mái nhà che chở", expl: "Bộ Miên (宀) vẽ hình mái nhà có nóc và tường che chắn, biểu thị nơi cư ngụ ấm áp.", icon: "🏠" },
         { q: "Trong chữ '店' (diàn - cửa hàng), bộ Nghiễm (广) biểu thị điều gì?", options: ["Nhà dựa vào sườn núi (mái hiên)", "Mái nhà kín", "Khu chợ", "Cái miệng"], a: "Nhà dựa vào sườn núi (mái hiên)", expl: "Bộ Nghiễm (广) khác bộ Miên ở chỗ nó khuyết một bên tường, tượng trưng cho những tòa nhà lớn hoặc mái hiên.", icon: "🏪" },
         { q: "Chữ '问' (wèn - hỏi) có bộ Môn (门) bao quanh. Tại sao?", options: ["Vì muốn hỏi phải đến cửa", "Vì tiếng cửa kêu", "Vì cửa bị hỏng", "Vì người đứng cạnh cửa"], a: "Vì muốn hỏi phải đến cửa", expl: "Chữ Vấn gồm bộ Môn (cửa) và chữ Khẩu (miệng). Hình ảnh cái miệng đặt ở cửa để hỏi han.", icon: "🚪" },
@@ -280,25 +278,16 @@
     let currentQ = 0;
     let score = 0;
 
-    // Hàm xử lý Back có âm thanh
-    function goBack(e) {
-        e.preventDefault(); // Ngừng chuyển trang ngay lập tức
-        playSfx('s-pop'); // Phát tiếng Pop
-        
-        // Đợi 200ms cho tiếng chuông kêu xong rồi mới chuyển trang
-        setTimeout(() => {
-            window.location.href = e.currentTarget.href;
-        }, 200);
-    }
-
     function shuffle(array) {
         return array.sort(() => Math.random() - 0.5);
     }
 
     function playSfx(id) {
         const sound = document.getElementById(id);
-        sound.currentTime = 0;
-        sound.play().catch(e => console.log("Audio blocked"));
+        if(sound) {
+            sound.currentTime = 0;
+            sound.play().catch(() => {});
+        }
     }
 
     function startGame() {
