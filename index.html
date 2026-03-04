@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Khu Vườn Game Của Tôi - Ghibli Style</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
     <style>
         :root {
             --ghibli-green: #9dc183;
@@ -12,6 +12,7 @@
             --ghibli-sky: #d0f0f7;
             --ghibli-wood: #8b5a2b;
             --ghibli-leaf: #7fb069;
+            --ghibli-pink: #ffb7c5;
         }
 
         body {
@@ -21,7 +22,7 @@
             background: var(--ghibli-sky);
             background-image: 
                 linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0)),
-                url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); /* Hình nền rừng cây nhẹ nhàng */
+                url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-attachment: fixed;
             color: #333;
@@ -33,7 +34,7 @@
 
         header {
             text-align: center;
-            padding: 50px 20px;
+            padding: 40px 20px;
             background: rgba(255, 255, 255, 0.7);
             width: 100%;
             margin-bottom: 30px;
@@ -48,9 +49,34 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        p.subtitle {
-            font-style: italic;
-            color: #555;
+        /* Khung tiêu đề phụ "Nga Học" */
+        .sub-title-box {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 20px;
+            border: 2px dashed var(--ghibli-dark-green);
+            border-radius: 15px;
+            background-color: rgba(255, 183, 197, 0.2);
+            color: var(--ghibli-dark-green);
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .sub-title-box::before {
+            content: '🌸';
+            position: absolute;
+            left: -15px;
+            top: -5px;
+        }
+
+        /* Câu quote tiếng Trung */
+        p.chinese-quote {
+            font-family: 'ZCOOL XiaoWei', serif;
+            font-size: 1.2rem;
+            color: #444;
+            margin-top: 15px;
+            letter-spacing: 1px;
         }
 
         .container {
@@ -100,21 +126,20 @@
             font-size: 0.9rem;
             color: var(--ghibli-dark-green);
         }
-
-        /* Trang trí thêm hình lá */
-        .leaf {
-            position: fixed;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.5;
-        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Khu Vườn Tiếng Trung 🌿</h1>
-    <p class="subtitle">Nơi lưu giữ các trò chơi học tập được tạo bởi Gemini</p>
+    
+    <div class="sub-title-box">
+        Nga Học
+    </div>
+
+    <p class="chinese-quote">
+        学如逆水行舟，不进则退。
+    </p>
 </header>
 
 <div class="container">
@@ -157,7 +182,6 @@
         <div class="game-icon">📖</div>
         <div class="game-title">HSK1: Bài 3</div>
     </a>
-
 </div>
 
 <footer>
