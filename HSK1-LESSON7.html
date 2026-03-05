@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khu Vườn Tiếng Trung - Nga Học HSK</title>
+    <title>Khu Vườn HSK - Bài 7: 今天几号？</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,6 +11,7 @@
             --ghibli-dark-green: #4f7942;
             --ghibli-sky: #d0f0f7;
             --ghibli-wood: #8b5a2b;
+            --ghibli-leaf: #7fb069;
         }
 
         body {
@@ -31,19 +32,41 @@
 
         .game-side { flex: 2; }
         
+        /* KHU VỰC CÂY */
         .tree-side {
             flex: 1; background: rgba(255, 255, 255, 0.85);
             border: 3px solid white; border-radius: 25px;
-            height: 500px; display: flex; flex-direction: column;
+            height: 550px; display: flex; flex-direction: column;
             align-items: center; justify-content: flex-end;
-            padding-bottom: 40px; position: sticky; top: 20px;
+            padding-bottom: 30px; position: sticky; top: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        #the-tree { 
-            font-size: 80px; 
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-origin: bottom center;
+        #tree-container {
+            position: relative; width: 200px; height: 300px;
+            display: flex; justify-content: center; align-items: flex-end;
         }
+
+        /* Thân cây khô */
+        .trunk {
+            width: 20px; height: 150px; background: var(--ghibli-wood);
+            border-radius: 10px 10px 0 0; position: relative;
+        }
+
+        /* Cành cây mọc lá */
+        .leaf-container {
+            position: absolute; width: 250px; height: 250px;
+            top: -100px; display: flex; flex-wrap: wrap;
+            justify-content: center; align-content: center; gap: 5px;
+        }
+
+        .leaf {
+            font-size: 24px; transition: all 0.5s ease;
+            opacity: 0; transform: scale(0) translateY(0);
+        }
+
+        .leaf.active { opacity: 1; transform: scale(1); }
+        .leaf.wither { transform: translateY(200px) rotate(45deg); opacity: 0; }
 
         .status-bar {
             background: white; padding: 10px 20px; border-radius: 50px;
@@ -52,35 +75,36 @@
         }
 
         .progress-bg { flex-grow: 1; height: 10px; background: #eee; border-radius: 10px; margin: 0 15px; overflow: hidden; }
-        .progress-fill { height: 100%; width: 0%; background: #7fb069; transition: 0.4s; }
+        .progress-fill { height: 100%; width: 0%; background: var(--ghibli-leaf); transition: 0.4s; }
 
         .game-container {
             background: rgba(255, 255, 255, 0.95); border: 4px solid var(--ghibli-green);
-            border-radius: 25px; padding: 25px; text-align: center; min-height: 450px;
+            border-radius: 25px; padding: 25px; text-align: center; min-height: 480px;
             display: flex; flex-direction: column;
         }
 
         .word-seed {
-            background: white; border: 2px solid #7fb069; border-radius: 15px;
-            padding: 15px; cursor: pointer; transition: 0.2s; font-size: 1.4rem;
-            font-weight: 600;
+            background: white; border: 2px solid var(--ghibli-leaf); border-radius: 15px;
+            padding: 15px; cursor: pointer; transition: 0.2s; font-size: 1.3rem;
+            font-weight: 600; color: #333;
         }
-        .word-seed:hover { transform: translateY(-3px); background: #f0fdf4; }
+        .word-seed:hover { transform: translateY(-3px); background: #f0fdf4; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
 
         .controls button {
             background: var(--ghibli-dark-green); color: white; border: none;
-            padding: 15px 40px; border-radius: 30px; font-weight: 600; cursor: pointer; margin-top: auto;
+            padding: 15px 40px; border-radius: 30px; font-weight: 600; cursor: pointer; 
+            margin-top: auto; font-size: 1.1rem;
         }
 
-        #result-area { display: none; padding: 30px; }
+        #feedback { margin-top:20px; font-weight:bold; min-height:30px; font-size: 1.2rem; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Khu Vườn Tiếng Trung Của Nga 🌿</h1>
+    <h1>Khu Vườn Tiếng Trung: Bài 7 🌿</h1>
 </header>
 
 <div class="main-layout">
@@ -88,90 +112,103 @@
         <div class="status-bar">
             <span>Điểm: <b id="score">0</b></span>
             <div class="progress-bg"><div id="progress-fill" class="progress-fill"></div></div>
-            <span id="level-indicator">1/30</span>
+            <span id="level-indicator">1/20</span>
         </div>
 
         <div class="game-container">
             <div id="quiz-area">
-                <div id="hint-box" style="font-weight: 600; color: var(--ghibli-wood); margin-bottom: 15px;"></div>
-                <div id="question-text" style="font-size: 2rem; font-weight: bold; margin-bottom: 20px;"></div>
+                <div id="hint-box" style="font-weight: 600; color: var(--ghibli-wood); margin-bottom: 20px;"></div>
+                <div id="question-text" style="font-size: 2rem; font-weight: bold; margin: 20px 0;"></div>
                 <div id="word-bank" class="options-grid"></div>
                 <div class="controls">
                     <button id="main-btn" onclick="nextQuestion()" style="display:none">Tiếp theo ➔</button>
                 </div>
             </div>
 
-            <div id="result-area">
-                <h2 style="color: var(--ghibli-dark-green);">Chúc mừng Nga! 🌸</h2>
-                <p id="final-msg" style="font-size: 1.2rem;"></p>
-                <button onclick="location.reload()" style="background:var(--ghibli-wood); color:white; border:none; padding:12px 25px; border-radius:20px; cursor:pointer;">Luyện tập lại</button>
+            <div id="result-area" style="display:none; padding: 40px;">
+                <h2 style="color: var(--ghibli-dark-green);">Nga thật tuyệt vời! 🌸</h2>
+                <p id="final-msg" style="font-size: 1.3rem;"></p>
+                <button onclick="location.reload()" style="background:var(--ghibli-wood); color:white; border:none; padding:15px 35px; border-radius:25px; cursor:pointer;">Học lại Bài 7</button>
             </div>
             
-            <div id="feedback" style="margin-top:20px; font-weight:bold; min-height:24px;"></div>
+            <div id="feedback"></div>
         </div>
     </div>
 
     <div class="tree-side">
-        <div id="the-tree">🌱</div>
-        <div style="font-weight: 600; color: var(--ghibli-dark-green); margin-top: 20px;">Cây của Nga</div>
+        <div id="tree-container">
+            <div class="trunk"></div>
+            <div id="leaf-box" class="leaf-container"></div>
+        </div>
+        <div style="font-weight: 600; color: var(--ghibli-dark-green); margin-top: 20px; font-size: 1.1rem;">Giúp Nga trồng cây nhé</div>
     </div>
 </div>
 
-<audio id="sfx-correct" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
-<audio id="sfx-wrong" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio>
+<audio id="sfx-win" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
+<audio id="sfx-lose" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio>
 
 <script>
-    // DANH SÁCH 30 CÂU HỎI KHÁC NHAU HOÀN TOÀN
     const levels = [
-        { q: "lǎoshī", hint: "Chọn chữ Hán của 'Giáo viên':", correct: "老师", options: ["老师", "老帅", "教师", "学生"] },
-        { q: "zàijiàn", hint: "Chọn chữ Hán của 'Tạm biệt':", correct: "再见", options: ["再见", "见再", "你好", "谢谢"] },
-        { q: "Hào (Ngày)", hint: "Hôm nay ngày mấy? (jǐ hào):", correct: "号", options: ["号", "日", "月", "天"] },
-        { q: "nǐ hǎo", hint: "Lời chào cơ bản nhất:", correct: "你好", options: ["你好", "您好", "你们", "大家好"] },
-        { q: "xièxie", hint: "Khi ai đó giúp đỡ bạn:", correct: "谢谢", options: ["谢谢", "不客气", "对不起", "没关系"] },
-        { q: "māma", hint: "Người phụ nữ tuyệt vời nhất:", correct: "妈妈", options: ["妈妈", "爸爸", "奶奶", "姐姐"] },
-        { q: "bàba", hint: "Trụ cột gia đình:", correct: "爸爸", options: ["爸爸", "爷爷", "哥哥", "弟弟"] },
-        { q: "Zhōngguó", hint: "Quốc gia dùng tiếng Trung:", correct: "中国", options: ["中国", "越南", "美国", "英国"] },
-        { q: "rén", hint: "Một nét phẩy, một nét mác:", correct: "人", options: ["人", "大", "天", "口"] },
-        { q: "míngzi", hint: "Bạn tên là gì? (Nǐ jiào shénme...):", correct: "名字", options: ["名字", "名子", "老师", "学生"] },
-        { q: "xuéshēng", hint: "Người đi học gọi là:", correct: "学生", options: ["学生", "老师", "医生", "朋友"] },
-        { q: "Yī (Số 1)", hint: "Một gạch ngang:", correct: "一", options: ["一", "二", "三", "十"] },
-        { q: "Sān (Số 3)", hint: "Ba gạch ngang:", correct: "三", options: ["三", "二", "四", "五"] },
-        { q: "Wǔ (Số 5)", hint: "Số 5 viết là:", correct: "五", options: ["五", "四", "六", "八"] },
-        { q: "Bā (Số 8)", hint: "Số phát tài:", correct: "八", options: ["八", "九", "七", "六"] },
-        { q: "Shí (Số 10)", hint: "Hình dấu cộng:", correct: "十", options: ["十", "千", "万", "土"] },
-        { q: "Yuè (Tháng)", hint: "Hình trăng khuyết:", correct: "月", options: ["月", "日", "号", "年"] },
-        { q: "Rì (Ngày)", hint: "Hình mặt trời:", correct: "日", options: ["日", "月", "目", "口"] },
-        { q: "hē", hint: "Hành động uống nước:", correct: "喝", options: ["喝", "吃", "看", "听"] },
-        { q: "chī", hint: "Hành động ăn cơm:", correct: "吃", options: ["吃", "喝", "叫", "写"] },
-        { q: "chá", hint: "Thức uống phổ biến ở Trung Quốc:", correct: "茶", options: ["茶", "水", "咖啡", "牛奶"] },
-        { q: "mǐfàn", hint: "Cơm trắng:", correct: "米饭", options: ["米饭", "面条", "包子", "饺子"] },
-        { q: "shuǐ", hint: "70% cơ thể là:", correct: "水", options: ["水", "冰", "火", "木"] },
-        { q: "pingguǒ", hint: "Quả táo:", correct: "苹果", options: ["苹果", "香蕉", "西瓜", "芒果"] },
-        { q: "yīshēng", hint: "Người làm việc ở bệnh viện:", correct: "医生", options: ["医生", "老师", "司机", "警察"] },
-        { q: "yiyuàn", hint: "Bệnh viện:", correct: "医院", options: ["医院", "学校", "饭店", "商店"] },
-        { q: "shāngdiàn", hint: "Nơi để mua sắm:", correct: "商店", options: ["商店", "书店", "超市", "市场"] },
-        { q: "mǎi", hint: "Hành động mua:", correct: "买", options: ["买", "卖", "看", "给"] },
-        { q: "duōshao", hint: "Hỏi về số lượng/giá cả:", correct: "多少", options: ["多少", "什么", "怎么", "哪个"] },
-        { q: "qián", hint: "Dùng để mua đồ:", correct: "钱", options: ["钱", "金", "纸", "银"] }
+        { q: "Hôm nay là ngày mấy?", hint: "Học từ mới (Ngày - văn nói):", correct: "号 (hào)", options: ["号 (hào)", "日 (rì)", "月 (yuè)", "年 (nián)"] },
+        { q: "qǐng", hint: "Từ mới: (Lịch sự) mời, xin:", correct: "请", options: ["请", "问", "去", "看"] },
+        { q: "Hôm qua", hint: "Từ mới chỉ thời gian:", correct: "昨天 (zuótiān)", options: ["昨天 (zuótiān)", "今天 (jīntiān)", "明天 (míngtiān)", "星期 (xīngqī)"] },
+        { q: "Thứ tư, ngày 1 tháng 9", hint: "Sắp xếp theo thứ tự Trung Quốc (Lớn -> Nhỏ):", correct: "9月1号, 星期三", options: ["9月1号, 星期三", "星期三, 9月1号", "1号9月, 星期三", "9月星期三, 1号"] },
+        { q: "Trường học", hint: "Nơi để học tập:", correct: "学校 (xuéxiào)", options: ["学校 (xuéxiào)", "书店 (shūdiàn)", "看书 (kànshū)", "去学校"] },
+        { q: "Tôi đi trường học đọc sách", hint: "Cấu trúc liên động: 去 + Địa điểm + Hành động:", correct: "我去学校看书", options: ["我去学校看书", "我学校去看书", "我看书去学校", "去学校我看书"] },
+        { q: "xīngqī", hint: "Từ chỉ đơn vị thời gian (Tuần/Thứ):", correct: "星期", options: ["星期", "月", "号", "天"] },
+        { q: "Mời hỏi/Cho hỏi...", hint: "Cụm từ lịch sự khi bắt đầu câu hỏi:", correct: "请问 (qǐngwèn)", options: ["请问 (qǐngwèn)", "问请", "去问", "看问"] },
+        { q: "Ngày mai là thứ tư", hint: "Câu vị ngữ danh từ (không cần 'shì'):", correct: "明天星期三", options: ["明天星期三", "明天是星期三", "星期三明天", "明天有星期三"] },
+        { q: "Tháng", hint: "Từ mới (Hình trăng khuyết):", correct: "月 (yuè)", options: ["月 (yuè)", "日 (rì)", "号 (hào)", "年 (nián)"] },
+        { q: "míngtiān", hint: "Ngày sau ngày hôm nay:", correct: "明天", options: ["明天", "昨天", "今天", "后天"] },
+        { q: "Xem sách/Đọc sách", hint: "Dùng dgt 'kàn' + dt 'shū':", correct: "看书 (kànshū)", options: ["看书 (kànshū)", "写书", "喝书", "去书"] },
+        { q: "Trong văn viết, 'Ngày' dùng từ gì?", hint: "Lưu ý ngữ pháp Bài 7:", correct: "日 (rì)", options: ["日 (rì)", "号 (hào)", "月 (yuè)", "天 (tiān)"] },
+        { q: "Tôi đi Trung Quốc học tiếng Hán", hint: "Dịch sang tiếng Trung đúng cấu trúc:", correct: "我去中国学习汉语", options: ["我去中国学习汉语", "我学习汉语去中国", "去中国我学习汉语", "我中国去学习汉语"] },
+        { q: "Hôm nay ngày 1 tháng 9", hint: "Câu vị ngữ danh từ:", correct: "今天9月1号", options: ["今天9月1号", "今天是有9月1号", "9月1号今天", "今天号1月9"] },
+        { q: "wèn", hint: "Động từ 'Hỏi':", correct: "问", options: ["问", "门", "请", "叫"] },
+        { q: "qù", hint: "Động từ 'Đi đến':", correct: "去", options: ["去", "云", "看", "学"] },
+        { q: "Thứ/Tuần", hint: "Hệ thống lại từ mới:", correct: "星期 (xīngqī)", options: ["星期 (xīngqī)", "星月", "期星", "天期"] },
+        { q: "Hôm nay", hint: "Thời gian hiện tại:", correct: "今天 (jīntiān)", options: ["今天 (jīntiān)", "昨天", "明天", "今年"] },
+        { q: "Sách", hint: "Vật dụng dùng để 'kàn':", correct: "书 (shū)", options: ["书 (shū)", "看", "学", "校"] }
     ];
 
     let current = 0;
     let score = 0;
-    let treeLevel = 0;
+    const leafIcons = ["🍃", "🌿", "🍀", "🌱", "🍃"];
 
-    function updateTree() {
-        const tree = document.getElementById('the-tree');
-        const scale = 1 + (treeLevel * 0.08); 
-        tree.style.transform = `scale(${scale})`;
+    // Khởi tạo lá (ẩn sẵn)
+    function initLeaves() {
+        const box = document.getElementById('leaf-box');
+        for (let i = 0; i < 20; i++) {
+            const l = document.createElement('span');
+            l.className = 'leaf';
+            l.id = `leaf-${i}`;
+            l.innerText = leafIcons[i % leafIcons.length];
+            box.appendChild(l);
+        }
+    }
 
-        if (treeLevel >= 30) tree.innerText = "🌸";
-        else if (treeLevel > 20) tree.innerText = "🌳";
-        else if (treeLevel > 10) tree.innerText = "🪴";
-        else if (treeLevel > 5) tree.innerText = "🌿";
-        else tree.innerText = "🌱";
+    function addLeaf() {
+        const leaf = document.getElementById(`leaf-${current}`);
+        if(leaf) leaf.classList.add('active');
+    }
+
+    function dropLeaf() {
+        // Tìm lá gần nhất đang 'active' để rụng
+        for(let i = current; i >= 0; i--) {
+            const leaf = document.getElementById(`leaf-${i}`);
+            if(leaf && leaf.classList.contains('active')) {
+                leaf.classList.add('wither');
+                setTimeout(() => {
+                    leaf.classList.remove('active', 'wither');
+                }, 1000);
+                break;
+            }
+        }
     }
 
     function initLevel() {
+        if (current >= levels.length) return showFinal();
+        
         const lv = levels[current];
         document.getElementById('hint-box').innerText = lv.hint;
         document.getElementById('question-text').innerText = lv.q;
@@ -197,18 +234,16 @@
 
         const lv = levels[current];
         if (selected === lv.correct) {
-            score += 20;
-            treeLevel++;
-            document.getElementById('sfx-correct').play();
-            document.getElementById('feedback').innerHTML = "<span style='color:green'>Tuyệt vời! Cây lớn thêm rồi! ✨</span>";
+            score += 10;
+            document.getElementById('sfx-win').play();
+            document.getElementById('feedback').innerHTML = "<span style='color:green'>Chính xác! Cây mọc thêm lá rồi! ✨</span>";
             element.style.background = "#dcfce7";
-            element.style.borderColor = "#22c55e";
-            updateTree();
+            addLeaf();
         } else {
-            document.getElementById('sfx-wrong').play();
-            document.getElementById('feedback').innerHTML = "<span style='color:red'>Sai rồi, Nga cố gắng câu sau nhé! 🎋</span>";
+            document.getElementById('sfx-lose').play();
+            document.getElementById('feedback').innerHTML = "<span style='color:red'>Sai rồi! Lá bị héo rụng mất rồi... 🎋</span>";
             element.style.background = "#fee2e2";
-            element.style.borderColor = "#ef4444";
+            dropLeaf();
         }
         document.getElementById('score').innerText = score;
         document.getElementById('main-btn').style.display = "block";
@@ -216,21 +251,17 @@
 
     function nextQuestion() {
         current++;
-        if (current < levels.length) {
-            initLevel();
-        } else {
-            showFinal();
-        }
+        initLevel();
     }
 
     function showFinal() {
         document.getElementById('quiz-area').style.display = "none";
         document.getElementById('result-area').style.display = "block";
-        document.getElementById('final-msg').innerHTML = `Nga đã hoàn thành 30 câu hỏi!<br>Tổng điểm: <b>${score}</b><br>Khu vườn của Nga thật rực rỡ!`;
+        document.getElementById('final-msg').innerHTML = `Nga đã hoàn thành Bài 7!<br>Số điểm: <b>${score}</b><br>Khu vườn của Nga thật xinh đẹp!`;
     }
 
     window.onload = () => {
-        updateTree();
+        initLeaves();
         initLevel();
     };
 </script>
