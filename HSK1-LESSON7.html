@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Học Tiếng Trung cùng Nga - Bài 7</title>
+    <title>Game: Sắp Xếp Lịch Cho Cây - Bài 7</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,182 +16,135 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Quicksand', sans-serif;
             background: var(--ghibli-sky) url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
             background-size: cover;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center;
         }
 
         header {
-            text-align: center;
-            padding: 20px;
+            text-align: center; padding: 20px;
             background: rgba(255, 255, 255, 0.85);
-            width: 100%;
-            border-bottom: 5px solid var(--ghibli-green);
-            backdrop-filter: blur(5px);
-            position: relative;
-            box-sizing: border-box;
+            width: 100%; border-bottom: 5px solid var(--ghibli-green);
+            backdrop-filter: blur(5px); position: relative; box-sizing: border-box;
         }
 
         .back-btn {
-            position: absolute;
-            left: 20px;
-            top: 20px;
-            text-decoration: none;
-            background: var(--ghibli-wood);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            position: absolute; left: 20px; top: 20px;
+            text-decoration: none; background: var(--ghibli-wood);
+            color: white; padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;
         }
 
-        /* Status Bar: Điểm và Tiến trình */
         .status-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 90%;
-            max-width: 650px;
-            margin-top: 20px;
-            background: white;
-            padding: 10px 20px;
-            border-radius: 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            width: 90%; max-width: 650px; margin-top: 20px;
+            background: white; padding: 10px 20px; border-radius: 50px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .progress-bar-bg {
-            flex-grow: 1;
-            height: 12px;
-            background: #eee;
-            border-radius: 10px;
-            margin: 0 15px;
-            overflow: hidden;
+            flex-grow: 1; height: 12px; background: #eee;
+            border-radius: 10px; margin: 0 15px; overflow: hidden;
         }
 
         .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--ghibli-leaf);
-            transition: width 0.5s ease;
+            height: 100%; width: 0%;
+            background: var(--ghibli-leaf); transition: width 0.4s ease;
         }
 
         .score-text { font-weight: 600; color: var(--ghibli-dark-green); }
 
-        /* Game Box */
         .game-container {
             background: rgba(255, 255, 255, 0.95);
-            border: 4px solid var(--ghibli-green);
-            border-radius: 25px;
-            padding: 25px;
-            text-align: center;
-            max-width: 650px;
-            width: 90%;
-            margin: 20px auto;
+            border: 4px solid var(--ghibli-green); border-radius: 25px;
+            padding: 25px; text-align: center;
+            max-width: 650px; width: 90%; margin: 20px auto;
             box-shadow: 0 15px 30px rgba(79, 121, 66, 0.2);
         }
 
-        #vietnamese-hint {
-            font-size: 1.2rem;
-            color: var(--ghibli-wood);
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding: 10px;
-            border-bottom: 2px dashed var(--ghibli-pink);
+        #hint-box {
+            font-size: 1.2rem; color: var(--ghibli-wood);
+            font-weight: 600; margin-bottom: 20px;
+            padding: 15px; border-radius: 15px;
+            background: rgba(255, 183, 197, 0.15);
+            border: 2px dashed var(--ghibli-pink);
         }
 
-        /* Slot Styling */
         .slot-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            min-height: 80px;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: rgba(157, 193, 131, 0.1);
-            border-radius: 15px;
+            display: flex; justify-content: center; flex-wrap: wrap;
+            gap: 15px; min-height: 85px; margin: 20px 0;
+            padding: 15px; background: rgba(157, 193, 131, 0.05);
+            border-radius: 15px; border: 1px solid #ddd;
         }
 
         .slot {
-            min-width: 80px;
-            height: 65px;
+            min-width: 80px; height: 70px;
             border-bottom: 4px solid var(--ghibli-leaf);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.2s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.2s;
         }
 
-        .slot .pinyin { font-size: 0.8rem; color: #666; }
-        .slot .hanzi { font-size: 1.4rem; font-weight: bold; color: var(--ghibli-dark-green); }
+        .slot.filled { background: var(--ghibli-sky); border-radius: 8px 8px 0 0; }
+        .slot .pinyin { font-size: 0.8rem; color: #666; height: 1.2rem; }
+        .slot .hanzi { font-size: 1.5rem; font-weight: bold; color: var(--ghibli-dark-green); }
 
-        /* Word Seed Styling */
         .word-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin: 25px 0;
+            display: flex; justify-content: center; flex-wrap: wrap;
+            gap: 12px; margin: 25px 0;
         }
 
         .word-seed {
-            background-color: white;
-            border: 2px solid var(--ghibli-leaf);
-            border-radius: 15px;
-            padding: 8px 15px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: 0.2s;
+            background: white; border: 2px solid var(--ghibli-leaf);
+            border-radius: 15px; padding: 10px 15px; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.2s;
+            user-select: none;
         }
 
-        .word-seed:hover { transform: translateY(-3px); border-color: var(--ghibli-dark-green); }
-        .word-seed .pinyin { font-size: 0.75rem; color: #777; }
-        .word-seed .hanzi { font-size: 1.2rem; font-weight: 600; color: #333; }
+        .word-seed:hover { transform: translateY(-3px); border-color: var(--ghibli-dark-green); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .word-seed .pinyin { font-size: 0.8rem; color: #777; }
+        .word-seed .hanzi { font-size: 1.3rem; font-weight: 600; color: #333; }
 
         .controls button {
-            background-color: var(--ghibli-dark-green);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
+            background: var(--ghibli-dark-green); color: white;
+            border: none; padding: 12px 30px; border-radius: 25px;
+            font-family: 'Quicksand', sans-serif; font-weight: 600; font-size: 1rem;
+            cursor: pointer; margin: 5px; transition: 0.3s;
         }
 
-        .controls button:disabled { background-color: #ccc; cursor: not-allowed; }
+        .controls button:hover { background: var(--ghibli-leaf); transform: scale(1.05); }
+        .controls button#next-btn { background: var(--ghibli-wood); }
 
-        #feedback { margin-top: 15px; font-weight: 600; font-size: 1.1rem; }
-        #tree-growth { font-size: 4rem; margin-top: 10px; }
+        #feedback { margin-top: 15px; font-weight: 600; font-size: 1.1rem; min-height: 25px; }
+        #tree-growth { font-size: 4rem; margin-top: 10px; transition: 0.3s; }
 
-        footer { margin-top: auto; padding: 20px; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake { animation: shake 0.3s ease-in-out; }
+
+        footer { margin-top: auto; padding: 20px; color: #444; font-weight: 600; }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="index.html" class="back-btn">⬅ Trở về</a>
+    <a href="index.html" class="back-btn">⬅ Về Vườn</a>
     <h1>Bài 7: 今天几号？ 🗓️</h1>
 </header>
 
 <div class="status-container">
-    <span class="score-text">Điểm: <span id="score">0</span></span>
+    <span class="score-text">Điểm: <span id="score-display">0</span></span>
     <div class="progress-bar-bg"><div id="progress-fill" class="progress-fill"></div></div>
-    <span class="score-text" id="level-indicator">Câu 1/5</span>
+    <span class="score-text" id="level-display">Câu 1/30</span>
 </div>
 
 <div class="game-container">
-    <div id="vietnamese-hint">Đang tải...</div>
+    <div id="hint-box">Đang chuẩn bị hạt giống...</div>
     <div id="drop-zone" class="slot-container"></div>
     <div id="word-bank" class="word-container"></div>
 
@@ -204,75 +157,54 @@
     <div id="tree-growth">🪴</div>
 </div>
 
-<footer>© 2026 - Khu Vườn Tiếng Trung của Nga</footer>
+<footer>© 2026 - Made with ❤️ for Nga Học HSK</footer>
 
-<audio id="sound-click" src="https://cdn.pixabay.com/audio/2022/03/15/audio_790b1e60b4.mp3"></audio>
-<audio id="sound-win" src="https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3"></audio>
-<audio id="sound-wrong" src="https://cdn.pixabay.com/audio/2022/03/24/audio_eb3ee10eb8.mp3"></audio>
+<audio id="sfx-click" src="https://cdn.pixabay.com/audio/2022/03/15/audio_790b1e60b4.mp3"></audio>
+<audio id="sfx-win" src="https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3"></audio>
+<audio id="sfx-wrong" src="https://cdn.pixabay.com/audio/2022/03/24/audio_eb3ee10eb8.mp3"></audio>
 
 <script>
+    // DỮ LIỆU 30 CÂU HỎI
     const levels = [
-        {
-            hint: "Dịch: Ngày mai là thứ tư.",
-            correct: ["明天", "星期三"],
-            words: [
-                {h: "明天", p: "míngtiān"}, 
-                {h: "星期三", p: "xīngqīsān"}, 
-                {h: "昨天", p: "zuótiān"}, 
-                {h: "号", p: "hào"}
-            ]
-        },
-        {
-            hint: "Dịch: Tôi đi đến trường đọc sách.",
-            correct: ["我", "去", "学校", "看书"],
-            words: [
-                {h: "学校", p: "xuéxiào"}, 
-                {h: "我", p: "wǒ"}, 
-                {h: "去", p: "qù"}, 
-                {h: "看书", p: "kànshū"}, 
-                {h: "问", p: "wèn"}
-            ]
-        },
-        {
-            hint: "Dịch: Hôm nay là ngày 1 tháng 9.",
-            correct: ["今天", "9月", "1号"],
-            words: [
-                {h: "1号", p: "yī hào"}, 
-                {h: "今天", p: "jīntiān"}, 
-                {h: "9月", p: "jiǔyuè"}, 
-                {h: "明天", p: "míngtiān"}
-            ]
-        },
-        {
-            hint: "Dịch: Xin hỏi, hôm nay ngày mấy?",
-            correct: ["请", "问", "今天", "几号"],
-            words: [
-                {h: "问", p: "wèn"}, 
-                {h: "今天", p: "jīntiān"}, 
-                {h: "几号", p: "jǐ hào"}, 
-                {h: "请", p: "qǐng"}, 
-                {h: "去", p: "qù"}
-            ]
-        },
-        {
-            hint: "Dịch: Tôi đi Trung Quốc học tiếng Hán.",
-            correct: ["我", "去", "中国", "学习", "汉语"],
-            words: [
-                {h: "我", p: "wǒ"}, 
-                {h: "去", p: "qù"}, 
-                {h: "中国", p: "Zhōngguó"}, 
-                {h: "学习", p: "xuéxí"}, 
-                {h: "汉语", p: "Hànyǔ"},
-                {h: "看", p: "kàn"}
-            ]
-        }
+        { hint: "Dịch: Ngày mai là thứ tư.", correct: ["明天", "星期三"], words: [{h:"明天",p:"míngtiān"},{h:"星期三",p:"xīngqīsān"},{h:"昨天",p:"zuótiān"},{h:"星期二",p:"xīngqī'èr"}] },
+        { hint: "Dịch: Tôi đi đến trường đọc sách.", correct: ["我", "去", "学校", "看书"], words: [{h:"学校",p:"xuéxiào"},{h:"我",p:"wǒ"},{h:"去",p:"qù"},{h:"看书",p:"kànshū"},{h:"看电影",p:"kàn diànyǐng"}] },
+        { hint: "Dịch: Hôm nay là ngày 1 tháng 9.", correct: ["今天", "9月", "1号"], words: [{h:"1号",p:"yī hào"},{h:"今天",p:"jīntiān"},{h:"9月",p:"jiǔyuè"},{h:"10月",p:"shíyuè"}] },
+        { hint: "Dịch: Xin hỏi, hôm nay ngày mấy?", correct: ["请", "问", "今天", "几号"], words: [{h:"问",p:"wèn"},{h:"今天",p:"jīntiān"},{h:"几号",p:"jǐ hào"},{h:"请",p:"qǐng"},{h:"几月",p:"jǐ yuè"}] },
+        { hint: "Dịch: Tôi đi Trung Quốc học tiếng Hán.", correct: ["我", "去", "中国", "学习", "汉语"], words: [{h:"我",p:"wǒ"},{h:"去",p:"qù"},{h:"中国",p:"Zhōngguó"},{h:"学习",p:"xuéxí"},{h:"汉语",p:"Hànyǔ"},{h:"老师",p:"lǎoshī"}] },
+        { hint: "Dịch: Hôm qua là thứ sáu.", correct: ["昨天", "是", "星期五"], words: [{h:"昨天",p:"zuótiān"},{h:"是",p:"shì"},{h:"星期五",p:"xīngqīwǔ"},{h:"星期六",p:"xīngqīliù"}] },
+        { hint: "Dịch: Thứ bảy bạn đi đâu?", correct: ["星期六", "你", "去", "哪儿"], words: [{h:"星期六",p:"xīngqīliù"},{h:"你",p:"nǐ"},{h:"去",p:"qù"},{h:"哪儿",p:"nǎr"},{h:"学校",p:"xuéxiào"}] },
+        { hint: "Dịch: Ngày 25 tháng 12 là lễ Giáng sinh.", correct: ["12月", "25号"], words: [{h:"12月",p:"shí'èr yuè"},{h:"25号",p:"èrshíwǔ hào"},{h:"11月",p:"shíyī yuè"}] },
+        { hint: "Dịch: Hôm nay là thứ mấy?", correct: ["今天", "星期几"], words: [{h:"今天",p:"jīntiān"},{h:"星期几",p:"xīngqījǐ"},{h:"几号",p:"jǐ hào"}] },
+        { hint: "Dịch: Tôi đi nhà bạn uống trà.", correct: ["我", "去", "朋友家", "喝茶"], words: [{h:"朋友家",p:"péngyou jiā"},{h:"喝茶",p:"hē chá"},{h:"我",p:"wǒ"},{h:"去",p:"qù"}] },
+        // Thêm câu 11-30 tương tự
+        { hint: "Dịch: Ngày mai tôi đi ngân hàng.", correct: ["明天", "我", "去", "银行"], words: [{h:"明天",p:"míngtiān"},{h:"银行",p:"yínháng"},{h:"我",p:"wǒ"},{h:"去",p:"qù"}] },
+        { hint: "Dịch: Hôm qua bạn đi đâu?", correct: ["昨天", "你", "去", "哪儿"], words: [{h:"昨天",p:"zuótiān"},{h:"哪儿",p:"nǎr"},{h:"你",p:"nǐ"},{h:"去",p:"qù"}] },
+        { hint: "Dịch: Hôm nay tháng mấy ngày mấy?", correct: ["今天", "几月", "几号"], words: [{h:"今天",p:"jīntiān"},{h:"几月",p:"jǐ yuè"},{h:"几号",p:"jǐ hào"}] },
+        { hint: "Dịch: Thứ hai tôi đi làm.", correct: ["星期一", "我", "去", "工作"], words: [{h:"星期一",p:"xīngqīyī"},{h:"工作",p:"gōngzuò"},{h:"我",p:"wǒ"},{h:"去",p:"qù"}] },
+        { hint: "Dịch: Chủ nhật bạn có đi học không?", correct: ["星期天", "你", "去", "学校", "吗"], words: [{h:"星期天",p:"xīngqītiān"},{h:"学校",p:"xuéxiào"},{h:"你",p:"nǐ"},{h:"吗",p:"ma"},{h:"去",p:"qù"}] },
+        { hint: "Dịch: 10 tháng 10.", correct: ["10月", "10号"], words: [{h:"10月",p:"shí yuè"},{h:"10号",p:"shí hào"},{h:"9号",p:"jiǔ hào"}] },
+        { hint: "Dịch: Thứ ba ngày 5.", correct: ["星期二", "5号"], words: [{h:"星期二",p:"xīngqī'èr"},{h:"5号",p:"wǔ hào"},{h:"4号",p:"sì hào"}] },
+        { hint: "Dịch: Tôi không đi bệnh viện.", correct: ["我", "不去", "医院"], words: [{h:"我",p:"wǒ"},{h:"不去",p:"bú qù"},{h:"医院",p:"yīyuàn"}] },
+        { hint: "Dịch: Bạn đi xem phim không?", correct: ["你", "去", "看电影", "吗"], words: [{h:"你",p:"nǐ"},{h:"看电影",p:"kàn diànyǐng"},{h:"去",p:"qù"},{h:"吗",p:"ma"}] },
+        { hint: "Dịch: Hôm qua là ngày 31.", correct: ["昨天", "31号"], words: [{h:"昨天",p:"zuótiān"},{h:"31号",p:"sānshíyī hào"},{h:"1号",p:"yī hào"}] },
+        { hint: "Dịch: Thứ năm tôi đi thư viện.", correct: ["星期四", "我", "去", "图书馆"], words: [{h:"星期四",p:"xīngqīsì"},{h:"图书馆",p:"túshūguǎn"},{h:"我",p:"wǒ"},{h:"去",p:"qù"}] },
+        { hint: "Dịch: Hôm nay tôi rất bận.", correct: ["今天", "我", "很忙"], words: [{h:"今天",p:"jīntiān"},{h:"我",p:"wǒ"},{h:"很忙",p:"hěn máng"}] },
+        { hint: "Dịch: Thứ sáu gặp nhé.", correct: ["星期五", "再见"], words: [{h:"星期五",p:"xīngqīwǔ"},{h:"再见",p:"zàijiàn"}] },
+        { hint: "Dịch: Mai là mùng 2.", correct: ["明天", "2号"], words: [{h:"明天",p:"míngtiān"},{h:"2号",p:"èr hào"}] },
+        { hint: "Dịch: Anh ấy đi cửa hàng.", correct: ["他", "去", "商店"], words: [{h:"他",p:"tā"},{h:"去",p:"qù"},{h:"商店",p:"shāngdiàn"}] },
+        { hint: "Dịch: Tôi đi ăn cơm.", correct: ["我", "去", "吃饭"], words: [{h:"我",p:"wǒ"},{h:"去",p:"qù"},{h:"吃饭",p:"chīfàn"}] },
+        { hint: "Dịch: Bạn tên là gì?", correct: ["你", "叫", "什么", "名字"], words: [{h:"你",p:"nǐ"},{h:"叫",p:"jiào"},{h:"什么",p:"shénme"},{h:"名字",p:"míngzi"}] },
+        { hint: "Dịch: Tôi là người Việt Nam.", correct: ["我", "是", "越南人"], words: [{h:"我",p:"wǒ"},{h:"是",p:"yuènánrén"}] },
+        { hint: "Dịch: Cô ấy là giáo viên của tôi.", correct: ["她", "是", "我的", "老师"], words: [{h:"她",p:"tā"},{h:"是",p:"shì"},{h:"我的",p:"wǒde"},{h:"老师",p:"lǎoshī"}] },
+        { hint: "Dịch: Cảm ơn bạn.", correct: ["谢谢", "你"], words: [{h:"谢谢",p:"xièxie"},{h:"你",p:"nǐ"}] }
     ];
 
     let currentLevel = 0;
     let score = 0;
-    const sfxClick = document.getElementById('sound-click');
-    const sfxWin = document.getElementById('sound-win');
-    const sfxWrong = document.getElementById('sound-wrong');
+
+    const sfxClick = document.getElementById('sfx-click');
+    const sfxWin = document.getElementById('sfx-win');
+    const sfxWrong = document.getElementById('sfx-wrong');
 
     function playSfx(audio) {
         audio.currentTime = 0;
@@ -281,44 +213,49 @@
 
     function initLevel() {
         const level = levels[currentLevel];
-        document.getElementById('vietnamese-hint').innerText = level.hint;
+        document.getElementById('hint-box').innerText = level.hint;
         document.getElementById('feedback').innerText = "";
-        document.getElementById('level-indicator').innerText = `Câu ${currentLevel + 1}/${levels.length}`;
+        document.getElementById('level-display').innerText = `Câu ${currentLevel + 1}/${levels.length}`;
         document.getElementById('progress-fill').style.width = `${(currentLevel / levels.length) * 100}%`;
         document.getElementById('next-btn').style.display = 'none';
         document.getElementById('check-btn').style.display = 'inline-block';
-        document.getElementById('tree-growth').innerText = "🪴";
+        document.getElementById('tree-growth').style.transform = "scale(1)";
 
         const wordBank = document.getElementById('word-bank');
         const dropZone = document.getElementById('drop-zone');
         wordBank.innerHTML = '';
         dropZone.innerHTML = '';
 
-        // Tạo slot trống
+        // Tạo ô trống
         level.correct.forEach(() => {
             const slot = document.createElement('div');
             slot.className = 'slot';
+            slot.innerHTML = `<span class="pinyin"></span><span class="hanzi"></span>`;
             slot.onclick = () => returnToBank(slot);
             dropZone.appendChild(slot);
         });
 
-        // Tạo hạt giống từ vựng kèm Pinyin
+        // Trộn từ
         const shuffled = [...level.words].sort(() => Math.random() - 0.5);
-        shuffled.forEach((wordObj, index) => {
+        shuffled.forEach((w, i) => {
             const seed = document.createElement('div');
             seed.className = 'word-seed';
-            seed.id = `seed-${index}`;
-            seed.innerHTML = `<span class="pinyin">${wordObj.p: ""}</span><span class="hanzi">${wordObj.h}</span>`;
-            seed.onclick = () => moveToSlot(seed, wordObj);
+            seed.id = `seed-${currentLevel}-${i}`;
+            seed.innerHTML = `<span class="pinyin">${w.p}</span><span class="hanzi">${w.h}</span>`;
+            seed.onclick = () => moveToSlot(seed, w);
             wordBank.appendChild(seed);
         });
     }
 
-    function moveToSlot(seed, wordObj) {
-        const emptySlot = Array.from(document.querySelectorAll('.slot')).find(s => s.innerText === '');
+    function moveToSlot(seed, data) {
+        const slots = document.querySelectorAll('.slot');
+        const emptySlot = Array.from(slots).find(s => s.querySelector('.hanzi').innerText === "");
+        
         if (emptySlot) {
             playSfx(sfxClick);
-            emptySlot.innerHTML = `<span class="pinyin">${wordObj.p}</span><span class="hanzi">${wordObj.h}</span>`;
+            emptySlot.querySelector('.pinyin').innerText = data.p;
+            emptySlot.querySelector('.hanzi').innerText = data.h;
+            emptySlot.classList.add('filled');
             emptySlot.dataset.seedId = seed.id;
             seed.style.visibility = 'hidden';
             seed.style.pointerEvents = 'none';
@@ -326,47 +263,47 @@
     }
 
     function returnToBank(slot) {
-        if (slot.innerText !== '') {
+        const hanzi = slot.querySelector('.hanzi').innerText;
+        if (hanzi !== "") {
             playSfx(sfxClick);
             const seedId = slot.dataset.seedId;
-            const originalSeed = document.getElementById(seedId);
-            if (originalSeed) {
-                originalSeed.style.visibility = 'visible';
-                originalSeed.style.pointerEvents = 'auto';
+            const seed = document.getElementById(seedId);
+            if (seed) {
+                seed.style.visibility = 'visible';
+                seed.style.pointerEvents = 'auto';
             }
-            slot.innerHTML = '';
-            delete slot.dataset.seedId;
+            slot.querySelector('.pinyin').innerText = "";
+            slot.querySelector('.hanzi').innerText = "";
+            slot.classList.remove('filled');
         }
     }
 
     function checkSentence() {
         const slots = document.querySelectorAll('.slot');
-        const userAnswers = Array.from(slots).map(s => s.querySelector('.hanzi')?.innerText || "");
-        const correctAnswers = levels[currentLevel].correct;
+        const userAns = Array.from(slots).map(s => s.querySelector('.hanzi').innerText);
+        const correctAns = levels[currentLevel].correct;
 
-        if (userAnswers.includes("")) {
-            playSfx(sfxWrong);
-            document.getElementById('feedback').innerText = "⚠️ Đừng bỏ trống ô nào nhé!";
+        if (userAns.includes("")) {
+            document.getElementById('feedback').innerHTML = "<span style='color:orange'>Gieo hết hạt giống đã nhé! 🌸</span>";
             return;
         }
 
-        if (JSON.stringify(userAnswers) === JSON.stringify(correctAnswers)) {
+        if (JSON.stringify(userAns) === JSON.stringify(correctAns)) {
             playSfx(sfxWin);
             score += 20;
-            document.getElementById('score').innerText = score;
-            document.getElementById('feedback').innerHTML = "<span style='color:green'>✅ Xuất sắc! +20 điểm</span>";
+            document.getElementById('feedback').innerHTML = "<span style='color:green'>Chính xác! +20đ 🌳</span>";
             document.getElementById('tree-growth').innerText = "🌳";
+            document.getElementById('tree-growth').style.transform = "scale(1.3)";
             document.getElementById('check-btn').style.display = 'none';
             document.getElementById('next-btn').style.display = 'inline-block';
-            
-            if (currentLevel === levels.length - 1) {
-                document.getElementById('next-btn').innerText = "Hoàn thành vườn 🏆";
-                document.getElementById('progress-fill').style.width = "100%";
-            }
         } else {
             playSfx(sfxWrong);
-            document.getElementById('feedback').innerHTML = "<span style='color:red'>❌ Sai thứ tự rồi, thử lại nhé!</span>";
+            score -= 10;
+            document.querySelector('.game-container').classList.add('shake');
+            setTimeout(() => document.querySelector('.game-container').classList.remove('shake'), 300);
+            document.getElementById('feedback').innerHTML = "<span style='color:red'>Sai rồi! -10đ. Thử lại nào! 🍂</span>";
         }
+        document.getElementById('score-display').innerText = score;
     }
 
     function nextLevel() {
@@ -374,12 +311,14 @@
             currentLevel++;
             initLevel();
         } else {
-            alert(`Chúc mừng Nga! Bạn đã hoàn thành bài học với ${score} điểm!`);
+            document.getElementById('progress-fill').style.width = "100%";
+            alert(`Chúc mừng Nga! Bạn đã hoàn thành 30 câu với ${score} điểm! 🎉`);
             location.reload();
         }
     }
 
-    window.onload = initLevel;
+    // Đảm bảo script chạy sau khi DOM load
+    document.addEventListener('DOMContentLoaded', initLevel);
 </script>
 </body>
 </html>
