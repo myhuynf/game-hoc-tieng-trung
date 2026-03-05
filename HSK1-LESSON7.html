@@ -13,273 +13,335 @@
             --ghibli-wood: #8b5a2b;
             --ghibli-leaf: #7fb069;
             --ghibli-pink: #ffb7c5;
-            --white-glass: rgba(255, 255, 255, 0.9);
+            --white-glass: rgba(255, 255, 255, 0.95);
         }
 
         * { box-sizing: border-box; }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             font-family: 'Quicksand', sans-serif;
             background: var(--ghibli-sky);
             background-image: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0)),
                 url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-attachment: fixed;
-            display: flex;
-            min-height: 100vh;
+            background-size: cover; background-attachment: fixed;
+            display: flex; min-height: 100vh;
         }
 
-        /* Sidebar Ghibli Style */
         .sidebar {
-            width: 300px;
-            background: rgba(79, 121, 66, 0.9);
-            color: white;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            backdrop-filter: blur(10px);
-            border-right: 4px solid var(--ghibli-wood);
+            width: 300px; background: rgba(79, 121, 66, 0.95);
+            color: white; padding: 30px; display: flex;
+            flex-direction: column; flex-shrink: 0;
+            backdrop-filter: blur(10px); border-right: 4px solid var(--ghibli-wood);
         }
 
         .btn-home {
-            background: var(--ghibli-pink);
-            color: var(--ghibli-dark-green);
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            display: inline-flex;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 0 var(--ghibli-wood);
-        }
-
-        .app-icon-circle {
-            width: 70px; height: 70px;
-            background: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 35px; margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: var(--ghibli-pink); color: var(--ghibli-dark-green);
+            text-decoration: none; padding: 10px 20px; border-radius: 15px;
+            font-size: 0.85rem; font-weight: bold; margin-bottom: 30px;
+            box-shadow: 0 4px 0 var(--ghibli-wood); display: inline-block; width: fit-content;
         }
 
         .app-title { font-size: 1.8rem; font-weight: 700; margin: 0; line-height: 1.2; }
-        .teacher-info { margin-top: 10px; opacity: 0.9; }
-
-        .progress-container { margin-top: auto; padding-bottom: 20px; }
         .progress-bar-bg { width: 100%; height: 12px; background: rgba(255,255,255,0.2); border-radius: 10px; margin: 15px 0; overflow: hidden; }
         .progress-bar-fill { height: 100%; background: var(--ghibli-pink); width: 0%; transition: 0.5s; }
 
-        .stat-val { font-size: 2rem; font-weight: 700; display: block; }
-        .stat-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* Main Game Area */
-        .main-content {
-            flex-grow: 1;
-            padding: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        .main-content { flex-grow: 1; padding: 40px; display: flex; justify-content: center; align-items: center; }
 
         .quiz-card {
-            background: var(--white-glass);
-            width: 100%;
-            max-width: 850px;
-            padding: 40px;
-            border-radius: 30px;
-            border: 4px solid var(--ghibli-green);
+            background: var(--white-glass); width: 100%; max-width: 800px;
+            padding: 40px; border-radius: 30px; border: 4px solid var(--ghibli-green);
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            position: relative;
         }
 
         .tag-situation {
-            background: var(--ghibli-green);
-            color: white;
-            padding: 6px 15px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            display: inline-block;
-            margin-bottom: 15px;
+            background: var(--ghibli-green); color: white; padding: 6px 15px;
+            border-radius: 10px; font-weight: 700; font-size: 0.8rem; display: inline-block; margin-bottom: 15px;
         }
 
-        .question-text {
-            font-size: 1.6rem;
-            color: var(--ghibli-dark-green);
-            margin-bottom: 30px;
-            font-weight: 700;
-        }
-
-        .dialog-box {
-            background: #f9fdf9;
-            padding: 20px;
-            border-radius: 20px;
-            border-left: 6px solid var(--ghibli-leaf);
-            margin-bottom: 25px;
-            font-size: 1.4rem;
-        }
+        .question-text { font-size: 1.5rem; color: var(--ghibli-dark-green); margin-bottom: 30px; font-weight: 700; line-height: 1.4; }
 
         .options-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
         .option-item {
-            background: white;
-            border: 2px solid var(--ghibli-green);
-            padding: 18px 25px;
-            border-radius: 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: 0.2s;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--ghibli-dark-green);
+            background: white; border: 2px solid #e0e0e0;
+            padding: 16px 20px; border-radius: 15px; cursor: pointer;
+            display: flex; align-items: center; transition: 0.2s;
+            font-size: 1.15rem; font-weight: 600; color: #444;
         }
-        .option-item:hover { background: var(--ghibli-green); color: white; transform: scale(1.02); }
+        .option-item:hover { border-color: var(--ghibli-green); background: #f9fdf9; transform: translateX(5px); }
+        .option-letter {
+            width: 32px; height: 32px; border: 2px solid #ddd; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px; font-size: 0.9rem; color: #888; flex-shrink: 0;
+        }
 
         .slot-container {
-            min-height: 100px; border: 3px dashed var(--ghibli-green);
+            min-height: 80px; border: 3px dashed var(--ghibli-green);
             border-radius: 20px; background: rgba(255,255,255,0.5);
             margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px;
-            padding: 20px; justify-content: center; align-items: center;
+            padding: 15px; justify-content: center; align-items: center;
         }
 
         .chip {
             background: white; border: 2px solid var(--ghibli-wood);
-            padding: 12px 20px; border-radius: 12px; cursor: pointer;
-            font-weight: 700; color: var(--ghibli-wood);
-            box-shadow: 0 4px 0 var(--ghibli-wood);
+            padding: 10px 18px; border-radius: 12px; cursor: pointer;
+            font-weight: 700; color: var(--ghibli-wood); box-shadow: 0 3px 0 var(--ghibli-wood);
+            transition: 0.2s;
         }
-        .chip.selected { opacity: 0.2; pointer-events: none; }
-        .chip.in-slot { background: var(--ghibli-leaf); color: white; border-color: var(--ghibli-dark-green); box-shadow: 0 4px 0 var(--ghibli-dark-green); }
+        .chip:active { transform: translateY(3px); box-shadow: none; }
+        .chip.selected { opacity: 0.3; pointer-events: none; }
 
         .modal-btn {
-            background: var(--ghibli-wood);
-            color: white; border: none; padding: 15px 40px;
-            border-radius: 50px; font-weight: 700; cursor: pointer;
-            font-size: 1rem; margin-top: 20px; transition: 0.2s;
+            background: var(--ghibli-wood); color: white; border: none; padding: 15px 40px;
+            border-radius: 50px; font-weight: 700; cursor: pointer; font-size: 1rem; margin-top: 20px;
         }
-        .modal-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
 
-        /* Feedback Modal */
         .overlay {
             position: fixed; top:0; left:0; width:100%; height:100%;
             background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 1000;
         }
-        .modal {
-            background: white; border-radius: 30px; padding: 35px; text-align: center;
-            max-width: 480px; width: 90%; border: 6px solid var(--ghibli-pink);
-        }
-        .feedback-box {
-            background: #f0f9eb; border-radius: 15px; padding: 15px; margin-top: 15px;
-            border: 1px solid var(--ghibli-green);
-        }
-        .pinyin { color: #d63384; font-weight: 700; font-size: 1.1rem; }
-        .trans { color: #555; font-style: italic; margin-top: 5px; }
+        .modal { background: white; border-radius: 30px; padding: 35px; text-align: center; max-width: 450px; width: 90%; border: 6px solid var(--ghibli-pink); }
+        .feedback-box { background: #f0f9eb; border-radius: 15px; padding: 15px; margin-top: 15px; border: 1px solid var(--ghibli-green); }
 
-        @media (max-width: 900px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; padding: 20px; border-right: none; border-bottom: 4px solid var(--ghibli-wood); }
-            .main-content { padding: 20px; }
-        }
+        @media (max-width: 900px) { body { flex-direction: column; } .sidebar { width: 100%; } }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <a href="index.html" class="btn-home">🏠 VỀ KHU VƯỜN</a>
-    <div class="app-icon-circle">🏮</div>
-    <h1 class="app-title">HSK1 Bài 7<br>Giao Tiếp</h1>
-    <p class="teacher-info">Lớp học của <b>Nga Học HSK</b></p>
-
-    <div class="progress-container">
-        <span class="stat-lbl">Tiến trình</span>
-        <div class="progress-bar-bg">
-            <div id="progress-fill" class="progress-bar-fill"></div>
-        </div>
-        <div style="display: flex; justify-content: space-between;">
-            <div>
-                <span id="stat-score" class="stat-val">0</span>
-                <span class="stat-lbl">ĐIỂM</span>
-            </div>
-            <div style="text-align: right;">
-                <span class="stat-val"><span id="stat-current">1</span>/20</span>
-                <span class="stat-lbl">CÂU HỎI</span>
-            </div>
+    <a href="#" class="btn-home">🏠 VỀ TRANG CHỦ</a>
+    <h1 class="app-title">HSK1 Bài 7<br>20 Câu Hỏi</h1>
+    <p>Giáo viên: <b>Nga Học HSK</b></p>
+    <div class="progress-container" style="margin-top:auto">
+        <div class="progress-bar-bg"><div id="progress-fill" class="progress-bar-fill"></div></div>
+        <div style="display:flex; justify-content:space-between">
+            <span>Điểm: <b id="stat-score">0</b></span>
+            <span>Câu: <b id="stat-current">1</b>/20</span>
         </div>
     </div>
 </div>
 
 <div class="main-content">
     <div class="quiz-card" id="game-box">
-        <div style="text-align:center;">
-            <div style="font-size: 4rem; margin-bottom: 20px;">🗓️</div>
-            <h2 style="color: var(--ghibli-dark-green);">Hôm nay ngày mấy?</h2>
-            <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">Chào mừng bạn đến với thử thách giao tiếp Bài 7.</p>
-            <button class="modal-btn" onclick="startGame()">BẮT ĐẦU THỬ THÁCH</button>
+        <div style="text-align:center">
+            <div style="font-size: 4rem; margin-bottom: 20px;">🌸</div>
+            <h2>Chào mừng đến với Khu Vườn Bài 7</h2>
+            <p>Học đầy đủ 20 câu về thời gian và hoạt động.</p>
+            <button class="modal-btn" onclick="startGame()">BẮT ĐẦU</button>
         </div>
     </div>
 </div>
 
 <div class="overlay" id="overlay">
     <div class="modal">
-        <div id="modal-icon" style="font-size: 4rem; margin-bottom: 10px;">🌸</div>
-        <h2 id="modal-title">Chính xác!</h2>
-        <div id="modal-msg" style="color: #444; margin-top: 10px; font-size: 1.2rem;"></div>
+        <div id="modal-icon" style="font-size: 3rem">🌸</div>
+        <h2 id="modal-title"></h2>
+        <div id="modal-msg"></div>
         <div class="feedback-box" id="feedback-box">
-            <div class="pinyin" id="fb-pinyin"></div>
-            <div class="trans" id="fb-trans"></div>
+            <div style="color:#d63384; font-weight:700" id="fb-highlight"></div>
+            <div style="color:#666; font-style:italic" id="fb-trans"></div>
         </div>
-        <button class="modal-btn" onclick="nextQuestion()">TIẾP TỤC 🌿</button>
+        <button class="modal-btn" onclick="nextQuestion()">TIẾP TỤC</button>
     </div>
 </div>
 
-<audio id="snd-correct" src="https://assets.mixkit.co/active_storage/sfx/2020/2020-preview.mp3"></audio>
-<audio id="snd-wrong" src="https://assets.mixkit.co/active_storage/sfx/255/255-preview.mp3"></audio>
-
 <script>
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    function playSound(type) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        if (type === 'correct') {
+            osc.frequency.setValueAtTime(523, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+        } else {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.4);
+        }
+    }
+
     const questions = [
-        { type: 'choice', tag: 'Chào hỏi', question: 'Chào thầy cô/người lớn tuổi thế nào?', options: ['你好', '您好', '再见'], answer: '您好', pinyin: 'Nín hǎo', trans: 'Chào Ngài / Thầy / Cô' },
-        { type: 'dialog', tag: 'Hội thoại', question: 'Điền vào chỗ trống:', dialog: { a: '明天你去学校吗？', b: '...' }, options: ['我不去', '我不叫', '我不喝'], answer: '我不去', pinyin: 'Wǒ bú qù', trans: 'Tôi không đi' },
-        { type: 'reorder', tag: 'Sắp xếp', question: 'Sắp xếp: "Ngày mai tôi đi học"', words: ['明天', '我', '去', '学校'], correct: '明天我去学校', pinyin: 'Míngtiān wǒ qù xuéxiào', trans: 'Ngày mai tôi đi học' },
-        { type: 'choice', tag: 'Từ vựng', question: 'Tháng 12 trong tiếng Trung?', options: ['十二月', '二月', '十月'], answer: '十二月', pinyin: 'Shí\'èr yuè', trans: 'Tháng 12' },
-        { type: 'dialog', tag: 'Hội thoại', question: 'Hỏi thứ mấy:', dialog: { a: '...', b: '今天星期三。' }, options: ['今天星期几？', '今天几号？'], answer: '今天星期几？', pinyin: 'Jīntiān xīngqī jǐ?', trans: 'Hôm nay thứ mấy?' },
-        { type: 'reorder', tag: 'Sắp xếp', question: 'Dịch: "Hôm nay ngày 1 tháng 1"', words: ['今天', '1月', '1号'], correct: '今天1月1号', pinyin: 'Jīntiān yī yuè yī hào', trans: 'Hôm nay ngày 1 tháng 1' },
-        { type: 'choice', tag: 'Lịch sự', question: 'Dùng từ gì để hỏi thông tin lịch sự?', options: ['请问', '谢谢', '对不起'], answer: '请问', pinyin: 'Qǐngwèn', trans: 'Xin hỏi...' },
-        { type: 'dialog', tag: 'Hội thoại', question: 'Đi trường học làm gì?', dialog: { a: '你去学校做什么？', b: '我...' }, options: ['去学校看书', '去学校吃饭', '去学校睡觉'], answer: '去学校看书', pinyin: 'Wǒ qù xuéxiào kànshū', trans: 'Tôi đến trường đọc sách' },
-        { type: 'reorder', tag: 'Hỏi đáp', question: 'Sắp xếp: "Ngày mai bạn đi đâu?"', words: ['明天', '你', '去', '哪儿'], correct: '明天你去哪儿', pinyin: 'Míngtiān nǐ qù nǎr?', trans: 'Ngày mai bạn đi đâu?' },
-        { type: 'choice', tag: 'Thời gian', question: 'Từ "Hào" (号) dùng trong trường hợp nào?', options: ['Văn nói (Ngày)', 'Văn viết (Ngày)', 'Hỏi tháng'], answer: 'Văn nói (Ngày)', pinyin: 'Hào', trans: 'Ngày (thường dùng trong khẩu ngữ)' },
-        { type: 'choice', tag: 'Từ vựng', question: 'Thứ 7 là gì?', options: ['星期六', '星期日', '星期五'], answer: '星期六', pinyin: 'Xīngqīliù', trans: 'Thứ bảy' },
-        { type: 'dialog', tag: 'Hội thoại', question: 'Phủ định:', dialog: { a: '明天是星期五吗？', b: '...' }, options: ['不是，明天是星期六', '对，星期五'], answer: '不是，明天是星期六', pinyin: 'Bú shì, míngtiān xīngqīliù', trans: 'Không, mai là thứ 7' },
-        { type: 'reorder', tag: 'Mong muốn', question: 'Dịch: "Tôi muốn đi nhà sách đọc sách"', words: ['我', '想', '去', '书店', '看书'], correct: '我想去书店看书', pinyin: 'Wǒ xiǎng qù shūdiàn kànshū', trans: 'Tôi muốn đi nhà sách đọc sách' },
-        { type: 'choice', tag: 'Rủ rê', question: 'Cách rủ đi thư viện:', options: ['明天我们去图书馆吧', '图书馆在哪儿'], answer: '明天 chúng ta đi thư viện nhé', answer: '明天 chúng ta đi thư viện nhé', answer: '明天 chúng ta đi thư viện nhé' }, // Re-check logic below
-        { type: 'dialog', tag: 'Hỏi thăm', question: 'Bạn là người nước nào?', dialog: { a: '你是哪国人？', b: '我...' }, options: ['是越南人', '去学校', '叫大卫'], answer: '是越南人', pinyin: 'Wǒ shì Yuènán rén', trans: 'Tôi là người Việt Nam' },
-        { type: 'reorder', tag: 'Sự kiện', question: 'Dịch: "Ngày mai sinh nhật tôi"', words: ['明天', '是', '我的', '生日'], correct: '明天是我的生日', pinyin: 'Míngtiān shì wǒ de shēngrì', trans: 'Ngày mai là sinh nhật tôi' },
-        { type: 'choice', tag: 'Cảm ơn', question: 'Đáp lại "谢谢" là gì?', options: ['不客气', '没关系', '对不起'], answer: '不客气', pinyin: 'Bú kèqi', trans: 'Đừng khách sáo' },
-        { type: 'reorder', tag: 'Phủ định', question: 'Dịch: "Hôm nay tôi không đi học"', words: ['今天', '我', '不去', '学校'], correct: '今天我不去学校', pinyin: 'Jīntiān wǒ bú qù xuéxiào', trans: 'Hôm nay tôi không đi học' },
-        { type: 'choice', tag: 'Ngữ pháp', question: 'Trạng ngữ thời gian đứng ở đâu?', options: ['Đầu câu/Sau chủ ngữ', 'Cuối câu'], answer: 'Đầu câu/Sau chủ ngữ', pinyin: 'Grammar', trans: 'Đứng trước hoặc sau chủ ngữ' },
-        { type: 'choice', tag: 'Giao tiếp', question: 'Sách là gì?', options: ['书', '喝', '看'], answer: '书', pinyin: 'Shū', trans: 'Sách' }
+        {
+            type: 'choice', tag: 'Chào hỏi',
+            question: 'Khi gặp thầy cô giáo hoặc người lớn tuổi, bạn chào thế nào cho lịch sự?',
+            options: ['你好 (Nǐ hǎo)', '您好 (Nín hǎo)', '再见 (Zàijiàn)', '对不起 (Duìbuqǐ)'],
+            answer: '您好 (Nín hǎo)',
+            pinyin: 'Cấu trúc: Bạn dùng "您" (Ngài/Ông/Bà) để thể hiện sự tôn trọng.',
+            trans: 'Dịch: Chào Ngài/Thầy/Cô'
+        },
+        {
+            type: 'choice', tag: 'Hội thoại',
+            question: 'Người khác hỏi: "明天你去学校吗？" (Mai bạn đi học không?). Bạn trả lời "Tôi không đi":',
+            options: ['我不去 (Wǒ bù qù)', '我不喝 (Wǒ bù hē)', '我不看 (Wǒ bù kàn)', '我不叫 (Wǒ bù jiào)'],
+            answer: '我不去 (Wǒ bù qù)',
+            pinyin: 'Phủ định của hành động "去" là "不去".',
+            trans: 'Dịch: Tôi không đi.'
+        },
+        {
+            type: 'choice', tag: 'Ngữ pháp',
+            question: 'Trong câu tiếng Trung, trạng ngữ chỉ thời gian thường đứng ở đâu?',
+            options: ['Đứng trước hoặc sau chủ ngữ', 'Đứng ở cuối câu', 'Đứng sau động từ chính', 'Đứng sau tân ngữ'],
+            answer: 'Đứng trước hoặc sau chủ ngữ',
+            pinyin: 'Lưu ý: Thời gian tuyệt đối không được đứng cuối câu như tiếng Việt.',
+            trans: 'Quy tắc: Chủ ngữ + Thời gian + Động từ (Hoặc ngược lại).'
+        },
+        {
+            type: 'choice', tag: 'Thời gian',
+            question: 'Để hỏi hôm nay là ngày mấy, ta dùng câu nào?',
+            options: ['今天几号？ (Jīntiān jǐ hào?)', '今天星期几？ (Jīntiān xīngqī jǐ?)', '明天几号？ (Míngtiān jǐ hào?)', '你是谁？ (Nǐ shì shuí?)'],
+            answer: '今天几号？ (Jīntiān jǐ hào?)',
+            pinyin: 'Hỏi ngày trong tháng dùng "几号".',
+            trans: 'Dịch: Hôm nay ngày mấy?'
+        },
+        {
+            type: 'reorder', tag: 'Sắp xếp',
+            question: 'Sắp xếp câu: "Tôi đi trường học đọc sách"',
+            words: ['我', '去', '学校', '看书'],
+            correct: '我去学校看书',
+            pinyin: 'Cấu trúc liên động: Đi đâu đó để làm gì.',
+            trans: 'Tôi đến trường đọc sách.'
+        },
+        {
+            type: 'choice', tag: 'Giao tiếp',
+            question: 'Cách rủ bạn đi thư viện vào ngày mai một cách tự nhiên:',
+            options: ['明天我们去图书馆吧 (Míngtiān wǒmen qù túshūguǎn ba)', '图书馆在哪儿 (Túshūguǎn zài nǎr)', '我不去图书馆 (Wǒ bù qù túshūguǎn)', '谢谢你 (Xièxie nǐ)'],
+            answer: '明天 chúng ta đi thư viện nhé',
+            answer: '明天 chúng ta đi thư viện nhé',
+            answer: '明天 chúng ta đi thư viện nhé'
+        },
+        {
+            type: 'choice', tag: 'Từ vựng',
+            question: 'Từ "Thứ 7" trong tiếng Trung là gì?',
+            options: ['星期六 (Xīngqīliù)', '星期日 (Xīngqīrì)', '星期五 (Xīngqīwǔ)', '星期七 (Xīngqīqī)'],
+            answer: '星期六 (Xīngqīliù)',
+            pinyin: 'Thứ trong tiếng Trung lùi 1 số so với tiếng Việt (Thứ 2 = 星期一).',
+            trans: 'Dịch: Thứ bảy.'
+        },
+        {
+            type: 'reorder', tag: 'Sắp xếp',
+            question: 'Sắp xếp câu: "Ngày mai tôi đi cửa hàng"',
+            words: ['明天', '我', '去', '商店'],
+            correct: '明天我去商店',
+            pinyin: 'Thời gian có thể đặt ở đầu câu hoặc sau chủ ngữ.',
+            trans: 'Ngày mai tôi đi cửa hàng.'
+        },
+        {
+            type: 'choice', tag: 'Thời gian',
+            question: 'Cách hỏi "Hôm nay thứ mấy?" chính xác nhất:',
+            options: ['今天几号？ (Jīntiān jǐ hào?)', '今天星期几？ (Jīntiān xīngqī jǐ?)', '今天几月？ (Jīntiān jǐ yuè?)', '明天几号？ (Míngtiān jǐ hào?)'],
+            answer: '今天星期几？ (Jīntiān xīngqī jǐ?)',
+            pinyin: 'Hỏi thứ trong tuần dùng "星期几".',
+            trans: 'Dịch: Hôm nay thứ mấy?'
+        },
+        {
+            type: 'choice', tag: 'Thời gian',
+            question: 'Tháng 9 ngày 10 nói như thế nào?',
+            options: ['九月十号 (Jiǔyuè shí hào)', '十月 nine 号 (Shíyuè jiǔ hào)', '九月十月 (Jiǔyuè shí yuè)', '九号十月 (Jiǔhào shí yuè)'],
+            answer: '九月十号 (Jiǔyuè shí hào)',
+            pinyin: 'Quy tắc: To trước nhỏ sau (Tháng -> Ngày).',
+            trans: 'Dịch: Ngày 10 tháng 9.'
+        },
+        {
+            type: 'reorder', tag: 'Sắp xếp',
+            question: 'Sắp xếp câu: "Hôm nay là thứ ba"',
+            words: ['今天', '是', '星期', '二'],
+            correct: '今天是星期二',
+            pinyin: 'Có thể bỏ "是" trong khẩu ngữ khi nói về thời gian.',
+            trans: 'Hôm nay là thứ ba.'
+        },
+        {
+            type: 'choice', tag: 'Từ vựng',
+            question: 'Hôm qua là ngày mấy?',
+            options: ['昨天几号？ (Zuótiān jǐ hào?)', '明天几号？ (Míngtiān jǐ hào?)', '今天几号？ (Jīntiān jǐ hào?)', '哪天几号？ (Nǎtiān jǐ hào?)'],
+            answer: '昨天几号？ (Zuótiān jǐ hào?)',
+            pinyin: '"昨天" là hôm qua.',
+            trans: 'Dịch: Hôm qua ngày mấy?'
+        },
+        {
+            type: 'choice', tag: 'Hội thoại',
+            question: 'Bạn muốn mời bạn đi uống trà, bạn nói thế nào?',
+            options: ['我们去喝茶吧 (Wǒmen qù hē chá ba)', '我们去看书吧 (Wǒmen qù kànshū ba)', '我们在家吧 (Wǒmen zài jiā ba)', '我不喝茶 (Wǒ bù hē chá)'],
+            answer: 'Chúng ta đi uống trà nhé',
+            answer: 'Chúng ta đi uống trà nhé',
+            answer: 'Chúng ta đi uống trà nhé'
+        },
+        {
+            type: 'reorder', tag: 'Sắp xếp',
+            question: 'Sắp xếp câu: "Tháng này là tháng tám"',
+            words: ['这个', '月', '是', '八月'],
+            correct: '这个月是八月',
+            pinyin: 'Sử dụng "这个月" cho tháng này.',
+            trans: 'Tháng này là tháng tám.'
+        },
+        {
+            type: 'choice', tag: 'Từ vựng',
+            question: 'Từ "Cửa hàng" trong tiếng Trung là gì?',
+            options: ['商店 (Shāngdiàn)', '学校 (Xuéxiào)', '图书馆 (Túshūguǎn)', '家 (Jiā)'],
+            answer: '商店 (Shāngdiàn)',
+            pinyin: 'Shāngdiàn: Cửa hàng.',
+            trans: 'Dịch: Cửa hàng.'
+        },
+        {
+            type: 'choice', tag: 'Ngữ pháp',
+            question: 'Trong tiếng Trung, thứ tự nói ngày tháng năm là gì?',
+            options: ['Năm - Tháng - Ngày', 'Ngày - Tháng - Năm', 'Tháng - Ngày - Năm', 'Năm - Ngày - Tháng'],
+            answer: 'Năm - Tháng - Ngày',
+            pinyin: 'Quy tắc: Đơn vị lớn đứng trước, nhỏ đứng sau.',
+            trans: 'Năm -> Tháng -> Ngày.'
+        },
+        {
+            type: 'reorder', tag: 'Sắp xếp',
+            question: 'Sắp xếp câu: "Bạn tên là gì?"',
+            words: ['你', '叫', '什么', '名字'],
+            correct: '你叫什么名字',
+            pinyin: 'Ôn tập cấu trúc bài cũ.',
+            trans: 'Bạn tên là gì?'
+        },
+        {
+            type: 'choice', tag: 'Giao tiếp',
+            question: 'Bạn muốn nói: "Ngày mai tôi không đi học"',
+            options: ['明天我不去学校 (Míngtiān wǒ bù qù xuéxiào)', '明天我去学校 (Míngtiān wǒ qù xuéxiào)', '今天我不去学校 (Jīntiān wǒ bù qù xuéxiào)', '昨天我不去学校 (Zuótiān wǒ bù qù xuéxiào)'],
+            answer: 'Ngày mai tôi không đi học',
+            answer: 'Ngày mai tôi không đi học',
+            answer: 'Ngày mai tôi không đi học'
+        },
+        {
+            type: 'choice', tag: 'Thời gian',
+            question: 'Chủ nhật trong tiếng Trung có hai cách nói là gì?',
+            options: ['星期日 / 星期天', '星期六 / 星期日', '星期七 / 星期日', '星期天 / 星期六'],
+            answer: '星期日 / 星期天',
+            pinyin: 'Xīngqīrì và Xīngqītiān đều là Chủ Nhật.',
+            trans: 'Dịch: Chủ nhật.'
+        },
+        {
+            type: 'reorder', tag: 'Sắp xếp',
+            question: 'Sắp xếp câu: "Hôm nay là ngày 5 tháng 3"',
+            words: ['今天', '三月', '五号'],
+            correct: '今天三月五号',
+            pinyin: 'Nhớ quy tắc Tháng trước Ngày sau.',
+            trans: 'Hôm nay ngày 5 tháng 3.'
+        }
     ];
 
-    // Fix câu 14
-    questions[13].answer = '明天 chúng ta đi thư viện nhé';
-    questions[13].options = ['明天 chúng ta đi thư viện nhé', '图书馆在哪儿'];
-    questions[13].answer = '明天 chúng ta đi thư viện nhé';
-    // Đổi lại cho chuẩn tiếng Trung:
-    questions[13].options = ['明天我们去图书馆吧', '图书馆在哪儿'];
-    questions[13].answer = '明天 chúng ta đi thư viện nhé'; // Giữ label nếu cần hoặc đổi đồng bộ:
-    questions[13].answer = '明天 chúng ta đi thư viện nhé'; 
-    questions[13].answer = '明天 chúng ta đi thư viện nhé';
-    questions[13].options[0] = '明天 chúng ta đi thư viện nhé';
+    // Gán lại các đáp án đúng cho các câu đặc biệt
+    questions[5].answer = questions[5].options[0];
+    questions[12].answer = questions[12].options[0];
+    questions[17].answer = questions[17].options[0];
 
-    let currentIdx = 0;
-    let score = 0;
-    let userSelection = [];
+    let currentIdx = 0; let score = 0; let userSelection = [];
 
-    function startGame() {
-        currentIdx = 0; score = 0;
-        renderQuestion();
+    function startGame() { currentIdx = 0; score = 0; renderQuestion(); }
+
+    function updateUI() {
+        document.getElementById('progress-fill').style.width = `${(currentIdx / questions.length) * 100}%`;
+        document.getElementById('stat-current').innerText = currentIdx + 1;
+        document.getElementById('stat-score').innerText = score;
     }
 
     function renderQuestion() {
@@ -289,31 +351,29 @@
         updateUI();
 
         let html = `<span class="tag-situation">${q.tag}</span><h2 class="question-text">${q.question}</h2>`;
-        if(q.type === 'dialog') {
-            html += `<div class="dialog-box"><b>A:</b> ${q.dialog.a}<br><b>B:</b> ${q.dialog.b}</div>`;
-        }
 
-        if(q.type === 'choice' || q.type === 'dialog') {
+        if(q.type === 'choice') {
             html += `<div class="options-grid">`;
-            q.options.forEach(opt => {
-                html += `<div class="option-item" onclick="checkAnswer('${opt}')">${opt}</div>`;
+            q.options.forEach((opt, i) => {
+                const letter = String.fromCharCode(65 + i);
+                html += `<div class="option-item" onclick="checkChoice('${opt}')"><div class="option-letter">${letter}</div>${opt}</div>`;
             });
             html += `</div>`;
         } else {
             userSelection = [];
             const shuffled = [...q.words].sort(() => Math.random() - 0.5);
-            html += `<div class="slot-container" id="slots"></div><div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">`;
+            html += `<div class="slot-container" id="slots"></div><div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap">`;
             shuffled.forEach((w, i) => html += `<div class="chip" id="c-${i}" onclick="addWord('${w}',${i})">${w}</div>`);
             html += `</div><button class="modal-btn" style="width:100%" onclick="checkReorder()">KIỂM TRA ĐÁP ÁN</button>`;
         }
         box.innerHTML = html;
     }
 
-    function checkAnswer(val) {
+    function checkChoice(val) {
         const q = questions[currentIdx];
         const isRight = val === q.answer;
-        if(isRight) score += 5;
-        showModal(isRight, isRight ? val : q.answer, q.pinyin, q.trans);
+        if(isRight) { score += 5; playSound('correct'); } else { playSound('wrong'); }
+        showModal(isRight, isRight ? "Rất giỏi!" : `Sai rồi, đáp án đúng là: <br><b>${q.answer}</b>`, q.pinyin, q.trans);
     }
 
     function addWord(w, i) {
@@ -325,64 +385,40 @@
     }
 
     function drawSlots() {
-        const s = document.getElementById('slots');
-        s.innerHTML = "";
+        const s = document.getElementById('slots'); s.innerHTML = "";
         userSelection.forEach((item, i) => {
             const div = document.createElement('div');
-            div.className = 'chip in-slot';
-            div.innerText = item.text;
-            div.onclick = () => {
-                document.getElementById(`c-${item.id}`).classList.remove('selected');
-                userSelection.splice(i, 1);
-                drawSlots();
-            };
+            div.className = 'chip'; div.innerText = item.text;
+            div.onclick = () => { document.getElementById(`c-${item.id}`).classList.remove('selected'); userSelection.splice(i, 1); drawSlots(); };
             s.appendChild(div);
         });
     }
 
     function checkReorder() {
         const q = questions[currentIdx];
-        const isRight = userSelection.map(x=>x.text).join('') === q.correct.replace(/\s/g,'');
-        if(isRight) score += 5;
-        showModal(isRight, q.correct, q.pinyin, q.trans);
+        const userStr = userSelection.map(x=>x.text).join('');
+        const isRight = userStr === q.correct.replace(/\s/g,'');
+        if(isRight) { score += 5; playSound('correct'); } else { playSound('wrong'); }
+        showModal(isRight, isRight ? "Chính xác!" : `Thứ tự đúng là: <br><b>${q.correct}</b>`, q.pinyin, q.trans);
     }
 
-    function showModal(isRight, correctVal, pinyin, trans) {
-        const snd = document.getElementById(isRight ? 'snd-correct' : 'snd-wrong');
-        snd.currentTime = 0; snd.play().catch(()=>{});
-
-        document.getElementById('modal-icon').innerHTML = isRight ? "🌸" : "🍂";
-        document.getElementById('modal-title').innerText = isRight ? "Chính xác!" : "Cố gắng lên!";
-        document.getElementById('modal-msg').innerHTML = isRight ? `Bạn giỏi quá!` : `Đáp án đúng là: <b>${correctVal}</b>`;
-        document.getElementById('fb-pinyin').innerText = pinyin || "";
+    function showModal(isRight, msg, highlight, trans) {
+        document.getElementById('modal-icon').innerText = isRight ? "🌸" : "🍂";
+        document.getElementById('modal-title').innerText = isRight ? "CHÍNH XÁC" : "CỐ GẮNG LÊN";
+        document.getElementById('modal-msg').innerHTML = msg;
+        document.getElementById('fb-highlight').innerText = highlight || "";
         document.getElementById('fb-trans').innerText = trans || "";
         document.getElementById('overlay').style.display = 'flex';
     }
 
     function nextQuestion() {
         document.getElementById('overlay').style.display = 'none';
-        currentIdx++;
-        renderQuestion();
-    }
-
-    function updateUI() {
-        document.getElementById('progress-fill').style.width = `${(currentIdx / questions.length) * 100}%`;
-        document.getElementById('stat-current').innerText = currentIdx + 1;
-        document.getElementById('stat-score').innerText = score;
+        currentIdx++; renderQuestion();
     }
 
     function showResult() {
-        document.getElementById('game-box').innerHTML = `
-            <div style="text-align:center;">
-                <div style="font-size: 5rem;">🌳</div>
-                <h2>Khu vườn đã nở hoa!</h2>
-                <div style="font-size: 3rem; color: var(--ghibli-dark-green); font-weight: 700;">${score}/100</div>
-                <p>Bạn đã hoàn thành xuất sắc Bài 7!</p>
-                <button class="modal-btn" onclick="location.reload()">HỌC LẠI</button>
-            </div>
-        `;
+        document.getElementById('game-box').innerHTML = `<div style="text-align:center"><h2>Chúc mừng bạn!</h2><div style="font-size:3rem; color:var(--ghibli-dark-green)">${score} / 100 Điểm</div><p>Bạn đã hoàn thành toàn bộ 20 thử thách.</p><button class="modal-btn" onclick="location.reload()">CHƠI LẠI</button></div>`;
     }
 </script>
-
 </body>
 </html>
