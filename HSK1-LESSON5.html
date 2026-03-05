@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK1 - Bài 5: Cô ấy bao nhiêu tuổi?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ghibli-green: #9dc183;
+            --ghibli-dark-green: #4f7942;
+            --ghibli-sky: #d0f0f7;
+            --ghibli-wood: #8b5a2b;
+            --ghibli-leaf: #7fb069;
+            --ghibli-pink: #ffb7c5;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--ghibli-sky);
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .exit-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--ghibli-dark-green);
+            padding: 10px 18px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 2px solid var(--ghibli-green);
+            z-index: 1000;
+            transition: 0.3s;
+        }
+        .exit-button:hover { background: var(--ghibli-green); color: white; }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 5px solid var(--ghibli-green);
+        }
+
+        .game-stats { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: bold; color: var(--ghibli-dark-green); }
+        #score-display { color: var(--ghibli-wood); font-size: 1.2rem; }
+        #quiz-screen, #result-screen { display: none; }
+        
+        .progress-bar { width: 100%; height: 12px; background: #eee; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
+        #progress { height: 100%; background: linear-gradient(90deg, var(--ghibli-green), var(--ghibli-leaf)); width: 0%; transition: width 0.4s ease; }
+
+        .question-text { font-size: 1.4rem; color: var(--ghibli-wood); margin-bottom: 25px; font-weight: 600; line-height: 1.8; }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .option-btn { background: white; border: 2px solid var(--ghibli-leaf); padding: 15px 10px; border-radius: 15px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; font-family: inherit; font-weight: 600; }
+        .option-btn:hover:not(:disabled) { background: var(--ghibli-sky); }
+        .option-btn.correct { background: var(--ghibli-dark-green) !important; color: white !important; }
+        .option-btn.wrong { background: #ff7675 !important; color: white !important; }
+
+        .btn-main { background: var(--ghibli-wood); color: white; border: none; padding: 12px 35px; font-size: 1.2rem; border-radius: 30px; cursor: pointer; margin-top: 25px; font-weight: bold; box-shadow: 0 4px 0 #5d3d1d; }
+        
+        .rank-badge { font-size: 5rem; margin: 15px 0; display: block; }
+        .evaluation-box { background: var(--ghibli-sky); padding: 15px; border-radius: 15px; margin: 20px 0; font-style: italic; color: var(--ghibli-dark-green); }
+
+        ruby { ruby-align: center; }
+        rt { font-size: 0.6em; color: #666; }
+    </style>
+</head>
+<body>
+
+<a href="index.html" class="exit-button">🏠 Quay về vườn</a>
+
+<div class="game-container">
+    <div id="intro-screen">
+        <div style="background: var(--ghibli-pink); color: white; display: inline-block; padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 15px;">🌸 Nga Học HSK</div>
+        <h1><ruby>Bài<rt>bài</rt></ruby> 5: <ruby>她女儿今年二十岁<rt>Tā nǚ'ér jīnnián èrshí suì</rt></ruby></h1>
+        <p>Học về Gia đình, Tuổi tác và Lượng từ.<br>
+        <b style="color: var(--ghibli-dark-green);">Đúng +10đ</b> | <b style="color: #d63031;">Sai -5đ</b></p>
+        <button class="btn-main" onclick="startQuiz()">Bắt đầu học tập 🌿</button>
+    </div>
+
+    <div id="quiz-screen">
+        <div class="game-stats">
+            <span id="question-count">Câu: 1/20</span>
+            <span id="score-display">Điểm: 0</span>
+        </div>
+        <div class="progress-bar"><div id="progress"></div></div>
+        <div class="question-text" id="question-text"></div>
+        <div class="options-grid" id="options-grid"></div>
+        <div id="feedback" style="margin-top: 15px; font-weight: bold; min-height: 24px;"></div>
+        <button id="next-btn" class="btn-main" style="display: none;" onclick="nextQuestion()">Tiếp tục ➡</button>
+    </div>
+
+    <div id="result-screen">
+        <h1>Bảng Điểm Cuối Cùng</h1>
+        <span class="rank-badge" id="rank-icon">🌱</span>
+        <div style="font-size: 2.5rem; font-weight: bold; color: var(--ghibli-dark-green);" id="final-score">0đ</div>
+        <div id="correct-count" style="font-weight: bold; margin-top: 10px;">Số câu đúng: 0/20</div>
+        <div class="evaluation-box" id="evaluation-text"></div>
+        <button class="btn-main" onclick="location.reload()">Học lại lần nữa 🔄</button>
+    </div>
+</div>
+
+<script>
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playSfx(f1, f2, type) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+        o.type = type; o.connect(g); g.connect(audioCtx.destination);
+        o.frequency.setValueAtTime(f1, audioCtx.currentTime);
+        o.frequency.exponentialRampToValueAtTime(f2, audioCtx.currentTime + 0.2);
+        g.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        g.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.2);
+        o.start(); o.stop(audioCtx.currentTime + 0.2);
+    }
+
+    const questions = [
+        { q: "Từ <ruby>家<rt>jiā</rt></ruby> có nghĩa là gì?", options: ["Trường học", "Gia đình/Nhà", "Công ty", "Bệnh viện"], a: 1 },
+        { q: "Động từ 'Có' trong tiếng Trung là gì?", options: ["<ruby>是<rt>shì</rt></ruby>", "<ruby>叫<rt>jiào</rt></ruby>", "<ruby>有<rt>yǒu</rt></ruby>", "<ruby>在<rt>zài</rt></ruby>"], a: 2 },
+        { q: "Lượng từ dùng cho các thành viên trong gia đình là:", options: ["<ruby>个<rt>gè</rt></ruby>", "<ruby>口<rt>kǒu</rt></ruby>", "<ruby>本<rt>běn</rt></ruby>", "<ruby>岁<rt>suì</rt></ruby>"], a: 1 },
+        { q: "Nghĩa của từ <ruby>女儿<rt>nǚ'ér</rt></ruby> là gì?", options: ["Con trai", "Con gái", "Mẹ", "Chị gái"], a: 1 },
+        { q: "Dùng đại từ nào để hỏi số lượng thường dưới 10?", options: ["<ruby>多<rt>duō</rt></ruby>", "<ruby>几<rt>jǐ</rt></ruby>", "<ruby>大<rt>dà</rt></ruby>", "<ruby>谁<rt>shéi</rt></ruby>"], a: 1 },
+        { q: "Từ <ruby>岁<rt>suì</rt></ruby> dùng để chỉ đơn vị nào?", options: ["Tháng", "Ngày", "Tuổi", "Năm"], a: 2 },
+        { q: "Trợ từ <ruby>了<rt>le</rt></ruby> đặt ở cuối câu dùng để làm gì?", options: ["Hỏi", "Phủ định", "Chỉ sự thay đổi/trạng thái mới", "Sở hữu"], a: 2 },
+        { q: "Từ nào nghĩa là 'Năm nay'?", options: ["<ruby>今天<rt>jīntiān</rt></ruby>", "<ruby>今年<rt>jīnnián</rt></ruby>", "<ruby>明天<rt>míngtiān</rt></ruby>", "<ruby>去年<rt>qùnián</rt></ruby>"], a: 1 },
+        { q: "Trong câu hỏi tuổi, từ <ruby>多<rt>duō</rt></ruby> dùng để hỏi về:", options: ["Số lượng ít", "Mức độ", "Thời gian", "Tên"], a: 1 },
+        { q: "Tính từ 'Lớn/To' là gì?", options: ["<ruby>小<rt>xiǎo</rt></ruby>", "<ruby>多<rt>duō</rt></ruby>", "<ruby>大<rt>dà</rt></ruby>", "<ruby>几<rt>jǐ</rt></ruby>"], a: 2 },
+        { q: "Dịch: 'Nhà bạn có mấy người?'", options: ["<ruby>你家有几口人？<rt>Nǐ jiā yǒu jǐ kǒu rén?</rt></ruby>", "<ruby>你家有什么人？<rt>Nǐ jiā yǒu shénme rén?</rt></ruby>", "<ruby>你家有几个人？<rt>Nǐ jiā yǒu jǐ gè rén?</rt></ruby>", "<ruby>你是谁？<rt>Nǐ shì shéi?</rt></ruby>"], a: 0 },
+        { q: "Điền từ: <ruby>我家有三<rt>Wǒ jiā yǒu sān</rt></ruby> ___ <ruby>人<rt>rén</rt></ruby>.", options: ["<ruby>个<rt>gè</rt></ruby>", "<ruby>口<rt>kǒu</rt></ruby>", "<ruby>岁<rt>suì</rt></ruby>", "<ruby>了<rt>le</rt></ruby>"], a: 1 },
+        { q: "Hỏi tuổi một người trưởng thành (hoặc xấp xỉ): <ruby>你今年多<rt>Nǐ jīnnián duō</rt></ruby> ___ <ruby>了？<rt>le?</rt></ruby>", options: ["<ruby>小<rt>xiǎo</rt></ruby>", "<ruby>大<rt>dà</rt></ruby>", "<ruby>几<rt>jǐ</rt></ruby>", "<ruby>多<rt>duō</rt></ruby>"], a: 1 },
+        { q: "Dịch: 'Con gái tôi năm nay 4 tuổi.'", options: ["<ruby>我女儿今年四岁了。<rt>Wǒ nǚ'ér jīnnián sì suì le.</rt></ruby>", "<ruby>我女儿今年四岁。<rt>Wǒ nǚ'ér jīnnián sì suì.</rt></ruby>", "<ruby>她今年四岁。<rt>Tā jīnnián sì suì.</rt></ruby>", "<ruby>我女儿四岁。<rt>Wǒ nǚ'ér sì suì.</rt></ruby>"], a: 0 },
+        { q: "Câu <ruby>你女儿今年多大了？<rt>Nǐ nǚ'ér jīnnián duō dà le?</rt></ruby> dùng để hỏi gì?", options: ["Hỏi tên", "Hỏi quốc tịch", "Hỏi tuổi con gái", "Hỏi nghề nghiệp"], a: 2 },
+        { q: "Đáp lại <ruby>你家 có mấy người<rt></rt></ruby>: <ruby>我家有<rt>Wǒ jiā yǒu</rt></ruby> ___ <ruby>口人。<rt>kǒu rén.</rt></ruby>", options: ["<ruby>四<rt>sì</rt></ruby> (4)", "<ruby>老师<rt>lǎoshī</rt></ruby>", "<ruby>美国<rt>Měiguó</rt></ruby>", "<ruby>谁<rt>shéi</rt></ruby>"], a: 0 },
+        { q: "Chữ Hán của pinyin 'jǐ' là:", options: ["<ruby>口<rt>kǒu</rt></ruby>", "<ruby>几<rt>jǐ</rt></ruby>", "<ruby>儿<rt>ér</rt></ruby>", "<ruby>了<rt>le</rt></ruby>"], a: 1 },
+        { q: "Chữ <ruby>了<rt>le</rt></ruby> thường xuất hiện ở vị trí nào trong câu chỉ trạng thái mới?", options: ["Đầu câu", "Sau động từ", "Cuối câu", "Trước chủ ngữ"], a: 2 },
+        { q: "Nếu con gái bạn 20 tuổi, bạn nói: <ruby>她今年<rt>Tā jīnnián</rt></ruby> ___ <ruby>岁了。<rt>suì le.</rt></ruby>", options: ["<ruby>十二<rt>shí'èr</rt></ruby> (12)", "<ruby>二十<rt>èrshí</rt></ruby> (20)", "<ruby>二<rt>èr</rt></ruby> (2)", "<ruby>十<rt>shí</rt></ruby> (10)"], a: 1 },
+        { q: "Pinyin của từ 'Bao nhiêu' (hỏi về mức độ) là:", options: ["duō", "dà", "le", "suì"], a: 0 }
+    ];
+
+    let idx = 0, score = 0, correct = 0, answered = false;
+
+    function startQuiz() {
+        document.getElementById('intro-screen').style.display = 'none';
+        document.getElementById('quiz-screen').style.display = 'block';
+        showQ();
+    }
+
+    function showQ() {
+        answered = false;
+        document.getElementById('next-btn').style.display = 'none';
+        document.getElementById('feedback').innerText = '';
+        const q = questions[idx];
+        document.getElementById('question-count').innerText = `Câu: ${idx+1}/${questions.length}`;
+        document.getElementById('question-text').innerHTML = q.q;
+        document.getElementById('progress').style.width = `${(idx/questions.length)*100}%`;
+        
+        const grid = document.getElementById('options-grid');
+        grid.innerHTML = '';
+        q.options.forEach((o, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerHTML = o;
+            btn.onclick = () => check(i, btn);
+            grid.appendChild(btn);
+        });
+    }
+
+    function check(i, btn) {
+        if(answered) return;
+        answered = true;
+        const q = questions[idx];
+        const btns = document.querySelectorAll('.option-btn');
+        const fb = document.getElementById('feedback');
+
+        if(i === q.a) {
+            btn.classList.add('correct');
+            score += 10; correct++;
+            fb.innerText = '✨ Tuyệt vời! +10đ';
+            fb.style.color = 'var(--ghibli-dark-green)';
+            playSfx(600, 1000, 'sine');
+        } else {
+            btn.classList.add('wrong');
+            btns[q.a].classList.add('correct');
+            score = Math.max(0, score - 5);
+            fb.innerText = '❌ Cố lên nhé! -5đ';
+            fb.style.color = '#d63031';
+            playSfx(200, 100, 'triangle');
+        }
+        document.getElementById('score-display').innerText = `Điểm: ${score}`;
+        document.getElementById('next-btn').style.display = 'inline-block';
+    }
+
+    function nextQuestion() {
+        idx++;
+        if(idx < questions.length) showQ();
+        else finish();
+    }
+
+    function finish() {
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('final-score').innerText = `${score}đ`;
+        document.getElementById('correct-count').innerText = `Số câu đúng: ${correct}/${questions.length}`;
+        
+        let icon = "🌱", text = "";
+        if(score >= 180) { icon = "🌳"; text = "THẦN ĐỒNG NGÔN NGỮ! Gia đình Bài 5 không làm khó được bạn."; }
+        else if(score >= 120) { icon = "🌿"; text = "CÂY NON TRƯỞNG THÀNH! Bạn đã nắm vững cách hỏi tuổi và gia đình."; }
+        else if(score >= 60) { icon = "🍀"; text = "MẦM NHỎ VƯƠN LÊN! Hãy chú ý kỹ lượng từ '口' và phó từ '多' nhé."; }
+        else { icon = "🌱"; text = "HẠT MẦM CẦN NƯỚC! Hãy đọc lại bài khóa và luyện tập thêm số đếm nhé."; }
+        
+        document.getElementById('rank-icon').innerText = icon;
+        document.getElementById('evaluation-text').innerText = text;
+    }
+</script>
+</body>
+</html>
