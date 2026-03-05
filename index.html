@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSK1 - Bài 4: Kiểm tra toàn diện</title>
+    <title>Khu Vườn Học Tập Của Nga - Ghibli Style</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,136 +16,188 @@
         }
 
         body {
+            margin: 0;
+            padding: 0;
             font-family: 'Quicksand', sans-serif;
             background: var(--ghibli-sky);
-            background-image: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-image: 
+                linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0)),
+                url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-attachment: fixed;
+            color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
-        /* Nút Quay Về Cố Định */
-        .exit-button {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--ghibli-dark-green);
-            padding: 10px 18px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 2px solid var(--ghibli-green);
-            z-index: 1000;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .exit-button:hover { background: var(--ghibli-green); color: white; transform: scale(1.05); }
-
-        .game-container {
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: 25px;
-            padding: 30px;
-            max-width: 700px;
-            width: 100%;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        header {
             text-align: center;
-            border: 5px solid var(--ghibli-green);
+            padding: 50px 20px;
+            background: rgba(255, 255, 255, 0.75);
+            width: 100%;
+            margin-bottom: 30px;
+            border-bottom: 5px solid var(--ghibli-green);
+            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
-        .game-stats { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: bold; color: var(--ghibli-dark-green); }
-        #score-display { color: var(--ghibli-wood); font-size: 1.2rem; }
-        #quiz-screen, #result-screen { display: none; }
-        
-        .progress-bar { width: 100%; height: 12px; background: #eee; border-radius: 6px; margin-bottom: 20px; overflow: hidden; border: 1px solid #ddd; }
-        #progress { height: 100%; background: linear-gradient(90deg, var(--ghibli-green), var(--ghibli-leaf)); width: 0%; transition: width 0.4s ease; }
+        h1 {
+            margin: 0;
+            color: var(--ghibli-dark-green);
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
 
-        .question-text { font-size: 1.4rem; color: var(--ghibli-wood); margin-bottom: 25px; font-weight: 600; }
+        .sub-title-box {
+            display: inline-block;
+            margin: 15px 0;
+            padding: 8px 25px;
+            border: 2px dashed var(--ghibli-dark-green);
+            border-radius: 15px;
+            background-color: rgba(255, 183, 197, 0.3);
+            color: var(--ghibli-dark-green);
+            font-weight: 600;
+            font-size: 1.2rem;
+            position: relative;
+        }
 
-        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .option-btn { background: white; border: 2px solid var(--ghibli-leaf); padding: 15px 10px; border-radius: 15px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; font-family: inherit; font-weight: 600; }
-        .option-btn:hover:not(:disabled) { background: var(--ghibli-sky); }
-        .option-btn.correct { background: var(--ghibli-dark-green) !important; color: white !important; }
-        .option-btn.wrong { background: #ff7675 !important; color: white !important; }
+        .sub-title-box::before { content: '🌸'; position: absolute; left: -18px; top: -5px; }
+        .sub-title-box::after { content: '🌸'; position: absolute; right: -18px; top: -5px; }
 
-        .btn-main { background: var(--ghibli-wood); color: white; border: none; padding: 12px 35px; font-size: 1.2rem; border-radius: 30px; cursor: pointer; margin-top: 25px; font-weight: bold; box-shadow: 0 4px 0 #5d3d1d; transition: 0.2s; }
-        .btn-main:active { transform: translateY(3px); box-shadow: none; }
+        .welcome-quote {
+            font-weight: 600;
+            font-size: 1.15rem;
+            max-width: 800px;
+            line-height: 1.8;
+            margin-top: 10px;
+            animation: fadeInUp 1.5s ease-out;
+            background: linear-gradient(45deg, #4f7942, #8b5a2b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        .rank-badge { font-size: 5rem; margin: 15px 0; display: block; }
-        .evaluation-box { background: var(--ghibli-sky); padding: 15px; border-radius: 15px; margin: 20px 0; font-style: italic; color: var(--ghibli-dark-green); }
-        
-        @media (max-width: 500px) { .options-grid { grid-template-columns: 1fr; } .exit-button { top: 10px; left: 10px; padding: 8px 12px; } }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .leaves-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .leaf {
+            position: absolute;
+            display: block;
+            width: 15px;
+            height: 15px;
+            background: var(--ghibli-leaf);
+            opacity: 0.6;
+            border-radius: 50% 0 50% 0;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { opacity: 0; top: -10px; transform: translateX(0px) rotate(0deg); }
+            10% { opacity: 0.6; }
+            100% { opacity: 0; top: 100%; transform: translateX(100px) rotate(720deg); }
+        }
+
+        .leaf:nth-child(1) { left: 10%; animation-duration: 6s; }
+        .leaf:nth-child(2) { left: 30%; animation-duration: 8s; animation-delay: 1s; }
+        .leaf:nth-child(3) { left: 50%; animation-duration: 7s; animation-delay: 2s; }
+        .leaf:nth-child(4) { left: 70%; animation-duration: 9s; animation-delay: 0.5s; }
+        .leaf:nth-child(5) { left: 90%; animation-duration: 6s; animation-delay: 3s; }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            width: 90%;
+            padding-bottom: 50px;
+            z-index: 1;
+        }
+
+        .game-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--ghibli-leaf);
+            box-shadow: 0 15px 30px rgba(79, 121, 66, 0.2);
+        }
+
+        .game-icon { font-size: 50px; margin-bottom: 15px; }
+        .game-title { font-weight: 600; font-size: 1.2rem; color: var(--ghibli-wood); }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: var(--ghibli-dark-green);
+        }
     </style>
 </head>
 <body>
 
-<a href="index.html" class="exit-button">🏠 Quay về vườn</a>
+<header>
+    <div class="leaves-container">
+        <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
+    </div>
 
-<div class="game-container">
+    <h1>Khu Vườn Tiếng Trung 🌿</h1>
     
-    <div id="intro-screen">
-        <div style="background: var(--ghibli-pink); color: white; display: inline-block; padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 15px;">🌸 Nga Học HSK</div>
-        <h1>Bài 4: 她 là cô giáo của tôi</h1>
-        <p>Thử thách 20 câu hỏi về từ vựng & hội thoại.<br>
-        <b style="color: var(--ghibli-dark-green);">Đúng +10đ</b> | <b style="color: #d63031;">Sai -5đ</b></p>
-        <button class="btn-main" onclick="startQuiz()">Bắt đầu ngay 🌿</button>
+    <div class="sub-title-box">
+        Nga Học HSK
     </div>
 
-    <div id="quiz-screen">
-        <div class="game-stats">
-            <span id="question-count">Câu: 1/20</span>
-            <span id="score-display">Điểm: 0</span>
-        </div>
-        <div class="progress-bar"><div id="progress"></div></div>
-        <div class="question-text" id="question-text">Đang tải...</div>
-        <div class="options-grid" id="options-grid"></div>
-        <div id="feedback" style="margin-top: 15px; font-weight: bold; min-height: 24px;"></div>
-        <button id="next-btn" class="btn-main" style="display: none;" onclick="nextQuestion()">Câu tiếp theo ➡</button>
-    </div>
+    <p class="welcome-quote">
+        Chào mừng bạn đến với khu vườn nhỏ của Nga,<br>
+        Nơi tiếng Trung nảy mầm mỗi ngày.
+    </p>
+</header>
 
-    <div id="result-screen">
-        <h1>Kết Quả Học Tập</h1>
-        <span class="rank-badge" id="rank-icon">🌱</span>
-        <div style="font-size: 2.5rem; font-weight: bold; color: var(--ghibli-dark-green);" id="final-score">0đ</div>
-        <div id="correct-count" style="font-weight: bold; margin-top: 10px;">Đúng: 0/20</div>
-        <div class="evaluation-box" id="evaluation-text">Đang đánh giá...</div>
-        <button class="btn-main" onclick="location.reload()">Chơi lại 🔄</button>
-    </div>
+<div class="container">
+    <a href="BO THU 1.html" class="game-card"><div class="game-icon">🌱</div><div class="game-title">BỘ THỦ 1</div></a>
+    <a href="BO THU 2.html" class="game-card"><div class="game-icon">🌿</div><div class="game-title">BỘ THỦ 2</div></a>
+    <a href="BO THU 3.html" class="game-card"><div class="game-icon">☘️</div><div class="game-title">BỘ THỦ 3</div></a>
+    <a href="BO THU 4.html" class="game-card"><div class="game-icon">🍀</div><div class="game-title">BỘ THỦ 4</div></a>
+    <a href="BO THU 5.html" class="game-card"><div class="game-icon">🍃</div><div class="game-title">BỘ THỦ 5</div></a>
+    <a href="BO THU 6.html" class="game-card"><div class="game-icon">🌳</div><div class="game-title">BỘ THỦ 6</div></a>
+    <a href="HSK1-LESSON1-2.html" class="game-card"><div class="game-icon">📚</div><div class="game-title">HSK1: Bài 1-2</div></a>
+    <a href="HSK1-LESSON3.html" class="game-card"><div class="game-icon">📖</div><div class="game-title">HSK1: Bài 3</div></a>
+    <!-- Link bài 4 đã được cập nhật tên file chính xác -->
+    <a href="HSK1-LESSON4.html" class="game-card"><div class="game-icon">🏠</div><div class="game-title">HSK1: Bài 4</div></a>
 </div>
 
-<script>
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    function playSfx(f1, f2, type) {
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        const o = audioCtx.createOscillator(), g = audioCtx.createGain();
-        o.type = type; o.connect(g); g.connect(audioCtx.destination);
-        o.frequency.setValueAtTime(f1, audioCtx.currentTime);
-        o.frequency.exponentialRampToValueAtTime(f2, audioCtx.currentTime + 0.2);
-        g.gain.setValueAtTime(0.2, audioCtx.currentTime);
-        g.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.2);
-        o.start(); o.stop(audioCtx.currentTime + 0.2);
-    }
+<footer>
+    © 2026 - Made with ❤️ for Nga Học HSK
+</footer>
 
-    const questions = [
-        { q: "Từ 'Cô ấy' (tā) viết như thế nào?", options: ["他", "她", "我", "你"], a: 1 },
-        { q: "Từ '谁 shéi' nghĩa là gì?", options: ["Cái gì", "Ở đâu", "Ai", "Nào"], a: 2 },
-        { q: "Tiếng Trung Quốc (Hànyǔ) là:", options: ["英语", "汉语", "国", "老师"], a: 1 },
-        { q: "Bạn cùng lớp (tóngxué) là:", options: ["同学", "朋友", "老师", "学生"], a: 0 },
-        { q: "Điền: 她是__的汉语老师 (Cô ấy là cô giáo tôi)", options: ["你", "他", "我", "谁"], a: 2 },
-        { q: "Trợ từ hỏi lại 'Còn bạn thì sao?': 你__?", options: ["的", "吗", "呢", "不"], a: 2 },
-        { q: "Bạn bè (péngyou) là:", options: ["美国人", "朋友", "家", "老师"], a: 1 },
-        { q: "Từ 'Quốc gia/Đất nước' (guó):", options: ["哪", "国", "人", "美"], a: 1 },
-        { q: "Dịch: 'Cô ấy là ai?'", options: ["她是哪国人?", "她是谁?", "他是谁?", "她叫李月."], a: 1 },
-        { q: "Bạn là người nước nào?: 你是__国人?", options: ["哪", "那", "谁", "呢"], a: 0 },
-        { q: "Tôi là người Mỹ: 我是__国人", options: ["中", "哪", "美", "大"], a: 2 },
-        { q: "Anh ấy/Ông ấy (tā)
+</body>
+</html>
