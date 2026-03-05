@@ -11,7 +11,6 @@
             --ghibli-dark-green: #4f7942;
             --ghibli-sky: #d0f0f7;
             --ghibli-wood: #8b5a2b;
-            --ghibli-leaf: #7fb069;
         }
 
         body {
@@ -32,21 +31,18 @@
 
         .game-side { flex: 2; }
         
-        /* FIX LỖI ẢNH CÂY: Dùng khung chứa linh hoạt */
         .tree-side {
-            flex: 1; background: rgba(255, 255, 255, 0.8);
+            flex: 1; background: rgba(255, 255, 255, 0.85);
             border: 3px solid white; border-radius: 25px;
             height: 500px; display: flex; flex-direction: column;
             align-items: center; justify-content: flex-end;
             padding-bottom: 40px; position: sticky; top: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         #the-tree { 
-            font-size: 60px; /* Kích thước gốc */
+            font-size: 80px; 
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-origin: bottom center;
-            display: block; line-height: 1;
         }
 
         .status-bar {
@@ -56,7 +52,7 @@
         }
 
         .progress-bg { flex-grow: 1; height: 10px; background: #eee; border-radius: 10px; margin: 0 15px; overflow: hidden; }
-        .progress-fill { height: 100%; width: 0%; background: var(--ghibli-leaf); transition: 0.4s; }
+        .progress-fill { height: 100%; width: 0%; background: #7fb069; transition: 0.4s; }
 
         .game-container {
             background: rgba(255, 255, 255, 0.95); border: 4px solid var(--ghibli-green);
@@ -65,8 +61,9 @@
         }
 
         .word-seed {
-            background: white; border: 2px solid var(--ghibli-leaf); border-radius: 15px;
-            padding: 12px; cursor: pointer; transition: 0.2s; font-size: 1.3rem;
+            background: white; border: 2px solid #7fb069; border-radius: 15px;
+            padding: 15px; cursor: pointer; transition: 0.2s; font-size: 1.4rem;
+            font-weight: 600;
         }
         .word-seed:hover { transform: translateY(-3px); background: #f0fdf4; }
 
@@ -83,7 +80,7 @@
 <body>
 
 <header>
-    <h1>Khu Vườn Tiếng Trung 🌿</h1>
+    <h1>Khu Vườn Tiếng Trung Của Nga 🌿</h1>
 </header>
 
 <div class="main-layout">
@@ -96,8 +93,8 @@
 
         <div class="game-container">
             <div id="quiz-area">
-                <div id="hint-box" style="font-weight: 600; color: var(--ghibli-wood); margin-bottom: 20px;"></div>
-                <div id="question-text" style="font-size: 2rem; font-weight: bold; margin: 20px 0;"></div>
+                <div id="hint-box" style="font-weight: 600; color: var(--ghibli-wood); margin-bottom: 15px;"></div>
+                <div id="question-text" style="font-size: 2rem; font-weight: bold; margin-bottom: 20px;"></div>
                 <div id="word-bank" class="options-grid"></div>
                 <div class="controls">
                     <button id="main-btn" onclick="nextQuestion()" style="display:none">Tiếp theo ➔</button>
@@ -105,9 +102,9 @@
             </div>
 
             <div id="result-area">
-                <h2 style="color: var(--ghibli-dark-green);">Tuyệt vời, Nga ơi! 🌸</h2>
+                <h2 style="color: var(--ghibli-dark-green);">Chúc mừng Nga! 🌸</h2>
                 <p id="final-msg" style="font-size: 1.2rem;"></p>
-                <button onclick="location.reload()" style="background:var(--ghibli-wood); color:white; border:none; padding:12px 25px; border-radius:20px; cursor:pointer;">Học lại từ đầu</button>
+                <button onclick="location.reload()" style="background:var(--ghibli-wood); color:white; border:none; padding:12px 25px; border-radius:20px; cursor:pointer;">Luyện tập lại</button>
             </div>
             
             <div id="feedback" style="margin-top:20px; font-weight:bold; min-height:24px;"></div>
@@ -116,23 +113,47 @@
 
     <div class="tree-side">
         <div id="the-tree">🌱</div>
-        <div style="font-weight: 600; color: var(--ghibli-dark-green); margin-top: 20px;">giúp Nga trồng cây nhé</div>
+        <div style="font-weight: 600; color: var(--ghibli-dark-green); margin-top: 20px;">Cây của Nga</div>
     </div>
 </div>
 
-<script>
-    // FIX LỖI 2 & 3: Cập nhật đúng chữ Hán Giản thể và sửa logic đáp án
-    const levels = [
-        // ... (các câu hỏi khác giữ nguyên)
-        { q: "lǎoshī", hint: "Chữ Hán của 'Giáo viên':", correct: "老师", options: ["老师", "老帅", "者师", "教师"] },
-        { q: "zàijiàn", hint: "Chữ Hán của 'Tạm biệt':", correct: "再见", options: ["再见", "见再", "再看", "你好"] },
-        // Thêm các câu khác cho đủ 30...
-    ];
+<audio id="sfx-correct" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
+<audio id="sfx-wrong" src="https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3"></audio>
 
-    // Tạo giả lập 30 câu để Nga test (bạn có thể thay nội dung thực tế vào đây)
-    for(let i=3; i<=30; i++) {
-        levels.push({ q: "Hào (Ngày)", hint: `Câu hỏi số ${i}:`, correct: "号", options: ["号", "月", "日", "天"] });
-    }
+<script>
+    // DANH SÁCH 30 CÂU HỎI KHÁC NHAU HOÀN TOÀN
+    const levels = [
+        { q: "lǎoshī", hint: "Chọn chữ Hán của 'Giáo viên':", correct: "老师", options: ["老师", "老帅", "教师", "学生"] },
+        { q: "zàijiàn", hint: "Chọn chữ Hán của 'Tạm biệt':", correct: "再见", options: ["再见", "见再", "你好", "谢谢"] },
+        { q: "Hào (Ngày)", hint: "Hôm nay ngày mấy? (jǐ hào):", correct: "号", options: ["号", "日", "月", "天"] },
+        { q: "nǐ hǎo", hint: "Lời chào cơ bản nhất:", correct: "你好", options: ["你好", "您好", "你们", "大家好"] },
+        { q: "xièxie", hint: "Khi ai đó giúp đỡ bạn:", correct: "谢谢", options: ["谢谢", "不客气", "对不起", "没关系"] },
+        { q: "māma", hint: "Người phụ nữ tuyệt vời nhất:", correct: "妈妈", options: ["妈妈", "爸爸", "奶奶", "姐姐"] },
+        { q: "bàba", hint: "Trụ cột gia đình:", correct: "爸爸", options: ["爸爸", "爷爷", "哥哥", "弟弟"] },
+        { q: "Zhōngguó", hint: "Quốc gia dùng tiếng Trung:", correct: "中国", options: ["中国", "越南", "美国", "英国"] },
+        { q: "rén", hint: "Một nét phẩy, một nét mác:", correct: "人", options: ["人", "大", "天", "口"] },
+        { q: "míngzi", hint: "Bạn tên là gì? (Nǐ jiào shénme...):", correct: "名字", options: ["名字", "名子", "老师", "学生"] },
+        { q: "xuéshēng", hint: "Người đi học gọi là:", correct: "学生", options: ["学生", "老师", "医生", "朋友"] },
+        { q: "Yī (Số 1)", hint: "Một gạch ngang:", correct: "一", options: ["一", "二", "三", "十"] },
+        { q: "Sān (Số 3)", hint: "Ba gạch ngang:", correct: "三", options: ["三", "二", "四", "五"] },
+        { q: "Wǔ (Số 5)", hint: "Số 5 viết là:", correct: "五", options: ["五", "四", "六", "八"] },
+        { q: "Bā (Số 8)", hint: "Số phát tài:", correct: "八", options: ["八", "九", "七", "六"] },
+        { q: "Shí (Số 10)", hint: "Hình dấu cộng:", correct: "十", options: ["十", "千", "万", "土"] },
+        { q: "Yuè (Tháng)", hint: "Hình trăng khuyết:", correct: "月", options: ["月", "日", "号", "年"] },
+        { q: "Rì (Ngày)", hint: "Hình mặt trời:", correct: "日", options: ["日", "月", "目", "口"] },
+        { q: "hē", hint: "Hành động uống nước:", correct: "喝", options: ["喝", "吃", "看", "听"] },
+        { q: "chī", hint: "Hành động ăn cơm:", correct: "吃", options: ["吃", "喝", "叫", "写"] },
+        { q: "chá", hint: "Thức uống phổ biến ở Trung Quốc:", correct: "茶", options: ["茶", "水", "咖啡", "牛奶"] },
+        { q: "mǐfàn", hint: "Cơm trắng:", correct: "米饭", options: ["米饭", "面条", "包子", "饺子"] },
+        { q: "shuǐ", hint: "70% cơ thể là:", correct: "水", options: ["水", "冰", "火", "木"] },
+        { q: "pingguǒ", hint: "Quả táo:", correct: "苹果", options: ["苹果", "香蕉", "西瓜", "芒果"] },
+        { q: "yīshēng", hint: "Người làm việc ở bệnh viện:", correct: "医生", options: ["医生", "老师", "司机", "警察"] },
+        { q: "yiyuàn", hint: "Bệnh viện:", correct: "医院", options: ["医院", "学校", "饭店", "商店"] },
+        { q: "shāngdiàn", hint: "Nơi để mua sắm:", correct: "商店", options: ["商店", "书店", "超市", "市场"] },
+        { q: "mǎi", hint: "Hành động mua:", correct: "买", options: ["买", "卖", "看", "给"] },
+        { q: "duōshao", hint: "Hỏi về số lượng/giá cả:", correct: "多少", options: ["多少", "什么", "怎么", "哪个"] },
+        { q: "qián", hint: "Dùng để mua đồ:", correct: "钱", options: ["钱", "金", "纸", "银"] }
+    ];
 
     let current = 0;
     let score = 0;
@@ -140,11 +161,9 @@
 
     function updateTree() {
         const tree = document.getElementById('the-tree');
-        // Cây cao dần sau mỗi câu đúng
-        const scale = 1 + (treeLevel * 0.07); 
+        const scale = 1 + (treeLevel * 0.08); 
         tree.style.transform = `scale(${scale})`;
 
-        // Đổi icon theo giai đoạn
         if (treeLevel >= 30) tree.innerText = "🌸";
         else if (treeLevel > 20) tree.innerText = "🌳";
         else if (treeLevel > 10) tree.innerText = "🪴";
@@ -180,12 +199,14 @@
         if (selected === lv.correct) {
             score += 20;
             treeLevel++;
-            document.getElementById('feedback').innerHTML = "<span style='color:green'>Chính xác! Cây cao thêm rồi! ✨</span>";
+            document.getElementById('sfx-correct').play();
+            document.getElementById('feedback').innerHTML = "<span style='color:green'>Tuyệt vời! Cây lớn thêm rồi! ✨</span>";
             element.style.background = "#dcfce7";
             element.style.borderColor = "#22c55e";
             updateTree();
         } else {
-            document.getElementById('feedback').innerHTML = "<span style='color:red'>Chưa đúng rồi, cố lên Nga nhé! 🎋</span>";
+            document.getElementById('sfx-wrong').play();
+            document.getElementById('feedback').innerHTML = "<span style='color:red'>Sai rồi, Nga cố gắng câu sau nhé! 🎋</span>";
             element.style.background = "#fee2e2";
             element.style.borderColor = "#ef4444";
         }
@@ -205,7 +226,7 @@
     function showFinal() {
         document.getElementById('quiz-area').style.display = "none";
         document.getElementById('result-area').style.display = "block";
-        document.getElementById('final-msg').innerHTML = `Nga đã chăm sóc cây rất tốt!<br>Tổng điểm: <b>${score}</b><br>Cây đã nở hoa rực rỡ rồi! 🌸`;
+        document.getElementById('final-msg').innerHTML = `Nga đã hoàn thành 30 câu hỏi!<br>Tổng điểm: <b>${score}</b><br>Khu vườn của Nga thật rực rỡ!`;
     }
 
     window.onload = () => {
