@@ -3,120 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSK1 - Bài 4: Khu Vườn Ghibli của Cô Nga</title>
+    <title>HSK1 - Bài 4: Khu Vườn Ghibli</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Noto+Sans+SC:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --ghibli-green-dark: #4f7942;
             --ghibli-green-light: #9dc183;
-            --ghibli-pink: #ffb7c5;
             --ghibli-sky: #d0f0f7;
         }
-
         body { 
             font-family: 'Quicksand', sans-serif; 
             background: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
             background-size: cover;
             height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center;
         }
-
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border: 10px solid white;
-            border-radius: 40px;
-        }
-
-        /* Sidebar tông xanh Ghibli */
-        .sidebar {
-            width: 32%; background: var(--ghibli-green-dark); padding: 30px;
-            color: white; display: flex; flex-direction: column;
-            border-right: 2px dashed rgba(255,255,255,0.2);
-        }
-
-        .content-area {
-            width: 68%; padding: 40px; display: flex; flex-direction: column;
-            background: rgba(208, 240, 247, 0.3);
-        }
-
-        .btn-ghibli {
-            background: var(--ghibli-green-dark); color: white; border-radius: 20px;
-            transition: all 0.2s; cursor: pointer; border: 4px solid white;
-            box-shadow: 0 4px 15px rgba(79, 121, 66, 0.3);
-        }
+        .glass-effect { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(10px); border: 8px solid white; border-radius: 40px; }
+        .sidebar { width: 32%; background: var(--ghibli-green-dark); padding: 30px; color: white; display: flex; flex-direction: column; }
+        .content-area { width: 68%; padding: 40px; display: flex; flex-direction: column; background: rgba(208, 240, 247, 0.2); }
+        .btn-ghibli { background: var(--ghibli-green-dark); color: white; border-radius: 20px; transition: 0.2s; cursor: pointer; border: 4px solid white; }
         .btn-ghibli:hover { transform: scale(1.03); background: #3d5e33; }
-
-        .word-bubble {
-            background: white; border: 2px solid #e2e8f0; border-radius: 18px;
-            padding: 10px 18px; cursor: pointer; transition: 0.2s; text-align: center;
-        }
-
-        .selected-word {
-            background: var(--ghibli-green-light); color: white; border-radius: 15px;
-            padding: 8px 15px; cursor: pointer; margin: 4px;
-            display: flex; flex-direction: column; align-items: center;
-            animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        @keyframes pop { from { transform: scale(0.5); } to { transform: scale(1); } }
+        .option-card { background: white; border: 2px solid #e2e8f0; border-radius: 15px; padding: 15px; cursor: pointer; transition: 0.2s; width: 100%; text-align: left; margin-bottom: 10px; font-weight: bold; }
+        .option-card:hover { border-color: var(--ghibli-green-light); background: #f0fdf4; }
+        .word-tag { background: white; border: 2px solid #e2e8f0; border-radius: 12px; padding: 8px 15px; cursor: pointer; font-weight: bold; }
+        .selected-tag { background: var(--ghibli-green-light); color: white; border-radius: 12px; padding: 8px 15px; cursor: pointer; margin: 4px; animation: pop 0.3s; }
+        @keyframes pop { from { transform: scale(0.8); } to { transform: scale(1); } }
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <div id="main-container" class="w-[95%] max-w-[1050px] h-[620px] flex overflow-hidden glass-effect shadow-2xl">
-        
         <div class="sidebar">
             <div class="mb-4">
-                <a href="index.html" class="bg-white/20 px-4 py-2 rounded-full text-[10px] font-bold text-white flex gap-2 items-center w-fit">
-                    🏡 <span>QUAY VỀ VƯỜN</span>
-                </a>
+                <a href="index.html" class="bg-white/20 px-4 py-2 rounded-full text-[10px] font-bold text-white flex gap-2 items-center w-fit">🏡 QUAY VỀ VƯỜN</a>
             </div>
-            <div class="bg-white/20 w-16 h-16 rounded-3xl flex items-center justify-center text-4xl mb-6 shadow-inner">🌿</div>
-            <h1 class="text-2xl font-black leading-tight mb-2">Ứng dụng<br>Giao tiếp HSK</h1>
+            <div class="bg-white/20 w-16 h-16 rounded-3xl flex items-center justify-center text-4xl mb-6">🌿</div>
+            <h1 class="text-2xl font-black mb-2 leading-tight">Giao tiếp HSK<br>Bài 4</h1>
             <p class="text-yellow-200 font-bold text-xs mb-10 italic">Giáo viên: Nga Học HSK</p>
             
             <div class="mt-auto bg-black/10 p-5 rounded-3xl">
-                <p class="text-[10px] uppercase font-bold opacity-70 mb-2">Tiến độ bài học</p>
+                <p class="text-[10px] uppercase font-bold opacity-70 mb-2">Tiến độ</p>
                 <div class="w-full h-2 bg-white/20 rounded-full overflow-hidden">
-                    <div id="side-progress" class="w-0 h-full bg-white transition-all duration-500"></div>
+                    <div id="side-progress" class="w-0 h-full bg-white transition-all"></div>
                 </div>
                 <div class="flex justify-between mt-2 text-[10px] font-bold"><span id="side-percent">0%</span></div>
             </div>
             <div class="flex gap-10 mt-6">
-                <div><p class="text-[10px] uppercase opacity-50">Điểm số</p><p id="side-score" class="text-3xl font-bold text-yellow-300">0</p></div>
-                <div><p class="text-[10px] uppercase opacity-50">Câu hỏi</p><p id="side-count" class="text-3xl font-bold">1/20</p></div>
+                <div><p class="text-[10px] uppercase opacity-50">Điểm</p><p id="side-score" class="text-3xl font-bold text-yellow-300">0</p></div>
+                <div><p class="text-[10px] uppercase opacity-50">Câu</p><p id="side-count" class="text-3xl font-bold">1/20</p></div>
             </div>
         </div>
 
         <div id="screen-intro" class="content-area items-center justify-center text-center">
-            <h2 class="text-4xl font-black mb-4 text-gray-800">Chào mừng bạn đến với vườn Ghibli!</h2>
-            <p class="text-gray-600 mb-10 max-w-sm">Hôm nay chúng mình sẽ cùng cô Nga chinh phục 20 câu giao tiếp Bài 4 nhé.</p>
-            <button onclick="startGame()" class="btn-ghibli px-16 py-5 text-xl font-bold uppercase">Bắt đầu học thôi</button>
+            <h2 class="text-4xl font-black mb-4 text-gray-800">Bắt đầu Bài 4 thôi!</h2>
+            <p class="text-gray-600 mb-10 max-w-sm">Chào mừng bạn quay lại khu vườn. Hãy cùng ôn tập các từ về quốc tịch và bạn bè nhé.</p>
+            <button onclick="startGame()" class="btn-ghibli px-16 py-5 text-xl font-bold uppercase">BẮT ĐẦU HỌC</button>
         </div>
 
         <div id="screen-game" class="content-area hidden">
-            <div class="mb-6">
-                <span class="text-[10px] bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold uppercase tracking-widest">BÀI 4: 她是我的汉语老师</span>
-                <h3 id="q-text" class="text-2xl font-bold text-gray-800 mt-4"></h3>
+            <div class="mb-4">
+                <span id="q-type" class="text-[10px] bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold uppercase"></span>
+                <h3 id="q-text" class="text-xl font-bold text-gray-800 mt-3"></h3>
             </div>
 
-            <div id="answer-zone" class="flex-grow bg-white/40 rounded-[30px] p-6 border-4 border-dashed border-gray-200 flex flex-wrap content-start gap-2 shadow-inner overflow-y-auto"></div>
+            <div id="interaction-zone" class="flex-grow flex flex-col justify-center">
+                </div>
 
-            <div id="options-zone" class="mt-6 flex flex-wrap gap-2 justify-center min-h-[120px]"></div>
-
-            <div class="mt-6">
-                <button onclick="checkAnswer()" class="btn-ghibli w-full py-4 text-lg font-bold uppercase">KIỂM TRA ĐÁP ÁN</button>
+            <div class="mt-4">
+                <button id="check-btn" onclick="checkAnswer()" class="btn-ghibli w-full py-4 text-lg font-bold uppercase">KIỂM TRA</button>
             </div>
         </div>
 
         <div id="screen-end" class="content-area hidden items-center justify-center text-center">
-            <div class="text-8xl mb-6">🌸</div>
-            <h2 class="text-4xl font-black text-gray-800 mb-2">Hoàn thành xuất sắc!</h2>
-            <p id="final-msg" class="text-gray-600 mb-10 text-lg"></p>
-            <div id="final-score" class="text-7xl font-black text-green-700 mb-12">0</div>
-            <button onclick="location.reload()" class="btn-ghibli px-12 py-4 text-xl font-bold">HỌC LẠI TỪ ĐẦU</button>
+            <div class="text-7xl mb-6">🎈</div>
+            <h2 class="text-4xl font-black text-gray-800 mb-2">Hoàn thành!</h2>
+            <p class="text-gray-600 mb-8">Bạn đã chăm sóc khu vườn rất tốt.</p>
+            <div id="final-score" class="text-7xl font-black text-green-700 mb-10">0</div>
+            <button onclick="location.reload()" class="btn-ghibli px-12 py-4 text-xl font-bold">LÀM LẠI</button>
         </div>
     </div>
 
@@ -124,50 +88,42 @@
         <div class="bg-white rounded-[40px] p-8 max-w-md w-full shadow-2xl border-[8px] border-white">
             <div id="modal-emoji" class="text-6xl text-center mb-4">🌟</div>
             <h3 id="modal-title" class="text-2xl font-black text-center mb-4">Kết quả</h3>
-            
             <div class="bg-gray-50 rounded-2xl p-5 mb-6">
-                <p class="text-xs font-bold text-gray-400 uppercase mb-2">Giải thích chi tiết:</p>
+                <p class="text-xs font-bold text-gray-400 uppercase mb-2">Giải thích:</p>
                 <div id="modal-explanation" class="text-gray-700 text-sm leading-relaxed"></div>
             </div>
-
             <button onclick="nextStep()" class="btn-ghibli w-full py-4 text-lg font-bold uppercase">TIẾP THEO</button>
         </div>
     </div>
 
     <script>
         const quizData = [
-            { q: "Cô ấy là ai?", ans: ["她", "shì", "谁", "？"], explain: "Cấu trúc: Chủ ngữ (她) + 是 (là) + ai (谁). '谁' dùng để hỏi về người." },
-            { q: "Cô ấy là cô giáo tiếng Trung của tôi.", ans: ["她", "shì", "我", "de", "汉语", "老师"], explain: "Sử dụng '的' để biểu thị sở hữu: 'của tôi' (我的). '汉语老师' là cụm danh từ." },
-            { q: "Bạn là người nước nào?", ans: ["你", "shì", "哪", "国", "人", "？"], explain: "Cấu trúc hỏi quốc tịch: '哪' (nào) + '国' (nước) + '人' (người)." },
-            { q: "Tôi là người Mỹ.", ans: ["我", "shì", "美国", "人"], explain: "Tên quốc gia + '人' tạo thành danh từ chỉ quốc tịch." },
-            { q: "Anh ấy là bạn tôi.", ans: ["他", "shì", "我", "朋友"], explain: "Trong mối quan hệ thân thiết, có thể lược bỏ '的' sau đại từ nhân xưng." },
-            { q: "Cô ấy tên là Lý Nguyệt.", ans: ["她", "叫", "李月"], explain: "Dùng động từ '叫' (tên là/gọi là) để giới thiệu tên riêng." },
-            { q: "Người này là ai?", ans: ["这", "ge", "人", "shì", "谁", "？"], explain: "'这' (đây) kết hợp với lượng từ '个' trước danh từ '人'." },
-            { q: "Anh ấy không phải giáo viên.", ans: ["他", "bù", "shì", "老师"], explain: "Phủ định của '是' luôn luôn là '不是' (bù shì)." },
-            { q: "Bạn tên là gì?", ans: ["你", "叫", "什么", "名字", "？"], explain: "Cấu trúc hỏi tên đầy đủ: 叫 + 什么 (cái gì) + 名字 (tên)." },
-            { q: "Tôi học tiếng Trung.", ans: ["我", "xuéxí", "汉语"], explain: "'学习' (xuéxí) là động từ học tập." },
-            { q: "Cô ấy là bạn học của tôi.", ans: ["她", "shì", "我", "de", "同学"], explain: "'同学' (tóngxué) nghĩa là bạn cùng học/bạn cùng lớp." },
-            { q: "Kia là thầy giáo Vương.", ans: ["那", "shì", "王", "老师"], explain: "'那' (kia/đó) đối lập với '这' (đây)." },
-            { q: "Tôi cũng là người Mỹ.", ans: ["我", "yě", "shì", "美国", "人"], explain: "Phó từ '也' (cũng) đứng trước động từ '是'." },
-            { q: "Anh ấy là người nước nào vậy?", ans: ["他", "shì", "哪", "国", "人", "ne", "？"], explain: "Trợ từ '呢' đặt cuối câu hỏi để làm sắc thái câu nhẹ nhàng hơn." },
-            { q: "Bạn tôi cũng học tiếng Trung.", ans: ["我", "朋友", "yě", "xuéxí", "汉语"], explain: "Thứ tự: Chủ ngữ + 也 + Động từ + Tân ngữ." },
-            { q: "Đây là sách của tôi.", ans: ["这", "shì", "我", "de", "书"], explain: "Dùng '的' để kết nối chủ sở hữu và vật sở hữu." },
-            { q: "Tên anh ấy rất hay.", ans: ["他", "de", "名字", "hěn", "hǎo", "tīng"], explain: "'好听' (hay/dễ nghe). '很' dùng trước tính từ." },
-            { q: "Bạn quen cô ấy không?", ans: ["你", "rènshi", "她", "ma", "？"], explain: "Câu hỏi có/không dùng trợ từ '吗' ở cuối câu." },
-            { q: "Rất vui được quen biết bạn.", ans: ["rènshi", "你", "hěn", "gaoxìng"], explain: "Mẫu câu xã giao kinh điển khi lần đầu gặp mặt." },
-            { q: "Tạm biệt cô giáo Lý.", ans: ["李", "老师", "zàijiàn"], explain: "Chào tạm biệt: Tên/Chức danh + 再见." }
+            { type: "PINYIN", q: "Chọn Pinyin đúng cho chữ: 谁", options: ["shéi", "shénme", "nǎ"], correct: "shéi", explain: "谁 (shéi) có nghĩa là 'ai', dùng để hỏi về người." },
+            { type: "DỊCH NGHĨA", q: "Chữ '同学' nghĩa là gì?", options: ["Bạn học", "Bạn bè", "Giáo viên"], correct: "Bạn học", explain: "同学 (tóngxué) là bạn cùng học/bạn cùng lớp." },
+            { type: "ĐIỀN TỪ", q: "你是____国人？", options: ["谁", "哪", "什么"], correct: "哪", explain: "Cấu trúc hỏi quốc tịch: 哪 (nào) + 国 (nước) + 人 (người)?" },
+            { type: "PHẢN XẠ", q: "Trả lời câu hỏi: 他是谁？", options: ["他是我的汉语老师", "他是美国人", "他是我的同学"], correct: "Chấp nhận tất cả", isMulti: true, explain: "Cả 3 đều đúng ngữ pháp, nhưng trong bài này ta chọn đáp án phổ biến nhất là '他是我的汉语老师'." },
+            { type: "SẮP XẾP", q: "Ghép câu: Cô ấy là bạn của tôi.", ans: ["她", "是", "我", "的", "朋友"], explain: "Chủ ngữ + 是 + Cụm danh từ sở hữu (Đại từ + 的 + Danh từ)." },
+            { type: "PINYIN", q: "Chọn chữ Hán cho Pinyin: Hànyǔ", options: ["汉语", "英语", "国语"], correct: "汉语", explain: "汉语 (Hànyǔ) là Tiếng Hán / Tiếng Trung." },
+            { type: "DỊCH NGHĨA", q: "Cụm '我的老师' dịch là gì?", options: ["Giáo viên của tôi", "Tôi là giáo viên", "Học sinh của tôi"], correct: "Giáo viên của tôi", explain: "Cấu trúc: A + 的 + B nghĩa là B của A." },
+            { type: "SẮP XẾP", q: "Ghép câu: Bạn là người nước nào?", ans: ["你", "是", "哪", "国", "人", "？"], explain: "Đây là cấu trúc hỏi quốc tịch chuẩn trong Bài 4." },
+            { type: "ĐIỀN TỪ", q: "她___我的汉语老师。", options: ["叫", "是", "哪"], correct: "是", explain: "Sử dụng động từ '是' (là) để giới thiệu nghề nghiệp/quan hệ." },
+            { type: "PHẢN XẠ", q: "Câu '他是我的同学' nghĩa là gì?", options: ["Anh ấy là bạn học của tôi", "Anh ấy là bạn của tôi", "Anh ấy là giáo viên của tôi"], correct: "Anh ấy là bạn học của tôi", explain: "Phân biệt 同学 (bạn học) và 朋友 (bạn bè)." },
+            { type: "PINYIN", q: "Pinyin của chữ '朋友' là gì?", options: ["péngyou", "tóngxué", "lǎoshī"], correct: "péngyou", explain: "朋友 (péngyou) nghĩa là bạn bè." },
+            { type: "SẮP XẾP", q: "Ghép câu: Tôi không phải người Mỹ.", ans: ["我", "不", "shì", "美国", "人"], explain: "Phủ định của '是' là '不是' (bù shì)." },
+            { type: "DỊCH NGHĨA", q: "Chữ '哪' nghĩa là gì?", options: ["Nào", "Ai", "Cái gì"], correct: "Nào", explain: "哪 (nǎ) dùng trong câu hỏi lựa chọn (nào, đâu)." },
+            { type: "PHẢN XẠ", q: "Chọn câu trả lời: 你是哪国人？", options: ["我是美国人", "他是中国人", "谁是美国人"], correct: "我是美国人", explain: "Hỏi 'bạn' (你) thì phải trả lời là 'tôi' (我)." },
+            { type: "ĐIỀN TỪ", q: "他叫____名字？", options: ["谁", "什么", "哪"], correct: "什么", explain: "Cấu trúc hỏi tên: 叫 + 什么 + 名字?" },
+            { type: "PINYIN", q: "Chữ nào có pinyin là 'nǎ'?", options: ["哪", "那", "呢"], correct: "哪", explain: "哪 (nǎ - thanh 3) là 'nào'. Tránh nhầm với 那 (nà - thanh 4) là 'kia'." },
+            { type: "SẮP XẾP", q: "Ghép câu: Cô ấy là người nước nào?", ans: ["她", "shì", "哪", "国", "人", "？"], explain: "Thay '你' bằng '她' để hỏi về quốc tịch của cô ấy." },
+            { type: "DỊCH NGHĨA", q: "'美国人' là người nước nào?", options: ["Người Mỹ", "Người Anh", "Người Trung Quốc"], correct: "Người Mỹ", explain: "美国 (Měiguó) là nước Mỹ." },
+            { type: "ĐIỀN TỪ", q: "我不是老师，我___学生。", options: ["叫", "是", "的"], correct: "偏是", explain: "Sử dụng '是' để khẳng định danh tính." },
+            { type: "SẮP XẾP", q: "Ghép câu: Thầy giáo của tôi là người Trung Quốc.", ans: ["我", "de", "老师", "shì", "中国", "人"], explain: "Cụm danh từ làm chủ ngữ: 'Giáo viên của tôi'." }
         ];
 
-        // Chuẩn hóa dữ liệu pinyin sang Hán tự
+        // Chuẩn hóa s/shì/de
         quizData.forEach(item => {
-            item.ans = item.ans.map(w => {
-                const map = {
-                    'shì':'是','de':' đích','nǎ':'哪','bù':'不','ne':'呢','yě':'也',
-                    'xuéxí':'学习','hěn':'很','hǎo':'好','tīng':'听','rènshi':'认识',
-                    'ma':'吗','gaoxìng':'高兴','zàijiàn':'再见','ge':'个'
-                };
-                return map[w] || w;
-            }).map(w => w === ' đích' ? 'de' : w).map(w => w === 'de' ? '的' : w);
+            if(item.ans) item.ans = item.ans.map(w => w === 'shì' ? '是' : w === 'de' ? '的' : w);
+            if(item.correct === '偏 là') item.correct = '是';
         });
 
         let currentQ = 0, score = 0, userSelection = [];
@@ -185,36 +141,59 @@
             document.getElementById('side-score').innerText = score;
             document.getElementById('side-progress').style.width = (currentQ / 20 * 100) + '%';
             document.getElementById('side-percent').innerText = Math.floor(currentQ / 20 * 100) + '%';
-            document.getElementById('q-text').innerText = data.q;
-            document.getElementById('answer-zone').innerHTML = '';
             
-            const optionsZone = document.getElementById('options-zone');
-            optionsZone.innerHTML = '';
-            let pool = [...data.ans].sort(() => Math.random() - 0.5);
-            pool.forEach(word => {
-                const btn = document.createElement('div');
-                btn.className = 'word-bubble shadow-sm font-bold text-gray-700';
-                btn.innerText = word;
-                btn.onclick = () => {
-                    userSelection.push({word, btn});
-                    btn.classList.add('opacity-20', 'pointer-events-none');
-                    renderAnswer();
-                };
-                optionsZone.appendChild(btn);
-            });
+            document.getElementById('q-type').innerText = data.type;
+            document.getElementById('q-text').innerText = data.q;
+            
+            const zone = document.getElementById('interaction-zone');
+            zone.innerHTML = '';
+
+            if(data.type === "SẮP XẾP") {
+                const dropZone = document.createElement('div');
+                dropZone.className = "flex flex-wrap gap-2 mb-8 p-4 bg-white/50 rounded-2xl min-h-[80px] border-2 border-dashed border-gray-300";
+                dropZone.id = "drop-zone";
+                zone.appendChild(dropZone);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = "flex flex-wrap gap-2 justify-center";
+                let pool = [...data.ans].sort(() => Math.random() - 0.5);
+                pool.forEach(word => {
+                    const tag = document.createElement('button');
+                    tag.className = "word-tag";
+                    tag.innerText = word;
+                    tag.onclick = () => {
+                        userSelection.push({word, btn: tag});
+                        tag.classList.add('opacity-10', 'pointer-events-none');
+                        renderScramble(dropZone);
+                    };
+                    optionsDiv.appendChild(tag);
+                });
+                zone.appendChild(optionsDiv);
+            } else {
+                data.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = "option-card";
+                    btn.innerText = opt;
+                    btn.onclick = () => {
+                        document.querySelectorAll('.option-card').forEach(b => b.classList.remove('border-green-600', 'bg-green-50'));
+                        btn.classList.add('border-green-600', 'bg-green-50');
+                        userSelection = [opt];
+                    };
+                    zone.appendChild(btn);
+                });
+            }
         }
 
-        function renderAnswer() {
-            const zone = document.getElementById('answer-zone');
+        function renderScramble(zone) {
             zone.innerHTML = '';
-            userSelection.forEach((item, index) => {
+            userSelection.forEach((item, idx) => {
                 const div = document.createElement('div');
-                div.className = 'selected-word font-bold';
+                div.className = "selected-tag";
                 div.innerText = item.word;
                 div.onclick = () => {
-                    item.btn.classList.remove('opacity-20', 'pointer-events-none');
-                    userSelection.splice(index, 1);
-                    renderAnswer();
+                    item.btn.classList.remove('opacity-10', 'pointer-events-none');
+                    userSelection.splice(idx, 1);
+                    renderScramble(zone);
                 };
                 zone.appendChild(div);
             });
@@ -223,39 +202,36 @@
         function checkAnswer() {
             if(userSelection.length === 0) return;
             const data = quizData[currentQ];
-            const isCorrect = userSelection.map(i => i.word).join('') === data.ans.join('');
-            
-            const modal = document.getElementById('result-modal');
-            const title = document.getElementById('modal-title');
-            const emoji = document.getElementById('modal-emoji');
-            const explain = document.getElementById('modal-explanation');
+            let isCorrect = false;
 
-            if(isCorrect) {
-                score += 10;
-                title.innerText = "Chính xác! Đỉnh quá!";
-                title.className = "text-2xl font-black text-center mb-4 text-green-600";
-                emoji.innerText = "🌟";
+            if(data.type === "SẮP XẾP") {
+                isCorrect = userSelection.map(i => i.word).join('') === data.ans.join('');
+            } else if(data.isMulti) {
+                isCorrect = true;
             } else {
-                title.innerText = "Sai mất rồi!";
-                title.className = "text-2xl font-black text-center mb-4 text-red-500";
-                emoji.innerText = "🏮";
+                isCorrect = userSelection[0] === data.correct;
             }
+
+            const modal = document.getElementById('result-modal');
+            document.getElementById('modal-emoji').innerText = isCorrect ? "🌟" : "🏮";
+            document.getElementById('modal-title').innerText = isCorrect ? "Chính xác!" : "Cố gắng lên!";
+            document.getElementById('modal-title').className = isCorrect ? "text-2xl font-black text-center mb-4 text-green-600" : "text-2xl font-black text-center mb-4 text-red-500";
             
-            explain.innerHTML = `<b>Đáp án đúng:</b> <span class="text-green-700 font-bold">${data.ans.join(' ')}</span><br><br>${data.explain}`;
+            let correctStr = data.type === "SẮP XẾP" ? data.ans.join(' ') : (data.correct || "Đáp án linh hoạt");
+            document.getElementById('modal-explanation').innerHTML = `<b>Đáp án:</b> <span class="text-green-700 font-bold">${correctStr}</span><br><br>${data.explain}`;
+            
+            if(isCorrect) score += 10;
             modal.classList.remove('hidden');
-            modal.classList.add('flex');
         }
 
         function nextStep() {
             document.getElementById('result-modal').classList.add('hidden');
-            document.getElementById('result-modal').classList.remove('flex');
             currentQ++;
             if(currentQ < quizData.length) loadQuestion();
             else {
                 document.getElementById('screen-game').classList.add('hidden');
                 document.getElementById('screen-end').classList.remove('hidden');
                 document.getElementById('final-score').innerText = score;
-                document.getElementById('final-msg').innerText = score >= 150 ? "Bạn thực sự là một cao thủ HSK!" : "Bạn đã hoàn thành khu vườn rồi, giỏi lắm!";
             }
         }
     </script>
