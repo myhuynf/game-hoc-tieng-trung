@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game: Hôm nay là ngày mấy? - Khu Vườn Tiếng Trung</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ghibli-green: #9dc183;
+            --ghibli-dark-green: #4f7942;
+            --ghibli-sky: #d0f0f7;
+            --ghibli-wood: #8b5a2b;
+            --ghibli-leaf: #7fb069;
+            --ghibli-pink: #ffb7c5;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            background: var(--ghibli-sky);
+            background-image: 
+                linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0)),
+                url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.85);
+            width: 100%;
+            border-bottom: 5px solid var(--ghibli-green);
+            backdrop-filter: blur(5px);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--ghibli-dark-green);
+            font-size: 1.8rem;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 25px;
+            text-decoration: none;
+            background: var(--ghibli-wood);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover { background: var(--ghibli-dark-green); }
+
+        /* Game Box */
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border: 4px solid var(--ghibli-green);
+            border-radius: 25px;
+            padding: 25px;
+            text-align: center;
+            max-width: 650px;
+            width: 90%;
+            margin: 30px auto;
+            box-shadow: 0 15px 30px rgba(79, 121, 66, 0.2);
+        }
+
+        #vietnamese-hint {
+            font-size: 1.2rem;
+            color: var(--ghibli-wood);
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: rgba(255, 183, 197, 0.25);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px dashed var(--ghibli-pink);
+        }
+
+        /* Slots area */
+        .slot-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            min-height: 60px;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(157, 193, 131, 0.1);
+            border-radius: 15px;
+            border: 2px dashed var(--ghibli-green);
+        }
+
+        .slot {
+            min-width: 70px;
+            height: 45px;
+            border-bottom: 4px solid var(--ghibli-leaf);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--ghibli-dark-green);
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 0 10px;
+        }
+
+        .slot.filled {
+            background-color: var(--ghibli-sky);
+            border-radius: 10px 10px 0 0;
+            animation: popIn 0.3s ease;
+        }
+
+        /* Word Bank */
+        .word-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .word-seed {
+            background-color: white;
+            border: 2px solid var(--ghibli-leaf);
+            color: var(--ghibli-dark-green);
+            border-radius: 20px;
+            padding: 10px 18px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .word-seed:hover {
+            transform: translateY(-3px);
+            background-color: var(--ghibli-green);
+            color: white;
+        }
+
+        .controls button {
+            background-color: var(--ghibli-dark-green);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 5px;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+
+        .controls button:hover {
+            background-color: var(--ghibli-leaf);
+            transform: scale(1.05);
+        }
+
+        #feedback {
+            margin-top: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            min-height: 25px;
+        }
+
+        #tree-growth {
+            font-size: 4rem;
+            margin-top: 10px;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        footer { margin-top: auto; padding: 20px; color: var(--ghibli-dark-green); font-weight: 600; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="index.html" class="back-btn">⬅ Trở về</a>
+    <h1>Bài 7: 今天几号？ 🗓️</h1>
+</header>
+
+<div class="game-container">
+    <div id="vietnamese-hint">Đang tải câu hỏi...</div>
+    
+    <div id="drop-zone" class="slot-container">
+        </div>
+
+    <div id="word-bank" class="word-container">
+        </div>
+
+    <div class="controls">
+        <button onclick="checkSentence()">Kiểm tra ✨</button>
+        <button onclick="nextLevel()">Câu tiếp theo 🌿</button>
+    </div>
+    
+    <div id="feedback"></div>
+    <div id="tree-growth">🪴</div>
+</div>
+
+<footer>© 2026 - Made with ❤️ for Nga Học HSK</footer>
+
+<audio id="sound-click" src="https://cdn.pixabay.com/audio/2022/03/15/audio_790b1e60b4.mp3"></audio>
+<audio id="sound-win" src="https://cdn.pixabay.com/audio/2021/08/04/audio_0625c1539c.mp3"></audio>
+<audio id="sound-wrong" src="https://cdn.pixabay.com/audio/2022/03/24/audio_eb3ee10eb8.mp3"></audio>
+
+<script>
+    const levels = [
+        {
+            hint: "Dịch câu: Ngày mai là thứ tư.",
+            correct: ["明天", "星期三"],
+            words: ["星期三", "明天", "昨天", "号"]
+        },
+        {
+            hint: "Dịch câu: Tôi đi đến trường đọc sách.",
+            correct: ["我", "去", "学校", "看书"],
+            words: ["学校", "看", "我", "去", "书", "问", "今天"]
+        },
+        {
+            hint: "Dịch câu: Hôm nay là ngày 1 tháng 9.",
+            correct: ["今天", "9月", "1号"],
+            words: ["1号", "今天", "9月", "明天", "请"]
+        },
+        {
+            hint: "Dịch câu: Xin hỏi, hôm nay ngày mấy?",
+            correct: ["请", "问", "今天", "几号"],
+            words: ["问", "今天", "几号", "请", "去", "昨天"]
+        },
+        {
+            hint: "Dịch câu: Tôi đi xem sách.",
+            correct: ["我", "去", "看书"],
+            words: ["看书", "我", "去", "学校", "月"]
+        }
+    ];
+
+    let currentLevel = 0;
+    const wordBank = document.getElementById('word-bank');
+    const dropZone = document.getElementById('drop-zone');
+    const feedback = document.getElementById('feedback');
+    const treeGrowth = document.getElementById('tree-growth');
+
+    // Audio Elements
+    const sfxClick = document.getElementById('sound-click');
+    const sfxWin = document.getElementById('sound-win');
+    const sfxWrong = document.getElementById('sound-wrong');
+
+    function playSfx(audio) {
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log("Audio play blocked"));
+    }
+
+    function initLevel() {
+        const level = levels[currentLevel];
+        document.getElementById('vietnamese-hint').innerText = level.hint;
+        feedback.innerText = "";
+        treeGrowth.innerText = "🪴";
+        treeGrowth.style.transform = "scale(1)";
+        
+        wordBank.innerHTML = '';
+        dropZone.innerHTML = '';
+
+        // Tạo ô trống dựa trên đáp án đúng
+        level.correct.forEach(() => {
+            const slot = document.createElement('div');
+            slot.className = 'slot';
+            slot.onclick = () => returnToBank(slot);
+            dropZone.appendChild(slot);
+        });
+
+        // Tạo từ vựng
+        const shuffledWords = [...level.words].sort(() => Math.random() - 0.5);
+        shuffledWords.forEach(word => {
+            const span = document.createElement('span');
+            span.innerText = word;
+            span.className = 'word-seed';
+            span.onclick = () => moveToSlot(span);
+            wordBank.appendChild(span);
+        });
+    }
+
+    function moveToSlot(wordElement) {
+        const emptySlot = Array.from(dropZone.children).find(slot => slot.innerText === '');
+        if (emptySlot) {
+            playSfx(sfxClick);
+            emptySlot.innerText = wordElement.innerText;
+            emptySlot.classList.add('filled');
+            wordElement.style.visibility = 'hidden'; // Dùng hidden để giữ layout
+            wordElement.style.pointerEvents = 'none';
+        }
+    }
+
+    function returnToBank(slotElement) {
+        if (slotElement.innerText !== '') {
+            playSfx(sfxClick);
+            const wordText = slotElement.innerText;
+            slotElement.innerText = '';
+            slotElement.classList.remove('filled');
+            
+            // Hiện lại từ ở ngân hàng
+            const seeds = Array.from(wordBank.children);
+            const hiddenSeed = seeds.find(s => s.innerText === wordText && s.style.visibility === 'hidden');
+            if (hiddenSeed) {
+                hiddenSeed.style.visibility = 'visible';
+                hiddenSeed.style.pointerEvents = 'auto';
+            }
+        }
+    }
+
+    function checkSentence() {
+        const slots = document.querySelectorAll('.slot');
+        let userSentence = Array.from(slots).map(slot => slot.innerText);
+        const correctSentence = levels[currentLevel].correct;
+
+        if (userSentence.includes('')) {
+            playSfx(sfxWrong);
+            feedback.innerText = "⚠️ Bạn hãy điền hết các ô trống nhé!";
+            feedback.style.color = "#8b5a2b";
+            return;
+        }
+
+        if (JSON.stringify(userSentence) === JSON.stringify(correctSentence)) {
+            playSfx(sfxWin);
+            feedback.innerText = "✅ Tuyệt vời! Bạn giỏi quá!";
+            feedback.style.color = "#4f7942";
+            treeGrowth.innerText = "🌳";
+            treeGrowth.style.transform = "scale(1.3)";
+        } else {
+            playSfx(sfxWrong);
+            feedback.innerText = "❌ Sai rồi, thử sắp xếp lại nhé!";
+            feedback.style.color = "#e53935";
+        }
+    }
+
+    function nextLevel() {
+        playSfx(sfxClick);
+        currentLevel = (currentLevel + 1) % levels.length;
+        initLevel();
+    }
+
+    window.onload = initLevel;
+</script>
+
+</body>
+</html>
