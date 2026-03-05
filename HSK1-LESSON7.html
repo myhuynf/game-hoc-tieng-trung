@@ -35,12 +35,16 @@
             backdrop-filter: blur(10px); border-right: 4px solid var(--ghibli-wood);
         }
 
+        /* Cập nhật style cho nút Quay về vườn thành thẻ a */
         .btn-home {
             background: var(--ghibli-pink); color: var(--ghibli-dark-green);
             text-decoration: none; padding: 10px 20px; border-radius: 15px;
             font-size: 0.85rem; font-weight: bold; margin-bottom: 30px;
-            box-shadow: 0 4px 0 var(--ghibli-wood); display: inline-block; width: fit-content;
+            box-shadow: 0 4px 0 var(--ghibli-wood); display: inline-block; 
+            width: fit-content; cursor: pointer; border: none;
+            transition: 0.2s; text-align: center;
         }
+        .btn-home:hover { transform: scale(1.05); background: #f8a5b5; color: var(--ghibli-dark-green); }
 
         .app-title { font-size: 1.8rem; font-weight: 700; margin: 0; line-height: 1.2; }
         .progress-bar-bg { width: 100%; height: 12px; background: rgba(255,255,255,0.2); border-radius: 10px; margin: 15px 0; overflow: hidden; }
@@ -109,7 +113,8 @@
 <body>
 
 <div class="sidebar">
-    <a href="#" class="btn-home">🏠 VỀ TRANG CHỦ</a>
+    <!-- Cập nhật nút về trang chủ quay về file index.html -->
+    <a href="index.html" class="btn-home">🏠 VỀ TRANG CHỦ</a>
     <h1 class="app-title">HSK1 Bài 7<br>20 Câu Hỏi</h1>
     <p>Giáo viên: <b>Nga Học HSK</b></p>
     <div class="progress-container" style="margin-top:auto">
@@ -172,47 +177,45 @@
             question: 'Khi gặp thầy cô giáo hoặc người lớn tuổi, bạn chào thế nào cho lịch sự?',
             options: ['你好 (Nǐ hǎo)', '您好 (Nín hǎo)', '再见 (Zàijiàn)', '对不起 (Duìbuqǐ)'],
             answer: '您好 (Nín hǎo)',
-            pinyin: 'Cấu trúc: Bạn dùng "您" (Ngài/Ông/Bà) để thể hiện sự tôn trọng.',
-            trans: 'Dịch: Chào Ngài/Thầy/Cô'
+            pinyin: 'Ghi nhớ: Dùng "您" (Ngài/Thầy/Cô) để thể hiện sự tôn kính.',
+            trans: 'Dịch nghĩa: Con chào Thầy/Cô ạ.'
         },
         {
             type: 'choice', tag: 'Hội thoại',
             question: 'Người khác hỏi: "明天你去学校吗？" (Mai bạn đi học không?). Bạn trả lời "Tôi không đi":',
             options: ['我不去 (Wǒ bù qù)', '我不喝 (Wǒ bù hē)', '我不看 (Wǒ bù kàn)', '我不叫 (Wǒ bù jiào)'],
             answer: '我不去 (Wǒ bù qù)',
-            pinyin: 'Phủ định của hành động "去" là "不去".',
-            trans: 'Dịch: Tôi không đi.'
+            pinyin: 'Cấu trúc: Phủ định hành động đi "去" bằng phó từ "不".',
+            trans: 'Dịch nghĩa: Tôi không đi học.'
         },
         {
             type: 'choice', tag: 'Ngữ pháp',
             question: 'Trong câu tiếng Trung, trạng ngữ chỉ thời gian thường đứng ở đâu?',
             options: ['Đứng trước hoặc sau chủ ngữ', 'Đứng ở cuối câu', 'Đứng sau động từ chính', 'Đứng sau tân ngữ'],
             answer: 'Đứng trước hoặc sau chủ ngữ',
-            pinyin: 'Lưu ý: Thời gian tuyệt đối không được đứng cuối câu như tiếng Việt.',
-            trans: 'Quy tắc: Chủ ngữ + Thời gian + Động từ (Hoặc ngược lại).'
+            pinyin: 'Quy tắc vàng: Thời gian tuyệt đối KHÔNG đứng ở cuối câu.',
+            trans: 'Cấu trúc: (Thời gian) + Chủ ngữ + (Thời gian) + Động từ.'
         },
         {
             type: 'choice', tag: 'Thời gian',
             question: 'Để hỏi hôm nay là ngày mấy, ta dùng câu nào?',
             options: ['今天几号？ (Jīntiān jǐ hào?)', '今天星期几？ (Jīntiān xīngqī jǐ?)', '明天几号？ (Míngtiān jǐ hào?)', '你是谁？ (Nǐ shì shuí?)'],
             answer: '今天几号？ (Jīntiān jǐ hào?)',
-            pinyin: 'Hỏi ngày trong tháng dùng "几号".',
-            trans: 'Dịch: Hôm nay ngày mấy?'
+            pinyin: 'Hỏi ngày trong tháng dùng cụm từ "几号".',
+            trans: 'Dịch nghĩa: Hôm nay ngày bao nhiêu?'
         },
         {
             type: 'reorder', tag: 'Sắp xếp',
             question: 'Sắp xếp câu: "Tôi đi trường học đọc sách"',
             words: ['我', '去', '学校', '看书'],
             correct: '我去学校看书',
-            pinyin: 'Cấu trúc liên động: Đi đâu đó để làm gì.',
-            trans: 'Tôi đến trường đọc sách.'
+            pinyin: 'Câu liên động: Đi đâu đó (去 + Địa điểm) để thực hiện hành động (Động từ).',
+            trans: 'Dịch nghĩa: Tôi đến trường để xem sách.'
         },
         {
             type: 'choice', tag: 'Giao tiếp',
             question: 'Cách rủ bạn đi thư viện vào ngày mai một cách tự nhiên:',
             options: ['明天我们去图书馆吧 (Míngtiān wǒmen qù túshūguǎn ba)', '图书馆在哪儿 (Túshūguǎn zài nǎr)', '我不去图书馆 (Wǒ bù qù túshūguǎn)', '谢谢你 (Xièxie nǐ)'],
-            answer: '明天 chúng ta đi thư viện nhé',
-            answer: '明天 chúng ta đi thư viện nhé',
             answer: '明天 chúng ta đi thư viện nhé'
         },
         {
@@ -220,95 +223,91 @@
             question: 'Từ "Thứ 7" trong tiếng Trung là gì?',
             options: ['星期六 (Xīngqīliù)', '星期日 (Xīngqīrì)', '星期五 (Xīngqīwǔ)', '星期七 (Xīngqīqī)'],
             answer: '星期六 (Xīngqīliù)',
-            pinyin: 'Thứ trong tiếng Trung lùi 1 số so với tiếng Việt (Thứ 2 = 星期一).',
-            trans: 'Dịch: Thứ bảy.'
+            pinyin: 'Lưu ý: Tiếng Trung tính từ Thứ Hai là số 1, nên Thứ Bảy là số 6.',
+            trans: 'Dịch nghĩa: Thứ Bảy hàng tuần.'
         },
         {
             type: 'reorder', tag: 'Sắp xếp',
             question: 'Sắp xếp câu: "Ngày mai tôi đi cửa hàng"',
             words: ['明天', '我', '去', '商店'],
             correct: '明天我去商店',
-            pinyin: 'Thời gian có thể đặt ở đầu câu hoặc sau chủ ngữ.',
-            trans: 'Ngày mai tôi đi cửa hàng.'
+            pinyin: 'Trạng ngữ "明天" có thể đứng đầu câu hoặc sau "我".',
+            trans: 'Dịch nghĩa: Ngày mai tôi đi mua đồ ở cửa hàng.'
         },
         {
             type: 'choice', tag: 'Thời gian',
             question: 'Cách hỏi "Hôm nay thứ mấy?" chính xác nhất:',
             options: ['今天几号？ (Jīntiān jǐ hào?)', '今天星期几？ (Jīntiān xīngqī jǐ?)', '今天几月？ (Jīntiān jǐ yuè?)', '明天几号？ (Míngtiān jǐ hào?)'],
             answer: '今天星期几？ (Jīntiān xīngqī jǐ?)',
-            pinyin: 'Hỏi thứ trong tuần dùng "星期几".',
-            trans: 'Dịch: Hôm nay thứ mấy?'
+            pinyin: 'Hỏi về thứ tự trong tuần dùng cụm "星期几".',
+            trans: 'Dịch nghĩa: Hôm nay là thứ mấy thế?'
         },
         {
             type: 'choice', tag: 'Thời gian',
             question: 'Tháng 9 ngày 10 nói như thế nào?',
-            options: ['九月十号 (Jiǔyuè shí hào)', '十月 nine 号 (Shíyuè jiǔ hào)', '九月十月 (Jiǔyuè shí yuè)', '九号十月 (Jiǔhào shí yuè)'],
+            options: ['九月十号 (Jiǔyuè shí hào)', '十月九号 (Shíyuè jiǔ hào)', '九月十月 (Jiǔyuè shí yuè)', '九号十月 (Jiǔhào shí yuè)'],
             answer: '九月十号 (Jiǔyuè shí hào)',
-            pinyin: 'Quy tắc: To trước nhỏ sau (Tháng -> Ngày).',
-            trans: 'Dịch: Ngày 10 tháng 9.'
+            pinyin: 'Trật tự: Đơn vị lớn (Tháng) đứng trước đơn vị nhỏ (Ngày).',
+            trans: 'Dịch nghĩa: Ngày mùng 10 tháng 9.'
         },
         {
             type: 'reorder', tag: 'Sắp xếp',
             question: 'Sắp xếp câu: "Hôm nay là thứ ba"',
             words: ['今天', '是', '星期', '二'],
             correct: '今天是星期二',
-            pinyin: 'Có thể bỏ "是" trong khẩu ngữ khi nói về thời gian.',
-            trans: 'Hôm nay là thứ ba.'
+            pinyin: 'Trong câu phán đoán thời gian, từ "是" có thể dùng để nhấn mạnh.',
+            trans: 'Dịch nghĩa: Hôm nay là thứ ba rồi.'
         },
         {
             type: 'choice', tag: 'Từ vựng',
             question: 'Hôm qua là ngày mấy?',
             options: ['昨天几号？ (Zuótiān jǐ hào?)', '明天几号？ (Míngtiān jǐ hào?)', '今天几号？ (Jīntiān jǐ hào?)', '哪天几号？ (Nǎtiān jǐ hào?)'],
             answer: '昨天几号？ (Zuótiān jǐ hào?)',
-            pinyin: '"昨天" là hôm qua.',
-            trans: 'Dịch: Hôm qua ngày mấy?'
+            pinyin: 'Phân biệt: 昨天 (Hôm qua), 今天 (Hôm nay), 明天 (Ngày mai).',
+            trans: 'Dịch nghĩa: Hôm qua là ngày bao nhiêu?'
         },
         {
             type: 'choice', tag: 'Hội thoại',
             question: 'Bạn muốn mời bạn đi uống trà, bạn nói thế nào?',
-            options: ['我们去喝茶吧 (Wǒmen qù hē chá ba)', '我们去看书吧 (Wǒmen qù kànshū ba)', '我们在家吧 (Wǒmen zài jiā ba)', '我不喝茶 (Wǒ bù hē chá)'],
-            answer: 'Chúng ta đi uống trà nhé',
-            answer: 'Chúng ta đi uống trà nhé',
+            options: ['我们去喝茶吧 (Wǒmen qù hē chá ba)', 'Chúng ta xem sách nhé', 'Chúng ta ở nhà nhé', 'Tôi không uống trà'],
             answer: 'Chúng ta đi uống trà nhé'
         },
         {
             type: 'reorder', tag: 'Sắp xếp',
             question: 'Sắp xếp câu: "Tháng này là tháng tám"',
             words: ['这个', '月', '是', '八月'],
-            correct: '这个月是八月',
-            pinyin: 'Sử dụng "这个月" cho tháng này.',
-            trans: 'Tháng này là tháng tám.'
+            correct: '这个月 là tháng 8',
+            pinyin: 'Sử dụng lượng từ "个" cho tháng: 这个月.',
+            trans: 'Dịch nghĩa: Tháng này là tháng 8.'
         },
         {
             type: 'choice', tag: 'Từ vựng',
             question: 'Từ "Cửa hàng" trong tiếng Trung là gì?',
             options: ['商店 (Shāngdiàn)', '学校 (Xuéxiào)', '图书馆 (Túshūguǎn)', '家 (Jiā)'],
             answer: '商店 (Shāngdiàn)',
-            pinyin: 'Shāngdiàn: Cửa hàng.',
-            trans: 'Dịch: Cửa hàng.'
+            pinyin: 'Từ mới: 商店 (Shāngdiàn) nghĩa là cửa hàng hoặc cửa hiệu.',
+            trans: 'Dịch nghĩa: Cửa hàng.'
         },
         {
             type: 'choice', tag: 'Ngữ pháp',
             question: 'Trong tiếng Trung, thứ tự nói ngày tháng năm là gì?',
             options: ['Năm - Tháng - Ngày', 'Ngày - Tháng - Năm', 'Tháng - Ngày - Năm', 'Năm - Ngày - Tháng'],
             answer: 'Năm - Tháng - Ngày',
-            pinyin: 'Quy tắc: Đơn vị lớn đứng trước, nhỏ đứng sau.',
-            trans: 'Năm -> Tháng -> Ngày.'
+            pinyin: 'Ghi nhớ: Quy tắc từ lớn đến bé (Năm -> Tháng -> Ngày).',
+            trans: 'Ví dụ: 2024年3月5号.'
         },
         {
             type: 'reorder', tag: 'Sắp xếp',
             question: 'Sắp xếp câu: "Bạn tên là gì?"',
             words: ['你', '叫', '什么', '名字'],
             correct: '你叫什么名字',
-            pinyin: 'Ôn tập cấu trúc bài cũ.',
-            trans: 'Bạn tên là gì?'
+            pinyin: 'Cấu trúc hỏi tên cơ bản nhất trong HSK1.',
+            trans: 'Dịch nghĩa: Bạn tên gọi là gì?'
         },
         {
             type: 'choice', tag: 'Giao tiếp',
             question: 'Bạn muốn nói: "Ngày mai tôi không đi học"',
-            options: ['明天我不去学校 (Míngtiān wǒ bù qù xuéxiào)', '明天我去学校 (Míngtiān wǒ qù xuéxiào)', '今天我不去学校 (Jīntiān wǒ bù qù xuéxiào)', '昨天我不去学校 (Zuótiān wǒ bù qù xuéxiào)'],
-            answer: 'Ngày mai tôi không đi học',
-            answer: 'Ngày mai tôi không đi học',
+            options: ['明天我不去学校 (Míngtiān wǒ bù qù xuéxiào)', 'Hôm nay tôi không đi học', 'Hôm qua tôi không đi học', 'Ngày mai tôi đi học'],
             answer: 'Ngày mai tôi không đi học'
         },
         {
@@ -316,27 +315,31 @@
             question: 'Chủ nhật trong tiếng Trung có hai cách nói là gì?',
             options: ['星期日 / 星期天', '星期六 / 星期日', '星期七 / 星期日', '星期天 / 星期六'],
             answer: '星期日 / 星期天',
-            pinyin: 'Xīngqīrì và Xīngqītiān đều là Chủ Nhật.',
-            trans: 'Dịch: Chủ nhật.'
+            pinyin: 'Phân biệt: 星期日 (Văn viết) và 星期天 (Văn nói).',
+            trans: 'Dịch nghĩa: Ngày Chủ Nhật.'
         },
         {
             type: 'reorder', tag: 'Sắp xếp',
             question: 'Sắp xếp câu: "Hôm nay là ngày 5 tháng 3"',
             words: ['今天', '三月', '五号'],
             correct: '今天三月五号',
-            pinyin: 'Nhớ quy tắc Tháng trước Ngày sau.',
-            trans: 'Hôm nay ngày 5 tháng 3.'
+            pinyin: 'Nhớ trật tự: Tháng (月) luôn đứng trước Ngày (号).',
+            trans: 'Dịch nghĩa: Hôm nay là mùng 5 tháng 3.'
         }
     ];
 
-    // Gán lại các đáp án đúng cho các câu đặc biệt
+    // Cập nhật logic đáp án (Sửa lỗi logic so sánh ở câu 5, 12, 17)
     questions[5].answer = questions[5].options[0];
     questions[12].answer = questions[12].options[0];
     questions[17].answer = questions[17].options[0];
 
     let currentIdx = 0; let score = 0; let userSelection = [];
 
-    function startGame() { currentIdx = 0; score = 0; renderQuestion(); }
+    function startGame() { 
+        currentIdx = 0; 
+        score = 0; 
+        renderQuestion(); 
+    }
 
     function updateUI() {
         document.getElementById('progress-fill').style.width = `${(currentIdx / questions.length) * 100}%`;
@@ -389,7 +392,11 @@
         userSelection.forEach((item, i) => {
             const div = document.createElement('div');
             div.className = 'chip'; div.innerText = item.text;
-            div.onclick = () => { document.getElementById(`c-${item.id}`).classList.remove('selected'); userSelection.splice(i, 1); drawSlots(); };
+            div.onclick = () => { 
+                document.getElementById(`c-${item.id}`).classList.remove('selected'); 
+                userSelection.splice(i, 1); 
+                drawSlots(); 
+            };
             s.appendChild(div);
         });
     }
@@ -397,6 +404,7 @@
     function checkReorder() {
         const q = questions[currentIdx];
         const userStr = userSelection.map(x=>x.text).join('');
+        // Loại bỏ khoảng trắng và so sánh
         const isRight = userStr === q.correct.replace(/\s/g,'');
         if(isRight) { score += 5; playSound('correct'); } else { playSound('wrong'); }
         showModal(isRight, isRight ? "Chính xác!" : `Thứ tự đúng là: <br><b>${q.correct}</b>`, q.pinyin, q.trans);
