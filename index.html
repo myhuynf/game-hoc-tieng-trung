@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khu Vườn Học Tập Của Nga - Ghibli Style</title>
+    <title>HSK1 - Bài 6: Tôi biết nói tiếng Trung</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,184 +16,300 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Quicksand', sans-serif;
             background: var(--ghibli-sky);
-            background-image: 
-                linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0)),
-                url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0)), url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-attachment: fixed;
-            color: #333;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        header {
-            text-align: center;
-            padding: 50px 20px;
-            background: rgba(255, 255, 255, 0.75);
-            width: 100%;
-            margin-bottom: 30px;
-            border-bottom: 5px solid var(--ghibli-green);
-            backdrop-filter: blur(5px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        h1 {
             margin: 0;
-            color: var(--ghibli-dark-green);
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .sub-title-box {
-            display: inline-block;
-            margin: 15px 0;
-            padding: 8px 25px;
-            border: 2px dashed var(--ghibli-dark-green);
-            border-radius: 15px;
-            background-color: rgba(255, 183, 197, 0.3);
-            color: var(--ghibli-dark-green);
-            font-weight: 600;
-            font-size: 1.2rem;
-            position: relative;
-        }
-
-        .sub-title-box::before { content: '🌸'; position: absolute; left: -18px; top: -5px; }
-        .sub-title-box::after { content: '🌸'; position: absolute; right: -18px; top: -5px; }
-
-        .welcome-quote {
-            font-weight: 600;
-            font-size: 1.15rem;
-            max-width: 800px;
-            line-height: 1.8;
-            margin-top: 10px;
-            background: linear-gradient(45deg, #4f7942, #8b5a2b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .leaves-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .leaf {
-            position: absolute;
-            display: block;
-            width: 15px;
-            height: 15px;
-            background: var(--ghibli-leaf);
-            opacity: 0.6;
-            border-radius: 50% 0 50% 0;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% { opacity: 0; top: -10px; transform: translateX(0px) rotate(0deg); }
-            10% { opacity: 0.6; }
-            100% { opacity: 0; top: 100%; transform: translateX(100px) rotate(720deg); }
-        }
-
-        .leaf:nth-child(1) { left: 10%; animation-duration: 6s; }
-        .leaf:nth-child(2) { left: 30%; animation-duration: 8s; animation-delay: 1s; }
-        .leaf:nth-child(3) { left: 50%; animation-duration: 7s; animation-delay: 2s; }
-        .leaf:nth-child(4) { left: 70%; animation-duration: 9s; animation-delay: 0.5s; }
-        .leaf:nth-child(5) { left: 90%; animation-duration: 6s; animation-delay: 3s; }
-
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            width: 95%;
-            padding-bottom: 50px;
-            z-index: 1;
-        }
-
-        .game-card {
-            background: white;
-            border-radius: 20px;
             padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 3px solid transparent;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        }
+
+        .exit-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--ghibli-dark-green);
+            padding: 10px 18px;
+            border-radius: 50px;
             text-decoration: none;
-            color: inherit;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 2px solid var(--ghibli-green);
+            z-index: 1000;
         }
 
-        .game-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            border-color: var(--ghibli-leaf);
-            box-shadow: 0 15px 30px rgba(79, 121, 66, 0.2);
+        .game-container {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 5px solid var(--ghibli-green);
         }
 
-        .game-icon { font-size: 45px; margin-bottom: 12px; }
-        .game-title { font-weight: 600; font-size: 1.1rem; color: var(--ghibli-wood); }
+        /* Mặc định ẩn các màn hình không cần thiết */
+        #quiz-screen, #result-screen { display: none; }
+        #intro-screen { display: block; }
 
-        footer {
-            margin-top: auto;
-            padding: 20px;
-            font-size: 0.9rem;
-            color: var(--ghibli-dark-green);
+        .game-stats { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; color: var(--ghibli-dark-green); }
+        .progress-bar { width: 100%; height: 10px; background: #eee; border-radius: 5px; margin-bottom: 20px; overflow: hidden; }
+        #progress { height: 100%; background: var(--ghibli-green); width: 0%; transition: 0.4s; }
+
+        .question-box { font-size: 1.3rem; color: var(--ghibli-wood); margin-bottom: 20px; line-height: 1.8; }
+        ruby { ruby-align: center; }
+        rt { font-size: 0.55em; color: #666; font-weight: 400; }
+
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .option-btn { 
+            background: white; border: 2px solid var(--ghibli-leaf); padding: 15px 10px; 
+            border-radius: 12px; font-size: 1.1rem; cursor: pointer; transition: 0.2s; 
+            font-family: inherit; font-weight: 600; 
         }
+        .option-btn:hover:not(:disabled) { background: var(--ghibli-sky); }
+        .option-btn.correct { background: var(--ghibli-dark-green) !important; color: white !important; }
+        .option-btn.wrong { background: #ff7675 !important; color: white !important; }
+
+        .word-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .chip { background: #f0f0f0; padding: 10px 15px; border-radius: 8px; cursor: pointer; border: 2px solid #ddd; }
+        .chip.selected { opacity: 0.3; cursor: default; }
+        .answer-area { min-height: 50px; border-bottom: 2px dashed var(--ghibli-green); margin-bottom: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 10px; }
+
+        .feedback-box { 
+            margin-top: 20px; padding: 15px; border-radius: 12px; display: none; 
+            text-align: left; font-size: 0.95rem; line-height: 1.5; background: #f9f9f9;
+        }
+        .explanation { font-style: italic; margin-top: 8px; color: #555; border-top: 1px solid #ddd; padding-top: 8px; }
+
+        .btn-main { background: var(--ghibli-wood); color: white; border: none; padding: 12px 30px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; margin-top: 15px; font-weight: bold; transition: 0.3s; }
+        .btn-main:hover { transform: scale(1.05); background: #5d3d1d; }
+
+        @media (max-width: 500px) { .options-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="leaves-container">
-        <div class="leaf"></div><div class="leaf"></div><div class="leaf"></div><div class="leaf"></div><div class="leaf"></div>
+<a href="index.html" class="exit-button">🏠 Quay về vườn</a>
+
+<div class="game-container">
+    <div id="intro-screen">
+        <div style="background: var(--ghibli-pink); color: white; display: inline-block; padding: 5px 15px; border-radius: 20px; font-weight: bold; margin-bottom: 15px;">🌸 Nga Học HSK</div>
+        <h1><ruby>Bài<rt>bài</rt></ruby> 6: <ruby>我会说汉语<rt>Wǒ huì shuō Hànyǔ</rt></ruby></h1>
+        <p>Thử thách 30 câu hỏi: Trắc nghiệm, Điền từ, Sắp xếp & Dịch thuật.<br>
+        <b style="color: var(--ghibli-dark-green);">Đúng +10đ</b> | <b style="color: #d63031;">Sai -5đ</b></p>
+        <button class="btn-main" onclick="startQuiz()">Bắt đầu ngay 🌿</button>
     </div>
 
-    <h1>Khu Vườn Tiếng Trung 🌿</h1>
-    
-    <div class="sub-title-box">
-        Nga Học HSK
+    <div id="quiz-screen">
+        <div class="game-stats">
+            <span id="question-count">Câu: 1/30</span>
+            <span id="score-display">Điểm: 0</span>
+        </div>
+        <div class="progress-bar"><div id="progress"></div></div>
+        
+        <div id="question-content">
+            <div class="question-box" id="question-text"></div>
+            <div id="answer-section"></div>
+        </div>
+
+        <div id="feedback-box" class="feedback-box">
+            <div id="result-status"></div>
+            <div id="explanation-text" class="explanation"></div>
+        </div>
+        
+        <button id="next-btn" class="btn-main" style="display: none;" onclick="handleNext()">Tiếp tục ➡</button>
     </div>
 
-    <p class="welcome-quote">
-        Chào mừng bạn đến với khu vườn nhỏ của Nga,<br>
-        Nơi tiếng Trung nảy mầm mỗi ngày.
-    </p>
-</header>
-
-<div class="container">
-    <a href="BO THU 1.html" class="game-card"><div class="game-icon">🌱</div><div class="game-title">BỘ THỦ 1</div></a>
-    <a href="BO THU 2.html" class="game-card"><div class="game-icon">🌿</div><div class="game-title">BỘ THỦ 2</div></a>
-    <a href="BO THU 3.html" class="game-card"><div class="game-icon">☘️</div><div class="game-title">BỘ THỦ 3</div></a>
-    <a href="BO THU 4.html" class="game-card"><div class="game-icon">🍀</div><div class="game-title">BỘ THỦ 4</div></a>
-    <a href="BO THU 5.html" class="game-card"><div class="game-icon">🍃</div><div class="game-title">BỘ THỦ 5</div></a>
-    <a href="BO THU 6.html" class="game-card"><div class="game-icon">🌳</div><div class="game-title">BỘ THỦ 6</div></a>
-    
-    <a href="HSK1-LESSON1-2.html" class="game-card"><div class="game-icon">📚</div><div class="game-title">HSK1: Bài 1-2</div></a>
-    <a href="HSK1-LESSON3.html" class="game-card"><div class="game-icon">📖</div><div class="game-title">HSK1: Bài 3</div></a>
-    <a href="HSK1-LESSON4.html" class="game-card"><div class="game-icon">🏠</div><div class="game-title">HSK1: Bài 4</div></a>
-    <a href="HSK1-LESSON5.html" class="game-card"><div class="game-icon">👨‍👩‍👧</div><div class="game-title">HSK1: Bài 5</div></a>
-    <a href="HSK1-LESSON6.html" class="game-card"><div class="game-icon">🗣️</div><div class="game-title">HSK1: Bài 6</div></a>
+    <div id="result-screen">
+        <h1>Kết Quả Khu Vườn</h1>
+        <span id="rank-icon" style="font-size: 5rem;">🌱</span>
+        <div style="font-size: 2.5rem; font-weight: bold; color: var(--ghibli-dark-green);" id="final-score">0đ</div>
+        <p id="correct-count-text"></p>
+        <div id="evaluation-detail" style="background: #f0f7ed; padding: 20px; border-radius: 15px; text-align: left; margin: 20px 0;"></div>
+        <button class="btn-main" onclick="location.reload()">Chơi lại 🔄</button>
+    </div>
 </div>
 
-<footer>
-    © 2026 - Made with ❤️ for Nga Học HSK
-</footer>
+<script>
+    const rawQuestions = [
+        // TRẮC NGHIỆM
+        { type: 'mc', q: "Để diễn đạt một khả năng có được thông qua học tập, ta dùng:", options: ["<ruby>Shi<rt>shì</rt></ruby>", "<ruby>You<rt>yǒu</rt></ruby>", "<ruby>Hui<rt>huì</rt></ruby>", "<ruby>Jiao<rt>jiào</rt></ruby>"], a: 2, exp: "Động từ '会' (huì) chỉ kỹ năng có được qua rèn luyện." },
+        { type: 'mc', q: "Phủ định của '<ruby>我会做中国菜<rt>Wǒ huì zuò Zhōngguó cài</rt></ruby>' là:", options: ["<ruby>我没做中国菜。<rt>Wǒ méi zuò...</rt></ruby>", "<ruby>我不写中国菜。<rt>Wǒ bù xiě...</rt></ruby>", "<ruby>我不会做中国菜。<rt>Wǒ bú huì zuò...</rt></ruby>", "<ruby>我会不做中国菜。<rt>Wǒ huì bú zuò...</rt></ruby>"], a: 2, exp: "Phủ định của '会' là '不会'." },
+        { type: 'mc', q: "Điền từ: '<ruby>这个汉字____读？<rt>Zhè ge Hànzì... dú?</rt></ruby>'", options: ["<ruby>什么<rt>shénme</rt></ruby>", "<ruby>怎么<rt>zěnme</rt></ruby>", "<ruby>谁<rt>shéi</rt></ruby>", "<ruby>哪<rt>nǎ</rt></ruby>"], a: 1, exp: "'怎么' (zěnme) + động từ hỏi về cách thức." },
+        { type: 'mc', q: "Câu nào miêu tả món ăn Trung Quốc rất ngon?", options: ["<ruby>中国菜好。<rt>Zhōngguó cài hǎo.</rt></ruby>", "<ruby>中国菜不吃。<rt>Zhōngguó cài bù chī.</rt></ruby>", "<ruby>中国菜很好吃。<rt>Zhōngguó cài hěn hǎochī.</rt></ruby>", "<ruby>中国菜很做。<rt>Zhōngguó cài hěn zuò.</rt></ruby>"], a: 2, exp: "'很好吃' nghĩa là rất ngon." },
+        { type: 'mc', q: "'<ruby>汉字<rt>Hànzì</rt></ruby>' có nghĩa là gì?", options: ["Tiếng Trung", "Chữ Hán", "Người Trung", "Nước Trung"], a: 1, exp: "Hànzì là Chữ Hán." },
+        { type: 'mc', q: "Vị trí của phó từ '<ruby>很<rt>hěn</rt></ruby>':", options: ["Sau tính từ", "Cuối câu", "Trước tính từ", "Đầu câu"], a: 2, exp: "Công thức: S + 很 + Tính từ." },
+        { type: 'mc', q: "Dịch: 'Tôi biết đọc chữ Hán nhưng không biết viết'", options: ["<ruby>我会写，不会说。<rt>Wǒ huì xiě...</rt></ruby>", "<ruby>我会读，不会 nói。<rt>Wǒ huì dú...</rt></ruby>", "<ruby>我会写，不会 đọc。<rt>Wǒ huì xiě...</rt></ruby>", "<ruby>我会读，不会写。<rt>Wǒ huì dú, bú huì xiě.</rt></ruby>"], a: 3, exp: "Đọc là '读', viết là '写'." },
+        { type: 'mc', q: "'Mẹ của tôi' là:", options: ["<ruby>我老师<rt>Wǒ lǎoshī</rt></ruby>", "<ruby>我同学<rt>Wǒ tóngxué</rt></ruby>", "<ruby>我妈妈<rt>Wǒ māma</rt></ruby>", "<ruby>我朋友<rt>Wǒ péngyou</rt></ruby>"], a: 2, exp: "Māma là mẹ." },
+        { type: 'mc', q: "'<ruby>怎么<rt>zěnme</rt></ruby>' thường đứng ở đâu?", options: ["Sau động từ", "Trước động từ", "Cuối câu", "Sau tân ngữ"], a: 1, exp: "Cách dùng: 怎么 + Động từ." },
+        { type: 'mc', q: "'Món ăn' tiếng Trung là:", options: ["<ruby>饭<rt>fàn</rt></ruby>", "<ruby>水<rt>shuǐ</rt></ruby>", "<ruby>菜<rt>cài</rt></ruby>", "<ruby>茶<rt>chá</rt></ruby>"], a: 2, exp: "'菜' (cài) là món ăn." },
 
+        // ĐIỀN TỪ
+        { type: 'mc', q: "我 ___ <ruby>写 汉字<rt>xiě Hànzì</rt></ruby> (Tôi biết viết chữ Hán)", options: ["会", "说", "怎么", "菜"], a: 0, exp: "Dùng '会' chỉ kỹ năng." },
+        { type: 'mc', q: "<ruby>中国<rt>Zhōngguó</rt></ruby> ___ <ruby>很好吃<rt>hěn hǎochī</rt></ruby>.", options: ["会", "菜", "写", "读"], a: 1, exp: "Trung Quốc Thái (Món ăn Trung Quốc)." },
+        { type: 'mc', q: "<ruby>你的 汉语 名字<rt>Nǐ de Hànyǔ míngzi</rt></ruby> ___ <ruby>写<rt>xiě</rt></ruby>?", options: ["怎么", "很", "说", "做"], a: 0, exp: "Hỏi cách viết dùng '怎么'." },
+        { type: 'mc', q: "<ruby>我 妈妈<rt>Wǒ māma</rt></ruby> ___ <ruby>做 中国 菜<rt>zuò Zhōngguó cài</rt></ruby>", options: ["不会", "很", "写", "说"], a: 0, exp: "Phủ định kỹ năng dùng '不会'." },
+        { type: 'mc', q: "<ruby>你<rt>Nǐ</rt></ruby> ___ <ruby>说 汉语 吗<rt>shuō Hànyǔ ma</rt></ruby>?", options: ["会", "怎么", "做", "菜"], a: 0, exp: "Hỏi khả năng dùng '会'." },
+        { type: 'mc', q: "<ruby>这个 字 我 会<rt>Zhè ge zì wǒ huì</rt></ruby> ___ , <ruby>不会 写<rt>bú huì xiě</rt></ruby>.", options: ["读", "做", "菜", "很"], a: 0, exp: "Biết đọc (读) nhưng không biết viết." },
+        { type: 'mc', q: "<ruby>她的 汉语 老师 是<rt>Tā de Hànyǔ lǎoshī shì</rt></ruby> ___ <ruby>国 人<rt>guó rén</rt></ruby>?", options: ["哪", "会", "很", "怎么"], a: 0, exp: "Hỏi quốc tịch dùng '哪'." },
+        { type: 'mc', q: "<ruby>我 妈妈 做 的 菜<rt>Wǒ māma zuò de cài</rt></ruby> ___ <ruby>好吃<rt>hǎochī</rt></ruby>.", options: ["很", "说", "做", "写"], a: 0, exp: "Nhấn mạnh mức độ ngon dùng '很'." },
+        { type: 'mc', q: "<ruby>老师，请问 这个<rt>Lǎoshī, qǐngwèn zhè ge</rt></ruby> ___ <ruby>怎么 读<rt>zěnme dú</rt></ruby>?", options: ["汉字", "会", "说", "菜"], a: 0, exp: "Hỏi chữ này (汉字) đọc thế nào." },
+        { type: 'mc', q: "<ruby>我<rt>Wǒ</rt></ruby> ___ <ruby>说 中国 话<rt>shuō Zhōngguó huà</rt></ruby>.", options: ["会", "怎么", "做", "写"], a: 0, exp: "Biết nói dùng '会'." },
+
+        // SẮP XẾP CÂU
+        { type: 'sort', q: "Sắp xếp: 会 / 我 / 写 / 汉字 / 。", a: ["我", "会", "写", "汉字", "。"], exp: "Cấu trúc: Chủ ngữ + 会 + Động từ + Tân ngữ." },
+        { type: 'sort', q: "Sắp xếp: 很好吃 / 中国 / 菜 / 。", a: ["中国", "菜", "很好吃", "。"], exp: "Tính từ làm vị ngữ đứng sau danh từ." },
+        { type: 'sort', q: "Sắp xếp: 怎么 / 名字 / 你的 / 写 / 汉语 / ？", a: ["你的", "汉语", "名字", "怎么", "写", "？"], exp: "Trạng từ '怎么' đứng trước động từ." },
+        { type: 'sort', q: "Sắp xếp: 不会 / 我 / 做 / 菜 / 中国 / 。", a: ["我", "不会", "做", "中国", "菜", "。"], exp: "Phủ định '不会' đứng trước động từ chính." },
+        { type: 'sort', q: "Sắp xếp: 读 / 怎么 / 这个 / 字 / ？", a: ["这个", "字", "怎么", "读", "？"], exp: "Chủ ngữ + 怎么 + Động từ?" },
+
+        // DỊCH & THỰC TẾ
+        { type: 'mc', q: "Dịch: 'Tôi biết nói tiếng Trung, không biết nói tiếng Anh'", options: ["<ruby>我会说汉语，不会说英语。<rt>Wǒ huì shuō Hànyǔ...</rt></ruby>", "Tôi chỉ nói tiếng Việt", "Tôi không biết nói gì", "Tiếng Anh khó quá"], a: 0, exp: "Tiếng Anh là 英语 (Yīngyǔ)." },
+        { type: 'mc', q: "Trả lời: <ruby>你会做中国菜吗？<rt>Nǐ huì zuò Zhōngguó cài ma?</rt></ruby>", options: ["<ruby>我会做中国菜。<rt>Wǒ huì zuò...</rt></ruby>", "<ruby>我是菜。<rt>Wǒ shì cài.</rt></ruby>", "Tôi đi ngủ", "Không biết"], a: 0, exp: "Câu trả lời đúng ngữ pháp cho câu hỏi '会...吗?'." },
+        { type: 'mc', q: "Dịch: 'Bạn có biết viết chữ Hán không?'", options: ["<ruby>你会写汉字吗？<rt>Nǐ huì xiě Hànzì ma?</rt></ruby>", "Bạn là ai?", "Chữ Hán ở đâu?", "Bạn biết đọc không?"], a: 0, exp: "Viết chữ Hán là 写汉字." },
+        { type: 'mc', q: "Dịch: 'Người Việt Nam đều biết nói tiếng Việt'", options: ["<ruby>越南人都会说越南语。<rt>Yuènán rén dōu huì...</rt></ruby>", "Người Việt Nam thích ăn phở", "Tiếng Trung rất hay", "Tôi là người Việt"], a: 0, exp: "Đều biết nói là 都会说." },
+        { type: 'mc', q: "Trả lời: <ruby>你觉得中国菜好吃吗？<rt>Nǐ juéde Zhōngguó cài hǎochī ma?</rt></ruby>", options: ["<ruby>我觉得很好吃。<rt>Wǒ juéde hěn hǎochī.</rt></ruby>", "Tôi không đói", "Món ăn rẻ", "Tôi thích uống trà"], a: 0, exp: "Hỏi về cảm nhận ngon dùng '好吃'." }
+    ];
+
+    let questions = [];
+    let curIdx = 0;
+    let score = 0;
+    let correctCount = 0;
+    let selectedOrder = [];
+
+    function startQuiz() {
+        console.log("Game started!"); // Kiểm tra trong console
+        questions = [...rawQuestions].sort(() => Math.random() - 0.5);
+        curIdx = 0; score = 0; correctCount = 0;
+        
+        document.getElementById('intro-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'none';
+        document.getElementById('quiz-screen').style.display = 'block';
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const q = questions[curIdx];
+        document.getElementById('question-count').innerText = `Câu: ${curIdx + 1}/30`;
+        document.getElementById('score-display').innerText = `Điểm: ${score}`;
+        document.getElementById('progress').style.width = `${((curIdx) / 30) * 100}%`;
+        document.getElementById('question-text').innerHTML = q.q;
+        document.getElementById('feedback-box').style.display = 'none';
+        document.getElementById('next-btn').style.display = 'none';
+        
+        const area = document.getElementById('answer-section');
+        area.innerHTML = '';
+
+        if (q.type === 'mc') {
+            const grid = document.createElement('div');
+            grid.className = 'options-grid';
+            q.options.forEach((opt, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = opt;
+                btn.onclick = () => checkAnswer(i);
+                grid.appendChild(btn);
+            });
+            area.appendChild(grid);
+        } else if (q.type === 'sort') {
+            selectedOrder = [];
+            const ansArea = document.createElement('div');
+            ansArea.className = 'answer-area';
+            ansArea.id = 'answer-area-box';
+            
+            const chipBox = document.createElement('div');
+            chipBox.className = 'word-chips';
+            
+            let shuffleWords = [...q.a].sort(() => Math.random() - 0.5);
+            shuffleWords.forEach((w) => {
+                const chip = document.createElement('div');
+                chip.className = 'chip';
+                chip.innerText = w;
+                chip.onclick = () => {
+                    if (chip.classList.contains('selected')) return;
+                    chip.classList.add('selected');
+                    selectedOrder.push(w);
+                    renderSortAnswer();
+                };
+                chipBox.appendChild(chip);
+            });
+            
+            const checkBtn = document.createElement('button');
+            checkBtn.className = 'btn-main';
+            checkBtn.innerText = 'Kiểm tra câu 🆗';
+            checkBtn.onclick = checkSortAnswer;
+
+            area.appendChild(ansArea);
+            area.appendChild(chipBox);
+            area.appendChild(checkBtn);
+        }
+    }
+
+    function renderSortAnswer() {
+        const area = document.getElementById('answer-area-box');
+        area.innerHTML = '';
+        selectedOrder.forEach(w => {
+            const div = document.createElement('div');
+            div.className = 'chip';
+            div.innerText = w;
+            area.appendChild(div);
+        });
+    }
+
+    function checkAnswer(idx) {
+        const q = questions[curIdx];
+        const btns = document.querySelectorAll('.option-btn');
+        if (document.getElementById('next-btn').style.display === 'block') return;
+
+        const isCorrect = idx === q.a;
+        showFeedback(isCorrect, q.exp);
+        btns[q.a].classList.add('correct');
+        if (!isCorrect) btns[idx].classList.add('wrong');
+    }
+
+    function checkSortAnswer() {
+        const q = questions[curIdx];
+        const isCorrect = selectedOrder.join('') === q.a.join('');
+        showFeedback(isCorrect, q.exp);
+    }
+
+    function showFeedback(isCorrect, exp) {
+        const fb = document.getElementById('feedback-box');
+        fb.style.display = 'block';
+        if (isCorrect) {
+            document.getElementById('result-status').innerHTML = '✅ <b style="color:green">Chính xác!</b> +10đ';
+            score += 10; correctCount++;
+        } else {
+            document.getElementById('result-status').innerHTML = '❌ <b style="color:red">Sai rồi!</b> -5đ';
+            score = Math.max(0, score - 5);
+        }
+        document.getElementById('explanation-text').innerHTML = `<b>Giải thích:</b> ${exp}`;
+        document.getElementById('next-btn').style.display = 'block';
+        document.getElementById('score-display').innerText = `Điểm: ${score}`;
+    }
+
+    function handleNext() {
+        curIdx++;
+        if (curIdx < questions.length) showQuestion();
+        else showFinalResult();
+    }
+
+    function showFinalResult() {
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('final-score').innerText = `${score}đ`;
+        document.getElementById('correct-count-text').innerText = `Bạn đúng ${correctCount}/30 câu.`;
+        
+        let text = score >= 200 ? "🌳 Tuyệt vời! Bạn là bậc thầy HSK6!" : "🌱 Cố gắng thêm chút nữa nhé!";
+        document.getElementById('evaluation-detail').innerText = text;
+    }
+</script>
 </body>
 </html>
