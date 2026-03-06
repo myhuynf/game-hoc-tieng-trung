@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSK 1 - Bài 8: Đồng bộ Pinyin - Nga Học HSK</title>
+    <title>HSK 1 - Bài 8: 你想喝什么？</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -37,6 +37,7 @@
             background-color: rgba(255, 183, 197, 0.3); color: var(--ghibli-dark-green); font-weight: 600;
         }
 
+        /* Card Styles for Vocab */
         .card { perspective: 1000px; cursor: pointer; height: 110px; }
         .card-inner { transition: transform 0.6s; transform-style: preserve-3d; position: relative; height: 100%; }
         .card.flipped .card-inner { transform: rotateY(180deg); }
@@ -90,6 +91,12 @@
         .shake-it { animation: shake 0.4s ease-in-out; }
         
         .pinyin-sub { font-size: 0.7rem; color: #e2e8f0; font-weight: normal; margin-bottom: 2px; }
+
+        /* Sort Area Styles */
+        #sort-bucket {
+            transition: all 0.2s;
+        }
+        #sort-bucket:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -110,7 +117,7 @@
         <!-- SCREEN: VOCAB -->
         <div id="screen-vocab" class="block">
             <div class="rule-box">
-                <b>Luật chơi:</b> Ghép cặp Chữ Hán (có Pinyin) với Nghĩa tiếng Việt tương ứng.
+                <b>Luật chơi:</b> Ghép cặp Chữ Hán (kèm Pinyin) với nghĩa tiếng Việt.
             </div>
 
             <div class="mb-6 bg-white/50 p-4 rounded-2xl shadow-sm border border-white">
@@ -173,72 +180,72 @@
         { 
             type: 'mc', q: "Cái ly này bao nhiêu tiền?", 
             opts: ["A. 这个杯子多少钱？ (Zhè ge bēizi duōshao qián?)", "B. 那个杯子多少钱？ (Nà ge bēizi duōshao qián?)", "C. 这个杯子多少？ (Zhè ge bēizi duōshao?)", "D. 这个杯子钱多少？ (Zhè ge bēizi qián duōshao?)"], 
-            ans: 0, explain: "Hỏi giá tiền cho vật ở gần: [这个 + Vật] + 多少钱? 💰"
+            ans: 0, explain: "Dùng [这个 + Danh từ] + 多少钱？ 💰"
         },
         { 
             type: 'mc', q: "Gia đình có 3 người, dùng lượng từ nào?", 
             opts: ["A. 三个人 (Sān gè rén)", "B. 三个口 (Sān gè kǒu)", "C. 三口人 (Sān kǒu rén)", "D. 三块人 (Sān kuài rén)"], 
-            ans: 2, explain: "Dùng '口' (kǒu) chuyên dụng cho nhân khẩu gia đình. 👨‍👩‍👧"
+            ans: 2, explain: "Dùng '口' (kǒu) cho nhân khẩu gia đình. 👨‍👩‍👧"
         },
         { 
             type: 'sort', q: "Sắp xếp câu: Tôi muốn ăn cơm.", 
             words: ["想 (xiǎng)", "我 (wǒ)", "吃 (chī)", "米饭 (mǐfàn)"], 
-            correct: "我想吃米饭", explain: "Tôi (我) + Muốn (想) + Ăn (吃) + Cơm (米饭). 🍚"
+            correct: "我想吃米饭", explain: "Cấu trúc: Chủ ngữ (我) + 想 (xiǎng) + Động từ (吃) + Tân ngữ (米饭). 🍚"
         },
         { 
             type: 'mc', q: "Chiều nay bạn muốn đi đâu?", 
             opts: ["A. 下午你想去哪儿？ (Xiàwǔ nǐ xiǎng qù nǎr?)", "B. 你去哪儿下午？ (Nǐ qù nǎr xiàwǔ?)", "C. 下午去哪儿你想？ (Xiàwǔ qù nǎr nǐ xiǎng?)", "D. 下午你想去什么？ (Xiàwǔ nǐ xiǎng qù shénme?)"], 
-            ans: 0, explain: "Thời gian đứng trước hoặc sau chủ ngữ. 🏃‍♂️"
+            ans: 0, explain: "Thời gian đứng trước hoặc sau chủ ngữ đều được. 🏃‍♂️"
         },
         { 
             type: 'mc', q: "Lượng từ cho '杯子' (bēizi - cái ly) là gì?", 
             opts: ["A. 一个 (yī gè)", "B. 一口 (yī kǒu)", "C. 一块 (yī kuài)", "D. 一朵 (yī duǒ)"], 
-            ans: 0, explain: "Dùng lượng từ '个' (gè) thông dụng cho cái ly. 🥤"
+            ans: 0, explain: "Dùng lượng từ '个' (gè) cho cốc/ly. 🥤"
         },
         { 
             type: 'mc', q: "Hỏi số lượng lớn hoặc hỏi giá tiền dùng gì?", 
             opts: ["A. 几 (jǐ)", "B. 多少 (duōshao)", "C. 什么 (shénme)", "D. 哪儿 (nǎr)"], 
-            ans: 1, explain: "Dùng '多少' (duōshao) khi hỏi giá hoặc số lượng lớn. 🔢"
+            ans: 1, explain: "Dùng '多少' (duōshao) để hỏi giá. 🔢"
         },
         { 
             type: 'sort', q: "Sắp xếp câu: Cái ly kia bao nhiêu tiền?", 
             words: ["多少钱 (duōshao qián)", "那 (nà)", "个 (gè)", "杯子 (bēizi)"], 
-            correct: "那个杯子多少钱", explain: "Kia (那) + Lượng từ (个) + Ly (杯子) + Bao nhiêu tiền (多少钱). 💸"
+            correct: "那个杯子多少钱", explain: "Cấu trúc: [那 + Lượng + Danh] + 多少钱？ 💸"
         },
         { 
             type: 'mc', q: "Tôi muốn mua cái ly này.", 
-            opts: ["A. 我想买这个杯子 (Wǒ xiǎng mǎi zhè ge bēizi)", "B. 我买想这个杯子 (Wǒ mǎi xiǎng zhè ge bēizi)", "C. 我想这个杯子买 (Wǒ xiǎng zhè ge bēizi mǎi)", "D. 这个杯子我想买 (Zhè ge bēizi wǒ xiǎng mǎi)"], 
-            ans: 0, explain: "Cấu trúc chuẩn: S + 想 + V + O. 🚫"
+            opts: ["A. 我想买这个杯子 (Wǒ xiǎng mǎi zhè ge bēizi)", "B. 我买想 cái này", "C. 我想 hē cái ly", "D. 我想买 cái ly kia"], 
+            ans: 0, explain: "Mua là '买' (mǎi), cái ly này là '这个杯子'. 🛒"
         },
         { 
             type: 'mc', q: "35 đồng (tệ) - Khẩu ngữ nói thế nào?", 
-            opts: ["A. 三十五块钱 (Sānshíwǔ kuài qián)", "B. 三十五块个 (Sānshíwǔ kuài gè)", "C. 三十五个钱 (Sānshíwǔ gè qián)", "D. 三十五元个 (Sānshíwǔ yuán gè)"], 
-            ans: 0, explain: "Văn nói dùng '块' (kuài). Đừng quên đơn vị tiền tệ này! 💵"
+            opts: ["A. 三十五块钱 (Sānshíwǔ kuài qián)", "B. 三十五元 (Sānshíwǔ yuán)", "C. 三十五个 (Sānshíwǔ gè)", "D. 三十五钱 (Sānshíwǔ qián)"], 
+            ans: 0, explain: "Văn nói dùng '块' (kuài). 💵"
         },
         { 
-            type: 'mc', q: "Phủ định của '想' (xiǎng - muốn) là gì?", 
+            type: 'mc', q: "Phủ định của '想' (muốn) là gì?", 
             opts: ["A. 不想 (bù xiǎng)", "B. 没想 (méi xiǎng)", "C. 不买 (bù mǎi)", "D. 想不 (xiǎng bù)"], 
-            ans: 0, explain: "Dùng '不想' (bù xiǎng) để nói không muốn làm gì đó. ☕"
+            ans: 0, explain: "Không muốn là '不想' (bù xiǎng). ☕"
         },
         { 
             type: 'mc', q: "Từ nào nghĩa là 'Cửa hàng'?", 
             opts: ["A. 商店 (shāngdiàn)", "B. 学校 (xuéxiào)", "C. 医院 (yīyuàn)", "D. 家 (jiā)"], 
-            ans: 0, explain: "商店 (shāngdiàn) là 'Thương Điếm' - Cửa hàng. 🛒"
+            ans: 0, explain: "商店 (shāngdiàn) nghĩa là Cửa hàng. 🛒"
         },
         { 
             type: 'sort', q: "Sắp xếp câu: Chiều nay tôi đi cửa hàng.", 
             words: ["去 (qù)", "商店 (shāngdiàn)", "下午 (xiàwǔ)", "我 (wǒ)"], 
-            correct: "下午我去商店", explain: "Thời gian (下午) + Chủ ngữ (我) + Động từ (去) + Địa điểm (商店). 🛍️"
+            correct: "下午我去商店", explain: "Thời gian + S + V + O. 🛍️"
         },
         { 
             type: 'mc', q: "Bạn muốn mua gì?", 
-            opts: ["A. 你想买什么？ (Nǐ xiǎng mǎi shénme?)", "B. 你想喝什么？ (Nǐ xiǎng hē shénme?)", "C. 你想吃什么？ (Nǐ xiǎng chī shénme?)", "D. 你去哪儿？ (Nǐ qù nǎr?)"], 
-            ans: 0, explain: "Mua là '买' (mǎi). Hỏi vật là '什么' (shénme). 🛒"
+            opts: ["A. 你想买什么？ (Nǐ xiǎng mǎi shénme?)", "B. 你想喝什么？", "C. 你想吃什么？", "D. 你去哪儿？"], 
+            ans: 0, explain: "Mua là '买', gì là '什么'. 🛒"
         },
         { 
             type: 'mc', q: "Cái nào là cấu trúc đúng của Số + Lượng + Danh?", 
-            opts: ["A. 三口人 (Sān kǒu rén)", "B. 三个杯子 (Sān gè bēizi)", "C. 三块钱 (Sān kuài qián)", "D. Tất cả đều đúng"], 
-            ans: 3, explain: "Hệ thống lượng từ trong tiếng Trung rất quan trọng. Rất tốt! ✨"
+            opts: ["A. 三口人", "B. 三个杯子", "C. 三块钱", "D. Tất cả đều đúng"], 
+            ans: 3, explain: "Cả 3 đều là cấu trúc [Số + Lượng + Danh] chuẩn. ✨"
         }
     ];
 
@@ -342,7 +349,7 @@
         const msg = document.getElementById('vocab-message');
         msg.classList.remove('hidden');
         document.getElementById('vocab-msg-icon').innerText = success ? "🥳" : "🤡";
-        document.getElementById('vocab-msg-text').innerText = success ? "Tuyệt đỉnh Pinyin! Bạn đã thắng!" : "Hết giờ! Xem lại Pinyin và thử lại nhé!";
+        document.getElementById('vocab-msg-text').innerText = success ? "Tuyệt vời! Bạn đã ghép đúng tất cả." : "Hết giờ rồi! Hãy thử lại nhé.";
     }
 
     function restartGrammar() {
@@ -373,9 +380,11 @@
             });
             aArea.appendChild(grid);
         } else {
-            qArea.innerHTML = `<p class="text-center text-gray-500 mb-3 italic">${q.q}</p><div id="sort-bucket" class="min-h-[100px] p-4 bg-white/60 rounded-xl border-2 border-dashed border-green-200 flex flex-wrap gap-2 justify-center items-center text-green-800 font-bold text-lg cursor-pointer"></div>`;
+            // Sort Question - Đã xóa Hán tự trong câu hỏi (CHỈ HIỆN NGHĨA VIỆT)
+            qArea.innerHTML = `<p class="text-center text-gray-500 mb-3 italic">Hãy sắp xếp các thẻ dưới đây thành câu đúng:</p><p class="text-center font-bold text-green-800 mb-4">${q.q.replace('Sắp xếp câu: ', '')}</p><div id="sort-bucket" class="min-h-[100px] p-4 bg-white/60 rounded-xl border-2 border-dashed border-green-200 flex flex-wrap gap-2 justify-center items-center text-green-800 font-bold text-lg cursor-pointer" title="Bấm vào đây để xóa từ cuối cùng"></div>`;
             const pool = document.createElement('div'); pool.className = "flex flex-wrap gap-2 justify-center mt-6";
             sortSequence = [];
+            
             document.getElementById('sort-bucket').onclick = () => { if(sortSequence.length>0) { const last = sortSequence.pop(); pool.querySelector(`[data-uid="${last.uid}"]`).classList.remove('hidden'); renderSortBucket(); } };
             
             [...q.words].sort(() => 0.5 - Math.random()).forEach((w, idx) => {
@@ -395,7 +404,11 @@
 
     function renderSortBucket() {
         const bucket = document.getElementById('sort-bucket');
-        bucket.innerHTML = sortSequence.map(i => `<span class="px-3 py-1 bg-green-100 border border-green-200 rounded-lg text-xs leading-tight">${i.display}</span>`).join('');
+        if (sortSequence.length === 0) {
+            bucket.innerHTML = '<span class="text-gray-300 text-sm">Thứ tự câu của bạn sẽ hiện ở đây...</span>';
+        } else {
+            bucket.innerHTML = sortSequence.map(i => `<span class="px-3 py-1 bg-green-100 border border-green-200 rounded-lg text-sm">${i.display}</span>`).join('');
+        }
     }
 
     function checkAnswer(isCorrect, explain) {
@@ -431,7 +444,7 @@
         document.getElementById('grammar-play').classList.add('hidden');
         document.getElementById('grammar-result').classList.remove('hidden');
         document.getElementById('grammar-final-score-text').innerText = `${grammarScore} ĐIỂM`;
-        document.getElementById('grammar-final-title').innerText = grammarScore > 80 ? "Bậc thầy HSK 1! 👑" : "Cần luyện tập thêm! 📚";
+        document.getElementById('grammar-final-title').innerText = grammarScore > 100 ? "Tuyệt vời! 👑" : "Cố gắng hơn nữa nhé! 📚";
     }
 
     window.onload = initVocabGame;
