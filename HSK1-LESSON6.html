@@ -42,6 +42,12 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             border: 2px solid var(--ghibli-green);
             z-index: 1000;
+            transition: 0.3s;
+        }
+
+        .exit-button:hover {
+            background: var(--ghibli-green);
+            color: white;
         }
 
         .game-container {
@@ -97,7 +103,8 @@
 </head>
 <body>
 
-<a href="#" class="exit-button" onclick="location.reload()">🏠 Quay về vườn</a>
+<!-- Cập nhật nút quay về dẫn tới trang chủ (index.html) -->
+<a href="index.html" class="exit-button">🏠 Quay về vườn</a>
 
 <div class="game-container">
     <div id="intro-screen">
@@ -178,12 +185,12 @@
         { type: 'mc', q: "Phủ định của '妈妈做的菜很好吃' là:", options: ["<ruby>妈妈做的菜很不好吃。<rt>Māma zuò de cài hěn bù hǎochī.</rt></ruby>", "<ruby>妈妈做的菜不很好吃。<rt>Māma zuò de cài bù hěn hǎochī.</rt></ruby>", "<ruby>妈妈做的菜不好吃。<rt>Māma zuò de cài bù hǎochī.</rt></ruby>", "<ruby>妈妈做的菜没好吃。<rt>Māma zuò de cài méi hǎochī.</rt></ruby>"], a: 2, exp: "Phủ định tính từ dùng '不', bỏ 'khuynh hướng' 很." },
         { type: 'mc', q: "Bạn biết làm món Trung Quốc không?", options: ["<ruby>你会做中国菜 ma？<rt>Nǐ huì zuò Zhōngguó cài ma?</rt></ruby>", "<ruby>你会写中国菜 ma？<rt>Nǐ huì xiě Zhōngguó cài ma?</rt></ruby>", "<ruby>你做中国菜 ma？<rt>Nǐ zuò Zhōngguó cài ma?</rt></ruby>", "<ruby>你会说中国菜 ma？<rt>Nǐ huì shuō Zhōngguó cài ma?</rt></ruby>"], a: 0, exp: "Nấu ăn dùng động từ 做 (zuò)." },
         { type: 'sort', q: "Sắp xếp: 会 / 你 / 写 / 汉字 / 吗 / ？", a: ["你", "会", "写", "汉字", "吗", "？"], exp: "Câu nghi vấn với 会: S + 会 + V + O + 吗？" },
-        { type: 'mc', q: "Tôi biết nói tiếng Anh (英语):", options: ["<ruby>我会说英语。<rt>Wǒ huì shuō Yīngyǔ.</rt></ruby>", "<ruby>我英语会说。<rt>Wǒ Yīngyǔ huì shuō.</rt></ruby>", "<ruby>我会写英语。<rt>Wǒ huì xiě Yīngyǔ.</rt></ruby>", "<ruby>我英语说会。<rt>Wǒ Yīngyǔ shuō huì.</rt></ruby>"], a: 0, exp: "S + 会 + V + O." },
+        { type: 'mc', q: "Tôi biết nói tiếng Anh (英语):", options: ["<ruby>我会說英语。<rt>Wǒ huì shuō Yīngyǔ.</rt></ruby>", "<ruby>我英语会说。<rt>Wǒ Yīngyǔ huì shuō.</rt></ruby>", "<ruby>我会写英语。<rt>Wǒ huì xiě Yīngyǔ.</rt></ruby>", "<ruby>我英语说会。<rt>Wǒ Yīngyǔ shuō huì.</rt></ruby>"], a: 0, exp: "S + 会 + V + O." },
         { type: 'mc', q: "Điền từ vào chỗ trống: '你的___名字是什么？'", options: ["<ruby>中国<rt>Zhōngguó</rt></ruby>", "<ruby>汉字<rt>Hànzì</rt></ruby>", "<ruby>汉语<rt>Hànyǔ</rt></ruby>", "<ruby>谁<rt>shéi</rt></ruby>"], a: 2, exp: "汉语名字 (Hànyǔ míngzi): Tên tiếng Trung." },
 
         // Nhóm 3: Đại từ 怎么 & Tổng hợp
         { type: 'sort', q: "Sắp xếp: 怎么 / 写 / 这个字 / ？", a: ["这个字", "怎么", "写", "？"], exp: "Hỏi cách thức: Đối tượng + 怎么 + Động từ." },
-        { type: 'mc', q: "Để hỏi 'Chữ này đọc thế nào?', ta nói:", options: ["<ruby>这个字什么读？<rt>Zhè ge zì shénme dú?</rt></ruby>", "<ruby>这个字怎么读？<rt>Zhè ge zì zěnme dú?</rt></ruby>", "<ruby>这个字怎么写？<rt>Zhè ge zì zěnme xiě?</rt></ruby>", "<ruby>这个字读什么？<rt>Zhè ge zì dú shénme?</rt></ruby>"], a: 1, exp: "怎么读 (zěnme dú): đọc như thế nào." },
+        { type: 'mc', q: "Để hỏi 'Chữ này đọc thế nào?', ta nói:", options: ["<ruby>这个字什么读？<rt>Zhè ge zì shénme dú?</rt></ruby>", "<ruby>这个字怎么读？<rt>Zhè ge zì zěnme dú?</rt></ruby>", "<ruby>借个字怎么写？<rt>Zhè ge zì zěnme xiě?</rt></ruby>", "<ruby>这个字读什么？<rt>Zhè ge zì dú shénme?</rt></ruby>"], a: 1, exp: "怎么读 (zěnme dú): đọc như thế nào." },
         { type: 'sort', q: "Sắp xếp: 怎么 / 你的 / 汉语名字 / 读 / ？", a: ["你的", "汉语名字", "怎么", "读", "？"], exp: "Tên tiếng Trung của bạn đọc thế nào?" },
         { type: 'mc', q: "Chọn từ điền vào chỗ trống: '你会___汉字吗？'", options: ["<ruby>说<rt>shuō</rt></ruby>", "<ruby>做<rt>zuò</rt></ruby>", "<ruby>写<rt>xiě</rt></ruby>", "<ruby>很<rt>hěn</rt></ruby>"], a: 2, exp: "Viết chữ Hán dùng 写 (xiě)." },
         { type: 'sort', q: "Sắp xếp: 我 / 汉字 / 会 / 读 / ， / 不会 / 写 / 。", a: ["我", "会", "读", "汉字", "，", "不会", "写", "。"], exp: "Tôi biết đọc chữ Hán nhưng không biết viết." },
@@ -202,7 +209,6 @@
 
     function startQuiz() {
         playSound('click');
-        // Trộn câu hỏi mỗi khi bắt đầu
         questions = [...rawQuestions].sort(() => Math.random() - 0.5);
         curIdx = 0; 
         score = 0; 
@@ -246,7 +252,6 @@
             const chipBox = document.createElement('div');
             chipBox.className = 'word-chips';
             
-            // Xử lý dấu câu riêng
             let shuffleWords = [...q.a].filter(w => w !== "。" && w !== "？" && w !== "，");
             const puncs = q.a.filter(w => w === "。" || w === "？" || w === "，");
             
