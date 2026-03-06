@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 9: Con trai anh làm việc ở đâu? - Ghibli Learning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ghibli-green: #9dc183;
+            --ghibli-dark-green: #4f7942;
+            --ghibli-sky: #d0f0f7;
+            --ghibli-wood: #8b5a2b;
+            --ghibli-pink: #ffb7c5;
+            --white: #ffffff;
+            --success-color: #2e7d32;
+            --error-color: #c62828;
+            --info-color: #1976d2;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: var(--ghibli-sky);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.85);
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--ghibli-green);
+            backdrop-filter: blur(5px);
+            box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: var(--ghibli-dark-green);
+            font-size: 1.1rem;
+        }
+
+        .home-btn {
+            background: var(--ghibli-green);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .home-btn:hover {
+            background: var(--ghibli-dark-green);
+            transform: scale(1.05);
+        }
+
+        .game-wrapper {
+            width: 95%;
+            max-width: 700px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        #main-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .menu-btn {
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px solid var(--ghibli-green);
+            background: #f0f9f0;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+        }
+
+        .menu-btn:hover {
+            transform: translateY(-5px);
+            background: var(--ghibli-green);
+            color: white;
+        }
+
+        .game-container {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--ghibli-wood);
+        }
+
+        .score-display {
+            font-size: 1.2rem;
+            color: var(--ghibli-pink);
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+
+        .score-pop { transform: scale(1.3); color: var(--success-color); }
+        .score-shake { animation: shake 0.3s ease; color: var(--error-color); }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .progress-inner {
+            height: 100%;
+            background: var(--ghibli-pink);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .question-box {
+            background: #fdfdfd;
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px dashed var(--ghibli-green);
+            margin-bottom: 25px;
+            transition: all 0.3s;
+        }
+
+        .shake { animation: shake 0.4s ease-in-out; border-color: var(--error-color); }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--ghibli-pink);
+            color: white;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .question-text { font-size: 1.4rem; color: var(--ghibli-dark-green); font-weight: 600; }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option-card {
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: white;
+            font-weight: 600;
+        }
+
+        .option-card:hover { transform: scale(1.02); border-color: var(--ghibli-green); }
+        .option-card.selected { background: var(--ghibli-green); color: white; border-color: var(--ghibli-green); }
+
+        .answer-zone {
+            min-height: 70px;
+            border: 2px solid #eee;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 15px;
+            justify-content: center;
+            align-items: center;
+            background: #fafafa;
+        }
+
+        .word-tag {
+            background: var(--ghibli-green);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            animation: pop 0.3s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+            display: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .explanation-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-left: 5px solid var(--info-color);
+            border-radius: 10px;
+            text-align: left;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .explanation-box h4 { margin: 0 0 5px 0; color: var(--info-color); }
+        .explanation-box p { margin: 0; font-size: 0.95rem; line-height: 1.4; }
+
+        .success { background: #e8f5e9; color: var(--success-color); border: 2px solid var(--success-color); }
+        .error { background: #ffebee; color: var(--error-color); border: 2px solid var(--error-color); }
+
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-primary { background: var(--ghibli-green); color: white; box-shadow: 0 4px 0 var(--ghibli-dark-green); }
+        .btn-primary:active { transform: translateY(3px); box-shadow: none; }
+        .btn-secondary { background: #eee; color: #666; }
+        .btn-next { background: var(--info-color); color: white; display: none; margin: 20px auto 0; }
+
+        /* Flashcards */
+        .flashcard-container { perspective: 1000px; width: 100%; height: 250px; margin-bottom: 20px; }
+        .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; cursor: pointer; }
+        .flashcard.flipped { transform: rotateY(180deg); }
+        .flashcard-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 25px; border: 2px solid var(--ghibli-green); background: white; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        .flashcard-back { transform: rotateY(180deg); background: #f0f9f0; }
+        .flashcard .cn { font-size: 4.5rem; color: var(--ghibli-dark-green); }
+        .flashcard .pinyin { font-size: 1.5rem; color: #888; }
+        .flashcard .vi { font-size: 1.8rem; color: var(--ghibli-wood); font-weight: 600; }
+
+        .result-screen { padding: 40px 20px; }
+        .rank-badge { font-size: 4rem; font-weight: 900; color: var(--ghibli-pink); margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <h1>Khu Vườn Bài 9 🌿</h1>
+    <button class="home-btn" onclick="backToMenu()">🏡 Về vườn</button>
+</header>
+
+<div class="game-wrapper">
+    <div id="main-menu">
+        <h2 style="color: var(--ghibli-dark-green); margin-bottom: 10px;">Chào bạn! Hôm nay bạn muốn luyện tập gì?</h2>
+        <button class="menu-btn" onclick="startVocabulary()">
+            <div class="icon" style="font-size: 2.5rem;">🌸</div>
+            <div class="text">
+                <h3>Ôn tập Từ vựng</h3>
+                <p>Nhận diện 14 từ mới qua Flashcards.</p>
+            </div>
+        </button>
+        <button class="menu-btn" onclick="startGrammar()">
+            <div class="icon" style="font-size: 2.5rem;">📝</div>
+            <div class="text">
+                <h3>Thách thức Ngữ pháp</h3>
+                <p>20 câu hỏi tính điểm & có giải thích đáp án.</p>
+            </div>
+        </button>
+    </div>
+
+    <!-- FLASHCARDS -->
+    <div id="vocab-game" class="game-container">
+        <div class="stats">
+            <span>Từ vựng Bài 9</span>
+            <span><span id="vocab-current">1</span>/14</span>
+        </div>
+        <div class="flashcard-container" onclick="flipCard()">
+            <div id="flashcard" class="flashcard">
+                <div class="flashcard-face">
+                    <div id="vocab-cn" class="cn">猫</div>
+                    <div id="vocab-pinyin" class="pinyin">māo</div>
+                </div>
+                <div class="flashcard-face flashcard-back">
+                    <div id="vocab-vi" class="vi">con mèo</div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="prevVocab()">◀ Trước</button>
+            <button class="btn btn-primary" onclick="nextVocab()">Tiếp theo ▶</button>
+        </div>
+    </div>
+
+    <!-- NGỮ PHÁP -->
+    <div id="grammar-game" class="game-container">
+        <div class="stats">
+            <span>Câu hỏi: <span id="grammar-current">1</span>/20</span>
+            <span class="score-display">Điểm: <span id="score-val">0</span></span>
+        </div>
+        <div class="progress-bar"><div id="grammar-progress" class="progress-inner"></div></div>
+        
+        <div id="grammar-content">
+            <div id="q-badge" class="badge">SẮP XẾP CÂU</div>
+            <div id="q-box" class="question-box">
+                <div id="q-text" class="question-text">Đang tải...</div>
+            </div>
+
+            <div id="ans-zone" class="answer-zone"></div>
+            <div id="opt-grid" class="options-grid"></div>
+
+            <div id="grammar-feedback" class="feedback"></div>
+            <div id="explanation-box" class="explanation-box">
+                <h4>💡 Giải thích:</h4>
+                <p id="explanation-text"></p>
+            </div>
+
+            <div class="btn-group" id="grammar-actions">
+                <button class="btn btn-secondary" id="btn-reset" onclick="resetGrammarAnswer()">Làm lại</button>
+                <button id="btn-check" class="btn btn-primary" onclick="checkGrammarAnswer()">Kiểm tra ✅</button>
+            </div>
+            <button id="btn-next-q" class="btn btn-next" onclick="nextQuestion()">Câu tiếp theo ➔</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- Audio System ---
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioCtx();
+
+    function playSound(type) {
+        if (ctx.state === 'suspended') ctx.resume();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        const now = ctx.currentTime;
+        switch(type) {
+            case 'correct':
+                osc.type = 'sine'; osc.frequency.setValueAtTime(523.25, now); 
+                osc.frequency.exponentialRampToValueAtTime(1046.50, now + 0.1); 
+                gain.gain.setValueAtTime(0.3, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                osc.start(now); osc.stop(now + 0.5);
+                break;
+            case 'wrong':
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(220, now); 
+                osc.frequency.exponentialRampToValueAtTime(110, now + 0.3);
+                gain.gain.setValueAtTime(0.2, now); gain.gain.linearRampToValueAtTime(0, now + 0.4);
+                osc.start(now); osc.stop(now + 0.4);
+                break;
+            case 'pop':
+                osc.type = 'sine'; osc.frequency.setValueAtTime(400, now);
+                gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now); osc.stop(now + 0.1);
+                break;
+            case 'click':
+                osc.type = 'square'; osc.frequency.setValueAtTime(150, now);
+                gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                osc.start(now); osc.stop(now + 0.05);
+                break;
+            case 'victory':
+                [523, 659, 783, 1046].forEach((freq, i) => {
+                    const o = ctx.createOscillator(); const g = ctx.createGain();
+                    o.connect(g); g.connect(ctx.destination);
+                    o.frequency.setValueAtTime(freq, now + i*0.1);
+                    g.gain.setValueAtTime(0.2, now + i*0.1);
+                    g.gain.exponentialRampToValueAtTime(0.01, now + i*0.1 + 0.4);
+                    o.start(now + i*0.1); o.stop(now + i*0.1 + 0.4);
+                });
+                break;
+        }
+    }
+
+    const vocabulary = [
+        {cn: '小', p: 'xiǎo', vi: 'nhỏ, bé'}, {cn: '猫', p: 'māo', vi: 'con mèo'},
+        {cn: '在', p: 'zài', vi: 'ở, tại'}, {cn: '哪儿', p: 'nǎr', vi: 'đâu, chỗ nào'},
+        {cn: '狗', p: 'gǒu', vi: 'con chó'}, {cn: '椅子', p: 'yǐzi', vi: 'cái ghế'},
+        {cn: '下面', p: 'xiàmiàn', vi: 'phía dưới'}, {cn: '工作', p: 'gōngzuò', vi: 'làm việc'},
+        {cn: '儿子', p: 'érzi', vi: 'con trai'}, {cn: '医院', p: 'yīyuàn', vi: 'bệnh viện'},
+        {cn: '医生', p: 'yīshēng', vi: 'bác sĩ'}, {cn: '爸爸', p: 'bàba', vi: 'bố, cha'},
+        {cn: '女儿', p: 'nǚ\'ér', vi: 'con gái'}, {cn: '学校', p: 'xuéxiào', vi: 'trường học'}
+    ];
+
+    const grammarQuestions = [
+        { type: 'SẮP XẾP', q: 'Sắp xếp: "Con trai tôi làm việc ở bệnh viện."', opt: ['我', '儿子', '在', '医院', '工作'], ans: '我儿子在医院工作', exp: 'Cấu ngữ pháp: Chủ ngữ + 在 + Địa điểm + Hành động (làm việc).' },
+        { type: 'PINYIN', q: 'Pinyin của "工作" (Làm việc):', opt: ['gōngzuò', 'gōngsuò', 'kōngzuò', 'gōngzuó'], ans: 'gōngzuò', exp: '工作 (gōngzuò) nghĩa là công việc hoặc làm việc.' },
+        { type: 'CHỮ HÁN', q: 'Chọn chữ Hán cho: "Cái ghế"', opt: ['椅子', '桌子', '杯子', '衣服'], ans: '椅子', exp: '椅子 (yǐzi): Cái ghế. 桌子: Cái bàn. 杯子: Cái ly.' },
+        { type: 'ĐIỀN TỪ', q: '我的小猫___哪儿？', opt: ['在', '有', '是', '去'], ans: '在', exp: 'Sử dụng "在" (zài) để chỉ vị trí của đối tượng.' },
+        { type: 'SẮP XẾP', q: 'Sắp xếp: "Con mèo nhỏ ở dưới cái ghế."', opt: ['小猫', '在', '椅子', '下面'], ans: '小猫在椅子下面', exp: 'Cấu trúc chỉ vị trí: Đối tượng + 在 + Vật mốc + Phương hướng.' },
+        { type: 'PINYIN', q: 'Pinyin của "医生" (Bác sĩ):', opt: ['yīyuàn', 'yīshēng', 'yīshén', 'yīshēn'], ans: 'yīshēng', exp: '医生 (yīshēng) là bác sĩ.' },
+        { type: 'NGỮ PHÁP', q: 'Câu hỏi ngắn gọn: "Con chó của tôi đâu?"', opt: ['我的', '小狗', '呢', '？'], ans: '我的小狗呢？', exp: 'Trợ từ "呢" dùng cuối câu hỏi để hỏi xem ai/cái gì đang ở đâu.' },
+        { type: 'CHỮ HÁN', q: 'Chữ Hán của "Bệnh viện":', opt: ['医生', '医院', '学校', '饭店'], ans: '医院', exp: '医院 (yīyuàn) là bệnh viện.' },
+        { type: 'ĐIỀN TỪ', q: '他在___工作？ (Anh ấy làm việc ở đâu?)', opt: ['哪儿', '什麼', '谁', '哪'], ans: '哪儿', exp: '哪儿 (nǎr) là đại từ nghi vấn dùng để hỏi địa điểm.' },
+        { type: 'SẮP XẾP', q: 'Sắp xếp: "Bố tôi ở nhà."', opt: ['我', '爸爸', '在', '家'], ans: '我爸爸在家', exp: 'Cấu trúc cơ bản: Ai + 在 + Ở đâu.' },
+        { type: 'SẮP XẾP', q: 'Sắp xếp: "Tôi uống trà ở nhà bạn."', opt: ['我', '在', '朋友家', '喝茶'], ans: '我在朋友家喝茶', exp: 'Lưu ý: "Ở đâu" (In + Place) luôn đứng trước hành động (喝茶).' },
+        { type: 'CHỮ HÁN', q: 'Chọn chữ "Con trai":', opt: ['儿子', '女儿', '爸爸', '老师'], ans: '儿子', exp: '儿子 (érzi) là con trai.' },
+        { type: 'PINYIN', q: 'Pinyin của "下面" (Phía dưới):', opt: ['xiàmiàn', 'shàngmiàn', 'lǐmiàn', 'xiàbian'], ans: 'xiàmiàn', exp: '下面 (xiàmiàn) là phía dưới.' },
+        { type: 'ĐIỀN TỪ', q: '你儿子在学校___吗？', opt: ['工作', '在', '哪儿', '呢'], ans: '工作', exp: 'Câu hỏi: Con trai bạn có làm việc ở trường không?' },
+        { type: 'CHỮ HÁN', q: 'Chọn chữ "Nhỏ, bé":', opt: ['小', '大', '多', '少'], ans: '小', exp: '小 (xiǎo) là nhỏ.' },
+        { type: 'SẮP XẾP', q: 'Sắp xếp: "Cái ly ở trên ghế."', opt: ['杯子', '在', '椅子', '上面'], ans: '杯子在椅子上面', exp: 'Vật mốc (椅子) đứng trước từ chỉ phương hướng (上面).' },
+        { type: 'PINYIN', q: 'Pinyin của "哪儿":', opt: ['nǎr', 'nàr', 'nǎ', 'nǎli'], ans: 'nǎr', exp: '哪儿 (nǎr) có âm cuốn lưỡi ở cuối.' },
+        { type: 'ĐIỀN TỪ', q: '我的杯子___？(Cái ly của tôi đâu rồi?)', opt: ['呢', '吗', '吧', '了'], ans: '呢', exp: 'Dùng "呢" để hỏi vị trí một cách vắn tắt.' },
+        { type: 'CHỮ HÁN', q: 'Chọn chữ "Con chó":', opt: ['狗', '猫', '鱼', '鳥'], ans: '狗', exp: '狗 (gǒu) là con chó.' },
+        { type: 'NGỮ PHÁP', q: 'Sắp xếp: "Con gái bạn ở đâu?"', opt: ['你', '女儿', '在', '哪儿', '？'], ans: '你女儿在哪儿？', exp: 'Cấu trúc hỏi vị trí: Đối tượng + 在哪儿？' }
+    ];
+
+    let currentVocabIdx = 0, currentGrammarIdx = 0, selectedWords = [], score = 0;
+    const successMsgs = ["Chính xác! 🎉", "Làm tốt lắm! ✨", "Tuyệt vời! 👏", "Rất chuẩn! 🌟"];
+    const errorMsgs = ["Sai mất rồi, bị trừ 5 điểm! 🙊", "Opps! Hãy thử lại nào! 💪", "Chưa đúng rồi! 😅"];
+
+    function backToMenu() { 
+        playSound('pop'); 
+        document.getElementById('main-menu').style.display = 'flex'; 
+        document.getElementById('vocab-game').style.display = 'none'; 
+        document.getElementById('grammar-game').style.display = 'none'; 
+    }
+
+    function startVocabulary() { 
+        playSound('pop'); 
+        document.getElementById('main-menu').style.display = 'none'; 
+        document.getElementById('vocab-game').style.display = 'block'; 
+        updateVocabCard(); 
+    }
+
+    function flipCard() { playSound('click'); document.getElementById('flashcard').classList.toggle('flipped'); }
+    
+    function updateVocabCard() { 
+        const v = vocabulary[currentVocabIdx]; 
+        document.getElementById('vocab-current').innerText = currentVocabIdx + 1; 
+        document.getElementById('vocab-cn').innerText = v.cn; 
+        document.getElementById('vocab-pinyin').innerText = v.p; 
+        document.getElementById('vocab-vi').innerText = v.vi; 
+        document.getElementById('flashcard').classList.remove('flipped'); 
+    }
+
+    function nextVocab() { if (currentVocabIdx < vocabulary.length - 1) { playSound('pop'); currentVocabIdx++; updateVocabCard(); } }
+    function prevVocab() { if (currentVocabIdx > 0) { playSound('pop'); currentVocabIdx--; updateVocabCard(); } }
+
+    function startGrammar() { 
+        playSound('pop'); 
+        document.getElementById('main-menu').style.display = 'none'; 
+        document.getElementById('grammar-game').style.display = 'block'; 
+        currentGrammarIdx = 0; score = 0; 
+        document.getElementById('score-val').innerText = '0'; 
+        loadGrammarQuestion(); 
+    }
+
+    function loadGrammarQuestion() {
+        const q = grammarQuestions[currentGrammarIdx];
+        document.getElementById('grammar-current').innerText = currentGrammarIdx + 1;
+        document.getElementById('q-badge').innerText = q.type;
+        document.getElementById('q-text').innerText = q.q;
+        document.getElementById('grammar-feedback').style.display = 'none';
+        document.getElementById('explanation-box').style.display = 'none';
+        document.getElementById('btn-next-q').style.display = 'none';
+        document.getElementById('grammar-actions').style.display = 'flex';
+        document.getElementById('q-box').classList.remove('shake');
+        
+        const ansZone = document.getElementById('ans-zone');
+        const optGrid = document.getElementById('opt-grid');
+        ansZone.innerHTML = ''; optGrid.innerHTML = '';
+        selectedWords = [];
+
+        if (q.type === 'SẮP XẾP' || q.type === 'NGỮ PHÁP') {
+            ansZone.style.display = 'flex';
+            [...q.opt].sort(() => Math.random() - 0.5).forEach(w => {
+                const btn = document.createElement('div');
+                btn.className = 'option-card'; btn.innerText = w;
+                btn.onclick = () => {
+                    if(!btn.classList.contains('selected')) {
+                        playSound('pop'); selectedWords.push(w); btn.classList.add('selected');
+                        const tag = document.createElement('div'); tag.className = 'word-tag'; tag.innerText = w;
+                        tag.onclick = () => { playSound('pop'); btn.classList.remove('selected'); selectedWords = selectedWords.filter(item => item !== w); tag.remove(); };
+                        ansZone.appendChild(tag);
+                    }
+                };
+                optGrid.appendChild(btn);
+            });
+        } else {
+            ansZone.style.display = 'none';
+            q.opt.forEach(w => {
+                const btn = document.createElement('div'); btn.className = 'option-card'; btn.innerText = w;
+                btn.onclick = () => { playSound('pop'); document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected')); btn.classList.add('selected'); selectedWords = [w]; };
+                optGrid.appendChild(btn);
+            });
+        }
+        document.getElementById('grammar-progress').style.width = (currentGrammarIdx / 20 * 100) + '%';
+    }
+
+    function resetGrammarAnswer() { playSound('pop'); const q = grammarQuestions[currentGrammarIdx]; if (q.type === 'SẮP XẾP' || q.type === 'NGỮ PHÁP') { document.getElementById('ans-zone').innerHTML = ''; document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected')); selectedWords = []; } }
+
+    function checkGrammarAnswer() {
+        const q = grammarQuestions[currentGrammarIdx];
+        const userAnswer = selectedWords.join('').trim();
+        const correctAnswer = q.ans.replace(/\s/g, '');
+        const fb = document.getElementById('grammar-feedback');
+        
+        if (userAnswer.replace(/\s/g, '') === correctAnswer) {
+            playSound('correct'); score += 5; updateScoreUI(true);
+            fb.innerText = successMsgs[Math.floor(Math.random() * successMsgs.length)];
+            fb.className = 'feedback success'; fb.style.display = 'block';
+            document.getElementById('explanation-text').innerText = q.exp;
+            document.getElementById('explanation-box').style.display = 'block';
+            document.getElementById('grammar-actions').style.display = 'none';
+            document.getElementById('btn-next-q').style.display = 'block';
+        } else {
+            playSound('wrong'); score -= 5; updateScoreUI(false);
+            document.getElementById('q-box').classList.add('shake');
+            fb.innerText = errorMsgs[Math.floor(Math.random() * errorMsgs.length)];
+            fb.className = 'feedback error'; fb.style.display = 'block';
+            setTimeout(() => document.getElementById('q-box').classList.remove('shake'), 400);
+        }
+    }
+
+    function nextQuestion() { playSound('pop'); currentGrammarIdx++; if (currentGrammarIdx < 20) loadGrammarQuestion(); else finishGame(); }
+
+    function updateScoreUI(isSuccess) {
+        const s = document.getElementById('score-val'); s.innerText = score;
+        const container = s.parentElement;
+        container.classList.remove('score-pop', 'score-shake');
+        if (isSuccess) container.classList.add('score-pop'); else container.classList.add('score-shake');
+        setTimeout(() => container.classList.remove('score-pop', 'score-shake'), 300);
+    }
+
+    function finishGame() {
+        playSound('victory');
+        let rank = "C";
+        if (score >= 90) rank = "S 🏆"; else if (score >= 80) rank = "A ✨"; else if (score >= 60) rank = "B 👍"; else if (score < 0) rank = "F 💀";
+        document.getElementById('grammar-game').innerHTML = `
+            <div class="result-screen">
+                <h2 style="color: var(--ghibli-dark-green)">KẾT QUẢ HOÀN THÀNH</h2>
+                <div class="rank-badge">${rank}</div>
+                <p style="font-size: 1.5rem;">Điểm cuối cùng: <b>${score}/100</b></p>
+                <p>${score >= 80 ? "Bạn học siêu quá! Nắm chắc kiến thức Bài 9 rồi!" : (score < 0 ? "Oái! Điểm bị âm mất rồi. Hãy luyện tập kỹ hơn nhé!" : "Hãy cố gắng đạt điểm cao hơn lần sau nhé!")}</p>
+                <button class="btn btn-primary" onclick="location.reload()" style="margin-top: 20px;">Làm lại bài mới</button>
+            </div>
+        `;
+    }
+</script>
+</body>
+</html>
