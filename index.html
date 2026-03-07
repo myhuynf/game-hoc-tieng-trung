@@ -34,7 +34,7 @@
             position: relative;
         }
 
-        /* --- BẮT ĐẦU CSS CHO HIỆU ỨNG LÁ BAY --- */
+        /* --- HIỆU ỨNG LÁ BAY --- */
         #leaves-container {
             position: fixed;
             top: 0;
@@ -153,6 +153,8 @@
             align-items: center;
             text-decoration: none;
             color: inherit;
+            position: relative;
+            overflow: hidden;
         }
 
         .game-card:hover {
@@ -173,12 +175,28 @@
 
         .game-title { font-weight: 600; font-size: 1.1rem; color: var(--ghibli-wood); }
 
+        .new-badge {
+            position: absolute;
+            top: 10px;
+            right: -25px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 30px;
+            transform: rotate(45deg);
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
         footer {
             margin-top: auto;
             padding: 20px;
             font-size: 0.9rem;
             color: var(--ghibli-dark-green);
             z-index: 10;
+            text-align: center;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
@@ -196,6 +214,7 @@
 </header>
 
 <div class="container">
+    <!-- Nhóm Bộ Thủ -->
     <a href="BO THU 1.html" class="game-card"><div class="game-icon">🌱</div><div class="game-title">BỘ THỦ 1</div></a>
     <a href="BO THU 2.html" class="game-card"><div class="game-icon">🌿</div><div class="game-title">BỘ THỦ 2</div></a>
     <a href="BO THU 3.html" class="game-card"><div class="game-icon">☘️</div><div class="game-title">BỘ THỦ 3</div></a>
@@ -203,6 +222,7 @@
     <a href="BO THU 5.html" class="game-card"><div class="game-icon">🍃</div><div class="game-title">BỘ THỦ 5</div></a>
     <a href="BO THU 6.html" class="game-card"><div class="game-icon">🌳</div><div class="game-title">BỘ THỦ 6</div></a>
     
+    <!-- Nhóm HSK1 -->
     <a href="HSK1-LESSON1-2.html" class="game-card"><div class="game-icon">📚</div><div class="game-title">HSK1: Bài 1-2</div></a>
     <a href="HSK1-LESSON3.html" class="game-card"><div class="game-icon">📖</div><div class="game-title">HSK1: Bài 3</div></a>
     <a href="HSK1-LESSON4.html" class="game-card"><div class="game-icon">🏠</div><div class="game-title">HSK1: Bài 4</div></a>
@@ -211,16 +231,19 @@
     <a href="HSK1-LESSON7.html" class="game-card"><div class="game-icon">🗓️</div><div class="game-title">HSK1: Bài 7</div></a>
     <a href="HSK1-LESSON8.html" class="game-card"><div class="game-icon">☕</div><div class="game-title">HSK1: Bài 8</div></a>
     <a href="HSK1-LESSON9.html" class="game-card"><div class="game-icon">🐱</div><div class="game-title">HSK1: Bài 9</div></a>
+    <a href="HSK1-LESSON10.html" class="game-card"><div class="game-icon">🪑</div><div class="game-title">HSK1: Bài 10</div></a>
 
-    <!-- Bài 10 mới được thêm vào -->
-    <a href="HSK1-LESSON10.html" class="game-card">
-        <div class="game-icon">🪑</div>
-        <div class="game-title">HSK1: Bài 10</div>
+    <!-- Bài 11 Mới nhất -->
+    <a href="HSK1-LESSON11.html" class="game-card">
+        <div class="new-badge">MỚI</div>
+        <div class="game-icon">⏰</div>
+        <div class="game-title">HSK1: Bài 11</div>
     </a>
 </div>
 
 <footer>
-    © 2026 - Made with ❤️ for Nga Học HSK
+    © 2026 - Khu Vườn Của Nga 🌸 <br>
+    Học tiếng Trung thật vui mỗi ngày!
 </footer>
 
 <script>
