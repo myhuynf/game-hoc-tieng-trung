@@ -6,37 +6,175 @@
     <title>Cùng Nga Học Pinyin chuẩn HSK 👩‍🏫🌿</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
     <style>
-        :root { --ghibli-green: #9dc183; --ghibli-dark: #4f7942; --accent-pink: #ffb7c5; --highlight: #ffd166; --paper: #fdfcf0; }
-        body { font-family: 'Quicksand', sans-serif; background: var(--paper); margin: 0; padding: 5px; color: #444; }
-        .back-btn { text-decoration: none; color: white; background: var(--ghibli-green); padding: 6px 18px; border-radius: 20px; font-weight: bold; display: inline-block; margin: 5px; box-shadow: 0 3px 0 var(--ghibli-dark); font-size: 0.85rem; }
-        h1 { text-align: center; color: var(--ghibli-dark); font-size: 1.4rem; margin: 10px 0; }
-        .table-container { width: 100%; max-height: 82vh; overflow: auto; border: 4px solid white; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); background: white; }
+        :root { 
+            --ghibli-green: #9dc183; 
+            --ghibli-dark: #4f7942; 
+            --accent-pink: #ffb7c5; 
+            --highlight: #ffd166; 
+            --paper: #fdfcf0; 
+            --sky-blue: #e0f2f1;
+        }
+
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background: var(--paper); 
+            margin: 0; 
+            padding: 0; 
+            color: #444; 
+        }
+
+        /* Giao diện Ghibli phía trên bảng */
+        .ghibli-header {
+            background: linear-gradient(to bottom, #87ceeb, var(--paper)), url('https://www.transparenttextures.com/patterns/clouds.png');
+            padding: 30px 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid var(--ghibli-green);
+        }
+
+        /* Trang trí mây và cây cỏ cách điệu */
+        .ghibli-header::before {
+            content: "☁️"; position: absolute; left: 10%; top: 20%; font-size: 2rem; opacity: 0.6;
+        }
+        .ghibli-header::after {
+            content: "🌿"; position: absolute; right: 10%; bottom: 10%; font-size: 2rem;
+        }
+
+        .back-btn { 
+            text-decoration: none; color: white; background: var(--ghibli-green); 
+            padding: 8px 20px; border-radius: 20px; font-weight: bold; 
+            display: inline-block; margin-bottom: 15px; 
+            box-shadow: 0 4px 0 var(--ghibli-dark); font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ghibli-dark); }
+
+        h1 { 
+            color: var(--ghibli-dark); font-size: 1.8rem; margin: 0; 
+            text-shadow: 2px 2px 0px white;
+            letter-spacing: 1px;
+        }
+
+        /* Cải thiện hiển thị bảng */
+        .table-container { 
+            width: 96%; margin: 20px auto; max-height: 75vh; 
+            overflow: auto; border: 6px solid white; border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); background: white; 
+        }
+
         table { border-collapse: separate; border-spacing: 0; width: 100%; }
-        thead th { position: sticky; top: 0; z-index: 10; color: white; padding: 10px 2px; font-size: 1.2rem; border-bottom: 2px solid var(--ghibli-dark); min-width: 45px; }
-        .group-labial { background: #ffcad4 !important; } .group-alveolar { background: #ffe5d9 !important; } .group-velar { background: #ffecb3 !important; } .group-palatal { background: #e2cfea !important; } .group-retroflex { background: #d1e7dd !important; } .group-sibilant { background: #d0f4de !important; } .group-zero { background: var(--ghibli-green) !important; }
-        .final-header { position: sticky; left: 0; z-index: 11; background: #f8fbf8 !important; color: var(--ghibli-dark); font-weight: bold; padding: 10px 8px; font-size: 1.2rem; border-right: 2px solid var(--ghibli-green); text-align: left; }
-        td { padding: 10px 2px; text-align: center; border-bottom: 0.5px solid #f5f5f5; font-size: 1.15rem; }
-        .syllable { cursor: pointer; color: #444; font-weight: 600; border-radius: 6px; transition: 0.1s; }
-        .syllable:hover, .syllable.active { background: var(--accent-pink) !important; color: white; transform: scale(1.15); z-index: 5; }
-        .empty { color: transparent; pointer-events: none; }
-        #toneMenu { display: none; position: fixed; background: rgba(255,255,255,0.98); border: 3px solid var(--ghibli-green); border-radius: 15px; padding: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 1000; }
-        .tone-grid { display: flex; gap: 8px; }
-        .t-btn { border: none; background: #f0f7ef; padding: 12px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1.2rem; color: var(--ghibli-dark); box-shadow: 0 3px 0 #d4e4d0; min-width: 60px; }
-        .t-btn.playing { background: var(--highlight) !important; box-shadow: none; transform: translateY(2px); }
-        #errorLog { display: none; color: #e63946; font-size: 0.75rem; margin-top: 8px; text-align: center; }
+
+        /* Tiêu đề cột */
+        thead th { 
+            position: sticky; top: 0; z-index: 10; color: white; 
+            padding: 12px 5px; font-size: 1.2rem; 
+            border-bottom: 3px solid var(--ghibli-dark); 
+            border-right: 1px solid rgba(255,255,255,0.3);
+            min-width: 55px; 
+        }
+
+        /* Tiêu đề hàng (Vần) */
+        .final-header { 
+            position: sticky; left: 0; z-index: 11; 
+            background: #f8fbf8 !important; color: var(--ghibli-dark); 
+            font-weight: bold; padding: 12px 10px; font-size: 1.3rem; 
+            border-right: 3px solid var(--ghibli-green); 
+            border-bottom: 1px solid #eee;
+            text-align: center; 
+        }
+
+        /* Ô dữ liệu - Làm rõ ràng hơn */
+        td { 
+            padding: 12px 4px; text-align: center; 
+            border-bottom: 1.5px solid #f0f0f0; 
+            border-right: 1.5px solid #f0f0f0;
+            font-size: 1.2rem; 
+        }
+
+        .syllable { 
+            cursor: pointer; color: #333; font-weight: 600; 
+            border-radius: 10px; transition: all 0.15s;
+            display: block; margin: 2px;
+            background: #fafafa;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.05);
+        }
+
+        .syllable:hover { 
+            background: var(--accent-pink) !important; 
+            color: white !important; 
+            transform: scale(1.1); z-index: 5;
+            box-shadow: 0 4px 10px rgba(255, 183, 197, 0.5);
+        }
+
+        .syllable.active { 
+            background: var(--ghibli-dark) !important; 
+            color: white !important; 
+        }
+
+        .empty { color: #ddd; font-size: 0.8rem; pointer-events: none; }
+
+        /* Menu thanh điệu */
+        #toneMenu { 
+            display: none; position: fixed; 
+            background: rgba(255,255,255,0.98); 
+            border: 4px solid var(--ghibli-green); 
+            border-radius: 20px; padding: 15px; 
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2); z-index: 1000; 
+        }
+
+        .tone-grid { display: flex; gap: 10px; }
+
+        .t-btn { 
+            border: none; background: #f0f7ef; padding: 15px 20px; 
+            border-radius: 12px; cursor: pointer; font-weight: bold; 
+            font-size: 1.4rem; color: var(--ghibli-dark); 
+            box-shadow: 0 4px 0 #d4e4d0; transition: 0.1s;
+        }
+
+        .t-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #d4e4d0; }
+
+        .t-btn.playing { 
+            background: var(--highlight) !important; 
+            box-shadow: none; transform: translateY(2px); 
+        }
+
+        #errorLog { 
+            display: none; color: #e63946; font-size: 0.8rem; 
+            margin-top: 10px; text-align: center; font-weight: bold;
+        }
+
+        /* Phân loại nhóm màu sắc */
+        .group-labial { background: #ffcad4 !important; } 
+        .group-alveolar { background: #ffe5d9 !important; } 
+        .group-velar { background: #ffecb3 !important; } 
+        .group-palatal { background: #e2cfea !important; } 
+        .group-retroflex { background: #d1e7dd !important; } 
+        .group-sibilant { background: #d0f4de !important; } 
+        .group-zero { background: var(--ghibli-green) !important; }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-btn">🍃 VỀ VƯỜN</a>
-    <h1>Cùng Nga Học Pinyin chuẩn HSK 👩‍🏫✨</h1>
+
+    <div class="ghibli-header">
+        <a href="index.html" class="back-btn">🍃 VỀ VƯỜN</a>
+        <h1>Cùng Nga Học Pinyin chuẩn HSK ✨</h1>
+        <p style="margin: 5px 0 0; color: var(--ghibli-dark); font-size: 0.9rem; opacity: 0.8;">Hệ thống phát âm tự động - Giáo viên: Nga Học HSK</p>
+    </div>
+
     <div class="table-container">
         <table id="pinyinMainTable">
-            <thead><tr id="initialHeaders"><th class="final-header" style="background: var(--ghibli-green) !important; color: white;">V\T</th></tr></thead>
+            <thead>
+                <tr id="initialHeaders">
+                    <th class="final-header" style="background: var(--ghibli-green) !important; color: white;">V\T</th>
+                </tr>
+            </thead>
             <tbody id="pinyinBody"></tbody>
         </table>
     </div>
+
     <div id="toneMenu">
-        <div id="toneLabel" style="text-align:center; font-weight:bold; margin-bottom:12px; font-size:1.3rem;"></div>
+        <div id="toneLabel" style="text-align:center; font-weight:bold; margin-bottom:15px; font-size:1.5rem; color: var(--ghibli-dark);"></div>
         <div class="tone-grid">
             <button class="t-btn" onclick="playWithRetry(1)" id="btn-t1">1</button>
             <button class="t-btn" onclick="playWithRetry(2)" id="btn-t2">2</button>
@@ -45,7 +183,9 @@
         </div>
         <div id="errorLog">⚠️ Không thấy file: <span id="missingFileName"></span></div>
     </div>
+
     <audio id="audioPlayer"></audio>
+
     <script>
         const initials = ['', 'b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'zh', 'ch', 'sh', 'r', 'z', 'c', 's'];
         const finals = ['a', 'o', 'e', 'ai', 'ei', 'ao', 'ou', 'an', 'en', 'ang', 'eng', 'er', 'i', 'ia', 'iao', 'ie', 'iu', 'ian', 'in', 'iang', 'ing', 'iong', 'u', 'ua', 'uo', 'uai', 'ui', 'uan', 'un', 'uang', 'ueng', 'ü', 'üe', 'üan', 'ün'];
@@ -77,7 +217,7 @@
                 initials.forEach(i => {
                     const td = document.createElement('td');
                     let s = (i==='' && ['i','u','ü'].some(v=>f.startsWith(v))) ? getZ(f) : (['j','q','x'].includes(i) && f.startsWith('ü')) ? i+f.replace('ü','u') : i+f;
-                    if (validData.has(s)) { td.className = 'syllable'; td.innerText = s; td.onclick = (e) => open(e, s, td); }
+                    if (validData.has(s)) { td.innerHTML = `<span class="syllable">${s}</span>`; td.onclick = (e) => open(e, s, td.querySelector('.syllable')); }
                     else { td.className = 'empty'; td.innerText = '·'; }
                     tr.appendChild(td);
                 });
