@@ -34,7 +34,7 @@
             position: relative;
         }
 
-        /* --- HIỆU ỨNG LÁ BAY --- */
+        /* --- HIỆU ỨNG LÁ BAY (Giữ nguyên) --- */
         #leaves-container {
             position: fixed;
             top: 0;
@@ -68,7 +68,7 @@
 
         header {
             text-align: center;
-            padding: 40px 15px;
+            padding: 30px 15px;
             background: rgba(255, 255, 255, 0.75);
             width: 100%;
             margin-bottom: 20px;
@@ -86,7 +86,7 @@
         h1 {
             margin: 0;
             color: var(--ghibli-dark-green);
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
@@ -104,8 +104,8 @@
 
         .welcome-quote {
             font-weight: 600;
-            font-size: 0.95rem;
-            max-width: 90%;
+            font-size: 0.9rem;
+            max-width: 600px;
             line-height: 1.6;
             margin: 10px 0 20px 0;
             background: linear-gradient(45deg, #4f7942, #8b5a2b);
@@ -114,26 +114,27 @@
             text-align: center;
         }
 
-        /* --- SEARCH BOX TOTORO --- */
+        /* --- TỐI ƯU SEARCH BOX JIJI --- */
         .search-wrapper {
             position: relative;
-            width: 90%;
-            max-width: 350px;
+            width: 85%; /* Co giãn linh hoạt trên mobile */
+            max-width: 350px; /* Không quá dài trên máy tính */
             margin-bottom: 10px;
             z-index: 20;
         }
 
         #gameSearch {
             width: 100%;
-            padding: 12px 20px 12px 55px; /* Chừa chỗ cho Totoro */
-            border-radius: 30px;
+            padding: 12px 15px 12px 50px;
+            border-radius: 25px;
             border: 2px solid var(--ghibli-green);
             background: white;
             font-family: 'Quicksand', sans-serif;
-            font-size: 1rem;
+            font-size: 16px; /* 16px để iOS không bị tự zoom */
             outline: none;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
+            box-sizing: border-box;
         }
 
         #gameSearch:focus {
@@ -141,34 +142,52 @@
             box-shadow: 0 5px 20px rgba(79, 121, 66, 0.2);
         }
 
-        .totoro-icon {
+        /* Biểu tượng mèo Jiji */
+        .jiji-icon {
             position: absolute;
             left: 10px;
             top: 50%;
             transform: translateY(-50%);
-            width: 40px; /* Kích thước ảnh Totoro */
-            height: 40px;
-            background-image: url('https://i.pinimg.com/originals/31/87/3e/31873ea8b31b6019d39f30a0798cd409.jpg'); /* Sử dụng link trực tiếp từ file bạn gửi */
-            background-size: cover;
+            width: 35px;
+            height: 35px;
+            background-image: url('https://i.pinimg.com/originals/14/7b/9e/147b9e078028972e9a26569130761e01.png');
+            background-size: contain;
+            background-repeat: no-repeat;
             background-position: center;
-            border-radius: 50%; /* Cắt tròn cho cân đối */
-            border: 2px solid var(--ghibli-green);
+            transition: all 0.3s ease;
+            pointer-events: none;
         }
 
+        /* Hiệu ứng vẫy nhẹ khi gõ tìm kiếm */
+        @keyframes jijiNod {
+            0%, 100% { transform: translateY(-50%) rotate(0deg); }
+            50% { transform: translateY(-50%) rotate(-10deg); }
+        }
+
+        #gameSearch:focus + .jiji-icon {
+            animation: jijiNod 0.6s ease-in-out infinite;
+        }
+
+        /* --- GRID CONTAINER TỐI ƯU --- */
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            /* Mặc định 2 cột cho điện thoại nhỏ */
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px;
             max-width: 1200px;
             width: 92%;
-            padding-bottom: 50px;
+            padding: 10px 0 50px;
             z-index: 10;
             position: relative;
         }
 
+        /* Máy tính và Tablet lớn: tự động dàn hàng ngang */
         @media (min-width: 768px) {
-            .container { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-            h1 { font-size: 2.5rem; }
+            .container { 
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+                gap: 20px; 
+            }
+            .welcome-quote { font-size: 1rem; }
         }
 
         .game-card {
@@ -189,15 +208,16 @@
         }
 
         .game-card:hover {
-            transform: translateY(-5px) scale(1.03);
+            transform: translateY(-5px);
             border-color: var(--ghibli-leaf);
+            background-color: #f9fff6;
         }
 
-        .game-icon { font-size: 35px; margin-bottom: 10px; }
+        .game-icon { font-size: 32px; margin-bottom: 8px; }
         @media (min-width: 768px) { .game-icon { font-size: 45px; } }
 
-        .game-title { font-weight: 600; font-size: 0.9rem; color: var(--ghibli-wood); }
-        @media (min-width: 768px) { .game-title { font-size: 1.1rem; } }
+        .game-title { font-weight: 600; font-size: 0.85rem; color: var(--ghibli-wood); }
+        @media (min-width: 768px) { .game-title { font-size: 1.05rem; } }
 
         .new-badge {
             position: absolute;
@@ -219,7 +239,8 @@
             z-index: 10;
             text-align: center;
             width: 100%;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.4);
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -237,8 +258,8 @@
     </p>
 
     <div class="search-wrapper">
-        <div class="totoro-icon"></div>
-        <input type="text" id="gameSearch" placeholder="Tìm bài học">
+        <input type="text" id="gameSearch" placeholder="Tìm bài học...">
+        <div class="jiji-icon"></div>
     </div>
 </header>
 
@@ -289,7 +310,7 @@
         // --- HIỆU ỨNG LÁ BAY ---
         const container = document.getElementById('leaves-container');
         const leafIcons = ['🍃', '🍂', '🌿', '🌸', '✨'];
-        const numLeaves = 20;
+        const numLeaves = 15; // Giảm số lượng lá trên mobile để mượt hơn
 
         for (let i = 0; i < numLeaves; i++) {
             let leaf = document.createElement('div');
