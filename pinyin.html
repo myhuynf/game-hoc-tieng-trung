@@ -23,7 +23,7 @@
         .tone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .t-btn { border: none; background: #f0f7ef; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 1.3rem; color: var(--ghibli-dark); box-shadow: 0 3px 0 #d4e4d0; transition: 0.1s; }
         .t-btn.playing { background: var(--highlight) !important; color: #333; }
-        #errorLog { display: none; color: #e63946; font-size: 0.8rem; margin-top: 10px; text-align: center; font-weight: bold; }
+        #errorLog { display: none; color: #e63946; font-size: 0.85rem; margin-top: 10px; text-align: center; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -46,7 +46,7 @@
             <button class="t-btn" onclick="playAudio(3)" id="btn-t3">3</button>
             <button class="t-btn" onclick="playAudio(4)" id="btn-t4">4</button>
         </div>
-        <div id="errorLog">⚠️ Đang tải âm thanh...</div>
+        <div id="errorLog">🍃 Đang kết nối máy chủ...</div>
     </div>
 
     <audio id="audioPlayer"></audio>
@@ -95,11 +95,19 @@
         }
 
         function openMenu(e, s, c) {
-            player.pause(); // Reset âm thanh cũ
+            // "Mồi" trình duyệt mở khóa quyền âm thanh
+            player.play().catch(()=>{}); 
+            player.pause(); 
+            
             curS = s; 
             document.getElementById('toneLabel').innerText = s; 
             document.getElementById('errorLog').style.display='none';
-            for(let t=1; t<=4; t++) document.getElementById(`btn-t${t}`).innerText = getToneMarked(s, t);
+            for(let t=1; t<=4; t++) {
+                let btn = document.getElementById(`btn-t${t}`);
+                btn.innerText = getToneMarked(s, t);
+                btn.classList.remove('playing');
+            }
+            
             menu.style.display = 'block'; 
             if (activeC) activeC.classList.remove('active');
             activeC = c; activeC.classList.add('active');
@@ -111,29 +119,57 @@
         function playAudio(t) {
             const btn = document.getElementById(`btn-t${t}`);
             const errorLog = document.getElementById('errorLog');
-            btn.classList.add('playing');
-            errorLog.style.display = 'block';
-            errorLog.innerText = "🍃 Đang tải...";
-
-            // Lấy chữ có dấu thanh điệu chuẩn
-            let word = getToneMarked(curS, t);
             
-            // Dùng nguồn Google Translate chuẩn xác cho tiếng Trung
-            const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(word)}&tl=zh-CN&total=1&idx=0&textlen=10&client=tw-ob&prev=input`;
+            // Xóa trạng thái của các nút khác
+            for(let i=1; i<=4; i++) document.getElementById(`btn-t${i}`).classList.remove('playing');
+            btn.classList.add('playing');
+            
+            errorLog.style.display = 'block';
+            errorLog.innerText = "🍃 Đang kết nối API Youdao...";
 
-            player.src = url;
-            player.play()
-                .then(() => { 
-                    errorLog.style.display = 'none';
-                    player.onended = () => btn.classList.remove('playing'); 
-                })
-                .catch(() => { 
+            // Chuyển đổi chuẩn hóa: ke -> ke1, nü -> nv3
+            let baseWord = curS.toLowerCase().replace('ü', 'v');
+            let pinyinCode = baseWord + t; 
+            
+            // Cấu trúc chống lỗi: Youdao là nguồn mở tốt nhất, Yoyo dự phòng
+            const sources = [
+                `https://dict.youdao.com/dictvoice?audio=${pinyinCode}&le=zh`,
+                `https://yoyochinese.com/audio/pinyin/${pinyinCode}.mp3`
+            ];
+
+            let currentSource = 0;
+
+            function tryPlay() {
+                if (currentSource >= sources.length) {
                     btn.classList.remove('playing');
-                    errorLog.innerText = "⚠️ Lỗi âm thanh mạng";
-                });
+                    errorLog.innerText = "⚠️ Bị chặn bởi máy chủ mạng.";
+                    return;
+                }
+
+                player.src = sources[currentSource];
+                player.load(); // Bắt buộc tải lại để vượt Cache
+
+                player.play()
+                    .then(() => { 
+                        errorLog.style.display = 'none';
+                        player.onended = () => btn.classList.remove('playing'); 
+                    })
+                    .catch((err) => { 
+                        console.warn("Lỗi nguồn:", err);
+                        currentSource++; 
+                        tryPlay(); 
+                    });
+            }
+            tryPlay();
         }
 
-        document.addEventListener('click', (e) => { if (!menu.contains(e.target)) { menu.style.display = 'none'; if (activeC) activeC.classList.remove('active'); } });
+        document.addEventListener('click', (e) => { 
+            if (!menu.contains(e.target)) { 
+                menu.style.display = 'none'; 
+                if (activeC) activeC.classList.remove('active'); 
+            } 
+        });
+        
         init();
     </script>
 </body>
