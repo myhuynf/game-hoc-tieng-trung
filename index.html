@@ -68,10 +68,10 @@
 
         header {
             text-align: center;
-            padding: 50px 20px;
+            padding: 40px 15px; /* Giảm padding cho mobile */
             background: rgba(255, 255, 255, 0.75);
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             border-bottom: 5px solid var(--ghibli-green);
             backdrop-filter: blur(5px);
             display: flex;
@@ -86,25 +86,25 @@
         h1 {
             margin: 0;
             color: var(--ghibli-dark-green);
-            font-size: 2.5rem;
+            font-size: 2rem; /* Giảm nhẹ size chữ tiêu đề */
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             transition: transform 0.3s;
         }
-        
-        h1:hover {
-            transform: scale(1.05);
+
+        @media (min-width: 768px) {
+            h1 { font-size: 2.5rem; }
         }
 
         .sub-title-box {
             display: inline-block;
-            margin: 15px 0;
-            padding: 8px 25px;
+            margin: 12px 0;
+            padding: 6px 20px;
             border: 2px dashed var(--ghibli-dark-green);
             border-radius: 15px;
             background-color: rgba(255, 183, 197, 0.3);
             color: var(--ghibli-dark-green);
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1rem;
             position: relative;
             animation: float 3s ease-in-out infinite;
         }
@@ -114,14 +114,14 @@
             50% { transform: translateY(-5px); }
         }
 
-        .sub-title-box::before { content: '🌸'; position: absolute; left: -18px; top: -5px; }
-        .sub-title-box::after { content: '🌸'; position: absolute; right: -18px; top: -5px; }
+        .sub-title-box::before { content: '🌸'; position: absolute; left: -18px; top: -2px; }
+        .sub-title-box::after { content: '🌸'; position: absolute; right: -18px; top: -2px; }
 
         .welcome-quote {
             font-weight: 600;
-            font-size: 1.15rem;
-            max-width: 800px;
-            line-height: 1.8;
+            font-size: 0.95rem;
+            max-width: 90%;
+            line-height: 1.6;
             margin-top: 10px;
             background: linear-gradient(45deg, #4f7942, #8b5a2b);
             -webkit-background-clip: text;
@@ -131,10 +131,11 @@
 
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            /* Tự động chia cột: tối thiểu 150px trên mobile (để được 2 cột), 220px trên máy tính */
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
             max-width: 1200px;
-            width: 95%;
+            width: 92%;
             padding-bottom: 50px;
             z-index: 10;
             position: relative;
@@ -143,7 +144,7 @@
         .game-card {
             background: white;
             border-radius: 20px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             transition: all 0.3s ease;
             border: 3px solid transparent;
@@ -158,30 +159,41 @@
         }
 
         .game-card:hover {
-            transform: translateY(-8px) scale(1.03);
+            transform: translateY(-5px) scale(1.03);
             border-color: var(--ghibli-leaf);
             box-shadow: 0 15px 30px rgba(79, 121, 66, 0.2);
         }
 
         .game-icon { 
-            font-size: 45px; 
-            margin-bottom: 12px; 
+            font-size: 35px; /* Giảm nhẹ size icon trên mobile */
+            margin-bottom: 10px; 
             transition: transform 0.3s;
         }
         
-        .game-card:hover .game-icon {
-            transform: rotate(10deg) scale(1.1);
+        @media (min-width: 768px) {
+            .game-icon { font-size: 45px; }
+            .container { gap: 20px; }
+            .game-card { padding: 20px; }
         }
 
-        .game-title { font-weight: 600; font-size: 1.1rem; color: var(--ghibli-wood); }
+        .game-title { 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            color: var(--ghibli-wood); 
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .game-title { font-size: 1.1rem; }
+        }
 
         .new-badge {
             position: absolute;
-            top: 10px;
-            right: -25px;
+            top: 8px;
+            right: -28px;
             background: #ff6b6b;
             color: white;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             padding: 2px 30px;
             transform: rotate(45deg);
             font-weight: bold;
@@ -191,7 +203,7 @@
         footer {
             margin-top: auto;
             padding: 20px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--ghibli-dark-green);
             z-index: 10;
             text-align: center;
@@ -214,7 +226,6 @@
 </header>
 
 <div class="container">
-    <!-- Nhóm Bộ Thủ -->
     <a href="BO THU 1.html" class="game-card"><div class="game-icon">🌱</div><div class="game-title">BỘ THỦ 1</div></a>
     <a href="BO THU 2.html" class="game-card"><div class="game-icon">🌿</div><div class="game-title">BỘ THỦ 2</div></a>
     <a href="BO THU 3.html" class="game-card"><div class="game-icon">☘️</div><div class="game-title">BỘ THỦ 3</div></a>
@@ -222,7 +233,6 @@
     <a href="BO THU 5.html" class="game-card"><div class="game-icon">🍃</div><div class="game-title">BỘ THỦ 5</div></a>
     <a href="BO THU 6.html" class="game-card"><div class="game-icon">🌳</div><div class="game-title">BỘ THỦ 6</div></a>
     
-    <!-- Nhóm HSK1 -->
     <a href="HSK1-LESSON1-2.html" class="game-card"><div class="game-icon">📚</div><div class="game-title">HSK1: Bài 1-2</div></a>
     <a href="HSK1-LESSON3.html" class="game-card"><div class="game-icon">📖</div><div class="game-title">HSK1: Bài 3</div></a>
     <a href="HSK1-LESSON4.html" class="game-card"><div class="game-icon">🏠</div><div class="game-title">HSK1: Bài 4</div></a>
@@ -233,7 +243,6 @@
     <a href="HSK1-LESSON9.html" class="game-card"><div class="game-icon">🐱</div><div class="game-title">HSK1: Bài 9</div></a>
     <a href="HSK1-LESSON10.html" class="game-card"><div class="game-icon">🪑</div><div class="game-title">HSK1: Bài 10</div></a>
 
-    <!-- Bài 11 Mới nhất -->
     <a href="HSK1-LESSON11.html" class="game-card">
         <div class="new-badge">MỚI</div>
         <div class="game-icon">⏰</div>
@@ -250,7 +259,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         const container = document.getElementById('leaves-container');
         const leafIcons = ['🍃', '🍂', '🌿', '🌸', '✨'];
-        const numLeaves = 30;
+        const numLeaves = 20; // Giảm bớt số lá trên mobile để nhẹ máy
 
         for (let i = 0; i < numLeaves; i++) {
             let leaf = document.createElement('div');
