@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK1 Bài 12: 明天天气怎么样？</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Nunito:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #d0f0f7 0%, #e0f7fa 100%);
+            min-height: 100vh;
+        }
+
+        .chinese-text { font-family: 'KaiTi', 'SimSun', sans-serif; }
+
+        .btn-back-garden {
+            font-family: 'Quicksand', sans-serif;
+            background: #7fb069;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(127, 176, 105, 0.3);
+            border: 2px solid white;
+        }
+
+        .btn-back-garden:hover {
+            background: #4f7942;
+            transform: scale(1.05);
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .floating { animation: float 3s ease-in-out infinite; }
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        .shake-hard { animation: shake-hard 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+        @keyframes shake-hard {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+        
+        .option-btn:hover:not(:disabled) { transform: scale(1.01); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .correct-ans { background-color: #d1fae5 !important; color: #065f46 !important; border-color: #34d399 !important; }
+        .wrong-ans { background-color: #fee2e2 !important; color: #991b1b !important; border-color: #f87171 !important; }
+        
+        .explanation-box {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="flex flex-col items-center p-4">
+
+    <div class="w-full max-w-2xl flex justify-start mb-6">
+        <a href="index.html" class="btn-back-garden">
+            <i class="fa-solid fa-leaf"></i> Quay về vườn
+        </a>
+    </div>
+
+    <div id="game-container" class="max-w-2xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden relative z-10">
+        
+        <!-- Header / Progress -->
+        <div id="game-header" class="bg-blue-600 text-white p-4 flex justify-between items-center hidden">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-star text-yellow-300"></i>
+                <span id="score" class="font-bold text-lg">0</span>
+            </div>
+            <div class="flex-1 mx-4">
+                <div class="w-full bg-blue-800 rounded-full h-3 border border-blue-400">
+                    <div id="progress-bar" class="bg-gradient-to-r from-yellow-300 to-yellow-500 h-full rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(253,224,71,0.6)]" style="width: 0%"></div>
+                </div>
+            </div>
+            <div class="font-bold text-lg"><span id="current-q" class="text-yellow-300">1</span>/20</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="p-8 text-center flex flex-col items-center justify-center min-h-[450px]">
+            <div class="text-7xl mb-6 floating">🌤️🌡️</div>
+            <h1 class="text-3xl font-extrabold text-blue-600 mb-2">Trạm Thời Tiết Hán Ngữ</h1>
+            <p class="text-gray-600 mb-8 font-semibold italic uppercase tracking-wider">HSK 1 - Bài 12</p>
+            <div class="flex flex-col gap-4 w-full">
+                <button onclick="startFlashcard(vocabList)" class="group bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg transition transform hover:-translate-y-1">
+                    <i class="fa-solid fa-layer-group mr-2 group-hover:rotate-12 transition-transform"></i> Học Flashcard Từ Vựng
+                </button>
+                <button onclick="startGame()" class="group bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-2xl shadow-lg transition transform hover:-translate-y-1">
+                    <i class="fa-solid fa-gamepad mr-2 group-hover:bounce transition-transform"></i> Thử Thách Trắc Nghiệm (20 Câu)
+                </button>
+            </div>
+        </div>
+
+        <!-- Flashcard Screen -->
+        <div id="flashcard-screen" class="hidden p-6 min-h-[500px] flex-col items-center w-full">
+            <div class="mb-4 text-center text-gray-600 font-bold w-full flex justify-between items-center">
+                <button onclick="goHome()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-arrow-left text-xl"></i></button>
+                <span>Thẻ: <span id="fc-current" class="text-blue-600">1</span> / <span id="fc-total">13</span></span>
+                <div class="flex gap-2 text-xs">
+                    <span class="bg-green-100 text-green-600 px-2 py-1 rounded">✔️ <span id="count-known">0</span></span>
+                    <span class="bg-red-100 text-red-600 px-2 py-1 rounded">❌ <span id="count-unknown">0</span></span>
+                </div>
+            </div>
+            <div class="flex-1 flex justify-center items-center perspective-1000 cursor-pointer mb-6 w-full" onclick="flipCard()">
+                <div id="fc-inner" class="relative w-full max-w-sm h-96 transition-transform duration-500 transform-style-3d">
+                    <div class="absolute w-full h-full bg-white border-4 border-blue-400 rounded-3xl shadow-xl flex items-center justify-center backface-hidden">
+                        <span id="fc-zh" class="text-7xl font-bold text-blue-800 chinese-text"></span>
+                    </div>
+                    <div class="absolute w-full h-full bg-blue-50 border-4 border-blue-400 rounded-3xl shadow-xl flex flex-col items-center justify-center backface-hidden rotate-y-180 p-6 text-center">
+                        <span id="fc-py" class="text-3xl font-semibold text-gray-700 mb-2"></span>
+                        <span id="fc-vi" class="text-2xl font-bold text-blue-600 mb-4"></span>
+                        <div class="w-full border-t border-blue-200 my-2 pt-2 text-left">
+                            <p class="text-xs font-bold text-blue-400 uppercase tracking-wider mb-1">Ví dụ:</p>
+                            <p id="fc-ex-zh" class="text-lg text-gray-800 font-semibold chinese-text mb-1"></p>
+                            <p id="fc-ex-py" class="text-sm text-gray-500 italic mb-1"></p>
+                            <p id="fc-ex-vi" class="text-sm text-gray-600"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-4 w-full max-w-sm">
+                <button onclick="markCard(false)" class="flex-1 bg-red-400 text-white font-bold py-3 rounded-2xl hover:bg-red-500 transition-colors shadow-md active:scale-95">Chưa nhớ</button>
+                <button onclick="markCard(true)" class="flex-1 bg-green-400 text-white font-bold py-3 rounded-2xl hover:bg-green-500 transition-colors shadow-md active:scale-95">Đã nhớ</button>
+            </div>
+        </div>
+
+        <!-- Flashcard Result Screen -->
+        <div id="fc-end-screen" class="hidden p-8 text-center flex-col items-center min-h-[450px]">
+            <h2 class="text-3xl font-bold text-blue-600 mb-2">Tổng Kết Ôn Tập</h2>
+            <div class="flex gap-6 mb-6">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-green-500" id="final-known">0</div>
+                    <div class="text-xs text-gray-500 uppercase">Đã thuộc</div>
+                </div>
+                <div class="text-center border-l border-r px-6">
+                    <div class="text-3xl font-bold text-red-500" id="final-unknown">0</div>
+                    <div class="text-xs text-gray-500 uppercase">Chưa thuộc</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-blue-500" id="final-total">0</div>
+                    <div class="text-xs text-gray-500 uppercase">Tổng từ</div>
+                </div>
+            </div>
+
+            <div id="forgotten-box" class="w-full bg-gray-50 rounded-2xl p-4 mb-8 border border-gray-200 text-left overflow-y-auto max-h-64">
+                <h3 class="font-bold mb-3 text-red-500 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Danh sách cần ôn lại:
+                </h3>
+                <div id="forgotten-list" class="grid grid-cols-1 gap-2"></div>
+            </div>
+            
+            <div id="all-remembered-msg" class="hidden text-green-600 font-bold mb-8 p-6 bg-green-50 rounded-2xl border-2 border-dashed border-green-200">
+                <div class="text-4xl mb-2">🌸</div>
+                Tuyệt vời! Bạn đã chinh phục được tất cả từ vựng!
+            </div>
+
+            <div class="flex flex-col gap-3 w-full">
+                <button id="btn-retry-forgotten" onclick="retryForgotten()" class="hidden bg-orange-500 text-white py-4 px-8 rounded-2xl font-bold shadow-lg hover:bg-orange-600 transition transform hover:-translate-y-1">
+                    <i class="fa-solid fa-rotate-right mr-2"></i> Ôn lại các từ chưa nhớ
+                </button>
+                <button onclick="goHome()" class="bg-gray-200 py-3 px-8 rounded-2xl font-bold hover:bg-gray-300 transition">Quay lại trang chủ</button>
+            </div>
+        </div>
+
+        <!-- Game Screen -->
+        <div id="game-screen" class="p-6 hidden min-h-[450px] flex flex-col">
+            <div class="text-center mb-6">
+                <div id="question-icon" class="text-5xl mb-4 floating">🤔</div>
+                <h2 id="question-text" class="text-xl font-bold text-gray-800 px-4"></h2>
+            </div>
+            
+            <div id="options-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4"></div>
+
+            <!-- Explanation Box -->
+            <div id="explanation-container" class="hidden explanation-box mb-6 p-4 rounded-xl border-l-4 bg-blue-50 border-blue-400">
+                <p class="text-sm font-bold text-blue-700 mb-1"><i class="fa-solid fa-circle-info mr-1"></i> Giải thích:</p>
+                <p id="explanation-text" class="text-sm text-gray-700 italic"></p>
+            </div>
+
+            <button id="next-btn" onclick="nextQuestion()" class="hidden mt-auto w-full bg-blue-600 text-white font-bold py-4 rounded-2xl shadow-lg hover:bg-blue-700 transition active:scale-95">Tiếp tục hành trình ✨</button>
+        </div>
+
+        <!-- End Screen -->
+        <div id="end-screen" class="p-8 text-center hidden flex-col items-center justify-center min-h-[450px]">
+            <h2 class="text-4xl font-extrabold text-blue-600 mb-4">Kết Thúc!</h2>
+            <div class="text-8xl mb-6" id="end-emoji">🏆</div>
+            <div class="bg-yellow-50 p-6 rounded-3xl border-2 border-yellow-200 mb-8 w-full">
+                <p class="text-gray-600 font-bold uppercase tracking-widest mb-1">Tổng điểm đạt được</p>
+                <span id="final-score" class="text-5xl font-black text-yellow-500"></span>
+            </div>
+            <button onclick="goHome()" class="bg-blue-600 text-white py-4 px-10 rounded-full font-bold shadow-xl hover:bg-blue-700 transition transform hover:scale-105">Làm lại từ đầu</button>
+        </div>
+    </div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, type, duration, volume = 0.1) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        }
+
+        const vocabList = [
+            { zh: "天气", pinyin: "tiānqì", vi: "Thời tiết", ex_zh: "明天天气怎么样？", ex_py: "Míngtiān tiānqì zěnmeyàng?", ex_vi: "Thời tiết ngày mai thế nào?" },
+            { zh: "怎么样", pinyin: "zěnmeyàng", vi: "Thế nào", ex_zh: "你身体怎么样？", ex_py: "Nǐ shēntǐ zěnmeyàng?", ex_vi: "Sức khỏe bạn thế nào?" },
+            { zh: "太", pinyin: "tài", vi: "Quá, lắm", ex_zh: "太热了！", ex_py: "Tài rè le!", ex_vi: "Nóng quá rồi!" },
+            { zh: "冷", pinyin: "lěng", vi: "Lạnh", ex_zh: "今天不冷。", ex_py: "Jīntiān bù lěng.", ex_vi: "Hôm nay không lạnh." },
+            { zh: "热", pinyin: "rè", vi: "Nóng", ex_zh: "最近很热。", ex_py: "Zuìjìn hěn rè.", ex_vi: "Dạo này rất nóng." },
+            { zh: "下雨", pinyin: "xià yǔ", vi: "Mưa", ex_zh: "明天会下雨吗？", ex_py: "Míngtiān huì xià yǔ ma?", ex_vi: "Ngày mai có mưa không?" },
+            { zh: "小姐", pinyin: "xiǎojiě", vi: "Cô, chị", ex_zh: "王小姐在吗？", ex_py: "Wáng xiǎojiě zài ma?", ex_vi: "Cô Vương có đó không?" },
+            { zh: "来", pinyin: "lái", vi: "Đến", ex_zh: "你什么时候来？", ex_py: "Nǐ shénme shíhou lái?", ex_vi: "Khi nào bạn đến?" },
+            { zh: "身体", pinyin: "shēntǐ", vi: "Sức khỏe/Cơ thể", ex_zh: "我身体不太好。", ex_py: "Wǒ shēntǐ bú tài hǎo.", ex_vi: "Sức khỏe tôi không tốt lắm." },
+            { zh: "爱", pinyin: "ài", vi: "Yêu, thích", ex_zh: "我爱吃水果。", ex_py: "Wǒ ài chī shuǐguǒ.", ex_vi: "Tôi thích ăn hoa quả." },
+            { zh: "些", pinyin: "xiē", vi: "Một ít/Một số", ex_zh: "买些水果吧。", ex_py: "Mǎi xiē shuǐguǒ ba.", ex_vi: "Mua ít hoa quả đi." },
+            { zh: "水果", pinyin: "shuǐguǒ", vi: "Hoa quả/Trái cây", ex_zh: "これらの水果很甜。", ex_py: "Zhèxiē shuǐguǒ hěn tián.", ex_vi: "Những hoa quả này rất ngọt." },
+            { zh: "水", pinyin: "shuǐ", vi: "Nước", ex_zh: "请喝水。", ex_py: "Qǐng hē shuǐ.", ex_vi: "Mời uống nước." }
+        ];
+
+        const questions = [
+            { q: "Từ 天气 (tiānqì) có nghĩa là gì?", options: ["Thời tiết", "Sức khỏe", "Hôm nay", "Ngày mai"], answer: 0, icon: "🌤️", explain: "Tiānqì (天气) nghĩa là thời tiết." },
+            { q: "Dịch: 明天天气怎么样？", options: ["Thời tiết ngày mai thế nào?", "Hôm nay trời đẹp không?", "Khi nào trời mưa?", "Bạn khỏe không?"], answer: 0, icon: "📅", explain: "Míngtiān (Ngày mai) + tiānqì (thời tiết) + zěnmeyàng (thế nào)." },
+            { q: "Trái nghĩa với '冷' (lěng - Lạnh) là gì?", options: ["热 (rè)", "下雨 (xià yǔ)", "水 (shuǐ)", "来 (lái)"], answer: 0, icon: "🔥", explain: "Lěng (冷) là lạnh, rè (热) là nóng." },
+            { q: "Từ nào nghĩa là 'Cô/Chị' (cách gọi lịch sự)?", options: ["小姐 (xiǎojiě)", "先生 (xiānsheng)", "学生 (xuésheng)", "老师 (lǎoshī)"], answer: 0, icon: "👩", explain: "Xiǎojiě (小姐) dùng để gọi phụ nữ trẻ một cách lịch sự." },
+            { q: "Dịch: 'Sức khỏe tôi không tốt lắm'", options: ["我身体不太好", "我很热", "我想吃水果", "他在北京"], answer: 0, icon: "🤒", explain: "Shēntǐ (身体) là sức khỏe, bù tài hǎo (不太好) là không tốt lắm." },
+            { q: "Từ '太' (tài) trong '太热了' có nghĩa là gì?", options: ["Quá/Lắm", "Cũng", "Vẫn", "Hơi"], answer: 0, icon: "📈", explain: "Cấu trúc '太 + Tính từ + 了' dùng để biểu thị mức độ cao (Quá...)." },
+            { q: "Dịch nghĩa của từ '下雨' (xià yǔ)?", options: ["Mưa", "Nắng", "Mây", "Tuyết"], answer: 0, icon: "☔", explain: "Xià yǔ (下雨) nghĩa là trời mưa." },
+            { q: "Từ nào sau đây nghĩa là 'Hoa quả'?", options: ["水果 (shuǐguǒ)", "水 (shuǐ)", "茶 (chá)", "米饭 (mǐfàn)"], answer: 0, icon: "🍎", explain: "Shuǐguǒ (水果) là trái cây/hoa quả." },
+            { q: "Hoàn thành câu: '这些___很甜' (Những... này rất ngọt)", options: ["水果", "天气", "身体", "些"], answer: 0, icon: "✨", explain: "Sử dụng '水果' (hoa quả) để mô tả vị ngọt (tián)." },
+            { q: "Từ '来' (lái) có nghĩa là gì?", options: ["Đến/Tới", "Đi", "Ngồi", "Xem"], answer: 0, icon: "🏃", explain: "Lái (来) có nghĩa là đến hoặc tới một địa điểm nào đó." },
+            { q: "Để hỏi thăm sức khỏe: 你___怎么样？", options: ["身体", "天气", "水果", "小姐"], answer: 0, icon: "💪", explain: "Dùng 'shēntǐ' (sức khỏe/cơ thể) trong câu hỏi thăm này." },
+            { q: "Dịch: 'Mời uống nước'", options: ["请喝水", "请喝茶", "请吃水果", "请来北京"], answer: 0, icon: "🥛", explain: "Qǐng (mời) + hē (uống) + shuǐ (nước)." },
+            { q: "Cấu trúc nào sau đây đúng ngữ pháp?", options: ["太冷了", "冷太了", "太了冷", "了太冷"], answer: 0, icon: "📝", explain: "Cấu trúc chuẩn là '太 + Tính từ + 了'." },
+            { q: "Dịch: 'Một ít hoa quả'", options: ["一些水果", "个水果", "大水果", "来水果"], answer: 0, icon: "🧺", explain: "Xiē (些) là lượng từ chỉ một số, một ít." },
+            { q: "Từ '怎么样' (zěnmeyàng) dùng để hỏi về điều gì?", options: ["Hỏi tính chất/trạng thái", "Hỏi số lượng", "Hỏi danh tính", "Hỏi địa điểm"], answer: 0, icon: "❓", explain: "Zěnmeyàng dùng để hỏi về trạng thái hoặc tính chất của sự vật/sự việc." },
+            { q: "Dịch: 'Tôi thích ăn hoa quả'", options: ["我爱吃水果", "我不爱吃水果", "他爱吃水果", "我爱喝水"], answer: 0, icon: "❤️", explain: "Trong tiếng Trung, '爱' (ài) ngoài nghĩa là 'yêu' còn dùng để chỉ sự yêu thích làm việc gì đó." },
+            { q: "Phiên âm đúng của từ '冷' là gì?", options: ["lěng", "rè", "tài", "shuǐ"], answer: 0, icon: "🔊", explain: "Lěng (thanh 3) là phiên âm của từ 冷 (lạnh)." },
+            { q: "Dịch: 'Không lạnh lắm'", options: ["不太冷", "很冷", "太冷了", "不冷"], answer: 0, icon: "❄️", explain: "Cấu trúc '不太 + Tính từ' có nghĩa là không... lắm." },
+            { q: "Điền từ: 明天___下雨 (Ngày mai sẽ mưa).", options: ["会", "是", "在", "有"], answer: 0, icon: "🔮", explain: "Huì (会) dùng để chỉ khả năng hoặc một sự việc sẽ xảy ra trong tương lai." },
+            { q: "Cách gọi 'Cô Vương' trong tiếng Trung là gì?", options: ["王小姐", "小姐王", "王先生", "王老师"], answer: 0, icon: "🆔", explain: "Trong tiếng Trung, Họ luôn đứng trước danh xưng (Họ + Tiểu thư/Tiên sinh...)." }
+        ];
+
+        let currentQuestion = 0, score = 0, fcIndex = 0, currentCards = [], fcForgotten = [], fcKnownCount = 0, isFlipped = false, hasAnswered = false;
+
+        function goHome() { location.reload(); }
+
+        function startFlashcard(list) {
+            currentCards = [...list]; fcIndex = 0; fcForgotten = []; fcKnownCount = 0;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('fc-end-screen').classList.add('hidden');
+            document.getElementById('flashcard-screen').classList.remove('hidden');
+            document.getElementById('flashcard-screen').classList.add('flex');
+            updateFcCounters();
+            loadCard();
+        }
+
+        function updateFcCounters() {
+            document.getElementById('count-known').innerText = fcKnownCount;
+            document.getElementById('count-unknown').innerText = fcForgotten.length;
+        }
+
+        function loadCard() {
+            if (fcIndex >= currentCards.length) { showFcEndScreen(); return; }
+            isFlipped = false;
+            document.getElementById('fc-inner').classList.remove('rotate-y-180');
+            const c = currentCards[fcIndex];
+            document.getElementById('fc-zh').innerText = c.zh;
+            document.getElementById('fc-py').innerText = c.pinyin;
+            document.getElementById('fc-vi').innerText = c.vi;
+            document.getElementById('fc-ex-zh').innerText = c.ex_zh;
+            document.getElementById('fc-ex-py').innerText = c.ex_py;
+            document.getElementById('fc-ex-vi').innerText = c.ex_vi;
+            document.getElementById('fc-current').innerText = fcIndex + 1;
+            document.getElementById('fc-total').innerText = currentCards.length;
+        }
+
+        function flipCard() { isFlipped = !isFlipped; document.getElementById('fc-inner').classList.toggle('rotate-y-180'); }
+
+        function markCard(rem) { 
+            if (!rem) fcForgotten.push(currentCards[fcIndex]);
+            else fcKnownCount++;
+            fcIndex++; 
+            updateFcCounters();
+            loadCard(); 
+        }
+
+        function showFcEndScreen() {
+            document.getElementById('flashcard-screen').classList.add('hidden');
+            const screen = document.getElementById('fc-end-screen');
+            screen.classList.remove('hidden'); screen.classList.add('flex');
+            
+            document.getElementById('final-known').innerText = fcKnownCount;
+            document.getElementById('final-unknown').innerText = fcForgotten.length;
+            document.getElementById('final-total').innerText = currentCards.length;
+
+            const listDiv = document.getElementById('forgotten-list');
+            const box = document.getElementById('forgotten-box');
+            const msg = document.getElementById('all-remembered-msg');
+            const btnRetry = document.getElementById('btn-retry-forgotten');
+
+            if (fcForgotten.length > 0) {
+                box.classList.remove('hidden');
+                msg.classList.add('hidden');
+                btnRetry.classList.remove('hidden');
+                listDiv.innerHTML = fcForgotten.map(c => `
+                    <div class="bg-white p-3 rounded-xl border border-red-100 flex justify-between items-center shadow-sm">
+                        <div>
+                            <span class="chinese-text font-bold text-lg text-gray-800">${c.zh}</span>
+                            <span class="text-sm text-gray-400 ml-2">${c.pinyin}</span>
+                        </div>
+                        <span class="text-blue-600 font-semibold">${c.vi}</span>
+                    </div>
+                `).join('');
+            } else {
+                box.classList.add('hidden');
+                msg.classList.remove('hidden');
+                btnRetry.classList.add('hidden');
+            }
+        }
+
+        function retryForgotten() { startFlashcard(fcForgotten); }
+
+        function startGame() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('game-header').classList.remove('hidden');
+            currentQuestion = 0; score = 0;
+            document.getElementById('score').innerText = score;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            hasAnswered = false;
+            const q = questions[currentQuestion];
+            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('question-icon').innerText = q.icon;
+            document.getElementById('current-q').innerText = currentQuestion + 1;
+            document.getElementById('progress-bar').style.width = `${((currentQuestion) / questions.length) * 100}%`;
+            
+            document.getElementById('explanation-container').classList.add('hidden');
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            
+            const optsWithStatus = q.options.map((text, i) => ({ text, isCorrect: i === q.answer }));
+            const shuffledOpts = [...optsWithStatus].sort(() => Math.random() - 0.5);
+
+            shuffledOpts.forEach((opt) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn bg-white border-2 border-blue-100 p-4 rounded-2xl text-left font-semibold text-gray-700 transition-all hover:border-blue-300';
+                btn.innerText = opt.text;
+                btn.onclick = () => checkAnswer(opt.isCorrect, btn);
+                container.appendChild(btn);
+            });
+            document.getElementById('next-btn').classList.add('hidden');
+        }
+
+        function checkAnswer(isCorrect, btn) {
+            if (hasAnswered) return;
+            hasAnswered = true;
+            const q = questions[currentQuestion];
+            const allBtns = document.querySelectorAll('.option-btn');
+            
+            if (isCorrect) {
+                btn.classList.add('correct-ans');
+                score += 10;
+                playTone(523, 'sine', 0.1, 0.2); 
+            } else {
+                btn.classList.add('wrong-ans');
+                allBtns.forEach(b => {
+                    const originalQ = questions[currentQuestion];
+                    if (b.innerText === originalQ.options[originalQ.answer]) {
+                        b.classList.add('correct-ans');
+                    }
+                });
+                score -= 5;
+                playTone(150, 'sawtooth', 0.3, 0.2);
+                document.getElementById('game-container').classList.add('shake-hard');
+                setTimeout(() => document.getElementById('game-container').classList.remove('shake-hard'), 400);
+            }
+
+            document.getElementById('explanation-text').innerText = q.explain;
+            document.getElementById('explanation-container').classList.remove('hidden');
+
+            document.getElementById('score').innerText = score;
+            document.getElementById('next-btn').classList.remove('hidden');
+            
+            document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) loadQuestion();
+            else {
+                document.getElementById('game-screen').classList.add('hidden');
+                document.getElementById('game-header').classList.add('hidden');
+                document.getElementById('end-screen').classList.remove('hidden');
+                document.getElementById('end-screen').classList.add('flex');
+                document.getElementById('final-score').innerText = score;
+                if (score > 150) {
+                    document.getElementById('end-emoji').innerText = "👑";
+                    playTone(523, 'sine', 0.1, 0.2);
+                    playTone(659, 'sine', 0.1, 0.2);
+                    playTone(783, 'sine', 0.3, 0.2);
+                } else if (score < 0) {
+                    document.getElementById('end-emoji').innerText = "💀";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
