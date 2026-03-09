@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài 15: 我是坐飞机来的 - Nga Học HSK</title>
+    <title>Bài 15: 我 là 坐飞机来的 - Nga Học HSK</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -107,11 +107,12 @@
         .pinyin { font-size: 1.5rem; color: #666; font-weight: 600; }
         .vi { font-size: 1.8rem; color: var(--ghibli-wood); font-weight: 700; }
 
-        /* Grammar */
+        /* Grammar & Questions */
         .question-box { background: #fdfdfd; padding: 20px; border-radius: 20px; border: 2px dashed var(--ghibli-green); margin-bottom: 20px; }
         .answer-zone { min-height: 60px; border: 2px solid #eee; border-radius: 15px; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; justify-content: center; background: #fafafa; }
-        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
-        .option-card { padding: 12px; border: 2px solid #eee; border-radius: 12px; cursor: pointer; background: white; font-weight: 600; }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+        .option-card { padding: 12px; border: 2px solid #eee; border-radius: 12px; cursor: pointer; background: white; font-weight: 600; transition: 0.2s; }
+        .option-card:hover { border-color: var(--ghibli-green); background: #f9fff9; }
         .option-card.selected { opacity: 0.5; background: #eee; cursor: default; }
         .word-tag { background: var(--ghibli-green); color: white; padding: 8px 15px; border-radius: 10px; cursor: pointer; }
         
@@ -126,8 +127,8 @@
         .btn-success { background: var(--success-color); color: white; flex: 1; }
         .btn-error { background: var(--error-color); color: white; flex: 1; }
         
-        .review-list { text-align: left; background: #fffaf0; border-radius: 15px; padding: 15px; max-height: 200px; overflow-y: auto; }
-        .review-item { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #eee; }
+        .review-list { text-align: left; background: #fffaf0; border-radius: 15px; padding: 15px; max-height: 250px; overflow-y: auto; }
+        .review-item { display: flex; flex-direction: column; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -139,19 +140,19 @@
 
 <div class="game-wrapper">
     <div id="main-menu">
-        <h2 style="color: var(--ghibli-dark-green);">Chào bạn! Hôm nay bạn luyện gì?</h2>
+        <h2 style="color: var(--ghibli-dark-green);">Chào mừng bạn đến với lớp của giáo viên: Nga Học HSK!</h2>
         <button class="menu-btn" onclick="startVocab()">
             <span style="font-size: 2rem;">🌸</span>
             <div><h3>Ôn tập Từ vựng</h3><p>Phương tiện & Cách thức</p></div>
         </button>
         <button class="menu-btn" onclick="startGrammar()">
             <span style="font-size: 2rem;">📝</span>
-            <div><h3>Thách thức Ngữ pháp</h3><p>Cấu trúc 是...的</p></div>
+            <div><h3>Thách thức 20 Câu hỏi</h3><p>Từ vựng - Ngữ pháp - Dịch câu</p></div>
         </button>
     </div>
 
     <div id="vocab-game" class="game-container" style="display:none;">
-        <div class="stats"><span>Bài 15: Từ vựng</span><span id="v-count">1/14</span></div>
+        <div class="stats"><span>Từ vựng</span><span id="v-count">1/14</span></div>
         <div class="progress-bar"><div id="v-progress" class="progress-inner"></div></div>
         <div class="flashcard-container" onclick="document.getElementById('card').classList.toggle('flipped')">
             <div id="card" class="flashcard">
@@ -170,21 +171,26 @@
     </div>
 
     <div id="grammar-game" class="game-container" style="display:none;">
-        <div class="stats"><span>Câu: <span id="g-count">1</span>/10</span><span>Điểm: <span id="g-score">0</span></span></div>
+        <div class="stats"><span>Câu: <span id="g-count">1</span>/20</span><span>Điểm: <span id="g-score">0</span></span></div>
         <div class="progress-bar"><div id="g-progress" class="progress-inner"></div></div>
-        <div class="question-box"><div id="g-q" style="font-size:1.2rem; font-weight:600; color:var(--ghibli-dark-green)"></div></div>
-        <div id="g-ans" class="answer-zone"></div>
+        <div class="question-box"><div id="g-q" style="font-size:1.1rem; font-weight:600; color:var(--ghibli-dark-green)"></div></div>
+        
+        <div id="g-ans-container">
+            <div id="g-ans" class="answer-zone"></div>
+        </div>
+
         <div id="g-opts" class="options-grid"></div>
         <div id="g-fb" class="feedback"></div>
+        
         <div class="btn-group" id="g-btns">
-            <button class="btn btn-secondary" onclick="resetG()">Làm lại</button>
+            <button id="btn-reset" class="btn btn-secondary" onclick="resetG()">Làm lại</button>
             <button class="btn btn-primary" onclick="checkG()">Kiểm tra ✅</button>
         </div>
         <button id="g-next" class="btn btn-primary" style="display:none; width:100%; margin-top:10px" onclick="nextG()">Tiếp theo ➔</button>
     </div>
 
     <div id="result" class="game-container" style="display:none;">
-        <h2 id="r-title">Hoàn thành! 🌿</h2>
+        <h2 id="r-title">Hoàn thành bài tập! 🌿</h2>
         <div id="r-detail" style="margin-bottom:20px"></div>
         <div id="r-list" class="review-list"></div>
         <button class="btn btn-primary" style="margin-top:20px" onclick="location.reload()">Quay lại Menu</button>
@@ -198,28 +204,43 @@
         {cn:'大学', p:'dàxué', vi:'đại học', ex:'他在大学工作。'},
         {cn:'饭店', p:'fàndiàn', vi:'nhà hàng', ex:'我们在饭店吃饭。'},
         {cn:'出租车', p:'chūzūchē', vi:'xe taxi', ex:'坐出租车去。'},
-        {cn:'一起', p:'yìqǐ', vi:'cùng nhau', ex:'我们一起去吧。'},
+        {cn:'一起', p:'yìqǐ', vi:'cùng nhau', ex:'Chúng tôi cùng nhau đi.'},
         {cn:'高兴', p:'gāoxìng', vi:'vui mừng', ex:'认识你很高兴。'},
         {cn:'听', p:'tīng', vi:'nghe', ex:'听，谁在说话？'},
         {cn:'飞机', p:'fēijī', vi:'máy bay', ex:'我坐飞机回北京。'},
         {cn:'回来', p:'huílái', vi:'trở về', ex:'他什么时候回来？'},
-        {cn:'张', p:'zhāng', vi:'tờ/chiếc', ex:'一张桌子。'},
+        {cn:'张', p:'zhāng', vi:'tờ/chiếc (họ Trương)', ex:'张先生。'},
         {cn:'先生', p:'xiānsheng', vi:'ông/ngài', ex:'王先生。'},
         {cn:'怎么', p:'zěnme', vi:'thế nào', ex:'你是怎么来的？'},
         {cn:'桌子', p:'zhuōzi', vi:'cái bàn', ex:'桌子上有电脑。'}
     ];
 
     const grammars = [
-        {q:'Sắp xếp: "Tôi là tới bằng máy bay."', opts:['我','是','坐','飞机','来的'], ans:'我是坐飞机来的'},
-        {q:'Điền vào chỗ trống: "你是什么时候___北京的？"', opts:['来','的','是','去'], ans:'来'},
-        {q:'Sắp xếp: "Quen biết bạn tôi rất vui."', opts:['认识','你','我','很','高兴'], ans:'认识你很高兴'},
-        {q:'Pinyin của "一起" là gì?', opts:['yìqǐ','yīqǐ','yìqì','yíqǐ'], ans:'yìqǐ'},
-        {q:'Sắp xếp: "Chúng tôi cùng nhau đi ăn cơm."', opts:['我们','一起','去','吃饭','吧'], ans:'我们一起去吃饭吧'},
-        {q:'Chữ Hán của "Taxi" là gì?', opts:['出租车','公共汽车','自行车','飞机'], ans:'出租车'},
-        {q:'Điền từ: "这些是在饭店___"', opts:['买的','买','卖','买是'], ans:'买 job'}, // Lỗi text cũ, sửa lại:
-        {q:'Sắp xếp: "Bọn họ là năm 2010 quen nhau."', opts:['他们','是','2010年','认识的'], ans:'他们是2010年认识的'},
-        {q:'"先生" nghĩa là gì?', opts:['Ông/Ngài','Bà/Cô','Học sinh','Bác sĩ'], ans:'Ông/Ngài'},
-        {q:'Điền từ: "你是___来的？ - 我是坐出租车来的。"', opts:['怎么','什么','哪儿','谁'], ans:'怎么'}
+        // Phần 1: Trắc nghiệm (10 câu)
+        {type:'choice', q:'Từ nào sau đây có nghĩa là "quen biết"?', opts:['A. 学习', 'B. 认识', 'C. 喜欢', 'D. 身体'], ans:'B. 认识'},
+        {type:'choice', q:'Cách đọc năm "2011年" đúng quy tắc là gì?', opts:['A. èr qiān yī shí yī nián', 'B. èr líng yī yī nián', 'C. èr líng yāo yāo nián', 'D. liǎng líng yāo yāo nián'], ans:'B. èr líng yī yī nián'},
+        {type:'choice', q:'Trong câu "我是昨天来的", từ nào có thể lược bỏ mà ý nghĩa không thay đổi?', opts:['A. 我', 'B. 是', 'C. 的', 'D. 昨天'], ans:'B. 是'},
+        {type:'choice', q:'Để phủ định câu "他是坐飞机来的", ta nói thế nào?', opts:['A. 他没坐飞机來的', 'B. 他不坐飞机来的', 'C. 他不是坐飞机来的', 'D. 他是没坐飞机来的'], ans:'C. 他不是坐飞机来的'},
+        {type:'choice', q:'Từ "一起" (yìqǐ) trong câu "我们是一起来 đích" có nghĩa là gì?', opts:['A. Một lát', 'B. Cùng nhau', 'C. Một ít', 'D. Một lần'], ans:'B. Cùng nhau'},
+        {type:'choice', q:'Khi gặp một người bạn mới, bạn nên nói: "认识你很______。"', opts:['A. 漂亮', 'B. 好吃', 'C. 高兴', 'D. 怎么样'], ans:'C. 高兴'},
+        {type:'choice', q:'Từ nào chỉ phương tiện "xe taxi"?', opts:['A. 飞机', 'B. 火车', 'C. 出出租车', 'D. 电脑'], ans:'C. 出出租车'},
+        {type:'choice', q:'Thứ tự diễn đạt thời gian đúng trong tiếng Trung là:', opts:['A. Năm-Tháng-Ngày-Thứ', 'B. Thứ-Ngày-Tháng-Năm', 'C. Ngày-Tháng-Năm-Thứ', 'D. Tháng-Ngày-Năm-Thứ'], ans:'A. Năm-Tháng-Ngày-Thứ'},
+        {type:'choice', q:'Câu "这是在北京买" thiếu thành phần nào ở cuối để hoàn thành cấu trúc nhấn mạnh?', opts:['A. 了', 'B. 呢', 'C. 的', 'D. 吧'], ans:'C. 的'},
+        {type:'choice', q:'"Nghe ông Trương nói" trong tiếng Trung là gì?', opts:['A. 看张先生说', 'B. 听张先生说', 'C. 问张先生说', 'D. 学张先生说'], ans:'B. 听张先生说'},
+
+        // Phần 2: Sắp xếp (5 câu)
+        {type:'sort', q:'Sắp xếp: "Chúng tôi quen biết nhau năm 2011."', opts:['认识', '的', ' incubator', '2011年', '我们', '是'], ans:'我们是2011年认识的'},
+        {type:'sort', q:'Sắp xếp: "Các bạn đến nhà hàng bằng cách nào?"', opts:['怎么', '你们', '来', '是', '饭店', '的'], ans:'你们是怎么来饭店的'},
+        {type:'sort', q:'Sắp xếp: "Ông Trương là lái xe đến."', opts:['张先生', '开车', '是', '来的'], ans:'张先生是开车来的'},
+        {type:'sort', q:'Sắp xếp: "Tôi không phải tới bằng taxi."', opts:['不', '我', ' incubator', '坐', '来的', '出租车', '是'], ans:'我不是坐出租车来的'},
+        {type:'sort', q:'Sắp xếp: "Chúng tôi học đại học cùng nhau."', opts:['大学', '一起', '我们', '是', '读', '的'], ans:'我们是一起读大学的'},
+
+        // Phần 3: Dịch & Điền (5 câu)
+        {type:'choice', q:'Dịch: "Tôi đáp máy bay đến Bắc Kinh." (Cấu trúc nhấn mạnh)', opts:['A. 我坐飞机去北京了', 'B. 我是坐飞机去北京的', 'C. 我去北京坐飞机', 'D. 我坐飞机是的北京'], ans:'B. 我 là 坐飞机去北京的'},
+        {type:'choice', q:'Dịch: "Rất vui được quen biết cô Lý."', opts:['A. 认识李小姐很高兴', 'B. 高兴认识李小姐', 'C. 我认识小姐李', 'D. 认识小姐李的高兴'], ans:'A. 认识李小姐很高兴'},
+        {type:'choice', q:'Điền từ: "2008年8月8号，______五。"', opts:['A. 星期', 'B. 月', 'C. 号', 'D. 年'], ans:'A. 星期'},
+        {type:'choice', q:'Hoàn thành: "你们 ______ 哪儿认识 ______ ?"', opts:['A. 在...了', 'B. 是...的', 'C. 有...没', 'D. 想...吗'], ans:'B. 是...的'},
+        {type:'choice', q:'Dịch: "Cái ly này được mua vào hôm qua."', opts:['A. 这个杯子昨天买的', 'B. 这个杯子是昨天买的', 'C. 昨天买这个杯子', 'D. 这个杯子昨天是的买'], ans:'B. Cái này 杯子 là 昨天买的'}
     ];
 
     let vIdx = 0, gIdx = 0, score = 0, gSelected = [], vWrong = [];
@@ -250,7 +271,7 @@
         document.getElementById('result').style.display='block';
         document.getElementById('r-detail').innerText = `Bạn đã xem qua 14 từ vựng!`;
         let html = '<b>Từ cần ôn lại:</b><br>';
-        vWrong.forEach(v => html += `<div class="review-item"><span>${v.cn}</span><span>${v.vi}</span></div>`);
+        vWrong.forEach(v => html += `<div class="review-item"><span>${v.cn} (${v.p})</span><span>${v.vi}</span></div>`);
         document.getElementById('r-list').innerHTML = vWrong.length ? html : 'Tuyệt vời! Bạn đã thuộc hết!';
     }
 
@@ -264,63 +285,98 @@
         const g = grammars[gIdx];
         document.getElementById('g-q').innerText = g.q;
         document.getElementById('g-count').innerText = gIdx+1;
-        document.getElementById('g-progress').style.width = `${(gIdx+1)/10*100}%`;
+        document.getElementById('g-progress').style.width = `${(gIdx+1)/20*100}%`;
         document.getElementById('g-fb').style.display = 'none';
         document.getElementById('g-next').style.display = 'none';
         document.getElementById('g-btns').style.display = 'flex';
-        document.getElementById('g-ans').innerHTML = '';
+        
         gSelected = [];
+        const ansZone = document.getElementById('g-ans');
+        const ansContainer = document.getElementById('g-ans-container');
+        
+        // Hiển thị/Ẩn vùng trả lời dựa trên loại câu hỏi
+        if(g.type === 'sort') {
+            ansContainer.style.display = 'block';
+            ansZone.innerHTML = '';
+            document.getElementById('btn-reset').style.display = 'block';
+        } else {
+            ansContainer.style.display = 'none';
+            document.getElementById('btn-reset').style.display = 'none';
+        }
         
         let html = '';
         const shuffled = [...g.opts].sort(() => Math.random() - 0.5);
         shuffled.forEach((o, i) => {
-            html += `<div class="option-card" id="opt-${i}" onclick="selectG('${o}', 'opt-${i}')">${o}</div>`;
+            html += `<div class="option-card" id="opt-${i}" onclick="handleSelect('${o}', 'opt-${i}')">${o}</div>`;
         });
         document.getElementById('g-opts').innerHTML = html;
     }
-    function selectG(word, id) {
-        const el = document.getElementById(id);
-        if(el.classList.contains('selected')) return;
-        el.classList.add('selected');
-        gSelected.push(word);
-        const tag = document.createElement('div');
-        tag.className = 'word-tag';
-        tag.innerText = word;
-        tag.onclick = () => {
-            el.classList.remove('selected');
-            gSelected = gSelected.filter(w => w !== word);
-            tag.remove();
-        };
-        document.getElementById('g-ans').appendChild(tag);
+
+    function handleSelect(word, id) {
+        const g = grammars[gIdx];
+        if(g.type === 'choice') {
+            // Trắc nghiệm: Chọn là kiểm tra luôn hoặc đánh dấu
+            document.querySelectorAll('.option-card').forEach(el => el.style.borderColor = '#eee');
+            document.getElementById(id).style.borderColor = 'var(--ghibli-green)';
+            gSelected = [word];
+        } else {
+            // Sắp xếp: Thêm vào zone
+            const el = document.getElementById(id);
+            if(el.classList.contains('selected')) return;
+            el.classList.add('selected');
+            gSelected.push(word);
+            const tag = document.createElement('div');
+            tag.className = 'word-tag';
+            tag.innerText = word;
+            tag.onclick = () => {
+                el.classList.remove('selected');
+                gSelected = gSelected.filter(w => w !== word);
+                tag.remove();
+            };
+            document.getElementById('g-ans').appendChild(tag);
+        }
     }
+
     function resetG() {
         gSelected = [];
         document.getElementById('g-ans').innerHTML = '';
         document.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
     }
+
     function checkG() {
-        const user = gSelected.join('');
-        const correct = grammars[gIdx].ans.replace(/\s/g,'');
+        const g = grammars[gIdx];
+        let userAns = g.type === 'sort' ? gSelected.join('') : gSelected[0];
+        let correctAns = g.ans.replace(/\s/g,'');
+        
+        // Chuẩn hóa so sánh cho câu trắc nghiệm (chỉ lấy phần text sau A. B. C. D.)
+        if(g.type === 'choice' && userAns) {
+            userAns = userAns.replace(/\s/g,'');
+        }
+
         const fb = document.getElementById('g-fb');
         fb.style.display = 'block';
-        if(user === correct) {
-            score += 10;
+
+        if(userAns === correctAns || (g.type === 'choice' && gSelected[0] === g.ans)) {
+            score += 5;
             fb.innerText = "Chính xác! 🌟"; fb.className = "feedback success";
             document.getElementById('g-btns').style.display = 'none';
             document.getElementById('g-next').style.display = 'block';
         } else {
-            fb.innerText = "Chưa đúng, thử lại nhé!"; fb.className = "feedback error";
+            fb.innerText = `Chưa đúng rồi. Đáp án là: ${g.ans}`; fb.className = "feedback error";
+            document.getElementById('g-btns').style.display = 'none';
+            document.getElementById('g-next').style.display = 'block';
         }
         document.getElementById('g-score').innerText = score;
     }
+
     function nextG() {
-        if(gIdx < 9) { gIdx++; showG(); }
+        if(gIdx < 19) { gIdx++; showG(); }
         else {
             document.getElementById('grammar-game').style.display='none';
             document.getElementById('result').style.display='block';
             document.getElementById('r-title').innerText = "Thách thức hoàn tất!";
-            document.getElementById('r-detail').innerHTML = `<h1 style="color:var(--ghibli-pink)">${score} Điểm</h1>`;
-            document.getElementById('r-list').innerHTML = score === 100 ? "Xuất sắc! Bạn là bậc thầy ngữ pháp Bài 15!" : "Cố gắng luyện tập thêm để đạt điểm tối đa nhé!";
+            document.getElementById('r-detail').innerHTML = `<h3>Số điểm của bạn:</h3><h1 style="color:var(--ghibli-pink)">${score}/100</h1>`;
+            document.getElementById('r-list').innerHTML = score >= 80 ? "Giáo viên Nga Học HSK khen bạn rất giỏi! 🌸" : "Hãy ôn lại bài 15 một lần nữa nhé! 📚";
         }
     }
 </script>
