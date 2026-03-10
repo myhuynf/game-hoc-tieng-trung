@@ -83,6 +83,18 @@
         .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
         .custom-scroll::-webkit-scrollbar-thumb { background: var(--ghibli-brown); border-radius: 10px; }
         .hidden { display: none; }
+
+        /* Styles cho biểu đồ kết quả */
+        .circle-stat {
+            position: relative;
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            border: 6px solid #f3f4f6;
+        }
+        .stat-green { border-color: #a8d5ba; color: #4f7942; }
+        .stat-red { border-color: #fca5a5; color: #b91c1c; }
     </style>
 </head>
 <body>
@@ -194,9 +206,29 @@
         </div>
 
         <div id="flashcard-stat-screen" class="ghibli-card p-8 text-center hidden">
-             <h2 class="text-2xl font-bold text-amber-900 mb-8">Kết quả ghi nhớ</h2>
-             <div class="flex justify-center mb-8"><div class="text-center font-bold text-emerald-700 text-lg">Đã xem xong Flashcards!</div></div>
-             <button onclick="returnToStart()" class="btn-ghibli w-full">🔙 Về Menu Bài 1</button>
+             <h2 class="text-3xl font-bold text-amber-900 mb-8">Kết quả ghi nhớ</h2>
+             
+             <div class="flex justify-around items-center mb-8">
+                <div class="circle-stat stat-green">
+                    <span id="stat-learned-percent" class="text-xl font-bold">0%</span>
+                    <span class="text-[10px] uppercase font-bold">Thuộc</span>
+                </div>
+                <div class="circle-stat stat-red">
+                    <span id="stat-unlearned-percent" class="text-xl font-bold">0%</span>
+                    <span class="text-[10px] uppercase font-bold">Cần ôn</span>
+                </div>
+             </div>
+
+             <div class="text-left mb-6">
+                <p class="font-bold text-amber-900 mb-2">Danh sách cần lưu ý:</p>
+                <div id="unlearned-list" class="max-h-48 overflow-y-auto custom-scroll bg-amber-50 rounded-lg border border-amber-200 p-2 space-y-2">
+                    </div>
+             </div>
+
+             <div class="grid grid-cols-1 gap-3">
+                 <button id="btn-relearn" onclick="relearnUnlearned()" class="btn-ghibli w-full bg-amber-500 text-white border-amber-700 hidden">🔄 Học lại các từ chưa thuộc</button>
+                 <button onclick="returnToStart()" class="btn-ghibli w-full">🔙 Về Menu Bài 1</button>
+             </div>
         </div>
 
         <div id="end-screen" class="ghibli-card p-8 text-center hidden">
@@ -226,7 +258,7 @@
                         <p>1. 你写完 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none text-center text-emerald-700 rounded"><option value="____"></option><option>周末</option><option>带</option><option>游戏</option><option>跟</option><option>作业</option></select> 了吗？</p>
                         <p>2. 上个 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none text-center text-emerald-700 rounded"><option value="____"></option><option>周末</option><option>带</option><option>游戏</option><option>跟</option><option>作业</option></select> 我们去朋友家玩儿了。</p>
                         <p>3. 别玩儿 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none text-center text-emerald-700 rounded"><option value="____"></option><option>周末</option><option>带</option><option>游戏</option><option>跟</option><option>作业</option></select> 了，快去睡觉。</p>
-                        <p>4. 他说好请我吃饭，但是没 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none text-center text-emerald-700 rounded"><option value="____"></option><option>周末</option><option>带</option><option>游戏</option><option>跟</option><option>作业</option></select> 钱。</p>
+                        <p>4. 他说好請我吃饭，但是没 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none text-center text-emerald-700 rounded"><option value="____"></option><option>周末</option><option>带</option><option>游戏</option><option>跟</option><option>作业</option></select> 钱。</p>
                         <p>5. 明天我要上课, 不能 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none text-center text-emerald-700 rounded"><option value="____"></option><option>周末</option><option>带</option><option>游戏</option><option>跟</option><option>作业</option></select> 你们一起去玩儿。</p>
                     </div>
 
@@ -282,7 +314,6 @@
     <audio id="audio-flip" src="https://assets.mixkit.co/active_storage/sfx/2045/2045-preview.mp3"></audio>
 
     <script>
-        // Dữ liệu Game (Bỏ qua phần dữ liệu dài để ngắn gọn, bạn dán nguyên phần biến vocabulary và quizData cũ vào đây nhé)
         const vocabulary = [
             { h: "周末", p: "zhōumò", m: "Cuối tuần", ex: "你周末打算做什么？", exp: "Nǐ zhōumò dǎsuàn zuò shénme?", exv: "Cuối tuần bạn định làm gì?" },
             { h: "打算", p: "dǎsuàn", m: "Kế hoạch; dự định", ex: "我打算去旅游。", exp: "Wǒ dǎsuàn qù lǚyóu.", exv: "Tôi dự định đi du lịch." },
@@ -349,21 +380,7 @@
             }
         };
 
-        // --- HỆ THỐNG MỞ KHÓA BÀI TẬP ---
         let completedParts = { vocab: false, p3: false, p4: false, p5: false };
-
-        function checkUnlockExercise() {
-            if (completedParts.vocab && completedParts.p3 && completedParts.p4 && completedParts.p5) {
-                const btn = document.getElementById('btn-comprehensive');
-                btn.disabled = false;
-                btn.style.backgroundColor = '#fef08a'; // Màu vàng nổi bật
-                btn.style.borderColor = '#ca8a04';
-                btn.style.color = '#854d0e';
-                btn.innerHTML = '📝 Bài Tập Tổng Hợp (Đã mở khóa)';
-            }
-        }
-
-        // --- Core Logic ---
         let currentQuizKey = '', quizIdx = 0, quizScore = 0, quizAnswered = false;
         let currentFlashList = [], flashcardIdx = 0, learnedCount = 0, unlearnedItems = [];
         let vgStep = 0, vgScore = 0;
@@ -375,7 +392,18 @@
             document.getElementById('start-screen').classList.remove('hidden');
         }
 
-        // --- FLASHCARD LOGIC ---
+        function checkUnlockExercise() {
+            if (completedParts.vocab && completedParts.p3 && completedParts.p4 && completedParts.p5) {
+                const btn = document.getElementById('btn-comprehensive');
+                btn.disabled = false;
+                btn.style.backgroundColor = '#fef08a';
+                btn.style.borderColor = '#ca8a04';
+                btn.style.color = '#854d0e';
+                btn.innerHTML = '📝 Bài Tập Tổng Hợp (Đã mở khóa)';
+            }
+        }
+
+        // --- FLASHCARD LOGIC UPDATED ---
         function startFlashcards(list) {
             playAudio('audio-click');
             currentFlashList = [...list];
@@ -401,16 +429,51 @@
         function flipCard() { playAudio('audio-flip'); document.getElementById('flashcard-inner').classList.toggle('is-flipped'); }
 
         function markCard(learned) {
-            if (learned) learnedCount++;
-            else unlearnedItems.push(currentFlashList[flashcardIdx]);
+            if (learned) {
+                learnedCount++;
+            } else {
+                unlearnedItems.push(currentFlashList[flashcardIdx]);
+            }
             flashcardIdx++;
-            if (flashcardIdx < currentFlashList.length) updateFlashcard();
-            else showFlashcardStats();
+            if (flashcardIdx < currentFlashList.length) {
+                updateFlashcard();
+            } else {
+                showFlashcardStats();
+            }
         }
 
         function showFlashcardStats() {
             document.getElementById('flashcard-screen').classList.add('hidden');
             document.getElementById('flashcard-stat-screen').classList.remove('hidden');
+            
+            const total = currentFlashList.length;
+            const learnedPercent = Math.round((learnedCount / total) * 100);
+            const unlearnedPercent = 100 - learnedPercent;
+
+            document.getElementById('stat-learned-percent').innerText = learnedPercent + "%";
+            document.getElementById('stat-unlearned-percent').innerText = unlearnedPercent + "%";
+
+            const listContainer = document.getElementById('unlearned-list');
+            listContainer.innerHTML = '';
+            
+            if (unlearnedItems.length > 0) {
+                unlearnedItems.forEach(item => {
+                    listContainer.innerHTML += `
+                        <div class="flex justify-between items-center border-b border-amber-200 pb-1 text-sm">
+                            <span class="font-bold text-amber-900">${item.h} <span class="font-normal text-gray-500">(${item.p})</span></span>
+                            <span class="text-amber-700">${item.m}</span>
+                        </div>
+                    `;
+                });
+                document.getElementById('btn-relearn').classList.remove('hidden');
+            } else {
+                listContainer.innerHTML = '<p class="text-center text-emerald-600 font-bold py-4">Tuyệt vời! Bạn đã thuộc hết từ vựng.</p>';
+                document.getElementById('btn-relearn').classList.add('hidden');
+            }
+        }
+
+        function relearnUnlearned() {
+            startFlashcards(unlearnedItems);
         }
 
         // --- VOCAB GAME LOGIC ---
@@ -434,11 +497,9 @@
 
         function nextVocabStep() {
             if (vgStep >= vocabulary.length) {
-                // ĐÁNH DẤU HOÀN THÀNH VOCAB
                 completedParts.vocab = true;
                 document.getElementById('check-vocab').classList.remove('hidden');
                 checkUnlockExercise();
-
                 document.getElementById('vocab-game-screen').classList.add('hidden');
                 document.getElementById('end-screen').classList.remove('hidden');
                 document.getElementById('result-text').innerText = `Kết quả Game: ${vgScore}/${vocabulary.length}`;
@@ -533,11 +594,9 @@
             if (quizIdx < quizData[currentQuizKey].questions.length) {
                 showQuizQuestion();
             } else {
-                // ĐÁNH DẤU HOÀN THÀNH NGỮ PHÁP NÀY
                 completedParts[currentQuizKey] = true;
                 document.getElementById('check-' + currentQuizKey).classList.remove('hidden');
                 checkUnlockExercise();
-
                 document.getElementById('play-screen').classList.add('hidden');
                 document.getElementById('end-screen').classList.remove('hidden');
                 document.getElementById('result-text').innerText = `Kết quả: ${quizScore}/${quizData[currentQuizKey].questions.length}`;
@@ -555,41 +614,17 @@
 
         function submitExercise() {
             playAudio('audio-correct');
-            
             const selects = document.querySelectorAll('.ex-select');
             const inputs = document.querySelectorAll('#exercise-screen input[type="text"]');
-            
-            // Soạn sẵn tin nhắn nội dung bài tập để copy
-            let resultText = "BÀI TẬP TỔNG HỢP - HSK3 BÀI 1\n";
-            resultText += "--------------------------------\n\n";
-            
+            let resultText = "BÀI TẬP TỔNG HỢP - HSK3 BÀI 1\n--------------------------------\n\n";
             resultText += "Phần 2: Điền từ\n";
-            resultText += `1. 你写完 [${selects[0].value || '...'}] 了吗？\n`;
-            resultText += `2. 上个 [${selects[1].value || '...'}] 我们去朋友家玩儿了。\n`;
-            resultText += `3. 别玩儿 [${selects[2].value || '...'}] 了，快去睡觉。\n`;
-            resultText += `4. 他说好请我吃饭，但是没 [${selects[3].value || '...'}] 钱。\n`;
-            resultText += `5. 明天我要上课, 不能 [${selects[4].value || '...'}] 你们一起去玩儿。\n`;
-            resultText += `6. A: 你是什么时候 [${selects[5].value || '...'}] 家的？我怎么不知道？ B: 上个月。\n`;
-            resultText += `7. A: 你是北方人吗？ B: 不是, 我是 [${selects[6].value || '...'}] 人。\n`;
-            resultText += `8. A: 考完试你有什么 [${selects[7].value || '...'}] ？ B: 我还没想好。\n`;
-            resultText += `9. A: 你好，我要买一张 [${selects[8].value || '...'}] 。 B: 三块钱。\n`;
-            resultText += `10. A: 累了吧？吃点儿 [${selects[9].value || '...'}] 吧。 B: 好, 你也吃点儿吧。\n\n`;
-            
-            resultText += "Phần 3: Mô tả hình ảnh\n";
-            resultText += `Hình 1:\n A: 衣服都 [${inputs[0].value || '...'}] 了吗？\n B: 我一 [${inputs[1].value || '...'}] 也 [${inputs[2].value || '...'}] 。\n\n`;
-            resultText += `Hình 2:\n A: 小狗怎么没吃饭？\n B: 我的狗生病了，一 [${inputs[3].value || '...'}] 也 [${inputs[4].value || '...'}] 。\n\n`;
-            resultText += `Hình 3:\n A: 我们休息一下再 [${inputs[5].value || '...'}] 吧。\n B: 没关系，我一 [${inputs[6].value || '...'}] 也 [${inputs[7].value || '...'}] 。\n\n`;
-            resultText += `Hình 4:\n A: 你什么时候回家？\n B: 我还没 [${inputs[8].value || '...'}] 。飞机票呢，你知道在哪儿买票吗？\n`;
-
-            // Lệnh copy đoạn văn bản vào Clipboard
+            selects.forEach((s, i) => { resultText += `${i+1}. [${s.value || '...'}]\n`; });
+            resultText += "\nPhần 3: Mô tả hình ảnh\n";
+            inputs.forEach((inp, i) => { resultText += `Chỗ trống ${i+1}: [${inp.value || '...'}]\n`; });
             navigator.clipboard.writeText(resultText).then(() => {
                 const feedback = document.getElementById('exercise-feedback');
-                feedback.innerHTML = `<p class="font-bold text-lg mb-2">🎉 Đã copy toàn bộ bài làm của bạn!</p>
-                                      <p>👉 Hãy mở tin nhắn <b>Zalo/Facebook của cô giáo</b> và ấn <b>Dán (Ctrl+V)</b> để gửi nộp bài nhé.</p>`;
+                feedback.innerHTML = `<p class="font-bold text-lg mb-2">🎉 Đã copy toàn bộ bài làm của bạn!</p><p>👉 Hãy mở tin nhắn <b>Zalo/Facebook của cô giáo</b> và ấn <b>Dán (Ctrl+V)</b> để gửi nộp bài nhé.</p>`;
                 feedback.classList.remove('hidden');
-                feedback.classList.add('animate-pulse');
-            }).catch(err => {
-                alert("Hệ thống không thể tự copy. Hãy thử chụp ảnh màn hình bài làm và gửi cho cô giáo nhé!");
             });
         }
     </script>
