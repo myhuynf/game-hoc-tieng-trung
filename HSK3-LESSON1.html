@@ -180,26 +180,32 @@
             </div>
         </div>
 
-        <div id="flashcard-stat-screen" class="ghibli-card p-8 text-center hidden">
-            <h2 class="text-2xl font-bold text-amber-900 mb-2">Kết quả luyện tập</h2>
-            <div class="result-bar mb-6">
-                <div id="stat-bar-learned" class="bg-emerald-400 h-full transition-all duration-1000" style="width: 0%"></div>
-                <div id="stat-bar-unlearned" class="bg-rose-400 h-full transition-all duration-1000" style="width: 0%"></div>
+<div id="flashcard-stat-screen" class="ghibli-card p-8 text-center hidden">
+            <h2 class="text-2xl font-bold text-amber-900 mb-8">Kết quả ghi nhớ</h2>
+            
+            <div class="flex justify-around mb-8">
+                <div class="relative w-24 h-24 flex items-center justify-center rounded-full border-[6px] border-emerald-200">
+                    <div class="text-center">
+                        <div id="stat-percent-learned" class="font-bold text-emerald-700 text-lg">0%</div>
+                        <div class="text-[10px] text-emerald-600 font-bold uppercase">Thuộc</div>
+                    </div>
+                </div>
+                <div class="relative w-24 h-24 flex items-center justify-center rounded-full border-[6px] border-rose-200">
+                    <div class="text-center">
+                        <div id="stat-percent-unlearned" class="font-bold text-rose-700 text-lg">0%</div>
+                        <div class="text-[10px] text-rose-600 font-bold uppercase">Cần ôn</div>
+                    </div>
+                </div>
             </div>
-            <div class="flex justify-between font-bold text-sm px-1 mb-8">
-                <span class="text-emerald-700">✅ Thuộc: <span id="stat-percent-learned">0</span>%</span>
-                <span class="text-rose-700">❌ Xem lại: <span id="stat-percent-unlearned">0</span>%</span>
-            </div>
-            <div id="unlearned-container" class="hidden text-left mb-8">
-                <p class="text-amber-900 font-bold mb-3 border-b border-amber-200">📖 Từ chưa thuộc:</p>
-                <div id="unlearned-list" class="max-h-56 overflow-y-auto custom-scroll border-2 border-amber-100 rounded-xl p-3 bg-white space-y-2"></div>
-            </div>
-            <div class="flex gap-3 mt-2">
-                <button onclick="window.location.href='index.html'" class="btn-ghibli flex-1 bg-emerald-100 border-emerald-500 text-emerald-800">🏠 Về Vườn</button>
-                <button onclick="returnToStart()" class="btn-ghibli flex-1">🔙 Lại Bài 1</button>
-            </div>
-        </div>
 
+            <div id="unlearned-container" class="hidden text-left mb-8">
+                <p class="text-amber-900 font-bold mb-3 border-b border-amber-200 pb-1">Danh sách cần lưu ý:</p>
+                <div id="unlearned-list" class="max-h-64 overflow-y-auto custom-scroll border-2 border-amber-50 rounded-xl p-0 bg-white divide-y divide-amber-50"></div>
+            </div>
+
+            <div id="flash-stat-btns" class="flex gap-3 mt-2">
+                </div>
+        </div>
         <div id="end-screen" class="ghibli-card p-8 text-center hidden">
             <h2 class="text-3xl font-bold text-amber-900 mb-4">Hoàn thành!</h2>
             <div class="text-6xl mb-4">🌟</div>
@@ -331,43 +337,32 @@ function startFlashcards(list) {
             document.getElementById('flashcard-stat-screen').classList.remove('hidden');
             const total = currentFlashList.length;
             const pLearned = Math.round((learnedCount / total) * 100);
-            document.getElementById('stat-bar-learned').style.width = pLearned + '%';
-            document.getElementById('stat-bar-unlearned').style.width = (100 - pLearned) + '%';
-            document.getElementById('stat-percent-learned').innerText = pLearned;
-            document.getElementById('stat-percent-unlearned').innerText = 100 - pLearned;
+            
+            document.getElementById('stat-percent-learned').innerText = pLearned + '%';
+            document.getElementById('stat-percent-unlearned').innerText = (100 - pLearned) + '%';
             
             const listEl = document.getElementById('unlearned-list');
-            const btnContainer = document.querySelector('#flashcard-stat-screen .flex.gap-3.mt-2');
+            const btnContainer = document.getElementById('flash-stat-btns');
             
             if (unlearnedItems.length > 0) {
                 document.getElementById('unlearned-container').classList.remove('hidden');
-                listEl.innerHTML = unlearnedItems.map(item => `<div class="bg-rose-50 p-2 rounded"><b>${item.h}</b>: ${item.m}</div>`).join('');
+                listEl.innerHTML = unlearnedItems.map(item => `
+                    <div class="flex justify-between items-center p-3">
+                        <span class="text-amber-900 font-bold"><span class="chinese-text">${item.h}</span> <span class="text-xs font-normal text-gray-400">(${item.p})</span></span>
+                        <span class="text-amber-700 text-sm italic">${item.m}</span>
+                    </div>
+                `).join('');
+
                 btnContainer.innerHTML = `
-                    <button onclick="startFlashcards(unlearnedItems)" class="btn-ghibli flex-[2] bg-amber-500 text-white border-amber-700">🔄 Học lại ${unlearnedItems.length} từ chưa thuộc</button>
-                    <button onclick="returnToStart()" class="btn-ghibli flex-1">🔙 Menu</button>
+                    <button onclick="startFlashcards(unlearnedItems)" class="btn-ghibli flex-[2] bg-amber-500 text-white border-amber-700 font-bold shadow-md">🔄 Học lại từ chưa thuộc</button>
+                    <button onclick="returnToStart()" class="btn-ghibli flex-1 font-bold">🔙 Bài 1</button>
                 `;
             } else {
                 document.getElementById('unlearned-container').classList.add('hidden');
                 btnContainer.innerHTML = `
-                    <button onclick="window.location.href='index.html'" class="btn-ghibli flex-1 bg-emerald-100 border-emerald-500 text-emerald-800">🏠 Về Vườn</button>
-                    <button onclick="returnToStart()" class="btn-ghibli flex-1">🔙 Lại Bài 1</button>
+                    <button onclick="window.location.href='index.html'" class="btn-ghibli flex-1 bg-emerald-100 border-emerald-500 text-emerald-800 font-bold">🏠 Về Vườn</button>
+                    <button onclick="returnToStart()" class="btn-ghibli flex-1 font-bold">🔙 Bài 1</button>
                 `;
-            }
-        }
-
-        function showFlashcardStats() {
-            document.getElementById('flashcard-screen').classList.add('hidden');
-            document.getElementById('flashcard-stat-screen').classList.remove('hidden');
-            const total = currentFlashList.length;
-            const pLearned = Math.round((learnedCount / total) * 100);
-            document.getElementById('stat-bar-learned').style.width = pLearned + '%';
-            document.getElementById('stat-bar-unlearned').style.width = (100 - pLearned) + '%';
-            document.getElementById('stat-percent-learned').innerText = pLearned;
-            document.getElementById('stat-percent-unlearned').innerText = 100 - pLearned;
-            const listEl = document.getElementById('unlearned-list');
-            if (unlearnedItems.length > 0) {
-                document.getElementById('unlearned-container').classList.remove('hidden');
-                listEl.innerHTML = unlearnedItems.map(item => `<div class="bg-rose-50 p-2 rounded"><b>${item.h}</b>: ${item.m}</div>`).join('');
             }
         }
 
