@@ -634,7 +634,7 @@
             resultText += `3. 别玩儿 ${formatAns(selects[2])} 了，快去睡觉。\n`;
             resultText += `4. 他说好请我吃饭，但是没 ${formatAns(selects[3])} 钱。\n`;
             resultText += `5. 明天我要上课, 不能 ${formatAns(selects[4])} 你们一起去玩儿。\n`;
-            resultText += `6. A: 你是什么时候 ${formatAns(selects[5])} 家s của bạn？ B: 上个月。\n`;
+            resultText += `6. A: 你是什么时候 ${formatAns(selects[5])} 家？ B: 上个月。\n`;
             resultText += `7. A: 你是北方人吗？ B: 不是, 我是 ${formatAns(selects[6])} 人。\n`;
             resultText += `8. A: 考完试你有什么 ${formatAns(selects[7])} ？ B: 我还没想好。\n`;
             resultText += `9. A: 你好，我要买一张 ${formatAns(selects[8])} 。 B: 三块钱。\n`;
@@ -649,7 +649,7 @@
             // Lệnh copy đoạn văn bản vào Clipboard
             navigator.clipboard.writeText(resultText).then(() => {
                 const feedback = document.getElementById('exercise-feedback');
-                feedback.innerHTML = `<p class="font-bold text-lg mb-2">🎉 Đã copy bài làm với khoảng cách rõ ràng!</p>
+                feedback.innerHTML = `<p class="font-bold text-lg mb-2">🎉 Đã copy bài làm!</p>
                                       <p>👉 Hãy mở tin nhắn <b>Zalo/Facebook của cô giáo</b> và ấn <b>Dán (Ctrl+V)</b> để nộp nhé.</p>`;
                 feedback.classList.remove('hidden');
                 feedback.classList.add('animate-pulse');
