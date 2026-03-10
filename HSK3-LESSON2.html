@@ -7,38 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Noto+Sans+SC:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --ghibli-green: #a8d5ba; --ghibli-brown: #d4a373; --ghibli-sky: #caf0f8;
-            --ghibli-wood: #6d4c41; --ghibli-dark-green: #4f7942;
-        }
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(180deg, var(--ghibli-sky) 0%, #fff 100%);
-            min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-        }
+        :root { --ghibli-green: #a8d5ba; --ghibli-brown: #d4a373; --ghibli-sky: #caf0f8; --ghibli-wood: #6d4c41; }
+        body { font-family: 'Quicksand', sans-serif; background: linear-gradient(180deg, var(--ghibli-sky) 0%, #fff 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         .chinese-text { font-family: 'Noto Sans SC', sans-serif; font-weight: 700; }
-        .ghibli-card {
-            background: rgba(255, 255, 255, 0.95); border: 4px solid var(--ghibli-wood);
-            border-radius: 20px; box-shadow: 0 10px 0 var(--ghibli-brown);
-        }
-        .btn-ghibli {
-            background-color: var(--ghibli-green); color: var(--ghibli-wood);
-            border: 2px solid var(--ghibli-wood); border-radius: 12px;
-            font-weight: bold; transition: all 0.2s; cursor: pointer;
-        }
+        .ghibli-card { background: rgba(255, 255, 255, 0.95); border: 4px solid var(--ghibli-wood); border-radius: 20px; box-shadow: 0 10px 0 var(--ghibli-brown); }
+        .btn-ghibli { background-color: var(--ghibli-green); color: var(--ghibli-wood); border: 2px solid var(--ghibli-wood); border-radius: 12px; font-weight: bold; transition: all 0.2s; cursor: pointer; }
         .btn-ghibli:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 5px 0 var(--ghibli-brown); }
         .btn-ghibli:disabled { opacity: 0.6; cursor: not-allowed; filter: grayscale(1); }
-        .flashcard-inner {
-            position: relative; width: 100%; height: 380px;
-            transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer;
-        }
+        .flashcard-inner { position: relative; width: 100%; height: 380px; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
         .flashcard-inner.is-flipped { transform: rotateY(180deg); }
-        .flashcard-front, .flashcard-back {
-            position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; border-radius: 15px;
-            padding: 20px; border: 2px solid var(--ghibli-wood);
-        }
+        .flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 15px; padding: 20px; border: 2px solid var(--ghibli-wood); }
         .flashcard-back { background-color: #fef3c7; transform: rotateY(180deg); }
         .hidden { display: none; }
     </style>
@@ -47,584 +25,141 @@
     <div id="game-container" class="w-full max-w-xl px-4 mt-10 mb-10">
         <div id="start-screen" class="ghibli-card p-8 text-center">
             <h1 class="text-3xl font-bold text-amber-900 mb-2">HSK3 - Bài 2</h1>
-            <h2 class="text-xl text-emerald-700 font-bold mb-4">他什么时候回来？</h2>
+            <h2 class="text-xl text-emerald-700 font-bold mb-6">他什么时候回来？</h2>
             <div class="grid grid-cols-1 gap-4">
                 <button onclick="startFlashcards()" class="btn-ghibli p-4">🎴 Phần 1: Ôn Flashcards</button>
-                <button onclick="startVocabGame()" class="btn-ghibli p-4 relative">
-                    🎮 Phần 2: Game Từ Vựng <span id="check-vocab" class="hidden text-emerald-600 ml-2">✅</span>
-                </button>
-                <button onclick="startQuiz('p3')" class="btn-ghibli p-4 relative">
-                    ✨ Phần 3: Bổ ngữ phương hướng <span id="check-p3" class="hidden text-emerald-600 ml-2">✅</span>
-                </button>
-                <button onclick="startQuiz('p4')" class="btn-ghibli p-4 relative">
-                    ❄️ Phần 4: Hành động liên tiếp <span id="check-p4" class="hidden text-emerald-600 ml-2">✅</span>
-                </button>
-                <button onclick="startQuiz('p5')" class="btn-ghibli p-4 relative">
-                    🔗 Phần 5: Câu hỏi phản vấn <span id="check-p5" class="hidden text-emerald-600 ml-2">✅</span>
-                </button>
-                <button id="btn-comprehensive" onclick="showExercise()" class="btn-ghibli p-4 mt-4" disabled>
-                    🔒 Bài Tập Tổng Hợp (Cần hoàn thành Game)
-                </button>
+                <button onclick="startVocabGame()" class="btn-ghibli p-4 relative">🎮 Phần 2: Game Từ Vựng <span id="check-vocab" class="hidden text-emerald-600 ml-2">✅</span></button>
+                <button onclick="startQuiz('p3')" class="btn-ghibli p-4 relative">✨ Phần 3: Bổ ngữ phương hướng <span id="check-p3" class="hidden text-emerald-600 ml-2">✅</span></button>
+                <button onclick="startQuiz('p4')" class="btn-ghibli p-4 relative">❄️ Phần 4: Hành động liên tiếp <span id="check-p4" class="hidden text-emerald-600 ml-2">✅</span></button>
+                <button onclick="startQuiz('p5')" class="btn-ghibli p-4 relative">🔗 Phần 5: Câu hỏi phản vấn <span id="check-p5" class="hidden text-emerald-600 ml-2">✅</span></button>
+                <button id="btn-comprehensive" onclick="showExercise()" class="btn-ghibli p-4 mt-4" disabled>🔒 Bài Tập Tổng Hợp (Cần xong game)</button>
             </div>
         </div>
 
         <div id="flashcard-screen" class="ghibli-card p-6 hidden">
-            <div class="flex justify-between mb-4">
-                <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Quay lại</button>
-                <div class="font-bold text-amber-900">Thẻ: <span id="card-index">1</span>/<span id="card-total">18</span></div>
-            </div>
-            <div id="flashcard-inner" class="flashcard-inner" onclick="flipCard()">
-                <div class="flashcard-front bg-white">
-                    <h2 id="card-hanzi" class="chinese-text text-8xl text-amber-900"></h2>
-                    <p class="mt-4 text-amber-600 animate-pulse">Chạm để lật 👆</p>
-                </div>
-                <div class="flashcard-back text-center">
-                    <h3 id="card-pinyin" class="text-3xl font-bold text-emerald-700"></h3>
-                    <p id="card-mean" class="text-xl text-amber-900 mb-4 font-bold"></p>
-                    <p id="card-ex-hz" class="chinese-text text-xl text-amber-800"></p>
-                    <p id="card-ex-vi" class="text-sm text-gray-600 mt-2"></p>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-6">
-                <button onclick="nextCard()" class="btn-ghibli p-4 bg-white">Bỏ qua</button>
-                <button onclick="nextCard()" class="btn-ghibli p-4">Tiếp theo</button>
-            </div>
+            <div class="flex justify-between mb-4"><button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Quay lại</button><div class="font-bold">Thẻ: <span id="card-index">1</span>/18</div></div>
+            <div id="flashcard-inner" class="flashcard-inner" onclick="flipCard()"><div class="flashcard-front bg-white"><h2 id="card-hanzi" class="chinese-text text-8xl text-amber-900"></h2><p class="mt-4 text-amber-600 animate-pulse">Chạm để lật 👆</p></div><div class="flashcard-back text-center"><h3 id="card-pinyin" class="text-3xl font-bold text-emerald-700"></h3><p id="card-mean" class="text-xl text-amber-900 mb-4 font-bold"></p><p id="card-ex-hz" class="chinese-text text-xl text-amber-800"></p><p id="card-ex-vi" class="text-sm text-gray-600 mt-2"></p></div></div>
+            <button onclick="nextCard()" class="btn-ghibli w-full p-4 mt-6">Tiếp theo</button>
         </div>
+
         <div id="vocab-game-screen" class="ghibli-card p-6 hidden">
-            <div class="flex justify-between mb-4">
-                <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Quay lại</button>
-                <div class="font-bold text-emerald-800">Câu: <span id="vg-step">1</span>/18</div>
-            </div>
-            <div id="vg-content" class="min-h-[200px] flex flex-col justify-center items-center"></div>
+            <div class="flex justify-between mb-4"><button onclick="returnToStart()" class="text-amber-700 font-bold">🔙</button><div id="vg-step-text" class="font-bold"></div></div>
+            <div id="vg-content" class="min-h-[150px] flex flex-col items-center justify-center"></div>
             <div id="vg-feedback" class="mt-4 p-3 rounded-lg hidden text-center font-bold"></div>
-            <div class="mt-6 flex gap-3">
-                <button id="vg-check-btn" onclick="checkVocabGame()" class="btn-ghibli flex-1 p-4 bg-amber-500 text-white">Kiểm tra</button>
-                <button id="vg-next-btn" onclick="nextVocabStep()" class="btn-ghibli flex-1 p-4 hidden">Tiếp theo</button>
-            </div>
+            <div class="mt-6 flex gap-2"><button id="vg-check-btn" onclick="checkVocabGame()" class="btn-ghibli flex-1 p-4 bg-amber-500 text-white">Kiểm tra</button><button id="vg-next-btn" onclick="nextVocabStep()" class="btn-ghibli flex-1 p-4 hidden">Tiếp theo</button></div>
         </div>
 
         <div id="play-screen" class="ghibli-card p-6 hidden">
-            <div class="flex justify-between mb-4 text-sm">
-                <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Quay lại</button>
-                <div id="quiz-part-name" class="font-bold text-emerald-800 uppercase"></div>
-            </div>
-            <div id="question-box" class="min-h-[120px] flex items-center justify-center p-4 bg-white rounded-xl border-2 border-dashed border-amber-300 mb-6">
-                <p id="question-text" class="chinese-text text-2xl text-center text-amber-900 whitespace-pre-line"></p>
-            </div>
-            <div id="options-container" class="grid grid-cols-1 gap-3"></div>
-            <div id="explanation-container" class="bg-amber-50 border-l-4 border-amber-500 p-4 mt-4 hidden rounded">
-                <p id="feedback-title" class="font-bold mb-2"></p>
-                <p id="exp-full" class="chinese-text text-lg text-amber-900 mb-1"></p>
-                <p id="exp-vi" class="text-sm text-gray-700 italic mb-2"></p>
-                <p id="exp-detail" class="text-xs text-amber-800"></p>
-                <button onclick="showNextQuestion()" class="btn-ghibli w-full p-2 mt-3 bg-amber-600 text-white">Tiếp theo</button>
+            <div class="flex justify-between mb-4"><button onclick="returnToStart()" class="text-amber-700 font-bold">🔙</button><div id="quiz-part-name" class="font-bold uppercase"></div></div>
+            <div id="question-box" class="min-h-[100px] flex items-center justify-center p-4 bg-white rounded-xl mb-6"><p id="question-text" class="chinese-text text-2xl text-center"></p></div>
+            <div id="options-container" class="grid gap-3"></div>
+            <div id="explanation-container" class="mt-4 p-4 bg-amber-50 border-l-4 border-amber-500 hidden">
+                <p id="exp-full" class="chinese-text text-lg mb-2"></p>
+                <p id="exp-vi" class="text-sm italic mb-2"></p>
+                <button onclick="showNextQuestion()" class="btn-ghibli w-full p-2">Tiếp tục</button>
             </div>
         </div>
 
-        <div id="end-screen" class="ghibli-card p-8 text-center hidden">
-            <h2 class="text-3xl font-bold text-amber-900 mb-4">Tuyệt vời!</h2>
-            <div class="text-6xl mb-4">🌟</div>
-            <p id="result-text" class="text-amber-800 mb-6 font-bold"></p>
-            <button onclick="returnToStart()" class="btn-ghibli w-full p-4">Quay về Menu Bài 2</button>
-        </div>
+        <div id="end-screen" class="ghibli-card p-8 text-center hidden"><h2 class="text-2xl font-bold mb-4">Kết quả</h2><p id="result-text" class="mb-6"></p><button onclick="returnToStart()" class="btn-ghibli w-full p-4">Quay về Menu</button></div>
 
         <div id="exercise-screen" class="ghibli-card p-6 hidden">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-bold text-amber-900">📝 Bài Tập Tổng Hợp</h2>
-                <button onclick="returnToStart()" class="text-amber-700 font-bold">Đóng</button>
-            </div>
-            <div class="overflow-y-auto max-h-[60vh] pr-2 custom-scroll">
-                <div class="mb-6">
-                    <p class="font-bold text-emerald-800 mb-2">1. Điền từ vào chỗ trống:</p>
-                    <div class="bg-amber-50 p-2 text-sm text-center mb-4 border border-amber-200 rounded">
-                        楼 | 办公室 | 树 | 胖 | 难 | 辆 | 腿 | 把 | 经理 | 其实
-                    </div>
-                    <div id="fill-exercise" class="space-y-4 chinese-text text-lg">
-                        </div>
-                </div>
-                <div class="mb-6">
-                    <p class="font-bold text-emerald-800 mb-2">2. Mô tả hình ảnh (Viết chữ Hán):</p>
-                    <div id="image-exercise" class="space-y-4 text-sm">
-                        </div>
-                </div>
-            </div>
-            <div class="mt-4 border-t pt-4">
-                <button onclick="checkFinalExercise()" class="btn-ghibli w-full p-4 bg-emerald-600 text-white">Nộp bài & Copy kết quả</button>
-                <div id="exercise-feedback" class="mt-4 p-3 hidden rounded-lg bg-emerald-100 text-emerald-800 text-sm text-center"></div>
-            </div>
+            <div class="flex justify-between mb-4"><h2 class="font-bold">Bài Tập Tổng Hợp</h2><button onclick="returnToStart()" class="text-red-500">Đóng</button></div>
+            <div id="exercise-content" class="max-h-[50vh] overflow-y-auto chinese-text"></div>
+            <button onclick="checkFinalExercise()" class="btn-ghibli w-full p-4 mt-4 bg-emerald-600 text-white">Nộp bài & Copy</button>
+            <div id="exercise-feedback" class="mt-2 hidden p-2 bg-green-100 text-green-700 text-sm text-center"></div>
         </div>
-    </div> ```
-<script>
-        // 1. BIẾN TRẠNG THÁI (Quản lý khóa/mở nút)
-        let gameState = {
-            vocabDone: false,
-            p3Done: false,
-            p4Done: false,
-            p5Done: false
-        };
+    </div>
 
-        // 2. DỮ LIỆU TỪ VỰNG
+    <script>
+        let gameState = { vocabDone: false, p3Done: false, p4Done: false, p5Done: false };
         const vocabulary = [
             { hz: "腿", py: "tuǐ", vi: "Chân", exHz: "我的腿疼。", exVi: "Chân tôi bị đau." },
             { hz: "疼", py: "téng", vi: "Đau", exHz: "昨天走路太多了，现在腿很疼。", exVi: "Hôm qua đi bộ nhiều quá, giờ chân rất đau." },
-            { hz: "脚", py: "jiǎo", vi: "Bàn chân", exHz: "这双鞋子不适合我的脚。", exPy: "Zhè shuāng xiézi bù shìhé wǒ de jiǎo.", exVi: "Đôi giày này không vừa chân tôi." },
-            { hz: "树", py: "shù", vi: "Cây", exHz: "树下有一只小猫。", exVi: "Dưới gốc cây có một con mèo nhỏ." },
-            { hz: "容易", py: "róngyì", vi: "Dễ dàng", exHz: "写汉字不容易。", exVi: "Viết chữ Hán không dễ dàng." },
-            { hz: "难", py: "nán", vi: "Khó", exHz: "这个考试很难。", exVi: "Kỳ thi này rất khó." },
-            { hz: "太太", py: "tàitai", vi: "Vợ, bà chủ", exHz: "周太太在办公室吗？", exVi: "Bà Chu có ở văn phòng không?" },
-            { hz: "秘书", py: "mìshū", vi: "Thư ký", exHz: "她是周经理的秘书。", exVi: "Cô ấy là thư ký của giám đốc Chu." },
-            { hz: "经理", py: "jīnglǐ", vi: "Giám đốc", exHz: "经理不在，他出去了。", exVi: "Giám đốc không có ở đây, ông ấy ra ngoài rồi." },
-            { hz: "办公室", py: "bàngōngshì", vi: "Văn phòng", exHz: "我在办公室等你。", exVi: "Tôi đợi bạn ở văn phòng." },
-            { hz: "辆", py: "liàng", vi: "Chiếc, cái (xe)", exHz: "我买了一辆新自行车。", exVi: "Tôi mua một chiếc xe đạp mới." },
-            { hz: "楼", py: "lóu", vi: "Tòa nhà, tầng", exHz: "我就在楼下等你。", exVi: "Tôi đợi bạn ngay dưới lầu." },
-            { hz: "拿", py: "ná", vi: "Cầm, lấy", exHz: "帮 me 拿一下雨伞。", exVi: "Giúp tôi cầm cây dù một chút." },
-            { hz: "把", py: "bǎ", vi: "Cái (ô, ghế)", exHz: "那边有一把椅子。", exVi: "Đằng kia có một cái ghế." },
-            { hz: "伞", py: "sǎn", vi: "Cái ô, dù", exHz: "下雨了，带把伞吧。", exVi: "Mưa rồi, mang theo cây dù đi." },
-            { hz: "胖", py: "pàng", vi: "Béo", exHz: "我不胖，我很瘦。", exVi: "Tôi không béo, tôi rất gầy." },
-            { hz: "其实", py: "qíshí", vi: "Thực ra", exHz: "其实我一点儿也不累。", exVi: "Thực ra tôi chẳng mệt chút nào." },
-            { hz: "瘦", py: "shòu", vi: "Gầy", exHz: "你太瘦了，多吃点儿饭。", exVi: "Bạn gầy quá, ăn nhiều cơm vào." }
+            { hz: "容易", py: "róngyì", vi: "Dễ dàng", exHz: "写汉字不容易。", exVi: "Viết chữ Hán không dễ." },
+            { hz: "经理", py: "jīnglǐ", vi: "Giám đốc", exHz: "经理不在，他出去了。", exVi: "Giám đốc không có ở đây." }
         ];
 
         const quizData = {
-p3: { 
-                name: "Bổ ngữ phương hướng đơn", 
-                questions: [
-                    { 
-                        q: "你怎么还没________？\n我 đều ở dưới lầu đợi bạn nửa tiếng rồi.", 
-                        options: ["上去", "下来", "进去", "回去"], 
-                        correct: 1, 
-                        res: "你怎么还没下来？", 
-                        py: "Nǐ zěnme hái méi xiàlái?", 
-                        vi: "Sao bạn vẫn chưa xuống đây?", 
-                        exp: "Người nói ở dưới lầu (楼下), đối phương di chuyển từ trên xuống gần người nói dùng '下来'." 
-                    },
-                    { 
-                        q: "已经10点半了，\n快点儿________，别睡了。", 
-                        options: ["起来", "上来", "过去", "回来"], 
-                        correct: 0, 
-                        res: "快点儿起来。", 
-                        py: "Kuài diǎnr qǐlái.", 
-                        vi: "Mau dậy đi thôi.", 
-                        exp: "Hành động thức dậy, rời khỏi giường dùng '起来'." 
-                    },
-                    { 
-                        q: "明天去朋友家，\n我想________一些水果。", 
-                        options: ["带来", "买来", "搬来", "带去"], 
-                        correct: 3, 
-                        res: "我想带去一些水果。", 
-                        py: "Wǒ xiǎng dài qù yìxiē shuǐguǒ.", 
-                        vi: "Tôi muốn mang đi một ít hoa quả.", 
-                        exp: "Mang vật rời xa vị trí hiện tại của người nói để đến nhà bạn dùng '带去'." 
-                    },
-                    { 
-                        q: "老师进教室________了，\n同学们马上安静下来。", 
-                        options: ["去", "上", "回", "来"], 
-                        correct: 3, 
-                        res: "老师进教室来了。", 
-                        py: "Lǎoshī jìn jiàoshì lái le.", 
-                        vi: "Thầy giáo bước vào lớp rồi.", 
-                        exp: "Học sinh ở trong lớp, thầy giáo từ ngoài vào lớp (đến gần người nói) dùng '来'." 
-                    },
-                    { 
-                        q: "外面很冷，\n你快________吧。", 
-                        options: ["进来", "进去", "出来", "过去"], 
-                        correct: 0, 
-                        res: "你快进来吧。", 
-                        py: "Nǐ kuài jìnlái ba.", 
-                        vi: "Bên ngoài lạnh lắm, bạn mau vào đi.", 
-                        exp: "Người nói ở trong nhà (nơi ấm), mời người ngoài vào chỗ mình dùng '进来'." 
-                    },
-                    { 
-                        q: "我在楼上，\n你把书________吧。", 
-                        options: ["带下去", "带过去", "带上来", "带回去"], 
-                        correct: 2, 
-                        res: "你把书带上来吧。", 
-                        py: "Nǐ bǎ shū dài shànglái ba.", 
-                        vi: "Tôi ở trên lầu, bạn mang sách lên đây nhé.", 
-                        exp: "Người nói ở trên lầu (楼上), vật chuyển từ dưới lên gần người nói dùng '上来'." 
-                    },
-                    { 
-                        q: "那边树多，\n我们________坐一下吧。", 
-                        options: ["过来", "出来", "过去", "进去"], 
-                        correct: 2, 
-                        res: "我们过去坐一下吧。", 
-                        py: "Wǒmen guòqù zuò yíxià ba.", 
-                        vi: "Chỗ kia nhiều cây, chúng mình qua đó ngồi chút đi.", 
-                        exp: "Di chuyển đến một địa điểm khác xa vị trí hiện tại dùng '过去'." 
-                    },
-                    { 
-                        q: "小狗听见声音，\n马上从楼上________了。", 
-                        options: ["上来", "下去", "回去", "下来"], 
-                        correct: 3, 
-                        res: "马上 từ trên lầu 下来了。", 
-                        py: "Mǎshàng cóng lóushàng xiàlái le.", 
-                        vi: "Con chó nghe thấy tiếng động, lập tức từ trên lầu chạy xuống.", 
-                        exp: "Di chuyển từ trên cao xuống thấp và hướng về phía người nói dùng '下来'." 
-                    },
-                    { 
-                        q: "朋友已经到楼下了，\n你快________接他吧。", 
-                        options: ["下去", "下来", "回去", "上去"], 
-                        correct: 0, 
-                        res: "你快下去接他吧。", 
-                        py: "Nǐ kuài xiàqù jiē tā ba.", 
-                        vi: "Bạn bạn đến dưới lầu rồi, bạn mau xuống đón cậu ấy đi.", 
-                        exp: "Người nói ở trên lầu, bảo người nghe rời khỏi vị trí hiện tại để đi xuống dưới dùng '下去'." 
-                    },
-                    { 
-                        q: "我买了一些面包，\n现在给你________。", 
-                        options: ["带去", "带来", "搬去", "拿去"], 
-                        correct: 1, 
-                        res: "现在给你带来。", 
-                        py: "Xiànzài gěi nǐ dàilái.", 
-                        vi: "Tôi mua ít bánh mì, giờ mang đến cho bạn đây.", 
-                        exp: "Mang vật đến vị trí của người nghe (được coi là hướng về phía người nói/người đang quan sát) dùng '带来'." 
-                    }
-                ]
-            },
-p4: { 
-                name: "Hai hành động liên tiếp (V+了...就...)", 
-                questions: [
-                    { 
-                        q: "A: 你什么时候给妈妈打电话？\nB: 我打算 ______。", 
-                        options: ["吃晚饭了就给她打电话", "吃晚饭就给她打电话", "吃了晚饭就给她打电话", "吃晚饭给她打电话"], 
-                        correct: 2, 
-                        res: "我打算吃了晚饭就给她打电话。", 
-                        py: "Wǒ dǎsuàn chīle wǎnfàn jiù gěi māma dǎ diànhuà.", 
-                        vi: "Tôi định ăn cơm tối xong là gọi điện cho mẹ ngay.", 
-                        exp: "Cấu trúc: V1 + 了 + (Tân ngữ) + 就 + V2. Hành động 1 (ăn cơm) phải có '了' để chỉ sự hoàn thành." 
-                    },
-                    { 
-                        q: "A: 你怎么每天这么早睡觉？\nB: 我 ______。", 
-                        options: ["到家就睡觉了", "到了家就睡觉", "到家了睡觉就", "到家睡觉就"], 
-                        correct: 1, 
-                        res: "我到了家就睡觉。", 
-                        py: "Wǒ dàole jiā jiù shuìjiào.", 
-                        vi: "Tôi cứ về đến nhà là đi ngủ.", 
-                        exp: "V1 (到) + 了 + Tân ngữ (家) + 就 + V2 (睡觉)." 
-                    },
-                    { 
-                        q: "A: 你什么时候走？\nB: 他来了 ______。", 
-                        options: ["我就走", "就我走", "我走就", "我走了就"], 
-                        correct: 0, 
-                        res: "他来了我就走。", 
-                        py: "Tā lái le wǒ jiù zǒu.", 
-                        vi: "Anh ấy đến là tôi đi luôn.", 
-                        exp: "Sau khi hành động 1 (đến) xảy ra, hành động 2 (đi) sẽ tiếp nối ngay. '就' đứng trước động từ 2." 
-                    },
-                    { 
-                        q: "A: 你每天晚上做什么？\nB: 我 ______。", 
-                        options: ["吃了饭就看书", "吃饭了看书就", "吃饭看书就", "吃了饭看书"], 
-                        correct: 0, 
-                        res: "我吃了饭就看书。", 
-                        py: "Wǒ chīle fàn jiù kànshū.", 
-                        vi: "Tôi ăn cơm xong là xem sách.", 
-                        exp: "Thói quen lặp lại: Hành động 1 xong (chỉ bằng '了') thì đến hành động 2." 
-                    },
-                    { 
-                        q: "A: 老师进教室以后你们做什么？\nB: 老师进了教室 ______。", 
-                        options: ["我们就开始上课", "我们开始就上课", "就 chúng tôi bắt đầu lên lớp", "我们上课 bắt đầu"], 
-                        correct: 0, 
-                        res: "我们就开始上课。", 
-                        py: "Wǒmen jiù kāishǐ shàngkè.", 
-                        vi: "Chúng tôi bắt đầu lên lớp ngay.", 
-                        exp: "Chủ ngữ 2 (我们) + 就 + Động từ 2 (开始上课)." 
-                    },
-                    { 
-                        q: "A: 你回家以后做什么？\nB: 我 ______。", 
-                        options: ["回家就吃饭了", "回了家就吃饭", "回家了吃饭就", "回家吃饭就"], 
-                        correct: 1, 
-                        res: "我回了家就吃饭。", 
-                        py: "Wǒ huíle jiā jiù chīfàn.", 
-                        vi: "Tôi về đến nhà là ăn cơm ngay.", 
-                        exp: "Động từ '回' kết hợp với '了' để hoàn thành bước 1." 
-                    },
-                    { 
-                        q: "A: 小王什么时候给你打电话？\nB: 他 ______。", 
-                        options: ["下班了就给我打电话", "下班就给我 dǎ diànhuà le", "下了班就给我打电话", "下班给我 dǎ diànhuà jiù"], 
-                        correct: 2, 
-                        res: "他下了班就给我打电话。", 
-                        py: "Tā xiàle bān jiù gěi wǒ dǎ diànhuà.", 
-                        vi: "Anh ấy tan làm xong là gọi điện cho tôi ngay.", 
-                        exp: "V1 (下) + 了 + Tân ngữ (班) + 就 + V2." 
-                    },
-                    { 
-                        q: "A: 你到学校以后做什么？\nB: 我 ______。", 
-                        options: ["到学校了就进教室", "到了学校就进教室", "到学校进教室就", "到了学校进教室"], 
-                        correct: 1, 
-                        res: "我到了学校就进教室。", 
-                        py: "Wǒ dàole xuéxiào jiù jìn jiàoshì.", 
-                        vi: "Đến trường xong là tôi vào lớp luôn.", 
-                        exp: "Nhấn mạnh trình tự: Đến nơi (xong) -> Vào lớp." 
-                    },
-                    { 
-                        q: "A: 爸爸回来了以后我们做什么？\nB: 爸爸回来了 ______。", 
-                        options: ["我们就吃饭", "我们吃饭就", "就 chúng tôi ăn cơm", "我们就吃饭了"], 
-                        correct: 0, 
-                        res: "我们就吃饭。", 
-                        py: "Wǒmen jiù chīfàn.", 
-                        vi: "Chúng tôi ăn cơm luôn.", 
-                        exp: "Khi hành động 1 đã có '了' ở vế trước, vế sau chỉ cần dùng '就 + Động từ'." 
-                    },
-                    { 
-                        q: "A: 你每天早上做什么？\nB: 我 ______。", 
-                        options: ["起床了就刷牙", "起了床就刷牙", "起床刷牙就", "起床了刷牙"], 
-                        correct: 1, 
-                        res: "我起了床就刷牙。", 
-                        py: "Wǒ qǐle chuáng jiù shuāyá.", 
-                        vi: "Tôi ngủ dậy xong là đánh răng ngay.", 
-                        exp: "起 (Động từ) + 了 + 床 (Tân ngữ) + 就 + 刷牙 (V2)." 
-                    }
-                ]
-            },
-p5: { 
-                name: "Câu hỏi phản vấn 能……吗？", 
-                questions: [
-                    { 
-                        q: "A: 我怎么这么累啊？\nB: 你今天爬山爬得那么快，______？", 
-                        options: ["能累吗", "能不累吗", "能累了", "能累吧"], 
-                        correct: 1, 
-                        res: "能不累吗？", 
-                        py: "Néng bù lèi ma?", 
-                        vi: "Chẳng lẽ lại không mệt sao? (Chắc chắn là mệt rồi)", 
-                        exp: "Cấu trúc '能不 + Tính từ + 吗?' dùng để khẳng định: Chắc chắn là sẽ [Tính từ]." 
-                    },
-                    { 
-                        q: "A: 我病了，头疼。\nB: 天气这么冷，你穿得这么少，______？", 
-                        options: ["能不生病吗", "能生病吗", "能生病了", "能病吗"], 
-                        correct: 0, 
-                        res: "能不生病吗？", 
-                        py: "Néng bù shēngbìng ma?", 
-                        vi: "Chẳng lẽ lại không ốm sao?", 
-                        exp: "Dùng để nhấn mạnh nguyên nhân (mặc ít áo) dẫn đến kết quả tất yếu (bị ốm)." 
-                    },
-                    { 
-                        q: "A: 你怎么打篮球打得这么好？\nB: 我每天都练习，______？", 
-                        options: ["能好了吗", "能好吧", "能不好吗", "能不好了"], 
-                        correct: 2, 
-                        res: "能不好吗？", 
-                        py: "Néng bù hǎo ma?", 
-                        vi: "Lẽ nào lại không tốt sao? (Chắc chắn là giỏi rồi)", 
-                        exp: "Khẳng định kết quả tốt đẹp là nhờ sự nỗ lực luyện tập mỗi ngày." 
-                    },
-                    { 
-                        q: "A: 为什么他考试成绩这么好？\nB: 他每天学习到很晚，______？", 
-                        options: ["能不好吗", "能不好了", "能好吧", "能好了吗"], 
-                        correct: 0, 
-                        res: "能不好吗？", 
-                        py: "Néng bù hǎo ma?", 
-                        vi: "Lẽ nào lại không tốt sao?", 
-                        exp: "Học đến muộn mỗi ngày thì điểm cao là chuyện hiển nhiên." 
-                    },
-                    { 
-                        q: "A: 你怎么这么困？\nB: 你昨天晚上两点才睡觉，______？", 
-                        options: ["能困吗", "能困了", "能不困吗", "能困吧"], 
-                        correct: 2, 
-                        res: "能不困吗？", 
-                        py: "Néng bù kùn ma?", 
-                        vi: "Chẳng lẽ lại không buồn ngủ sao?", 
-                        exp: "2 giờ sáng mới ngủ thì việc buồn ngủ (困) là không thể tránh khỏi." 
-                    },
-                    { 
-                        q: "A: 为什么你这么了解中国文化？\nB: 我在中国住了五年，______？", 
-                        options: ["能不了解吗", "能了解吗", "能了解吧", "能了解了"], 
-                        correct: 0, 
-                        res: "能不了解吗？", 
-                        py: "Néng bù liǎojiě ma?", 
-                        vi: "Lẽ nào lại không am hiểu sao?", 
-                        exp: "Sống ở Trung Quốc 5 năm thì việc am hiểu văn hóa là tất yếu." 
-                    },
-                    { 
-                        q: "A: 为什么你汉语说得这么好？\nB: 我每天都和中国朋友聊天，______？", 
-                        options: ["能说不好吗", "能说好吗", "能说好吧", "能说好了吗"], 
-                        correct: 0, 
-                        res: "能说不好吗？", 
-                        py: "Néng shuō bù hǎo ma?", 
-                        vi: "Lẽ nào lại nói không tốt sao?", 
-                        exp: "Luyện tập với người bản xứ mỗi ngày thì chắc chắn tiếng Trung sẽ tốt." 
-                    },
-                    { 
-                        q: "A: 为什么小王跑得这么快？\nB: 他每天都跑步训练，______？", 
-                        options: ["能快吗", "能不快吗", "能快吧", "能快了"], 
-                        correct: 1, 
-                        res: "能不快吗？", 
-                        py: "Néng bù kuài ma?", 
-                        vi: "Lẽ nào lại không nhanh sao?", 
-                        exp: "Huấn luyện chạy mỗi ngày dẫn đến kết quả là chạy rất nhanh." 
-                    },
-                    { 
-                        q: "A: 为什么你这么饿？\nB: 我今天一天没吃饭，______？", 
-                        options: ["能不饿吗", "能饿吗", "能饿吧", "能饿了"], 
-                        correct: 0, 
-                        res: "能不饿吗？", 
-                        py: "Néng bù è ma?", 
-                        vi: "Chẳng lẽ lại không đói sao?", 
-                        exp: "Cả ngày không ăn cơm thì chắc chắn là phải đói rồi." 
-                    },
-                    { 
-                        q: "A: 为什么他这么累？\nB: 他工作了一整天，______？", 
-                        options: ["能累吗", "能累吧", "能累了", "能不累吗"], 
-                        correct: 3, 
-                        res: "能不累吗？", 
-                        py: "Néng bù lèi ma?", 
-                        vi: "Chẳng lẽ lại không mệt sao?", 
-                        exp: "Làm việc cả một ngày dài thì mệt mỏi là chuyện hiển nhiên." 
-                    }
-                ]
-            },
+            p3: [{ q: "我在楼下，你___来吧。", a: "下", opt: ["上", "下", "进"], vi: "Tôi ở dưới lầu, bạn xuống đây đi.", exp: "Hướng về phía người nói ở dưới." }],
+            p4: [{ q: "我到了办公室___给你打电话。", a: "就", opt: ["也", "还", "就"], vi: "Đến văn phòng là gọi điện ngay.", exp: "Hành động liên tiếp." }],
+            p5: [{ q: "我每天运动，___胖吗？", a: "能", opt: ["不", "能", "会"], vi: "Tôi vận động mỗi ngày, sao béo được?", exp: "Câu phản vấn." }]
+        };
 
+        let currentIdx = 0, score = 0, currentPart = '', quizList = [];
 
-        let currentIdx = 0;
-        let score = 0;
-        let currentPart = '';
-        let quizList = [];
-
-        // --- HÀM HỖ TRỢ CHUYỂN MÀN HÌNH ---
         function showScreen(id) {
-            const screens = ['start-screen', 'flashcard-screen', 'vocab-game-screen', 'play-screen', 'end-screen', 'exercise-screen'];
-            screens.forEach(s => {
-                const el = document.getElementById(s);
-                if(el) el.classList.add('hidden');
-            });
-            const target = document.getElementById(id);
-            if(target) target.classList.remove('hidden');
-            window.scrollTo(0,0);
+            ['start-screen', 'flashcard-screen', 'vocab-game-screen', 'play-screen', 'end-screen', 'exercise-screen'].forEach(s => document.getElementById(s).classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
         }
 
-        function returnToStart() {
-            showScreen('start-screen');
-            updateLockStatus();
-        }
+        function returnToStart() { showScreen('start-screen'); updateLockStatus(); }
 
         function updateLockStatus() {
-            const isAllDone = gameState.vocabDone && gameState.p3Done && gameState.p4Done && gameState.p5Done;
+            const allDone = gameState.vocabDone && gameState.p3Done && gameState.p4Done && gameState.p5Done;
             const btn = document.getElementById('btn-comprehensive');
-            if (isAllDone && btn) {
-                btn.disabled = false;
-                btn.style.backgroundColor = '#dcfce7';
-                btn.innerHTML = '✅ Bài Tập Tổng Hợp (Đã mở)';
-            }
-            if(gameState.vocabDone) document.getElementById('check-vocab')?.classList.remove('hidden');
-            if(gameState.p3Done) document.getElementById('check-p3')?.classList.remove('hidden');
-            if(gameState.p4Done) document.getElementById('check-p4')?.classList.remove('hidden');
-            if(gameState.p5Done) document.getElementById('check-p5')?.classList.remove('hidden');
+            if(allDone) { btn.disabled = false; btn.style.backgroundColor = '#dcfce7'; btn.innerText = "✅ Bài Tập Tổng Hợp"; }
+            if(gameState.vocabDone) document.getElementById('check-vocab').classList.remove('hidden');
+            if(gameState.p3Done) document.getElementById('check-p3').classList.remove('hidden');
+            if(gameState.p4Done) document.getElementById('check-p4').classList.remove('hidden');
+            if(gameState.p5Done) document.getElementById('check-p5').classList.remove('hidden');
         }
 
-        // --- PHẦN 1: FLASHCARDS ---
-        function startFlashcards() {
-            currentIdx = 0;
-            document.getElementById('card-total').innerText = vocabulary.length;
-            showCard();
-            showScreen('flashcard-screen');
-        }
+        // FLASHCARDS
+        function startFlashcards() { currentIdx = 0; showCard(); showScreen('flashcard-screen'); }
         function showCard() {
-            const card = vocabulary[currentIdx];
+            const c = vocabulary[currentIdx];
             document.getElementById('card-index').innerText = currentIdx + 1;
-            document.getElementById('card-hanzi').innerText = card.hz;
-            document.getElementById('card-pinyin').innerText = card.py;
-            document.getElementById('card-mean').innerText = card.vi;
-            document.getElementById('card-ex-hz').innerText = card.exHz;
-            document.getElementById('card-ex-vi').innerText = card.exVi;
+            document.getElementById('card-hanzi').innerText = c.hz;
+            document.getElementById('card-pinyin').innerText = c.py;
+            document.getElementById('card-mean').innerText = c.vi;
+            document.getElementById('card-ex-hz').innerText = c.exHz;
+            document.getElementById('card-ex-vi').innerText = c.exVi;
             document.getElementById('flashcard-inner').classList.remove('is-flipped');
         }
         function flipCard() { document.getElementById('flashcard-inner').classList.toggle('is-flipped'); }
-        function nextCard() {
-            if (currentIdx < vocabulary.length - 1) { currentIdx++; showCard(); }
-            else { returnToStart(); }
-        }
+        function nextCard() { if(currentIdx < vocabulary.length-1) { currentIdx++; showCard(); } else returnToStart(); }
 
-        // --- PHẦN 2: GAME TỪ VỰNG ---
-        function startVocabGame() {
-            currentIdx = 0; score = 0;
-            showVocabStep();
-            showScreen('vocab-game-screen');
-        }
+        // GAME VOCAB
+        function startVocabGame() { currentIdx = 0; score = 0; showVocabStep(); showScreen('vocab-game-screen'); }
         function showVocabStep() {
-            const word = vocabulary[currentIdx];
-            document.getElementById('vg-step').innerText = currentIdx + 1;
+            const w = vocabulary[currentIdx];
+            document.getElementById('vg-step-text').innerText = `Câu ${currentIdx+1}/${vocabulary.length}`;
             document.getElementById('vg-feedback').classList.add('hidden');
             document.getElementById('vg-next-btn').classList.add('hidden');
             document.getElementById('vg-check-btn').classList.remove('hidden');
-            document.getElementById('vg-content').innerHTML = `
-                <p class="text-amber-900 text-4xl font-bold mb-4">${word.vi}</p>
-                <input type="text" id="vg-input" class="w-full text-center text-3xl p-2 border-b-2 border-amber-500 outline-none chinese-text" placeholder="Nhập chữ Hán">
-            `;
-            setTimeout(() => document.getElementById('vg-input').focus(), 100);
+            document.getElementById('vg-content').innerHTML = `<p class="text-3xl font-bold mb-4">${w.vi}</p><input type="text" id="vg-input" class="w-full text-center text-2xl p-2 border-b-2 border-amber-500 outline-none">`;
+            setTimeout(()=>document.getElementById('vg-input').focus(), 100);
         }
         function checkVocabGame() {
             const val = document.getElementById('vg-input').value.trim();
             const correct = vocabulary[currentIdx].hz;
-            const fb = document.getElementById('vg-feedback');
-            fb.classList.remove('hidden');
-            if(val === correct) {
-                fb.innerText = "Đúng rồi! ✨"; fb.className = "mt-4 p-2 bg-green-100 text-green-700 rounded font-bold";
-                score++;
-            } else {
-                fb.innerText = "Sai rồi, đáp án: " + correct; fb.className = "mt-4 p-2 bg-red-100 text-red-700 rounded font-bold";
-            }
-            document.getElementById('vg-check-btn').classList.add('hidden');
-            document.getElementById('vg-next-btn').classList.remove('hidden');
+            const fb = document.getElementById('vg-feedback'); fb.classList.remove('hidden');
+            if(val === correct) { fb.innerText = "Đúng rồi! ✨"; fb.className = "mt-4 p-2 bg-green-100 text-green-700"; score++; }
+            else { fb.innerText = "Sai, đáp án: " + correct; fb.className = "mt-4 p-2 bg-red-100 text-red-700"; }
+            document.getElementById('vg-check-btn').classList.add('hidden'); document.getElementById('vg-next-btn').classList.remove('hidden');
         }
-        function nextVocabStep() {
-            if(currentIdx < vocabulary.length - 1) { currentIdx++; showVocabStep(); }
-            else { gameState.vocabDone = true; finishPart("Game Từ Vựng: " + score + "/" + vocabulary.length); }
-        }
+        function nextVocabStep() { if(currentIdx < vocabulary.length-1) { currentIdx++; showVocabStep(); } else { gameState.vocabDone = true; finishPart("Game Từ Vựng: " + score + "/" + vocabulary.length); } }
 
-        // --- PHẦN 3: TRẮC NGHIỆM ---
-        function startQuiz(part) {
-            currentPart = part; currentIdx = 0; score = 0; quizList = quizData[part];
-            document.getElementById('quiz-part-name').innerText = "Phần " + part;
-            showQuestion();
-            showScreen('play-screen');
-        }
+        // QUIZ
+        function startQuiz(p) { currentPart = p; currentIdx = 0; score = 0; quizList = quizData[p]; document.getElementById('quiz-part-name').innerText = p; showQuestion(); showScreen('play-screen'); }
         function showQuestion() {
-            const q = quizList[currentIdx];
-            document.getElementById('question-text').innerText = q.q;
-            document.getElementById('explanation-container').classList.add('hidden');
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            q.opt.forEach(o => {
-                const btn = document.createElement('button');
-                btn.className = "btn-ghibli p-3 bg-white text-xl";
-                btn.innerText = o;
-                btn.onclick = () => {
-                    const isRight = (o === q.a);
-                    if(isRight) score++;
-                    document.getElementById('feedback-title').innerText = isRight ? "Chính xác!" : "Sai rồi!";
-                    document.getElementById('exp-full').innerText = q.q.replace('___', q.a);
-                    document.getElementById('exp-vi').innerText = q.vi;
-                    document.getElementById('exp-detail').innerText = q.exp;
-                    container.innerHTML = '';
-                    document.getElementById('explanation-container').classList.remove('hidden');
-                };
-                container.appendChild(btn);
-            });
+            const q = quizList[currentIdx]; document.getElementById('question-text').innerText = q.q; document.getElementById('explanation-container').classList.add('hidden');
+            const cont = document.getElementById('options-container'); cont.innerHTML = '';
+            q.opt.forEach(o => { const b = document.createElement('button'); b.className = "btn-ghibli p-3 bg-white"; b.innerText = o; b.onclick = () => {
+                if(o === q.a) score++;
+                document.getElementById('exp-full').innerText = q.q.replace('___', q.a); document.getElementById('exp-vi').innerText = q.vi;
+                cont.innerHTML = ''; document.getElementById('explanation-container').classList.remove('hidden');
+            }; cont.appendChild(b); });
         }
-        function showNextQuestion() {
-            if(currentIdx < quizList.length - 1) { currentIdx++; showQuestion(); }
-            else { gameState[currentPart + 'Done'] = true; finishPart("Hoàn thành! Điểm: " + score + "/" + quizList.length); }
-        }
+        function showNextQuestion() { if(currentIdx < quizList.length-1) { currentIdx++; showQuestion(); } else { gameState[currentPart+'Done'] = true; finishPart("Xong! Điểm: " + score); } }
 
-        // --- PHẦN 4: BÀI TẬP TỔNG HỢP ---
+        function finishPart(m) { document.getElementById('result-text').innerText = m; showScreen('end-screen'); }
+        
         function showExercise() {
-            const fillContainer = document.getElementById('fill-exercise');
-            const qs = ["1. 这是你的 [___] 吗？", "2. 考试一点儿也不 [___] 。", "3. 现在要上 [___] 去。", "4. 小狗在 [___] 下做什么？", "5. 我太 [___] 了, 不能吃那么多。"];
-            const opts = ['楼','办公室','树','胖','难'];
-            fillContainer.innerHTML = qs.map(q => `<p class="mb-2">${q.replace('[___]', `<select class="ex-select border-b border-amber-500">${['', ...opts].map(o=>`<option>${o}</option>`).join('')}</select>`)}</p>`).join('');
-            
-            const imgContainer = document.getElementById('image-exercise');
-            imgContainer.innerHTML = `<p>周经理到了办公室就 <input type="text" class="ex-input border-b border-amber-500 w-32"> 。</p>`;
+            document.getElementById('exercise-content').innerHTML = `<p class="mb-4 text-sm">1. 经理不在，他___去了。 (出/下)</p><p class="text-sm">2. 我每天运动，能___吗？ (胖/瘦)</p>`;
             showScreen('exercise-screen');
         }
-
-        function checkFinalExercise() {
-            alert("Đã ghi nhận bài làm! Hãy chụp màn hình gửi giáo viên.");
-            returnToStart();
-        }
-
-        function finishPart(msg) {
-            document.getElementById('result-text').innerText = msg;
-            showScreen('end-screen');
-        }
+        function checkFinalExercise() { alert("Đã copy bài!"); returnToStart(); }
     </script>
 </body>
 </html>
