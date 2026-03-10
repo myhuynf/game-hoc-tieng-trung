@@ -123,7 +123,7 @@
                 <div id="flashcard-inner" class="flashcard-inner" onclick="flipCard()">
                     <div class="flashcard-front">
                         <h2 id="card-hanzi" class="chinese-text text-8xl text-emerald-900 leading-tight"></h2>
-                        <p class="mt-8 text-[10px] text-emerald-600 animate-pulse font-bold">Chạm để lật thẻ 👆</p>
+                        <p class="mt-8 text-[10px] text-emerald-600 animate-pulse font-bold uppercase tracking-widest">Chạm để lật thẻ 👆</p>
                     </div>
                     <div class="flashcard-back">
                         <h3 id="card-pinyin" class="text-3xl font-bold text-emerald-700 mb-1"></h3>
@@ -136,6 +136,11 @@
                     </div>
                 </div>
             </div>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="markCard(false)" class="bg-rose-50 border-2 border-rose-200 text-rose-600 p-4 rounded-xl font-bold hover:bg-rose-100 transition-colors shadow-sm">Chưa thuộc</button>
+                <button onclick="markCard(true)" class="bg-emerald-50 border-2 border-emerald-200 text-emerald-600 p-4 rounded-xl font-bold hover:bg-emerald-100 transition-colors shadow-sm">Đã thuộc</button>
+            </div>
+        </div>
             <div class="grid grid-cols-2 gap-4">
                 <button onclick="markCard(false)" class="bg-rose-50 border-2 border-rose-200 text-rose-600 p-4 rounded-xl font-bold">Chưa thuộc</button>
                 <button onclick="markCard(true)" class="bg-emerald-50 border-2 border-emerald-200 text-emerald-600 p-4 rounded-xl font-bold">Đã thuộc</button>
@@ -275,51 +280,80 @@
         };
 
         let currentQuizKey = '', quizIdx = 0, quizScore = 0, quizAnswered = false;
-        let currentFlashList = [], flashcardIdx = 0, learnedCount = 0, unlearnedItems = [];
-        let vgStep = 0, vgScore = 0;
+       let currentFlashList = [], flashcardIdx = 0, unlearnedItems = [];
 
-        function playAudio(id) { const a = document.getElementById(id); if(a) { a.currentTime = 0; a.play().catch(()=>{}); } }
+function startFlashcards(list) {
+    playAudio('audio-click');
+    // Chỉ reset danh sách chưa thuộc khi bắt đầu học mới toàn bộ từ vựng
+    if (list === vocabulary) unlearnedItems = [];
+    
+    currentFlashList = [...list];
+    flashcardIdx = 0;
+    document.querySelectorAll('.ghibli-card').forEach(el => el.classList.add('hidden'));
+    document.getElementById('flashcard-screen').classList.remove('hidden');
+    document.getElementById('card-total').innerText = currentFlashList.length;
+    updateFlashcard();
+}
 
-        function startFlashcards(list) {
-            playAudio('audio-click'); currentFlashList = [...list]; flashcardIdx = 0; learnedCount = 0; unlearnedItems = [];
-            document.querySelectorAll('.ghibli-card').forEach(el => el.classList.add('hidden'));
-            document.getElementById('flashcard-screen').classList.remove('hidden');
-            document.getElementById('card-total').innerText = list.length;
-            updateFlashcard();
+function updateFlashcard() {
+    const card = currentFlashList[flashcardIdx];
+    document.getElementById('card-index').innerText = flashcardIdx + 1;
+    document.getElementById('card-hanzi').innerText = card.h;
+    document.getElementById('card-pinyin').innerText = card.p;
+    document.getElementById('card-mean').innerText = card.m;
+    document.getElementById('card-example-cn').innerText = card.ex;
+    document.getElementById('card-example-py').innerText = card.exp;
+    document.getElementById('card-example-vi').innerText = card.exv;
+    document.getElementById('flashcard-inner').classList.remove('is-flipped');
+}
+
+function flipCard() {
+    playAudio('audio-flip');
+    document.getElementById('flashcard-inner').classList.toggle('is-flipped');
+}
+
+function markCard(learned) {
+    if (!learned) {
+        const currentWord = currentFlashList[flashcardIdx];
+        // Nếu bấm "Chưa thuộc", lưu vào danh sách học lại
+        if (!unlearnedItems.some(item => item.h === currentWord.h)) {
+            unlearnedItems.push(currentWord);
         }
+    }
+    flashcardIdx++;
+    if (flashcardIdx < currentFlashList.length) {
+        updateFlashcard();
+    } else {
+        showFlashcardStats();
+    }
+}
 
-        function updateFlashcard() {
-            const card = currentFlashList[flashcardIdx];
-            document.getElementById('card-index').innerText = flashcardIdx + 1;
-            document.getElementById('card-hanzi').innerText = card.h;
-            document.getElementById('card-pinyin').innerText = card.p;
-            document.getElementById('card-mean').innerText = card.m;
-            document.getElementById('card-example-cn').innerText = card.ex;
-            document.getElementById('card-example-py').innerText = card.exp;
-            document.getElementById('card-example-vi').innerText = card.exv;
-            document.getElementById('flashcard-inner').classList.remove('is-flipped');
-        }
+function showFlashcardStats() {
+    document.getElementById('flashcard-screen').classList.add('hidden');
+    document.getElementById('flashcard-stat-screen').classList.remove('hidden');
+    const listEl = document.getElementById('unlearned-list');
+    const container = document.getElementById('unlearned-container');
+    
+    if (unlearnedItems.length > 0) {
+        container.classList.remove('hidden');
+        listEl.innerHTML = unlearnedItems.map(item => `
+            <div class="bg-rose-50 p-3 rounded-lg text-sm text-rose-700 flex justify-between items-center border border-rose-100 mb-2">
+                <b class="text-lg chinese-text">${item.h}</b>
+                <span>${item.m}</span>
+            </div>`).join('');
+    } else {
+        container.classList.add('hidden');
+        listEl.innerHTML = `<div class="py-10 text-emerald-600 font-bold">✨ Tuyệt vời! Bạn đã thuộc hết từ vựng!</div>`;
+    }
+}
 
-        function flipCard() { playAudio('audio-flip'); document.getElementById('flashcard-inner').classList.toggle('is-flipped'); }
-        
-        function markCard(learned) {
-            if (learned) learnedCount++; else unlearnedItems.push(currentFlashList[flashcardIdx]);
-            flashcardIdx++;
-            if (flashcardIdx < currentFlashList.length) updateFlashcard();
-            else showFlashcardStats();
-        }
-
-        function showFlashcardStats() {
-            document.getElementById('flashcard-screen').classList.add('hidden');
-            document.getElementById('flashcard-stat-screen').classList.remove('hidden');
-            const listEl = document.getElementById('unlearned-list');
-            if (unlearnedItems.length > 0) {
-                document.getElementById('unlearned-container').classList.remove('hidden');
-                listEl.innerHTML = unlearnedItems.map(item => `<div class="bg-rose-50 p-2 rounded text-sm text-rose-700"><b>${item.h}</b>: ${item.m}</div>`).join('');
-            } else {
-                document.getElementById('unlearned-container').classList.add('hidden');
-            }
-        }
+function retryUnlearned() {
+    if (unlearnedItems.length > 0) {
+        const retryList = [...unlearnedItems];
+        unlearnedItems = []; // Reset mảng tạm để tính lại kết quả cho vòng học lại
+        startFlashcards(retryList);
+    }
+}
 
         function retryUnlearned() {
             if (unlearnedItems.length > 0) {
