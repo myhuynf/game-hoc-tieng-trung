@@ -290,11 +290,15 @@
 
         function playAudio(id) { const a = document.getElementById(id); if(a) { a.currentTime = 0; a.play().catch(()=>{}); } }
 
-        function startFlashcards(list) {
-            playAudio('audio-click'); currentFlashList = [...list]; flashcardIdx = 0; learnedCount = 0; unlearnedItems = [];
+function startFlashcards(list) {
+            playAudio('audio-click');
+            currentFlashList = [...list];
+            flashcardIdx = 0;
+            learnedCount = 0;
+            unlearnedItems = [];
             document.querySelectorAll('.ghibli-card').forEach(el => el.classList.add('hidden'));
             document.getElementById('flashcard-screen').classList.remove('hidden');
-            document.getElementById('card-total').innerText = list.length;
+            document.getElementById('card-total').innerText = currentFlashList.length;
             updateFlashcard();
         }
 
@@ -310,13 +314,45 @@
             document.getElementById('flashcard-inner').classList.remove('is-flipped');
         }
 
-        function flipCard() { playAudio('audio-flip'); document.getElementById('flashcard-inner').classList.toggle('is-flipped'); }
-        
+        function flipCard() { 
+            playAudio('audio-flip'); 
+            document.getElementById('flashcard-inner').classList.toggle('is-flipped'); 
+        }
+
         function markCard(learned) {
             if (learned) learnedCount++; else unlearnedItems.push(currentFlashList[flashcardIdx]);
             flashcardIdx++;
             if (flashcardIdx < currentFlashList.length) updateFlashcard();
             else showFlashcardStats();
+        }
+
+        function showFlashcardStats() {
+            document.getElementById('flashcard-screen').classList.add('hidden');
+            document.getElementById('flashcard-stat-screen').classList.remove('hidden');
+            const total = currentFlashList.length;
+            const pLearned = Math.round((learnedCount / total) * 100);
+            document.getElementById('stat-bar-learned').style.width = pLearned + '%';
+            document.getElementById('stat-bar-unlearned').style.width = (100 - pLearned) + '%';
+            document.getElementById('stat-percent-learned').innerText = pLearned;
+            document.getElementById('stat-percent-unlearned').innerText = 100 - pLearned;
+            
+            const listEl = document.getElementById('unlearned-list');
+            const btnContainer = document.querySelector('#flashcard-stat-screen .flex.gap-3.mt-2');
+            
+            if (unlearnedItems.length > 0) {
+                document.getElementById('unlearned-container').classList.remove('hidden');
+                listEl.innerHTML = unlearnedItems.map(item => `<div class="bg-rose-50 p-2 rounded"><b>${item.h}</b>: ${item.m}</div>`).join('');
+                btnContainer.innerHTML = `
+                    <button onclick="startFlashcards(unlearnedItems)" class="btn-ghibli flex-[2] bg-amber-500 text-white border-amber-700">🔄 Học lại ${unlearnedItems.length} từ chưa thuộc</button>
+                    <button onclick="returnToStart()" class="btn-ghibli flex-1">🔙 Menu</button>
+                `;
+            } else {
+                document.getElementById('unlearned-container').classList.add('hidden');
+                btnContainer.innerHTML = `
+                    <button onclick="window.location.href='index.html'" class="btn-ghibli flex-1 bg-emerald-100 border-emerald-500 text-emerald-800">🏠 Về Vườn</button>
+                    <button onclick="returnToStart()" class="btn-ghibli flex-1">🔙 Lại Bài 1</button>
+                `;
+            }
         }
 
         function showFlashcardStats() {
