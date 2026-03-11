@@ -159,7 +159,7 @@
                         小心 | 爬山 | 只 | 放 | 记得
                     </div>
                     <div class="space-y-4 chinese-text text-lg">
-                        <p>(6) A: 我们看过 this 电影，你 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 是什么时候吗？</p>
+                        <p>(6) A: 我们看过这个电影，你 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 是什么时候吗？</p>
                         <p>(7) A: 你跟我一起出去走走吧。 B: 我现在 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 想睡觉。</p>
                         <p>(8) A: 饭菜做好了吗？ B: 做好了，已经 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 饭桌上了。</p>
                         <p>(9) A: 您慢走，路上 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 点儿。</p>
@@ -204,14 +204,13 @@
     <audio id="audio-flip" src="https://assets.mixkit.co/active_storage/sfx/2045/2045-preview.mp3"></audio>
 
     <script>
-        // ... (Giữ nguyên mảng vocabulary và quizData bên trên)
         const vocabulary = [
             { h: "还是", p: "háishi", m: "Hay là", ex: "你喝茶还是喝咖啡？", py: "Nǐ hē chá háishi hē kāfēi?", exv: "Bạn uống trà hay uống cà phê?" },
-            { h: "爬山", p: "pá shān", m: "Leo núi", ex: "周末 chúng ta đi leo núi đi.", py: "Zhōumò wǒmen qù pá shān ba.", exv: "Cuối tuần chúng ta đi leo núi đi." },
+            { h: "爬山", p: "pá shān", m: "Leo núi", ex: "周末我们去爬山吧。", py: "Zhōumò wǒmen qù pá shān ba.", exv: "Cuối tuần chúng ta đi leo núi đi." },
             { h: "小心", p: "xiǎoxīn", m: "Cẩn thận", ex: "路滑，你要小心。", py: "Lù huá, nǐ yào xiǎoxīn.", exv: "Đường trơn, bạn phải cẩn thận." },
             { h: "条", p: "tiáo", m: "Lượng từ (quần, váy)", ex: "这条裤子很漂亮。", py: "Zhè tiáo kùzi hěn piàoliang.", exv: "Cái quần này rất đẹp." },
-            { h: "裤子", p: "kùzi", m: "Quần", ex: "裤子在哪儿買的？", py: "Kùzi zài nǎr mǎi de?", exv: "Quần mua ở đâu vậy?" },
-            { h: "记得", p: "jìde", m: "Nhớ, còn nhớ", ex: "你 còn nhớ wǒ ma？", py: "Nǐ hái jìde wǒ ma?", exv: "Bạn còn nhớ tôi không?" },
+            { h: "裤子", p: "kùzi", m: "Quần", ex: "裤子在哪儿买的？", py: "Kùzi zài nǎr mǎi de?", exv: "Quần mua ở đâu vậy?" },
+            { h: "记得", p: "jìde", m: "Nhớ, còn nhớ", ex: "你还记得我吗？", py: "Nǐ hái jìde wǒ ma?", exv: "Bạn còn nhớ tôi không?" },
             { h: "衬衫", p: "chènshān", m: "Áo sơ mi", ex: "这件衬衫有点儿贵。", py: "Zhè jiàn chènshān yǒudiǎnr guì.", exv: "Cái áo sơ mi này hơi đắt." },
             { h: "元", p: "yuán", m: "Đồng (tệ)", ex: "一共两百元。", py: "Yígòng liǎngbǎi yuán.", exv: "Tổng cộng 200 tệ." },
             { h: "新鲜", p: "xīnxiān", m: "Tươi", ex: "水果非常新鲜。", py: "Shuǐguǒ fēicháng xīnxiān.", exv: "Hoa quả vô cùng tươi ngon." },
@@ -230,16 +229,16 @@
             p3: { 
                 name: "1. 还是 và 或者", 
                 questions: [
-                    { q: "你喜欢喝咖啡 ___ 喝茶？", options: ["或者", "还是"], correct: 1, exp: "✅ Đúng!\n=> Câu hỏi lựa chọn dùng 还是." },
-                    { q: "今天晚上我们吃米饭 ___ 吃面条都可以。", options: ["或者", "还是"], correct: 0, exp: "✅ Đúng!\n=> Câu khẳng định dùng 或者." },
-                    { q: "明天是下雨 ___ 不下雨，我还不知道。", options: ["还是", "或者"], correct: 0, exp: "✅ Đúng!\n=> Phân vân giữa 2 lựa chọn dùng 还是." },
-                    { q: "周末我们可以去公园散步 ___ 在家看电影。", options: ["或者", "还是"], correct: 0, exp: "✅ Đúng!\n=> Lựa chọn tự do dùng 或者." },
-                    { q: "你想买这个红色的衣服 ___ 那个蓝色的衣服？", options: ["或者", "还是"], correct: 1, exp: "✅ Đúng!\n=> Câu hỏi lựa chọn dùng 还是." },
-                    { q: "他今天在办公室 ___ 在图书馆学习。", options: ["或者", "还是"], correct: 0, exp: "✅ Đúng!\n=> Khẳng định khả năng dùng 或者." },
-                    { q: "你今天晚上学习汉语 ___ 学习英语？", options: ["或者", "还是"], correct: 1, exp: "✅ Đúng!\n=> Câu hỏi dùng 还是." },
-                    { q: "我们可以坐地铁 ___ 坐公交车去学校。", options: ["或者", "还是"], correct: 0, exp: "✅ Đúng!\n=> Cách thức khẳng định dùng 或者." },
-                    { q: "小王今年二十岁 ___ 二十一岁，我记不清了。", options: ["还是", "或者"], correct: 0, exp: "✅ Đúng!\n=> Phân vân dùng 还是." },
-                    { q: "晚上你可以在家休息 ___ 去外面散步。", options: ["或者", "还是"], correct: 0, exp: "✅ Đúng!\n=> Gợi ý dùng 或者." }
+                    { q: "你喜欢喝咖啡 ___ 喝茶？", options: ["或者", "还是"], correct: 1, exp: "\n=> Câu hỏi lựa chọn dùng 还是." },
+                    { q: "今天晚上我们吃米饭 ___ 吃面条都可以。", options: ["或者", "还是"], correct: 0, exp: "\n=> Câu khẳng định dùng 或者." },
+                    { q: "明天是下雨 ___ 不下雨，我还不知道。", options: ["还是", "或者"], correct: 0, exp: "\n=> Phân vân giữa 2 lựa chọn dùng 还是." },
+                    { q: "周末我们可以去公园散步 ___ 在家看电影。", options: ["或者", "还是"], correct: 0, exp: "\n=> Lựa chọn tự do dùng 或者." },
+                    { q: "你想买这个红色的衣服 ___ 那个蓝色的衣服？", options: ["或者", "还是"], correct: 1, exp: "\n=> Câu hỏi lựa chọn dùng 还是." },
+                    { q: "他今天在办公室 ___ 在图书馆学习。", options: ["或者", "还是"], correct: 0, exp: "\n=> Khẳng định khả năng dùng 或者." },
+                    { q: "你今天晚上学习汉语 ___ 学习英语？", options: ["或者", "还是"], correct: 1, exp: "\n=> Câu hỏi dùng 还是." },
+                    { q: "我们可以坐地铁 ___ 坐公交车去学校。", options: ["或者", "还是"], correct: 0, exp: "\n=> Cách thức khẳng định dùng 或者." },
+                    { q: "小王今年二十岁 ___ 二十一岁，我记不清了。", options: ["还是", "或者"], correct: 0, exp: "\n=> Phân vân dùng 还是." },
+                    { q: "晚上你可以在家休息 ___ 去外面散步。", options: ["或者", "还是"], correct: 0, exp: "\n=> Gợi ý dùng 或者." }
                 ]
             },
             p4: { 
@@ -268,6 +267,8 @@
             }
         };
 
+        // Biến lưu trữ điểm số game ngữ pháp
+        let quizScores = { p3: 0, p4: 0, p5: 0 };
         let currentIdx = 0; let activeQuiz = '';
         let learned = []; let unlearned = []; let currentList = [];
         let completed = { p3: false, p4: false, p5: false };
@@ -313,7 +314,14 @@
         }
         function relearnUnlearned() { startFlashcards(unlearned); }
 
-        function startQuiz(type) { activeQuiz = type; currentIdx = 0; showQuizStep(); showScreen('play-screen'); }
+        function startQuiz(type) { 
+            activeQuiz = type; 
+            currentIdx = 0; 
+            quizScores[type] = 0; // Reset điểm khi bắt đầu lại
+            showQuizStep(); 
+            showScreen('play-screen'); 
+        }
+
         function showQuizStep() {
             const q = quizData[activeQuiz].questions[currentIdx];
             const optionsContainer = document.getElementById('options-container');
@@ -349,16 +357,20 @@
             const q = quizData[activeQuiz].questions[currentIdx];
             const answerZone = document.getElementById('answer-zone');
             const userAns = Array.from(answerZone.children).map(btn => btn.innerText.trim()).join('');
-            showFeedback(userAns === q.correct.replace(/\s+/g, ''), q.exp);
+            const isCorrect = userAns === q.correct.replace(/\s+/g, '');
+            if(isCorrect) quizScores[activeQuiz]++; // Cộng điểm ngữ pháp
+            showFeedback(isCorrect, q.exp);
         }
         function checkQuiz(i) {
             const q = quizData[activeQuiz].questions[currentIdx];
-            showFeedback(i === q.correct, q.exp);
+            const isCorrect = i === q.correct;
+            if(isCorrect) quizScores[activeQuiz]++; // Cộng điểm ngữ pháp
+            showFeedback(isCorrect, q.exp);
             document.querySelectorAll('#options-container button').forEach(b => b.disabled = true);
         }
         function showFeedback(isCorrect, expText) {
             const fb = document.getElementById('explanation-container'); fb.classList.remove('hidden');
-            document.getElementById('feedback-title').innerText = isCorrect ? "Đúng rồi nè! ✅" : "Cứu Tui! ❌";
+            document.getElementById('feedback-title').innerText = isCorrect ? "Đúng rồi! ✅" : "Chưa đúng! ❌";
             document.getElementById('explanation-text').innerText = expText;
             if(isCorrect) document.getElementById('audio-correct').play(); else document.getElementById('audio-wrong').play();
         }
@@ -375,7 +387,7 @@
         function showExercise() { showScreen('exercise-screen'); }
         function returnToStart() { showScreen('start-screen'); }
 
-        // --- HÀM NỘP BÀI CẬP NHẬT: COPY CẢ ĐỀ + ĐÁP ÁN HOÀN CHỈNH ---
+        // --- HÀM NỘP BÀI HOÀN THIỆN ---
         function submitExercise(btn) {
             const selects = document.querySelectorAll('.ex-select');
             const inputs = document.querySelectorAll('.ex-input');
@@ -386,8 +398,17 @@
                 return `(  ${val}  )`; 
             };
 
-            let res = "BÀI LÀM HSK3 - BÀI 3\n--------------------------\n";
+            let res = "KẾT QUẢ BÀI LÀM HSK3 - BÀI 3\n";
+            res += "---------------------------------\n\n";
+
+            // PHẦN MỚI: TỔNG HỢP KẾT QUẢ NGỮ PHÁP
+            res += "📊 KẾT QUẢ CÁC TRÒ CHƠI NGỮ PHÁP:\n";
+            res += `1. ✨ 还是 / 或者: ${quizScores.p3}/${quizData.p3.questions.length} câu đúng\n`;
+            res += `2. ❄️ Sự tồn tại (V+着): ${quizScores.p4}/${quizData.p4.questions.length} câu đúng\n`;
+            res += `3. 🔗 Khả năng với “会”: ${quizScores.p5}/${quizData.p5.questions.length} câu đúng\n`;
+            res += "---------------------------------\n\n";
             
+            res += "📝 CHI TIẾT BÀI TẬP ĐIỀN TỪ:\n\n";
             res += "Phần 2: Chọn từ điền vào chỗ trống\n";
             res += `(1) 你想喝点儿什么？茶 ${formatAns(selects[0])} 咖啡？\n`;
             res += `(2) 这条 ${formatAns(selects[1])} 一点儿也不贵，买吧。\n`;
@@ -410,12 +431,12 @@
             navigator.clipboard.writeText(res).then(() => {
                 const feedback = document.getElementById('exercise-feedback');
                 if (feedback) {
-                    feedback.innerHTML = `<p class="font-bold">✅ Đã nộp bài & Copy thành công!</p><p class="text-xs text-gray-500">Hãy dán (Ctrl+V) vào tin nhắn gửi giáo viên.</p>`;
+                    feedback.innerHTML = `<p class="font-bold">✅ Đã nộp bài & Copy thành công!</p><p class="text-xs text-gray-500">Hãy dán (Ctrl+V) toàn bộ báo cáo vào tin nhắn gửi giáo viên.</p>`;
                     feedback.classList.remove('hidden');
                 }
                 
                 if (btn) {
-                    btn.innerHTML = "ĐÃ COPY KẾT QUẢ!";
+                    btn.innerHTML = "ĐÃ COPY TOÀN BỘ KẾT QUẢ!";
                     btn.classList.remove('bg-amber-600');
                     btn.classList.add('bg-emerald-600');
                 }
