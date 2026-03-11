@@ -136,29 +136,66 @@
         </div>
 
 <div id="exercise-screen" class="ghibli-card p-6 hidden">
-    <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold text-amber-900">📝 Bài Tập Tổng Hợp</h2>
-        <button onclick="returnToStart()" class="text-amber-700 text-sm font-bold hover:underline">🔙 Đóng</button>
-    </div>
-    
-    <div class="overflow-y-auto max-h-[60vh] custom-scroll pr-2 text-amber-900">
-        <div class="mb-8">
-            <h3 class="font-bold text-emerald-800 mb-3 bg-emerald-50 border border-emerald-200 p-2 rounded-lg">2. 选择恰当的词语填空</h3>
-            <div class="space-y-4 mb-8 chinese-text text-lg">
-                 </div>
-        </div>
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-amber-900">📝 Bài Tập Tổng Hợp</h2>
+                <button onclick="returnToStart()" class="text-amber-700 text-sm font-bold hover:underline">🔙 Đóng</button>
+            </div>
+            
+            <div class="overflow-y-auto max-h-[70vh] custom-scroll pr-2 text-amber-900">
+                <div class="mb-8">
+                    <h3 class="font-bold text-emerald-800 mb-3 bg-emerald-50 border border-emerald-200 p-2 rounded-lg">2. 选择恰当的词语填空</h3>
+                    
+                    <div class="bg-amber-50 p-3 rounded mb-4 border border-amber-200 text-sm font-bold flex flex-wrap justify-center gap-2 text-emerald-700">
+                        舒服 | 裤子 | 衬衫 | 或者 | 还是
+                    </div>
+                    <div class="space-y-4 mb-8 chinese-text text-lg">
+                        <p>(1) 你想喝点儿什么？茶 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>舒服</option><option>裤子</option><option>衬衫</option><option>或者</option><option>还是</option></select> 咖啡？</p>
+                        <p>(2) 这条 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>舒服</option><option>裤子</option><option>衬衫</option><option>或者</option><option>还是</option></select> 一点儿也不贵，买吧。</p>
+                        <p>(3) 我每个周末都在家看电视 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>舒服</option><option>裤子</option><option>衬衫</option><option>或者</option><option>还是</option></select> 听音乐，不工作。</p>
+                        <p>(4) 你穿昨天新买的那件 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>舒服</option><option>裤子</option><option>衬衫</option><option>或者</option><option>还是</option></select> 吧。</p>
+                        <p>(5) 我不喜欢南方，太热了，不 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>舒服</option><option>裤子</option><option>衬衫</option><option>或者</option><option>还是</option></select> 。</p>
+                    </div>
 
-        <div class="mb-2">
-            <h3 class="font-bold text-emerald-800 mb-3 bg-emerald-50 border border-emerald-200 p-2 rounded-lg">3. 用本课新学的语言点和词语描述图片</h3>
-            <div class="space-y-4 chinese-text text-lg">
-                <div class="bg-white p-4 border-2 border-dashed border-amber-200 rounded-lg mb-4">
-                    <p>B: 桌子上 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-24 text-center outline-none text-emerald-700 rounded"> 那么多好吃的。</p>
-                    <p>A: 水果 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-20 text-center outline-none text-emerald-700 rounded"> 面包都会对你的身体好。</p>
+                    <div class="bg-amber-50 p-3 rounded mb-4 border border-amber-200 text-sm font-bold flex flex-wrap justify-center gap-2 text-emerald-700">
+                        小心 | 爬山 | 只 | 放 | 记得
+                    </div>
+                    <div class="space-y-4 chinese-text text-lg">
+                        <p>(6) A: 我们看过这个电影，你 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 是什么时候吗？</p>
+                        <p>(7) A: 你跟我一起出去走走吧。 B: 我现在 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 想睡觉。</p>
+                        <p>(8) A: 饭菜做好了吗？ B: 做好了，已经 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 饭桌上了。</p>
+                        <p>(9) A: 您慢走，路上 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 点儿。</p>
+                        <p>(10) A: 上个周末你去哪儿了？ B: 我跟朋友去 <select class="ex-select border-b-2 border-amber-500 bg-amber-50 outline-none rounded"><option value=""></option><option>小心</option><option>爬山</option><option>只</option><option>放</option><option>记得</option></select> 了。</p>
+                    </div>
                 </div>
-                <div class="bg-white p-4 border-2 border-dashed border-amber-200 rounded-lg">
-                    <p>B: 我不 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-24 text-center outline-none text-emerald-700 rounded"> 了。</p>
-                    <p>A: 机票上 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-24 text-center outline-none text-emerald-700 rounded"> 12月4号。</p>
+
+                <div class="mb-4">
+                    <h3 class="font-bold text-emerald-800 mb-3 bg-emerald-50 border border-emerald-200 p-2 rounded-lg">3. 用本课新学的语言点和词语描述图片</h3>
+                    <div class="space-y-4 chinese-text text-lg">
+                        <div class="bg-white p-4 border-2 border-dashed border-amber-200 rounded-lg">
+                            <p class="text-xs text-amber-600 font-bold mb-1">Hình 1</p>
+                            <p>B: 桌子上 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-24 text-center outline-none"> 那么多好吃的。</p>
+                            <p>A: 水果 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-24 text-center outline-none"> 面包都会好。</p>
+                        </div>
+                        <div class="bg-white p-4 border-2 border-dashed border-amber-200 rounded-lg">
+                            <p class="text-xs text-amber-600 font-bold mb-1">Hình 2</p>
+                            <p>B: 我不 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-24 text-center outline-none"> 了。你 nhìn vé máy bay.</p>
+                            <p>A: 机票上 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-24 text-center outline-none"> 12月4号。</p>
+                        </div>
+                        <div class="bg-white p-4 border-2 border-dashed border-amber-200 rounded-lg">
+                            <p class="text-xs text-amber-600 font-bold mb-1">Hình 3</p>
+                            <p>B: 红的 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-20 text-center outline-none"> 黑的？</p>
+                            <p>B: 电脑旁边 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-20 text-center outline-none"> ，是你的吗？</p>
+                        </div>
+                        <div class="bg-white p-4 border-2 border-dashed border-amber-200 rounded-lg">
+                            <p class="text-xs text-amber-600 font-bold mb-1">Hình 4</p>
+                            <p>A: 你家楼上 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-20 text-center outline-none"> 很多人吗？</p>
+                            <p>A: 他们是大学生 <input type="text" class="ex-input border-b-2 border-amber-500 bg-amber-50 w-20 text-center outline-none"> 中学生？</p>
+                        </div>
+                    </div>
                 </div>
+
+                <button onclick="submitExercise()" class="btn-ghibli w-full bg-amber-600 text-white py-3 uppercase mt-6 mb-4">📤 Nộp bài & Copy bài làm</button>
+                <div id="exercise-feedback" class="mt-4 hidden text-center font-bold text-emerald-700 bg-emerald-50 p-2 rounded border border-emerald-200"></div>
             </div>
         </div>
 
