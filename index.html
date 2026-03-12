@@ -53,14 +53,24 @@
         @media (min-width: 768px) { .about-me-card { flex-direction: row; text-align: left; padding: 25px; } }
         .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--ghibli-green); object-fit: cover; flex-shrink: 0; background-color: #f0f0f0; }
         .about-info h2 { margin: 0 0 5px 0; color: var(--ghibli-dark-green); font-size: 1.2rem; }
-        .about-info p { line-height: 1.5; color: #444; margin: 5px 0; font-size: 0.9rem; }
+        .about-info p { line-height: 1.6; color: #444; margin: 10px 0; font-size: 0.95rem; }
+
+        /* --- HỆ THỐNG MENU TAB --- */
+        .main-tabs { display: flex; gap: 10px; margin-bottom: 20px; z-index: 10; }
+        .tab-btn { padding: 10px 25px; border-radius: 25px; border: none; background: white; color: var(--ghibli-dark-green); font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-family: inherit; }
+        .tab-btn.active { background: var(--ghibli-dark-green); color: white; }
+
+        .sub-tabs-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px; width: 90%; z-index: 10; }
+        .sub-tab-btn { padding: 6px 15px; border-radius: 15px; border: 1px solid var(--ghibli-green); background: rgba(255,255,255,0.8); color: var(--ghibli-dark-green); font-size: 0.85rem; cursor: pointer; transition: 0.2s; font-family: inherit; }
+        .sub-tab-btn.active { background: var(--ghibli-leaf); color: white; }
 
         /* --- SEARCH & GRID --- */
-        .search-wrapper { position: relative; width: 85%; max-width: 320px; margin: 5px 0 20px; z-index: 20; }
-        #gameSearch { width: 100%; padding: 8px 15px 8px 40px; border-radius: 20px; border: 2px solid var(--ghibli-green); outline: none; box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
+        .search-wrapper { position: relative; width: 85%; max-width: 320px; margin: 0 auto 20px; z-index: 20; }
+        #gameSearch { width: 100%; padding: 8px 15px 8px 40px; border-radius: 20px; border: 2px solid var(--ghibli-green); outline: none; box-sizing: border-box; font-family: 'Quicksand'; }
         .koala-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 20px; }
 
-        .container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 1100px; width: 94%; padding-bottom: 30px; z-index: 10; }
+        .container { display: none; grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 1100px; width: 94%; padding-bottom: 30px; z-index: 10; }
+        .container.active { display: grid; }
         @media (min-width: 768px) { .container { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 15px; } }
         
         .game-card { background: white; border-radius: 18px; padding: 12px; text-align: center; transition: 0.3s; text-decoration: none; color: inherit; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 5px 12px rgba(0,0,0,0.05); border: 2px solid transparent; }
@@ -69,19 +79,21 @@
         .game-title { font-weight: 600; font-size: 0.75rem; color: var(--ghibli-wood); text-transform: uppercase; }
         .new-badge { position: absolute; top: 6px; right: -25px; background: #ff6b6b; color: white; font-size: 0.5rem; padding: 2px 25px; transform: rotate(45deg); font-weight: bold; }
 
+        .doc-list { display: none; width: 92%; max-width: 800px; flex-direction: column; gap: 12px; z-index: 10; margin-bottom: 30px;}
+        .doc-list.active { display: flex; }
+        .doc-card { background: white; padding: 15px; border-radius: 15px; border-left: 6px solid var(--ghibli-green); box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .btn-download { background: var(--ghibli-wood); color: white; text-decoration: none; padding: 8px 15px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; }
+
         /* --- FOOTER --- */
-        footer {
-            margin-top: auto; width: 100%; background: rgba(255, 255, 255, 0.8);
-            border-top: 2px solid var(--ghibli-green); padding: 12px;
-            backdrop-filter: blur(10px); z-index: 10; box-sizing: border-box;
-        }
+        footer { margin-top: auto; width: 100%; background: rgba(255, 255, 255, 0.8); border-top: 2px solid var(--ghibli-green); padding: 12px; backdrop-filter: blur(10px); z-index: 10; box-sizing: border-box; }
         .footer-content { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .contact-title { color: var(--ghibli-dark-green); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .contact-title { color: var(--ghibli-dark-green); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
         .qr-container { display: flex; justify-content: center; gap: 15px; }
         .qr-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
         .qr-code { width: 75px; height: 75px; background: #f0f0f0; padding: 3px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); object-fit: contain; }
         .qr-label { font-size: 0.65rem; font-weight: 600; color: var(--ghibli-wood); }
         .copyright { font-size: 0.7rem; color: var(--ghibli-dark-green); text-align: center; border-top: 1px solid rgba(0,0,0,0.05); width: 100%; padding-top: 8px; }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
@@ -102,44 +114,90 @@
     </div>
 </section>
 
-<div class="search-wrapper">
-    <input type="text" id="gameSearch" placeholder="Tìm bài học...">
-    <div class="koala-icon">🐨</div>
+<div class="main-tabs">
+    <button class="tab-btn active" onclick="switchMainTab('game-section')">🎮 TRÒ CHƠI</button>
+    <button class="tab-btn" onclick="switchMainTab('doc-section')">📚 TÀI LIỆU</button>
 </div>
 
-<div class="container" id="gameContainer">
-    <a href="pinyin.html" class="game-card">
-        <div class="new-badge" style="background: #ffcc00; color: #333;">HOT</div>
-        <div class="game-icon">🎹</div>
-        <div class="game-title">Bảng phát âm</div>
-    </a>
+<div id="game-section" class="tab-content" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <div class="sub-tabs-container">
+        <button class="sub-tab-btn active" onclick="filterSub('game', 'game-intro')">Nhập môn</button>
+        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk1')">HSK 1</button>
+        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk2')">HSK 2</button>
+        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk3')">HSK 3</button>
+        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk4')">HSK 4</button>
+        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk5')">HSK 5</button>
+        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk6')">HSK 6</button>
+    </div>
 
-    <a href="BO THU 1.html" class="game-card"><div class="game-icon">🌱</div><div class="game-title">Bộ thủ 1</div></a>
-    <a href="BO THU 2.html" class="game-card"><div class="game-icon">🌿</div><div class="game-title">Bộ thủ 2</div></a>
-    <a href="BO THU 3.html" class="game-card"><div class="game-icon">☘️</div><div class="game-title">Bộ thủ 3</div></a>
-    <a href="BO THU 4.html" class="game-card"><div class="game-icon">🍀</div><div class="game-title">Bộ thủ 4</div></a>
-    <a href="BO THU 5.html" class="game-card"><div class="game-icon">🍃</div><div class="game-title">Bộ thủ 5</div></a>
-    <a href="BO THU 6.html" class="game-card"><div class="game-icon">🌳</div><div class="game-title">Bộ thủ 6</div></a>
+    <div class="search-wrapper">
+        <input type="text" id="gameSearch" placeholder="Tìm bài học...">
+        <div class="koala-icon">🐨</div>
+    </div>
 
-    <a href="HSK1-LESSON1-2.html" class="game-card"><div class="game-icon">📚</div><div class="game-title">HSK1: Bài 1-2</div></a>
-    <a href="HSK1-LESSON3.html" class="game-card"><div class="game-icon">📖</div><div class="game-title">HSK1: Bài 3</div></a>
-    <a href="HSK1-LESSON4.html" class="game-card"><div class="game-icon">🏠</div><div class="game-title">HSK1: Bài 4</div></a>
-    <a href="HSK1-LESSON5.html" class="game-card"><div class="game-icon">👨‍👩‍👧</div><div class="game-title">HSK1: Bài 5</div></a>
-    <a href="HSK1-LESSON6.html" class="game-card"><div class="game-icon">🗣️</div><div class="game-title">HSK1: Bài 6</div></a>
-    <a href="HSK1-LESSON7.html" class="game-card"><div class="game-icon">🗓️</div><div class="game-title">HSK1: Bài 7</div></a>
-    <a href="HSK1-LESSON8.html" class="game-card"><div class="game-icon">☕</div><div class="game-title">HSK1: Bài 8</div></a>
-    <a href="HSK1-LESSON9.html" class="game-card"><div class="game-icon">🐱</div><div class="game-title">HSK1: Bài 9</div></a>
-    <a href="HSK1-LESSON10.html" class="game-card"><div class="game-icon">🪑</div><div class="game-title">HSK1: Bài 10</div></a>
-    <a href="HSK1-LESSON11.html" class="game-card"><div class="game-icon">⏰</div><div class="game-title">HSK1: Bài 11</div></a>
-    <a href="HSK1-LESSON12.html" class="game-card"><div class="game-icon">🌤️</div><div class="game-title">HSK1: Bài 12</div></a>
-    <a href="HSK1-LESSON13.html" class="game-card"><div class="game-icon">🍵</div><div class="game-title">HSK1: Bài 13</div></a>
-    <a href="HSK1-LESSON14.html" class="game-card"><div class="game-icon">🛍️</div><div class="game-title">HSK1: Bài 14</div></a>
-    <a href="HSK1-LESSON15.html" class="game-card"><div class="game-icon">✈️</div><div class="game-title">HSK1: Bài 15</div></a>
+    <div id="game-intro" class="container active">
+        <a href="pinyin.html" class="game-card"><div class="new-badge" style="background: #ffcc00; color: #333;">HOT</div><div class="game-icon">🎹</div><div class="game-title">Bảng phát âm</div></a>
+        <a href="BO THU 1.html" class="game-card"><div class="game-icon">🌱</div><div class="game-title">Bộ thủ 1</div></a>
+        <a href="BO THU 2.html" class="game-card"><div class="game-icon">🌿</div><div class="game-title">Bộ thủ 2</div></a>
+        <a href="BO THU 3.html" class="game-card"><div class="game-icon">☘️</div><div class="game-title">Bộ thủ 3</div></a>
+        <a href="BO THU 4.html" class="game-card"><div class="game-icon">🍀</div><div class="game-title">Bộ thủ 4</div></a>
+        <a href="BO THU 5.html" class="game-card"><div class="game-icon">🍃</div><div class="game-title">Bộ thủ 5</div></a>
+        <a href="BO THU 6.html" class="game-card"><div class="game-icon">🌳</div><div class="game-title">Bộ thủ 6</div></a>
+    </div>
 
-    <a href="HSK3-LESSON1.html" class="game-card"><div class="game-icon">🌲</div><div class="game-title">HSK3: Bài 1</div></a>
-    <a href="HSK3-LESSON2.html" class="game-card"><div class="game-icon">🚲</div><div class="game-title">HSK3: Bài 2</div></a>
-    <a href="HSK3-LESSON3.html" class="game-card"><div class="game-icon">🍎</div><div class="game-title">HSK3: Bài 3</div></a>
-    <a href="HSK3-LESSON4.html" class="game-card"><div class="new-badge">MỚI</div><div class="game-icon">🌸</div><div class="game-title">HSK3: Bài 4</div></a>
+    <div id="game-hsk1" class="container">
+        <a href="HSK1-LESSON1-2.html" class="game-card"><div class="game-icon">📚</div><div class="game-title">HSK1: Bài 1-2</div></a>
+        <a href="HSK1-LESSON3.html" class="game-card"><div class="game-icon">📖</div><div class="game-title">HSK1: Bài 3</div></a>
+        <a href="HSK1-LESSON4.html" class="game-card"><div class="game-icon">🏠</div><div class="game-title">HSK1: Bài 4</div></a>
+        <a href="HSK1-LESSON5.html" class="game-card"><div class="game-icon">👨‍👩‍👧</div><div class="game-title">HSK1: Bài 5</div></a>
+        <a href="HSK1-LESSON6.html" class="game-card"><div class="game-icon">🗣️</div><div class="game-title">HSK1: Bài 6</div></a>
+        <a href="HSK1-LESSON7.html" class="game-card"><div class="game-icon">🗓️</div><div class="game-title">HSK1: Bài 7</div></a>
+        <a href="HSK1-LESSON8.html" class="game-card"><div class="game-icon">☕</div><div class="game-title">HSK1: Bài 8</div></a>
+        <a href="HSK1-LESSON9.html" class="game-card"><div class="game-icon">🐱</div><div class="game-title">HSK1: Bài 9</div></a>
+        <a href="HSK1-LESSON10.html" class="game-card"><div class="game-icon">🪑</div><div class="game-title">HSK1: Bài 10</div></a>
+        <a href="HSK1-LESSON11.html" class="game-card"><div class="game-icon">⏰</div><div class="game-title">HSK1: Bài 11</div></a>
+        <a href="HSK1-LESSON12.html" class="game-card"><div class="game-icon">🌤️</div><div class="game-title">HSK1: Bài 12</div></a>
+        <a href="HSK1-LESSON13.html" class="game-card"><div class="game-icon">🍵</div><div class="game-title">HSK1: Bài 13</div></a>
+        <a href="HSK1-LESSON14.html" class="game-card"><div class="game-icon">🛍️</div><div class="game-title">HSK1: Bài 14</div></a>
+        <a href="HSK1-LESSON15.html" class="game-card"><div class="game-icon">✈️</div><div class="game-title">HSK1: Bài 15</div></a>
+    </div>
+
+    <div id="game-hsk3" class="container">
+        <a href="HSK3-LESSON1.html" class="game-card"><div class="game-icon">🌲</div><div class="game-title">HSK3: Bài 1</div></a>
+        <a href="HSK3-LESSON2.html" class="game-card"><div class="game-icon">🚲</div><div class="game-title">HSK3: Bài 2</div></a>
+        <a href="HSK3-LESSON3.html" class="game-card"><div class="game-icon">🍎</div><div class="game-title">HSK3: Bài 3</div></a>
+        <a href="HSK3-LESSON4.html" class="game-card"><div class="new-badge">MỚI</div><div class="game-icon">🌸</div><div class="game-title">HSK3: Bài 4</div></a>
+        <a href="HSK3-LESSON5.html" class="game-card"><div class="game-icon">🍏</div><div class="game-title">HSK3: Bài 5</div></a>
+        <a href="HSK3-LESSON6.html" class="game-card"><div class="game-icon">🔍</div><div class="game-title">HSK3: Bài 6</div></a>
+        <a href="HSK3-LESSON7.html" class="game-card"><div class="game-icon">🤝</div><div class="game-title">HSK3: Bài 7</div></a>
+        <a href="HSK3-LESSON8.html" class="game-card"><div class="game-icon">📍</div><div class="game-title">HSK3: Bài 8</div></a>
+        <a href="HSK3-LESSON9.html" class="game-card"><div class="game-icon">🗣️</div><div class="game-title">HSK3: Bài 9</div></a>
+        <a href="HSK3-LESSON10.html" class="game-card"><div class="game-icon">📐</div><div class="game-title">HSK3: Bài 10</div></a>
+        <a href="HSK3-LESSON11.html" class="game-card"><div class="game-icon">❄️</div><div class="game-title">HSK3: Bài 11</div></a>
+    </div>
+
+    <div id="game-hsk2" class="container"><div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #888;">🌿 Đang hoàn thiện...</div></div>
+    <div id="game-hsk4" class="container"><div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #888;">🌿 Đang hoàn thiện...</div></div>
+    <div id="game-hsk5" class="container"><div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #888;">🌿 Đang hoàn thiện...</div></div>
+    <div id="game-hsk6" class="container"><div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #888;">🌿 Đang hoàn thiện...</div></div>
+</div>
+
+<div id="doc-section" class="tab-content hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <div class="sub-tabs-container">
+        <button class="sub-tab-btn active" onclick="filterSub('doc', 'doc-hsk1')">HSK 1</button>
+        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk2')">HSK 2</button>
+        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk3')">HSK 3</button>
+        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk4')">HSK 4</button>
+        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk5')">HSK 5</button>
+        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk6')">HSK 6</button>
+        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk30')" style="color: #ff6b6b; font-weight: bold;">HSK 3.0</button>
+    </div>
+    <div id="doc-hsk1" class="doc-list active">
+        <div class="doc-card"><h3>Bộ thẻ Flashcard HSK 1</h3><a href="#" class="btn-download">Tải về 📥</a></div>
+    </div>
+    <div id="doc-hsk30" class="doc-list">
+        <div class="doc-card"><h3>Chuẩn HSK 3.0 (2026)</h3><a href="#" class="btn-download">Tải về 📥</a></div>
+    </div>
 </div>
 
 <footer>
@@ -164,16 +222,38 @@
 </footer>
 
 <script>
+    function switchMainTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+        document.getElementById(tabId).classList.remove('hidden');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+    }
+
+    function filterSub(type, subId) {
+        const parentId = type === 'game' ? 'game-section' : 'doc-section';
+        const itemClass = type === 'game' ? '.container' : '.doc-list';
+        document.querySelectorAll(`#${parentId} ${itemClass}`).forEach(item => item.classList.remove('active'));
+        document.getElementById(subId).classList.add('active');
+        document.querySelectorAll(`#${parentId} .sub-tab-btn`).forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
+        // Search
         const searchInput = document.getElementById('gameSearch');
-        const cards = document.querySelectorAll('.game-card');
         searchInput.addEventListener('input', function() {
             const searchTerm = searchInput.value.toLowerCase().trim();
-            cards.forEach(card => {
-                const title = card.querySelector('.game-title').textContent.toLowerCase();
-                card.style.display = title.includes(searchTerm) ? "flex" : "none";
-            });
+            const activeContainer = document.querySelector('.container.active');
+            if(activeContainer) {
+                const cards = activeContainer.querySelectorAll('.game-card');
+                cards.forEach(card => {
+                    const title = card.querySelector('.game-title').textContent.toLowerCase();
+                    card.style.display = title.includes(searchTerm) ? "flex" : "none";
+                });
+            }
         });
+
+        // Lá bay
         const container = document.getElementById('leaves-container');
         const leafIcons = ['🍃', '🍂', '🌿', '🌸', '✨'];
         for (let i = 0; i < 15; i++) {
