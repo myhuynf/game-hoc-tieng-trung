@@ -101,18 +101,69 @@
             font-weight: 600;
         }
 
-        .welcome-quote {
-            font-weight: 600;
-            font-size: 0.9rem;
-            max-width: 600px;
-            line-height: 1.6;
-            margin: 10px 0 20px 0;
-            background: linear-gradient(45deg, #4f7942, #8b5a2b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-align: center;
+        /* --- PHẦN GIỚI THIỆU BẢN THÂN --- */
+        .about-me-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 30px;
+            padding: 25px;
+            max-width: 850px;
+            width: 90%;
+            margin: 20px auto 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            border: 3px solid white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            position: relative;
         }
 
+        @media (min-width: 768px) {
+            .about-me-card { flex-direction: row; text-align: left; padding: 35px; }
+        }
+
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--ghibli-green);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .about-info h2 {
+            margin: 0 0 12px 0;
+            color: var(--ghibli-dark-green);
+            font-size: 1.5rem;
+        }
+
+        .about-info p {
+            line-height: 1.7;
+            color: #444;
+            font-size: 0.95rem;
+            margin: 10px 0;
+        }
+
+        .social-tags {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: var(--ghibli-pink);
+            color: white;
+            padding: 4px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* --- SEARCH & CONTAINER --- */
         .search-wrapper {
             position: relative;
             width: 85%;
@@ -135,18 +186,11 @@
             box-sizing: border-box;
         }
 
-        #gameSearch:focus {
-            border-color: var(--ghibli-dark-green);
-            box-shadow: 0 5px 20px rgba(79, 121, 66, 0.2);
-        }
-
         .koala-icon {
             position: absolute;
-            left: 12px;
-            top: 50%;
+            left: 12px; top: 50%;
             transform: translateY(-50%);
             font-size: 26px;
-            transition: all 0.3s ease;
             pointer-events: none;
         }
 
@@ -161,10 +205,7 @@
         }
 
         @media (min-width: 768px) {
-            .container { 
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-                gap: 20px; 
-            }
+            .container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
         }
 
         .game-card {
@@ -198,8 +239,7 @@
 
         .new-badge {
             position: absolute;
-            top: 8px;
-            right: -28px;
+            top: 8px; right: -28px;
             background: #ff6b6b;
             color: white;
             font-size: 0.6rem;
@@ -230,16 +270,30 @@
     <h1>Khu Vườn Tiếng Trung 🌿</h1>
     <div class="sub-title-box">Nga Học HSK</div>
     
-    <p class="welcome-quote">
-        Chào mừng bạn đến với khu vườn nhỏ của Nga,<br>
-        Nơi tiếng Trung nảy mầm mỗi ngày.
-    </p>
-
     <div class="search-wrapper">
         <input type="text" id="gameSearch" placeholder="Tìm bài học...">
         <div class="koala-icon">🐨</div>
     </div>
 </header>
+
+<section class="about-me-card">
+    <img src="https://via.placeholder.com/150" alt="Nga Profile" class="profile-img">
+    
+    <div class="about-info">
+        <h2>Chào bạn, mình là Nga! ✨</h2>
+        <p>
+            Tốt nghiệp <b>Đại học Kinh tế Quốc dân (NEU)</b> chuyên ngành Quản trị Du lịch & Khách sạn. Với tấm bằng <b>HSK6 & HSKK Cao cấp</b> và kinh nghiệm tiếp xúc đa ngôn ngữ, mình đam mê mang đến phương pháp học tiếng Trung qua <b>Game (Gamification)</b> đầy thú vị.
+        </p>
+        <p>
+            Mỗi bài học tại đây đều bám sát giáo trình chuẩn HSK, giúp bạn "vừa chơi vừa học" hiệu quả. Nếu gặp bất kỳ lỗi nhỏ nào, hãy giúp mình <b>chụp màn hình</b> và liên hệ để mình hoàn thiện khu vườn này nhé!
+        </p>
+        <div class="social-tags">
+            <span class="tag">#NEU_Alumni</span>
+            <span class="tag">#HSK6</span>
+            <span class="tag">#TiengTrungQuaGame</span>
+        </div>
+    </div>
+</section>
 
 <div class="container" id="gameContainer">
     <a href="pinyin.html" class="game-card">
@@ -268,23 +322,11 @@
     <a href="HSK1-LESSON12.html" class="game-card"><div class="game-icon">🌤️</div><div class="game-title">HSK1: Bài 12</div></a>
     <a href="HSK1-LESSON13.html" class="game-card"><div class="game-icon">🍵</div><div class="game-title">HSK1: Bài 13</div></a>
     <a href="HSK1-LESSON14.html" class="game-card"><div class="game-icon">🛍️</div><div class="game-title">HSK1: Bài 14</div></a>
-    <a href="HSK1-LESSON15.html" class="game-card">
-        <div class="game-icon">✈️</div>
-        <div class="game-title">HSK1: Bài 15</div>
-    </a>
+    <a href="HSK1-LESSON15.html" class="game-card"><div class="game-icon">✈️</div><div class="game-title">HSK1: Bài 15</div></a>
 
-    <a href="HSK3-LESSON1.html" class="game-card">
-        <div class="game-icon">🌲</div>
-        <div class="game-title">HSK3: Bài 1</div>
-    </a>
-    <a href="HSK3-LESSON2.html" class="game-card">
-        <div class="game-icon">🚲</div>
-        <div class="game-title">HSK3: Bài 2</div>
-    </a>
-    <a href="HSK3-LESSON3.html" class="game-card">
-        <div class="game-icon">🍎</div>
-        <div class="game-title">HSK3: Bài 3</div>
-    </a>
+    <a href="HSK3-LESSON1.html" class="game-card"><div class="game-icon">🌲</div><div class="game-title">HSK3: Bài 1</div></a>
+    <a href="HSK3-LESSON2.html" class="game-card"><div class="game-icon">🚲</div><div class="game-title">HSK3: Bài 2</div></a>
+    <a href="HSK3-LESSON3.html" class="game-card"><div class="game-icon">🍎</div><div class="game-title">HSK3: Bài 3</div></a>
     <a href="HSK3-LESSON4.html" class="game-card">
         <div class="new-badge">MỚI</div>
         <div class="game-icon">🌸</div>
