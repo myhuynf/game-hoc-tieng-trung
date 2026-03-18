@@ -11,6 +11,7 @@
             --ghibli-green: #a8d5ba; --ghibli-brown: #d4a373;
             --ghibli-sky: #caf0f8; --ghibli-wood: #6d4c41;
             --ghibli-dark-green: #4f7942;
+            --ghibli-leaf: #7fb069;
         }
         body {
             font-family: 'Quicksand', sans-serif;
@@ -68,11 +69,34 @@
             color: #b45309;
             font-weight: bold;
         }
+        .btn-home {
+            background: var(--ghibli-dark-green);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            box-shadow: 0 4px 0 #2d4d28;
+            margin-bottom: 20px;
+        }
+        .btn-home:hover { transform: translateY(-2px); background: var(--ghibli-leaf); }
+        .btn-home:active { transform: translateY(2px); box-shadow: none; }
     </style>
 </head>
 <body>
 
-    <div id="game-container" class="w-full max-w-xl px-4 mt-10 mb-10">
+    <div id="game-container" class="w-full max-w-xl px-4 mt-6 mb-10">
+        
+        <!-- NÚT QUAY VỀ TRANG CHỦ -->
+        <div class="flex justify-center">
+            <a href="index.html" class="btn-home">
+                <span>🏡 Quay về vườn</span>
+            </a>
+        </div>
+
         <!-- MÀN HÌNH CHÍNH -->
         <div id="start-screen" class="ghibli-card p-8 text-center">
             <h1 class="text-3xl font-bold text-amber-900 mb-2">HSK3 - Bài 5</h1>
@@ -114,7 +138,7 @@
             </div>
         </div>
 
-        <!-- MÀN HÌNH KẾT QUẢ FLASHCARD (Giữ nguyên menu) -->
+        <!-- MÀN HÌNH KẾT QUẢ FLASHCARD -->
         <div id="flashcard-results-screen" class="ghibli-card p-6 hidden">
             <h2 class="text-3xl font-bold text-center text-amber-900 mb-8">Kết quả ghi nhớ</h2>
             <div class="flex justify-center gap-8 mb-8">
@@ -189,27 +213,25 @@
                 <h2 class="text-2xl font-bold text-amber-900">📝 Bài Tập Tổng Hợp</h2>
                 <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Đóng</button>
             </div>
-            <div class="overflow-y-auto max-h-[65vh] pr-2 text-amber-900 space-y-8" id="ex-content">
+            <div class="overflow-y-auto max-h-[60vh] pr-2 text-amber-900 space-y-8" id="ex-content">
                 
-                <!-- Phần 2: Điền từ -->
+                <!-- Nội dung bài tập điền từ và mô tả tranh -->
                 <div>
                     <h3 class="font-bold text-emerald-800 mb-3 bg-emerald-50 p-2 rounded">2. Chọn từ ngữ thích hợp điền vào chỗ trống</h3>
-                    
                     <div class="mb-6">
                         <p class="text-xs font-bold text-center mb-2 text-amber-600">Nhóm 1: 草, 最近, 为, 发烧, 裙子</p>
                         <div class="space-y-3 chinese-text text-lg">
                             <p>① 我是不是 <input type="text" data-q="2-1" class="w-24"> 了？怎么总是觉得 cold？</p>
                             <p>② 春天不冷不热， <input type="text" data-q="2-2" class="w-20"> 都是绿的。</p>
-                            <p>③ 快来看一下，这是我 <input type="text" data-q="2-3" class="w-20"> 你买的衣服。</p>
-                            <p>④ 这条 <input type="text" data-q="2-4" class="w-24"> 真好看，是新买的吗？</p>
+                            <p>③ 快来看一下，这是我 <input type="text" data-q="2-3" class="w-20"> 你买 de 衣服。</p>
+                            <p>④ 这条 <input type="text" data-q="2-4" class="w-24"> 真好看，是新买 de 吗？</p>
                             <p>⑤ 小王在忙什么呢？你 <input type="text" data-q="2-5" class="w-24"> 见过他吗？</p>
                         </div>
                     </div>
-
                     <div class="mb-6">
                         <p class="text-xs font-bold text-center mb-2 text-amber-600">Nhóm 2: 当然, 照顾, 用, 季节, 夏天</p>
                         <div class="space-y-3 chinese-text text-lg">
-                            <p>⑥ A: 来一个西瓜。 B: 这个 <input type="text" data-q="2-6" class="w-20"> 的西瓜又大又甜，多来几个吧。</p>
+                            <p>⑥ A: 来一个西瓜。 B: 这个 <input type="text" data-q="2-6" class="w-20"> de 西瓜又大又甜，多来几个吧。</p>
                             <p>⑦ A: 今年 <input type="text" data-q="2-7" class="w-20"> 一点儿也不热。 B: 是吗？我怎么觉得快热死了！</p>
                             <p>⑧ A: 明天考试，你现在就睡觉了？不再看看书了？ B: 不 <input type="text" data-q="2-8" class="w-20"> 看了，我已经复习好了。</p>
                             <p>⑨ A: 明天阴天，你还去看比赛吗？ B: 我 <input type="text" data-q="2-9" class="w-24"> 要去，这是我最喜欢的比赛！</p>
@@ -218,40 +240,21 @@
                     </div>
                 </div>
 
-                <!-- Phần 3: Mô tả tranh -->
                 <div>
                     <h3 class="font-bold text-emerald-800 mb-3 bg-emerald-50 p-2 rounded">3. Sử dụng từ ngữ trong bài để mô tả hình ảnh</h3>
                     <div class="space-y-6 chinese-text text-lg">
                         <div class="bg-white p-3 rounded-lg border border-amber-100">
-                            <p class="text-xs font-bold text-amber-500 mb-2">Đoạn 1 (Hình em bé bị ốm)</p>
-                            <p>A: 儿子怎么没去上学？</p>
-                            <p>B: 他 <input type="text" data-q="3-1" class="w-48"> 。</p>
-                            <p>A: 最近天气不太好。</p>
-                            <p>B: 对，天气 <input type="text" data-q="3-2" class="w-48"> ，他穿得太少了。</p>
+                            <p>A: 儿子怎么没去上学？ B: 他 <input type="text" data-q="3-1" class="w-48"> 。</p>
+                            <p>A: 最近天气不太好。 B: 对，天气 <input type="text" data-q="3-2" class="w-48"> ，他穿得太少了。</p>
                         </div>
-
                         <div class="bg-white p-3 rounded-lg border border-amber-100">
-                            <p class="text-xs font-bold text-amber-500 mb-2">Đoạn 2 (Hình bầu trời mây đen)</p>
-                            <p>A: 天 <input type="text" data-q="3-3" class="w-48"> ，你带伞了吗？</p>
-                            <p>B: 没有。</p>
-                            <p>A: 那我们快点儿走吧，就要 <input type="text" data-q="3-4" class="w-48"> 。</p>
-                            <p>B: 好的。</p>
+                            <p>A: 天 <input type="text" data-q="3-3" class="w-48"> ，你带伞了吗？ B: 没有。</p>
+                            <p>A: 那我们快点儿走吧，就要 <input type="text" data-q="3-4" class="w-48"> 。 B: 好的。</p>
                         </div>
-
                         <div class="bg-white p-3 rounded-lg border border-amber-100">
-                            <p class="text-xs font-bold text-amber-500 mb-2">Đoạn 3 (Hình học sinh đang làm bài tập)</p>
-                            <p>A: 你昨天晚上没出去玩儿？</p>
-                            <p>B: 没有，一直在宿舍写作业呢。</p>
+                            <p>A: 你昨天晚上没出去玩儿？ B: 没有，一直在宿舍写作业呢。</p>
                             <p>A: 你最近真是 <input type="text" data-q="3-5" class="w-48"> 努力了。</p>
                             <p>B: 你看，我的汉语是不是 <input type="text" data-q="3-6" class="w-48"> ？</p>
-                        </div>
-
-                        <div class="bg-white p-3 rounded-lg border border-amber-100">
-                            <p class="text-xs font-bold text-amber-500 mb-2">Đoạn 4 (Hình người đàn ông mặc vest)</p>
-                            <p>A: 你现在回来得 <input type="text" data-q="3-7" class="w-48"> 。</p>
-                            <p>B: 最近 <input type="text" data-q="3-8" class="w-48"> 忙。</p>
-                            <p>A: 办公室有那么多事吗？</p>
-                            <p>B: 经理去美国了，我要 <input type="text" data-q="3-9" class="w-48"> 。</p>
                         </div>
                     </div>
                 </div>
@@ -305,26 +308,19 @@
         ],
         p5: [
             { w: ["极了", "可爱", "我的", "小狗"], c: "我的小狗可爱极了", p: "Wǒ de xiǎogǒu kě'ài jí le.", v: "Cún con của tôi đáng yêu cực kỳ." },
-            { w: ["冷", "极了", "今天", "天气"], c: "今天天气冷极了", p: "Jīntiān tiānqì lěng jí le.", v: "Hôm nay thời tiết lạnh cực kỳ." },
+            { w: ["冷", "极了", "今天", "天气"], c: "今天天气冷 jí 了", p: "Jīntiān tiānqì lěng jí le.", v: "Hôm nay thời tiết lạnh cực kỳ." },
             { w: ["极了", "喜欢", "我", "那件", "衣服"], c: "我喜欢那件衣服极了", p: "Wǒ xǐhuan nà jiàn yīfu jí le.", v: "Tôi thích bộ quần áo đó cực kỳ." },
             { w: ["满意", "极了", "他"], c: "他满意极了", p: "Tā mǎnyì jí le.", v: "Anh ấy hài lòng cực kỳ." },
             { w: ["漂亮", "裙子", "极了", "这种"], c: "这种裙子漂亮极了", p: "Zhè zhǒng qúnzi piàoliang jí le.", v: "Loại váy này đẹp cực kỳ." },
-            { w: ["甜", "这种", "极了", " 的", "南方", "水果"], c: "这种南方的水果甜极了", p: "Zhè zhǒng nánfāng de shuǐguǒ tián jí le.", v: "Loại hoa quả phương Nam này ngọt cực kỳ." },
+            { w: ["甜", "这种", "极了", " de", "南方", "水果"], c: "这种南方的水果甜极了", p: "Zhè zhǒng nánfāng de shuǐguǒ tián jí le.", v: "Loại hoa quả phương Nam này ngọt cực kỳ." },
             { w: ["累", "极了", "现在", "我"], c: "我现在累极了", p: "Wǒ xiànzài lèi jí le.", v: "Bây giờ tôi mệt cực kỳ." },
-            { w: ["安静", "环境", " 的", "极了", "这里的"], c: "这里的环境安静极了", p: "Zhèlǐ de huánjìng ānjìng jí le.", v: "Môi trường ở đây yên tĩnh cực kỳ." },
+            { w: ["安静", "环境", " de", "极了", "这里的"], c: "这里的环境安静极了", p: "Zhèlǐ de huánjìng ānjìng jí le.", v: "Môi trường ở đây yên tĩnh cực kỳ." },
             { w: ["考完试", "大家", "高兴", "极了"], c: "考完试大家高兴极了", p: "Kǎo wán shì dàjiā gāoxìng jí le.", v: "Thi xong rồi mọi người đều vui mừng khôn xiết." },
             { w: ["放心", "极了", "搬到", "以后", "新房", "周太太"], c: "周太太搬到新房以后放心极了", p: "Zhōu tàitai bāndào xīnfáng yǐhòu fàngxīn jí le.", v: "Bà Chu sau khi chuyển đến nhà mới thì vô cùng yên tâm." }
         ]
     };
 
-    // Tracking scores
-    let gameScores = {
-        vocab: 0,
-        p3: 0,
-        p4: 0,
-        p5: 0
-    };
-
+    let gameScores = { vocab: 0, p3: 0, p4: 0, p5: 0 };
     let curIdx = 0, curKey = '', curMode = '', completed = {vocab: false, p3: false, p4: false, p5: false};
     let currentFlashcardPool = [], knownCards = [], unknownCards = [], selectedWords = [], poolWords = [];
 
@@ -503,27 +499,19 @@
         const fb = document.getElementById('quiz-feedback-text');
         fb.innerText = isRight ? "Chính xác! 🌟" : "Chưa đúng rồi! ❌";
         fb.style.color = isRight ? "#059669" : "#dc2626";
-        
-        // Show answer anyway for learning
         document.getElementById('quiz-full-sentence').innerText = q.c || q.q.replace('______', q.s);
         document.getElementById('quiz-pinyin').innerText = q.p;
         document.getElementById('quiz-translate').innerText = "Dịch: " + q.v;
-        
         if (isRight && btn) btn.style.backgroundColor = "#a8d5ba";
         else if (!isRight && btn) btn.style.backgroundColor = "#fca5a5";
-        
         if(curMode === 'reorder') document.getElementById('btn-check-reorder').classList.add('hidden');
-        
-        // Disable other options
-        const opts = document.querySelectorAll('#quiz-options button');
-        opts.forEach(b => b.onclick = null);
+        document.querySelectorAll('#quiz-options button').forEach(b => b.onclick = null);
     }
     function nextQuizQuestion() {
         curIdx++; if(curIdx < 10) loadQuiz();
         else { completed[curKey] = true; document.getElementById('check-'+curKey).classList.remove('hidden'); returnToStart(); }
     }
 
-    // EXERCISE
     function showExercise() {
         document.getElementById('start-screen').classList.add('hidden');
         document.getElementById('exercise-screen').classList.remove('hidden');
@@ -537,46 +525,21 @@
         report += `- Ngữ pháp 除了: ${gameScores.p3}/10 ✅\n`;
         report += `- Ngữ pháp 什么: ${gameScores.p4}/10 ✅\n`;
         report += `- Ngữ pháp 极了: ${gameScores.p5}/10 ✅\n\n`;
-        
         report += `BÀI TẬP TỔNG HỢP:\n`;
         
-        const contentDiv = document.getElementById('ex-content');
-        const sections = contentDiv.querySelectorAll('h3, div.bg-white, div.mb-6');
-        
-        sections.forEach(sec => {
-            if (sec.tagName === 'H3') {
-                report += `\n[${sec.innerText}]\n`;
-            } else {
-                const lines = sec.querySelectorAll('p');
-                lines.forEach(line => {
-                    const lineInputs = line.querySelectorAll('input');
-                    if (lineInputs.length > 0) {
-                        let processedLine = line.innerHTML;
-                        lineInputs.forEach(inp => {
-                            const val = inp.value || "___";
-                            const formatted = `  ( ${val} )  `;
-                            processedLine = processedLine.replace(inp.outerHTML, formatted);
-                        });
-                        const temp = document.createElement('div');
-                        temp.innerHTML = processedLine;
-                        report += temp.innerText.trim() + '\n';
-                    } else if (!line.classList.contains('text-xs')) {
-                        report += line.innerText.trim() + '\n';
-                    }
-                });
-            }
+        const inputs = document.querySelectorAll('#ex-content input');
+        inputs.forEach(inp => {
+            const label = inp.getAttribute('data-q');
+            const val = inp.value || "___";
+            report += `Câu ${label}: ${val}\n`;
         });
 
-        // Copy to clipboard
         const textArea = document.createElement("textarea");
-        textArea.value = report;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
+        textArea.value = report; document.body.appendChild(textArea);
+        textArea.select(); document.execCommand('copy');
         document.body.removeChild(textArea);
-
         const fb = document.getElementById('ex-fb');
-        fb.innerText = "✨ Đã nộp bài và SAO CHÉP báo cáo (kèm điểm số chi tiết) vào bộ nhớ tạm!";
+        fb.innerText = "✨ Đã nộp bài và SAO CHÉP báo cáo kèm điểm số vào bộ nhớ tạm!";
         fb.classList.remove('hidden');
     }
 </script>
