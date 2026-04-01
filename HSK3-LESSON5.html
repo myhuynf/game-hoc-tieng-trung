@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HSK3 Bài 5 - 我最近越来越胖了</title>
+    <title>HSK3 Bài 5 - 我最近越来越胖了 - Giáo viên: Nga Học HSK</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Noto+Sans+SC:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -90,28 +90,25 @@
 
     <div id="game-container" class="w-full max-w-xl px-4 mt-6 mb-10">
         
-        <!-- NÚT QUAY VỀ TRANG CHỦ -->
         <div class="flex justify-center">
             <a href="index.html" class="btn-home">
                 <span>🏡 Quay về vườn</span>
             </a>
         </div>
 
-        <!-- MÀN HÌNH CHÍNH -->
         <div id="start-screen" class="ghibli-card p-8 text-center">
+            <p class="font-bold text-amber-700 mb-2 uppercase tracking-wide text-sm">Giáo viên: Nga Học HSK</p>
             <h1 class="text-3xl font-bold text-amber-900 mb-2">HSK3 - Bài 5</h1>
             <h2 class="text-xl text-emerald-700 font-bold mb-6 italic">我最近越来越胖了</h2>
             <div class="grid grid-cols-1 gap-4">
                 <button onclick="startFlashcards()" class="btn-ghibli text-lg">🎴 Phần 1: Ôn Flashcards</button>
                 <button onclick="startVocabGame()" class="btn-ghibli text-lg" style="background-color: #fef3c7;">🎮 Phần 2: Game Từ Vựng <span id="check-vocab" class="hidden">✅</span></button>
-                <button onclick="startQuiz('p3', 'multiple')" class="btn-ghibli text-lg" style="background-color: #fff1f2;">✨ Phần 3: Ngữ pháp 除了... <span id="check-p3" class="hidden">✅</span></button>
-                <button onclick="startQuiz('p4', 'reorder')" class="btn-ghibli text-lg" style="background-color: #ecfdf5;">❓ Phần 4: Ngữ pháp 什么 (Sắp xếp) <span id="check-p4" class="hidden">✅</span></button>
-                <button onclick="startQuiz('p5', 'reorder')" class="btn-ghibli text-lg" style="background-color: #e0f2fe;">🚀 Phần 5: Ngữ pháp 极了 (Sắp xếp) <span id="check-p5" class="hidden">✅</span></button>
+                <button onclick="startQuiz('p3', 'multiple')" class="btn-ghibli text-lg" style="background-color: #fff1f2;">✨ Phần 3: Ngữ pháp 了 (Sự thay đổi) <span id="check-p3" class="hidden">✅</span></button>
+                <button onclick="startQuiz('p4', 'multiple')" class="btn-ghibli text-lg" style="background-color: #ecfdf5;">🚀 Phần 4: Ngữ pháp 越来越 <span id="check-p4" class="hidden">✅</span></button>
                 <button id="btn-exercise" onclick="showExercise()" class="btn-ghibli text-lg" style="background-color: #e5e7eb; color: #9ca3af;" disabled>🔒 Bài tập tổng hợp</button>
             </div>
         </div>
 
-        <!-- MÀN HÌNH FLASHCARD -->
         <div id="flashcard-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between items-center mb-4">
                 <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Quay lại</button>
@@ -138,7 +135,6 @@
             </div>
         </div>
 
-        <!-- MÀN HÌNH KẾT QUẢ FLASHCARD -->
         <div id="flashcard-results-screen" class="ghibli-card p-6 hidden">
             <h2 class="text-3xl font-bold text-center text-amber-900 mb-8">Kết quả ghi nhớ</h2>
             <div class="flex justify-center gap-8 mb-8">
@@ -163,7 +159,6 @@
             <button onclick="returnToMenu()" class="btn-ghibli w-full bg-white text-amber-800 border-amber-300">📋 Quay lại menu</button>
         </div>
 
-        <!-- MÀN HÌNH GAME TỪ VỰNG -->
         <div id="vocab-game-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between mb-4">
                 <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Thoát</button>
@@ -180,7 +175,6 @@
             </div>
         </div>
 
-        <!-- MÀN HÌNH QUIZ CHUNG -->
         <div id="quiz-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between mb-4">
                 <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Thoát</button>
@@ -207,7 +201,6 @@
             </div>
         </div>
 
-        <!-- MÀN HÌNH BÀI TẬP TỔNG HỢP -->
         <div id="exercise-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold text-amber-900">📝 Bài Tập Tổng Hợp</h2>
@@ -215,7 +208,6 @@
             </div>
             <div class="overflow-y-auto max-h-[60vh] pr-2 text-amber-900 space-y-8" id="ex-content">
                 
-                <!-- Nội dung bài tập điền từ và mô tả tranh -->
                 <div>
                     <h3 class="font-bold text-emerald-800 mb-3 bg-emerald-50 p-2 rounded">2. Chọn từ ngữ thích hợp điền vào chỗ trống</h3>
                     <div class="mb-6">
@@ -283,45 +275,33 @@
 
     const quizData = {
         p3: [
-            { q: "除了小云以外，其他人______来了。", o: ["还", "也", "都", "没"], a: 2, s: "都", p: "Chú le Xiǎoyún yǐwài, qítā rén dōu lái le.", v: "Ngoài Tiểu Vân ra, những người khác đều đến rồi." },
-            { q: "除了汉语以外，我______会说一点儿英语。", o: ["都", "还", "别", "只"], a: 1, s: "还", p: "Chú le Hànyǔ yǐwài, wǒ hái huì shuō yīdiǎnr Yīngyǔ.", v: "Ngoài tiếng Hán ra, tôi còn biết nói một chút tiếng Anh." },
-            { q: "______看新闻以外，上网还可以听音乐。", o: ["除了", "为了", "因为", "只要"], a: 0, s: "除了", p: "Chú le kàn xīnwén yǐwài, shàngwǎng hái kěyǐ tīng yīnyuè.", v: "Ngoài xem tin tức ra, lên mạng còn có thể nghe nhạc." },
-            { q: "除了这个汉字以外，别的汉字我______认识。", o: ["也", "还", "都", "极了"], a: 2, s: "都", p: "Chú le zhège hànzì yǐwài, biéde hànzì wǒ dōu rènshi.", v: "Ngoài chữ Hán này ra, các chữ Hán khác tôi đều biết." },
-            { q: "除了唱歌以外，他______喜欢跳舞。", o: ["都", "只", "也", "没"], a: 2, s: "也", p: "Chú le chànggē yǐwài, tā yě xǐhuan tiàowǔ.", v: "Ngoài ca hát ra, anh ấy cũng thích khiêu vũ." },
-            { q: "我除了吃西瓜以外，______吃了一个苹果。", o: ["都", "还", "要", "想"], a: 1, s: "还", p: "Wǒ chúle chī xīguā yǐwài, hái chīle yīgè píngguǒ.", v: "Ngoài ăn dưa hấu ra, tôi còn ăn một quả táo." },
-            { q: "除了他以外， chúng tôi______是越南人。", o: ["还", "都", "也", "别"], a: 1, s: "都", p: "Chúle tā yǐwài, wǒmen dōu shì Yuènánrén.", v: "Ngoài anh ấy ra, chúng tôi đều là người Việt Nam." },
-            { q: "除了这个季节以外，别的季节我都______喜欢。", o: ["不", "还", "也", "再"], a: 0, s: "不", p: "Chúle zhège jìjié yǐwài, biéde jìjié wǒ dōu bù xǐhuan.", v: "Ngoài mùa này ra, các mùa khác tôi đều không thích." },
-            { q: "除了周六以外，周日我也______加班。", o: ["都", "要", "还", "不"], a: 1, s: "要", p: "Chúle zhōuliù yǐwài, zhōurì wǒ yě yào jiābān.", v: "Ngoài thứ 7 ra, chủ nhật tôi cũng phải tăng ca." },
-            { q: "除了咖啡以外，你 hái 想喝______？", o: ["怎么", "谁", "什么", "哪儿"], a: 2, s: "什么", p: "Chúle kāfēi yǐwài, nǐ hái xiǎng hē shénme?", v: "Ngoài cà phê ra, bạn còn muốn uống gì?" }
+            { q: "我昨天感冒还没好，今天不______了。", o: ["发烧", "季节", "照顾", "裙子"], a: 0, s: "发烧", p: "Wǒ zuótiān gǎnmào hái méi hǎo, jīntiān bù fāshāo le.", v: "Hôm qua tôi bị cảm vẫn chưa khỏi, hôm nay không sốt nữa rồi." },
+            { q: "天气不冷了，______来了，草都绿了。", o: ["夏天", "春天", "最近", "当然"], a: 1, s: "春天", p: "Tiānqì bù lěng le, chūntiān lái le, cǎo dōu lǜ le.", v: "Thời tiết không lạnh nữa, mùa xuân đến rồi, cỏ đều xanh rồi." },
+            { q: "这个______，草绿了，花也开了。", o: ["裙子", "感冒", "季节", "发烧"], a: 2, s: "季节", p: "Zhège jìjié, cǎo lǜ le, huā yě kāi le.", v: "Mùa này, cỏ xanh rồi, hoa cũng nở rồi." },
+            { q: "以前我不喝咖啡，现在喜欢喝______。", o: ["了", "过", "着", "的"], a: 0, s: "了", p: "Yǐqián wǒ bù hē kāfēi, xiànzài xǐhuan hē le.", v: "Trước đây tôi không uống cà phê, bây giờ thích uống rồi." },
+            { q: "医生说他的感冒好了，现在不______吃药了。", o: ["为", "用", "越", "照顾"], a: 1, s: "用", p: "Yīshēng shuō tā de gǎnmào hǎo le, xiànzài bù yòng chī yào le.", v: "Bác sĩ nói cảm cúm của anh ấy khỏi rồi, bây giờ không cần uống thuốc nữa." },
+            { q: "为了______好生病的妹妹，我今天没出去。", o: ["照顾", "发烧", "草", "裙子"], a: 0, s: "照顾", p: "Wèi le zhàogù hǎo shēngbìng de mèimei, wǒ jīntiān méi chūqù.", v: "Để chăm sóc tốt cho em gái bị ốm, hôm nay tôi không ra ngoài." },
+            { q: "我______很忙，没有时间给朋友打电话。", o: ["季节", "春天", "最近", "裙子"], a: 2, s: "最近", p: "Wǒ zuìjìn hěn máng, méiyǒu shíjiān gěi péngyou dǎ diànhuà.", v: "Dạo này tôi rất bận, không có thời gian gọi điện cho bạn bè." },
+            { q: "______快到了，天气变热了。", o: ["夏天", "季节", "为", "照顾"], a: 0, s: "夏天", p: "Xiàtiān kuài dào le, tiānqì biàn rè le.", v: "Mùa hè sắp đến rồi, thời tiết trở nên nóng." },
+            { q: "A: 你感冒了吗？ B: 我不______，只是头疼。", o: ["发烧", "裙子", "季节", "当然"], a: 0, s: "发烧", p: "A: Nǐ gǎnmào le ma? B: Wǒ bù fāshāo, zhǐshì tóuténg.", v: "A: Bạn bị cảm rồi à? B: Tôi không sốt, chỉ là đau đầu." },
+            { q: "以前这里的______是黄色的，现在变绿了。", o: ["裙子", "草", "感冒", "为"], a: 1, s: "草", p: "Yǐqián zhèlǐ de cǎo shì huángsè de, xiànzài biàn lǜ le.", v: "Trước đây cỏ ở đây màu vàng, bây giờ chuyển sang màu xanh rồi." }
         ],
         p4: [
-            { w: ["饭馆", "什么", "特别", "东西", "好吃的", "有没有", "这个"], c: "这个饭馆有没有什么特别好吃的东西", p: "Zhège fànguǎn yǒu méiyǒu shénme tèbié hǎochī de dōngxi?", v: "Quán ăn này có đồ ăn gì đặc biệt ngon không?" },
-            { w: ["打算", "有没有", "周末", "什么", "你"], c: "你周末有没有什么打算", p: "Nǐ zhōumò yǒu méiyǒu shénme dǎsuàn?", v: "Cuối tuần bạn có dự định gì không?" },
-            { w: ["问题", "很好", "什么", "写得", "没", "你"], c: "你写得很好没什么问题", p: "Nǐ xiě de hěn hǎo méi shénme wèntí.", v: "Bạn viết rất tốt, không có vấn đề gì." },
-            { w: ["地方", "不", "有", "给我", "以后", "明白", " de", "打电话", "什么"], c: "以后有什么不明白的地方给我打电话", p: "Yǐhòu yǒu shénme bù míngbái de dìfang gěi wǒ dǎ diànhuà.", v: "Sau này có chỗ nào không hiểu thì gọi điện cho tôi." },
-            { w: ["买", "刚才", "没", "东西", "我", "什么"], c: "我刚才没买什么东西", p: "Wǒ gāngcái méi mǎi shénme dōngxi.", v: "Vừa nãy tôi không mua đồ gì cả." },
-            { w: ["变化", "没", "小王", "什么", "最近"], c: "最近小王没什么变化", p: "Zuìjìn Xiǎowáng méi shénme biànhuà.", v: "Gần đây Tiểu Vương không có thay đổi gì mấy." },
-            { w: ["难", "没", "考试", " de", "今天的", "地方", "什么"], c: "今天的考试没什么难的地方", p: "Jīntiān de kǎoshì méi shénme nán de dìfang.", v: "Bài thi hôm nay không có chỗ nào khó cả." },
-            { w: ["打算", "还有", "别的", "你", "什么", "吗"], c: "你还有什么别的打算吗", p: "Nǐ hái yǒu shénme bié de dǎsuàn ma?", v: "Bạn còn có dự định khác gì nữa không?" },
-            { w: ["不", " de", "你", "服务", "经理", "满意", "有", "吗", "什么"], c: "你对经理的服务有什么不满意吗", p: "Nǐ duì jīnglǐ de fúwù yǒu shénme bù mǎnyì ma?", v: "Bạn có gì không hài lòng về sự phục vụ của giám đốc không?" },
-            { w: ["想吃的", "有", "你", "什么", "菜", "吗"], c: "你有什么想吃的菜吗", p: "Nǐ yǒu shénme xiǎng chī de cài ma?", v: "Bạn có món gì muốn ăn không?" }
-        ],
-        p5: [
-            { w: ["极了", "可爱", "我的", "小狗"], c: "我的小狗可爱极了", p: "Wǒ de xiǎogǒu kě'ài jí le.", v: "Cún con của tôi đáng yêu cực kỳ." },
-            { w: ["冷", "极了", "今天", "天气"], c: "今天天气冷 jí 了", p: "Jīntiān tiānqì lěng jí le.", v: "Hôm nay thời tiết lạnh cực kỳ." },
-            { w: ["极了", "喜欢", "我", "那件", "衣服"], c: "我喜欢那件衣服极了", p: "Wǒ xǐhuan nà jiàn yīfu jí le.", v: "Tôi thích bộ quần áo đó cực kỳ." },
-            { w: ["满意", "极了", "他"], c: "他满意极了", p: "Tā mǎnyì jí le.", v: "Anh ấy hài lòng cực kỳ." },
-            { w: ["漂亮", "裙子", "极了", "这种"], c: "这种裙子漂亮极了", p: "Zhè zhǒng qúnzi piàoliang jí le.", v: "Loại váy này đẹp cực kỳ." },
-            { w: ["甜", "这种", "极了", " de", "南方", "水果"], c: "这种南方的水果甜极了", p: "Zhè zhǒng nánfāng de shuǐguǒ tián jí le.", v: "Loại hoa quả phương Nam này ngọt cực kỳ." },
-            { w: ["累", "极了", "现在", "我"], c: "我现在累极了", p: "Wǒ xiànzài lèi jí le.", v: "Bây giờ tôi mệt cực kỳ." },
-            { w: ["安静", "环境", " de", "极了", "这里的"], c: "这里的环境安静极了", p: "Zhèlǐ de huánjìng ānjìng jí le.", v: "Môi trường ở đây yên tĩnh cực kỳ." },
-            { w: ["考完试", "大家", "高兴", "极了"], c: "考完试大家高兴极了", p: "Kǎo wán shì dàjiā gāoxìng jí le.", v: "Thi xong rồi mọi người đều vui mừng khôn xiết." },
-            { w: ["放心", "极了", "搬到", "以后", "新房", "周太太"], c: "周太太搬到新房以后放心极了", p: "Zhōu tàitai bāndào xīnfáng yǐhòu fàngxīn jí le.", v: "Bà Chu sau khi chuyển đến nhà mới thì vô cùng yên tâm." }
+            { q: "我觉得我写的汉字越来越______了。", o: ["漂亮", "裙子", "照顾", "季节"], a: 0, s: "漂亮", p: "Wǒ juéde wǒ xiě de hànzì yuèláiyuè piàoliang le.", v: "Tôi cảm thấy chữ Hán tôi viết ngày càng đẹp." },
+            { q: "这里的夏天______热了。", o: ["越来", "越来越", "为", "当然"], a: 1, s: "越来越", p: "Zhèlǐ de xiàtiān yuèláiyuè rè le.", v: "Mùa hè ở đây ngày càng nóng." },
+            { q: "春天到了，外面的______变绿了。", o: ["草越来越", "发烧越来越", "裙子越来越", "感冒越来越"], a: 0, s: "草越来越", p: "Chūntiān dào le, wàimiàn de cǎo yuèláiyuè biàn lǜ le.", v: "Mùa xuân đến rồi, cỏ bên ngoài ngày càng xanh." },
+            { q: "姐姐______喜欢穿新裙子了。", o: ["越来", "越来越", "当然", "季节"], a: 1, s: "越来越", p: "Jiějie yuèláiyuè xǐhuan chuān xīn qúnzi le.", v: "Chị gái ngày càng thích mặc váy mới." },
+            { q: "我的感冒越来越______了，我想去医院。", o: ["严重", "裙子", "春天", "最近"], a: 0, s: "严重", p: "Wǒ de gǎnmào yuèláiyuè yánzhòng le, wǒ xiǎng qù yīyuàn.", v: "Bệnh cảm của tôi ngày càng nghiêm trọng, tôi muốn đi bệnh viện." },
+            { q: "______照顾好孩子，她每天工作都很努力。", o: ["为", "用", "越", "当然"], a: 0, s: "为", p: "Wèi le zhàogù hǎo háizi, tā měitiān gōngzuò dōu hěn nǔlì.", v: "Để chăm sóc tốt cho con, cô ấy mỗi ngày làm việc đều rất nỗ lực." },
+            { q: "这个季节的裙子卖得______贵了。", o: ["越来越", "越来", "照顾", "最近"], a: 0, s: "越来越", p: "Zhège jìjié de qúnzi mài de yuèláiyuè guì le.", v: "Váy của mùa này bán ngày càng đắt." },
+            { q: "听了老师的话，我______喜欢学习汉语了。", o: ["越来", "越来越", "季节", "发烧"], a: 1, s: "越来越", p: "Tīng le lǎoshī de huà, wǒ yuèláiyuè xǐhuan xuéxí Hànyǔ le.", v: "Nghe lời cô giáo nói, tôi ngày càng thích học tiếng Hán." },
+            { q: "天气______冷了，你要多穿衣服，小心感冒。", o: ["越来越", "当然", "春天", "夏天"], a: 0, s: "越来越", p: "Tiānqì yuèláiyuè lěng le, nǐ yào duō chuān yīfu, xiǎoxīn gǎnmào.", v: "Thời tiết ngày càng lạnh rồi, bạn cần mặc nhiều áo, cẩn thận kẻo cảm lạnh." },
+            { q: "我最近认识的汉字越来越______了。", o: ["多", "季节", "裙子", "为"], a: 0, s: "多", p: "Wǒ zuìjìn rènshi de hànzì yuèláiyuè duō le.", v: "Gần đây chữ Hán tôi biết ngày càng nhiều." }
         ]
     };
 
-    let gameScores = { vocab: 0, p3: 0, p4: 0, p5: 0 };
-    let curIdx = 0, curKey = '', curMode = '', completed = {vocab: false, p3: false, p4: false, p5: false};
+    let gameScores = { vocab: 0, p3: 0, p4: 0 };
+    let curIdx = 0, curKey = '', curMode = '', completed = {vocab: false, p3: false, p4: false};
     let currentFlashcardPool = [], knownCards = [], unknownCards = [], selectedWords = [], poolWords = [];
 
     function returnToStart() {
@@ -331,7 +311,7 @@
     }
 
     function checkUnlockExercise() {
-        if(completed.vocab && completed.p3 && completed.p4 && completed.p5) {
+        if(completed.vocab && completed.p3 && completed.p4) {
             const b = document.getElementById('btn-exercise');
             b.disabled = false; b.style.backgroundColor = '#fbbf24'; b.style.color = '#78350f';
             b.innerText = '📝 Bài tập tổng hợp (Đã mở)';
@@ -522,9 +502,8 @@
         report += `===================================\n`;
         report += `ĐIỂM CÁC PHẦN GAME:\n`;
         report += `- Từ vựng: ${gameScores.vocab}/${vocabulary.length} ✅\n`;
-        report += `- Ngữ pháp 除了: ${gameScores.p3}/10 ✅\n`;
-        report += `- Ngữ pháp 什么: ${gameScores.p4}/10 ✅\n`;
-        report += `- Ngữ pháp 极了: ${gameScores.p5}/10 ✅\n\n`;
+        report += `- Ngữ pháp 了 (Sự thay đổi): ${gameScores.p3}/10 ✅\n`;
+        report += `- Ngữ pháp 越来越: ${gameScores.p4}/10 ✅\n\n`;
         report += `BÀI TẬP TỔNG HỢP:\n`;
         
         const inputs = document.querySelectorAll('#ex-content input');
