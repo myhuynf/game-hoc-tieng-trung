@@ -80,7 +80,6 @@
         
         .hint-text { color: #999; font-style: italic; font-size: 0.8rem; margin-top: 10px; }
 
-        /* Màn hình chúc mừng */
         #congrats-overlay {
             display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255, 255, 255, 0.95); border-radius: 22px;
@@ -95,17 +94,17 @@
 <div class="game-container">
     <div id="congrats-overlay">
         <h2>🎉 Chúc mừng! 🎉</h2>
-        <p>Bạn đã xuất sắc hoàn thành Bài 1!</p>
+        <p>Bạn đã hoàn thành Bài 1 xuất sắc!</p>
         <button class="btn-nav" onclick="window.location.href='index.html'" style="margin-top: 20px;">Quay về Khu Vườn 🌿</button>
     </div>
 
     <div class="progress" id="progress">Câu 1 / 36</div>
     <h1>English: Lesson 1 🎧</h1>
     
-    <button class="audio-btn" onclick="playAudio()" title="Nghe câu hỏi">🔊</button>
+    <button class="audio-btn" id="mainAudioBtn" onclick="playAudio()" title="Nghe câu hỏi">🔊</button>
     
     <div class="input-area">
-        <input type="text" id="userInput" placeholder="Nhập những gì bạn nghe được..." autocomplete="off">
+        <input type="text" id="userInput" placeholder="Nhấn Enter để kiểm tra hoặc qua câu..." autocomplete="off">
     </div>
 
     <div id="feedback" class="feedback"></div>
@@ -116,7 +115,7 @@
         <button class="btn-nav" onclick="nextQuestion()" id="nextBtn" style="display:none;">Câu tiếp theo ➔</button>
     </div>
 
-    <p class="hint-text">Mẹo: Nhấn Enter để kiểm tra nhanh!</p>
+    <p class="hint-text">Mẹo: Nhấn Enter để sang câu mới và nghe tự động!</p>
 
     <a href="index.html" class="back-home">🌿 Quay về trang chủ</a>
 </div>
@@ -137,16 +136,8 @@
 
     let currentIndex = 0;
 
-    function updateUI() {
-        document.getElementById('progress').innerText = `Câu ${currentIndex + 1} / ${sentences.length}`;
-        document.getElementById('userInput').value = "";
-        document.getElementById('feedback').innerText = "";
-        document.getElementById('nextBtn').style.display = "none";
-        document.getElementById('userInput').focus();
-    }
-
     function playAudio() {
-        window.speechSynthesis.cancel(); // Dừng âm thanh cũ nếu đang đọc dở
+        window.speechSynthesis.cancel(); 
         const msg = new SpeechSynthesisUtterance();
         msg.text = sentences[currentIndex];
         msg.lang = 'en-US';
@@ -154,9 +145,20 @@
         window.speechSynthesis.speak(msg);
     }
 
+    function updateUI() {
+        document.getElementById('progress').innerText = `Câu ${currentIndex + 1} / ${sentences.length}`;
+        document.getElementById('userInput').value = "";
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('nextBtn').style.display = "none";
+        document.getElementById('userInput').focus();
+        
+        // Tự động phát âm thanh khi sang câu mới
+        // Delay nhẹ 300ms để trình duyệt kịp xử lý sau khi chuyển câu
+        setTimeout(playAudio, 300);
+    }
+
     function checkAnswer() {
         const userText = document.getElementById('userInput').value.trim().toLowerCase();
-        // Loại bỏ dấu câu và khoảng trắng thừa để so sánh chính xác hơn
         const correctText = sentences[currentIndex].toLowerCase().replace(/[.,!?;]/g, "").trim();
         const userCleaned = userText.replace(/[.,!?;]/g, "").trim();
         
@@ -169,6 +171,7 @@
         } else {
             feedbackEl.innerText = "Chưa đúng rồi, hãy nghe lại nhé!";
             feedbackEl.className = "feedback incorrect";
+            playAudio(); // Tự động đọc lại nếu sai để người dùng nhận diện lỗi
         }
     }
 
@@ -183,12 +186,10 @@
             currentIndex++;
             updateUI();
         } else {
-            // Hiển thị màn hình chúc mừng khi hết câu
             document.getElementById('congrats-overlay').style.display = 'flex';
         }
     }
 
-    // Lắng nghe phím Enter để thao tác nhanh
     document.getElementById('userInput').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             if (document.getElementById('nextBtn').style.display === "inline-block") {
@@ -199,7 +200,13 @@
         }
     });
 
-    window.onload = updateUI;
+    // Khởi tạo bài học
+    window.onload = function() {
+        // Vì chính sách của trình duyệt (Chrome/Safari), âm thanh tự động chỉ chạy 
+        // sau khi người dùng click ít nhất 1 lần vào trang.
+        // Câu đầu tiên người dùng nên bấm loa, các câu sau sẽ tự động 100%.
+        updateUI();
+    };
 </script>
 
 </body>
