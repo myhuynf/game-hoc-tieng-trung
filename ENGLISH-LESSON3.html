@@ -35,6 +35,17 @@
 
         h1 { color: var(--ghibli-dark-green); font-size: 1.5rem; margin-bottom: 20px; }
 
+        /* Phần chỉnh tốc độ */
+        .speed-control {
+            margin-bottom: 15px;
+            background: rgba(157, 193, 131, 0.1);
+            padding: 10px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+        .speed-control label { font-size: 0.85rem; color: var(--ghibli-dark-green); font-weight: 600; }
+        #speedRange { vertical-align: middle; cursor: pointer; accent-color: var(--ghibli-green); }
+
         .audio-btn {
             background: var(--ghibli-green);
             border: none; width: 70px; height: 70px;
@@ -42,6 +53,7 @@
             font-size: 28px; color: white;
             margin-bottom: 15px; transition: 0.3s;
             box-shadow: 0 5px 15px rgba(157, 193, 131, 0.4);
+            display: block; margin-left: auto; margin-right: auto;
         }
 
         .audio-btn:hover { transform: scale(1.1); background: var(--ghibli-dark-green); }
@@ -104,6 +116,12 @@
 
     <div class="progress" id="progress">Câu 1 / 14</div>
     <h1>English: Lesson 3 🎧</h1>
+
+    <div class="speed-control">
+        <label>Tốc độ đọc: </label>
+        <input type="range" id="speedRange" min="0.5" max="1.2" step="0.1" value="0.8">
+        <span id="speedValue" style="font-size: 0.8rem; font-weight: bold;">0.8x</span>
+    </div>
     
     <button class="audio-btn" onclick="playAudio()">🔊</button>
     
@@ -149,12 +167,18 @@
 
     let currentIndex = 0;
 
+    // Cập nhật hiển thị chỉ số tốc độ khi kéo slider
+    document.getElementById('speedRange').addEventListener('input', function() {
+        document.getElementById('speedValue').innerText = this.value + 'x';
+    });
+
     function playAudio() {
         window.speechSynthesis.cancel();
         const msg = new SpeechSynthesisUtterance();
         msg.text = data[currentIndex].s;
         msg.lang = 'en-US';
-        msg.rate = 0.8; // Đọc hơi chậm một chút để nghe rõ hội thoại
+        // Lấy giá trị tốc độ từ slider
+        msg.rate = document.getElementById('speedRange').value;
         window.speechSynthesis.speak(msg);
     }
 
@@ -169,7 +193,6 @@
     }
 
     function checkAnswer() {
-        // Làm sạch input: bỏ dấu câu và khoảng trắng thừa để so sánh linh hoạt
         const userCleaned = document.getElementById('userInput').value.trim().toLowerCase().replace(/[.,!?;'-]/g, "");
         const correctCleaned = data[currentIndex].s.toLowerCase().replace(/[.,!?;'-]/g, "");
         
