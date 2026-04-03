@@ -1,1 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Lesson 1 - Dictation Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ghibli-green: #9dc183;
+            --ghibli-dark-green: #4f7942;
+            --ghibli-sky: #d0f0f7;
+            --ghibli-pink: #ffb7c5;
+            --ghibli-wood: #8b5a2b;
+        }
 
+        body {
+            margin: 0; padding: 20px;
+            font-family: 'Quicksand', sans-serif;
+            background: var(--ghibli-sky);
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0)), url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=1350&q=80');
+            background-size: cover; background-attachment: fixed;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px; border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px; width: 95%;
+            text-align: center; border: 3px solid var(--ghibli-green);
+            backdrop-filter: blur(10px); margin-top: 20px;
+            position: relative;
+        }
+
+        h1 { color: var(--ghibli-dark-green); font-size: 1.5rem; margin-bottom: 20px; }
+
+        .audio-btn {
+            background: var(--ghibli-green);
+            border: none; width: 80px; height: 80px;
+            border-radius: 50%; cursor: pointer;
+            font-size: 30px; color: white;
+            margin-bottom: 20px; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(157, 193, 131, 0.4);
+        }
+
+        .audio-btn:hover { transform: scale(1.1); background: var(--ghibli-dark-green); }
+
+        .input-area { width: 100%; margin: 20px 0; }
+
+        input {
+            width: 90%; padding: 15px;
+            border: 2px solid #ddd; border-radius: 15px;
+            font-size: 1.1rem; font-family: inherit;
+            text-align: center; outline: none; transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--ghibli-green); box-shadow: 0 0 10px rgba(157, 193, 131, 0.2); }
+
+        .feedback { height: 25px; margin: 10px 0; font-weight: 600; font-size: 0.9rem; }
+        .correct { color: #2ecc71; }
+        .incorrect { color: #e74c3c; }
+
+        .progress { font-size: 0.8rem; color: #666; margin-bottom: 10px; }
+
+        .btn-nav {
+            background: white; border: 2px solid var(--ghibli-green);
+            color: var(--ghibli-dark-green); padding: 8px 20px;
+            border-radius: 20px; cursor: pointer; font-weight: bold;
+            margin: 5px; transition: 0.3s;
+        }
+
+        .btn-nav:hover { background: var(--ghibli-green); color: white; }
+
+        .back-home {
+            margin-top: 20px; text-decoration: none;
+            color: var(--ghibli-dark-green); font-size: 0.9rem; font-weight: bold;
+            display: block;
+        }
+        
+        .hint-text { color: #999; font-style: italic; font-size: 0.8rem; margin-top: 10px; }
+
+        /* Màn hình chúc mừng */
+        #congrats-overlay {
+            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.95); border-radius: 22px;
+            flex-direction: column; align-items: center; justify-content: center; z-index: 100;
+        }
+        #congrats-overlay h2 { color: var(--ghibli-dark-green); margin-bottom: 10px; }
+        #congrats-overlay p { color: var(--ghibli-wood); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div id="congrats-overlay">
+        <h2>🎉 Chúc mừng! 🎉</h2>
+        <p>Bạn đã xuất sắc hoàn thành Bài 1!</p>
+        <button class="btn-nav" onclick="window.location.href='index.html'" style="margin-top: 20px;">Quay về Khu Vườn 🌿</button>
+    </div>
+
+    <div class="progress" id="progress">Câu 1 / 36</div>
+    <h1>English: Lesson 1 🎧</h1>
+    
+    <button class="audio-btn" onclick="playAudio()" title="Nghe câu hỏi">🔊</button>
+    
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Nhập những gì bạn nghe được..." autocomplete="off">
+    </div>
+
+    <div id="feedback" class="feedback"></div>
+    
+    <div class="controls">
+        <button class="btn-nav" onclick="checkAnswer()">Kiểm tra</button>
+        <button class="btn-nav" onclick="showHint()">Xem gợi ý</button>
+        <button class="btn-nav" onclick="nextQuestion()" id="nextBtn" style="display:none;">Câu tiếp theo ➔</button>
+    </div>
+
+    <p class="hint-text">Mẹo: Nhấn Enter để kiểm tra nhanh!</p>
+
+    <a href="index.html" class="back-home">🌿 Quay về trang chủ</a>
+</div>
+
+<script>
+    const sentences = [
+        "I am a student.", "You are not a teacher.", "We are happy.", "They are not sad.",
+        "She is a woman.", "He is not tall.", "It is a dog.", "He is my father.",
+        "It is not your book.", "She is our teacher.", "They are not their oranges.",
+        "Her cat is small.", "His car is not big.", "This is my cat, its nose is pink.",
+        "The man is tall.", "I am not a woman.", "He is my father.", "She is not my mother.",
+        "She is a teacher.", "I am not a student.", "He is my brother.", "She is not my sister.",
+        "It is a baby.", "He is not a child.", "It is a dog.", "My cat is not big.",
+        "It is my book.", "His car is not small.", "It is an orange.", "It is not an apple.",
+        "He is tall.", "She is not short.", "His car is big.", "Her cat is not small.",
+        "They are happy.", "They are not sad."
+    ];
+
+    let currentIndex = 0;
+
+    function updateUI() {
+        document.getElementById('progress').innerText = `Câu ${currentIndex + 1} / ${sentences.length}`;
+        document.getElementById('userInput').value = "";
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('nextBtn').style.display = "none";
+        document.getElementById('userInput').focus();
+    }
+
+    function playAudio() {
+        window.speechSynthesis.cancel(); // Dừng âm thanh cũ nếu đang đọc dở
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = sentences[currentIndex];
+        msg.lang = 'en-US';
+        msg.rate = 0.85; 
+        window.speechSynthesis.speak(msg);
+    }
+
+    function checkAnswer() {
+        const userText = document.getElementById('userInput').value.trim().toLowerCase();
+        // Loại bỏ dấu câu và khoảng trắng thừa để so sánh chính xác hơn
+        const correctText = sentences[currentIndex].toLowerCase().replace(/[.,!?;]/g, "").trim();
+        const userCleaned = userText.replace(/[.,!?;]/g, "").trim();
+        
+        const feedbackEl = document.getElementById('feedback');
+        
+        if (userCleaned === correctText) {
+            feedbackEl.innerText = "Chính xác! ✨";
+            feedbackEl.className = "feedback correct";
+            document.getElementById('nextBtn').style.display = "inline-block";
+        } else {
+            feedbackEl.innerText = "Chưa đúng rồi, hãy nghe lại nhé!";
+            feedbackEl.className = "feedback incorrect";
+        }
+    }
+
+    function showHint() {
+        const hint = sentences[currentIndex];
+        document.getElementById('feedback').innerText = "Gợi ý: " + hint;
+        document.getElementById('feedback').className = "feedback";
+    }
+
+    function nextQuestion() {
+        if (currentIndex < sentences.length - 1) {
+            currentIndex++;
+            updateUI();
+        } else {
+            // Hiển thị màn hình chúc mừng khi hết câu
+            document.getElementById('congrats-overlay').style.display = 'flex';
+        }
+    }
+
+    // Lắng nghe phím Enter để thao tác nhanh
+    document.getElementById('userInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            if (document.getElementById('nextBtn').style.display === "inline-block") {
+                nextQuestion();
+            } else {
+                checkAnswer();
+            }
+        }
+    });
+
+    window.onload = updateUI;
+</script>
+
+</body>
+</html>
