@@ -207,15 +207,18 @@
             </div>
             
             <div class="flex flex-col items-center justify-center space-y-6 mt-4">
-                <!-- Nút phát loa -->
-                <button onclick="playDictAudio()" class="w-20 h-20 bg-emerald-100 border-4 border-emerald-500 rounded-full flex items-center justify-center text-4xl hover:bg-emerald-200 transition-all shadow-md active:scale-95">
-                    🔊
-                </button>
-                <p class="text-xs text-gray-500 font-bold italic text-center">Bật bàn phím tiếng Trung (Pinyin) để gõ.<br>Nhấn loa để mở khóa ô nhập!</p>
+                
+                <!-- Audio Player Toàn Bài Khóa -->
+                <div class="w-full bg-emerald-50 p-4 rounded-xl border-2 border-emerald-200 shadow-sm mb-2">
+                    <p class="text-sm text-emerald-800 font-bold mb-2">🎧 Trình phát Audio (Toàn bộ bài khóa):</p>
+                    <audio id="lesson-audio-player" controls class="w-full h-10 outline-none rounded-lg"></audio>
+                </div>
+                
+                <p class="text-xs text-gray-500 font-bold italic text-center">Bật bàn phím tiếng Trung (Pinyin) để gõ.<br>Bạn có thể chủ động bấm nghe, dừng, tua và gõ từng câu!</p>
 
                 <!-- Khung nhập liệu -->
                 <div class="w-full relative">
-                    <input type="text" id="dict-input" class="dictation-input chinese-text" placeholder="Nhấn loa 🔊 để nghe và gõ..." autocomplete="off" disabled>
+                    <input type="text" id="dict-input" class="dictation-input chinese-text" placeholder="Gõ chữ Hán vào đây..." autocomplete="off">
                 </div>
 
                 <!-- Phản hồi đúng/sai -->
@@ -320,75 +323,80 @@
         ];
 
         // ==========================================
-        // DỮ LIỆU NGHE CHÉP ĐÃ ĐƯỢC CHUẨN HÓA (XÓA TRÙNG LẶP)
+        // DỮ LIỆU NGHE CHÉP ĐÃ ĐƯỢC CHUẨN HÓA (1 AUDIO/BÀI)
         // ==========================================
         const lessonsData = [
             {
                 id: 1,
                 title: "Bài khóa 1",
                 desc: "孙月和王静聊王静的男朋友",
+                audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-1.mp3",
                 completed: false,
                 sentences: [
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-1.mp3", h: "听说你男朋友李进跟你是一个学校的，是你同学吗？", p: "Tīngshuō nǐ nánpéngyou Lǐ Jìn gēn nǐ shì yí ge xuéxiào de, shì nǐ tóngxué ma?", vi: "Nghe nói bạn trai Lý Tiến của bạn học cùng trường với bạn, là bạn học của bạn à?", hint: "听...吗？" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-2.mp3", h: "是的，他学的是新闻，我学的是法律，我和他不是一个班。", p: "Shì de, tā xué de shì xīnwén, wǒ xué de shì fǎlǜ, wǒ hé tā bú shì yí ge bān.", vi: "Đúng vậy, anh ấy học báo chí, tôi học luật, tôi và anh ấy không cùng lớp.", hint: "是...班。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-3.mp3", h: "那你们俩是怎么认识的？", p: "Nà nǐmen liǎ shì zěnme rènshi de?", vi: "Vậy hai bạn quen nhau thế nào?", hint: "那...的？" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-4.mp3", h: "我们是在一次足球比赛中认识的。", p: "Wǒmen shì zài yí cì zúqiú bǐsài zhōng rènshi de.", vi: "Chúng tôi quen nhau trong một trận đấu bóng đá.", hint: "我... de。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-5.mp3", h: "我们班跟他们班比赛，他一个人踢进两个球，我对他印象很深，后来就慢慢熟悉了。", p: "Wǒmen bān gēn tāmen bān bǐsài, tā yí ge rén tī jìn liǎng ge qiú, wǒ duì tā yìnxiàng hěn shēn, hòulái jiù mànmàn shúxī le.", vi: "Lớp tôi thi đấu với lớp anh ấy, một mình anh ấy đá vào hai quả, tôi có ấn tượng rất sâu về anh ấy, sau này dần dần quen thuộc.", hint: "我...了。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-6.mp3", h: "你为什么喜欢他？", p: "Nǐ wèi shénme xǐhuan tā?", vi: "Tại sao bạn lại thích anh ấy?", hint: "你...他？" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-7.mp3", h: "他不仅足球踢得好，性格也不错。", p: "Tā bùjǐn zúqiú tī de hǎo, xìnggé yě búcuò.", vi: "Anh ấy không chỉ đá bóng giỏi, tính cách cũng không tồi.", hint: "他...错。" }
+                    { h: "听说你男朋友李进跟你是一个学校的，是你同学吗？", p: "Tīngshuō nǐ nánpéngyou Lǐ Jìn gēn nǐ shì yí ge xuéxiào de, shì nǐ tóngxué ma?", vi: "Nghe nói bạn trai Lý Tiến của bạn học cùng trường với bạn, là bạn học của bạn à?", hint: "听...吗？" },
+                    { h: "是的，他学的是新闻，我学的是法律，我和他不是一个班。", p: "Shì de, tā xué de shì xīnwén, wǒ xué de shì fǎlǜ, wǒ hé tā bú shì yí ge bān.", vi: "Đúng vậy, anh ấy học báo chí, tôi học luật, tôi và anh ấy không cùng lớp.", hint: "是...班。" },
+                    { h: "那你们俩是怎么认识的？", p: "Nà nǐmen liǎ shì zěnme rènshi de?", vi: "Vậy hai bạn quen nhau thế nào?", hint: "那...的？" },
+                    { h: "我们是在一次足球比赛中认识的。", p: "Wǒmen shì zài yí cì zúqiú bǐsài zhōng rènshi de.", vi: "Chúng tôi quen nhau trong một trận đấu bóng đá.", hint: "我... de。" },
+                    { h: "我们班跟他们班比赛，他一个人踢进两个球，我对他印象很深，后来就慢慢熟悉了。", p: "Wǒmen bān gēn tāmen bān bǐsài, tā yí ge rén tī jìn liǎng ge qiú, wǒ duì tā yìnxiàng hěn shēn, hòulái jiù mànmàn shúxī le.", vi: "Lớp tôi thi đấu với lớp anh ấy, một mình anh ấy đá vào hai quả, tôi có ấn tượng rất sâu về anh ấy, sau này dần dần quen thuộc.", hint: "我...了。" },
+                    { h: "你为什么喜欢他？", p: "Nǐ wèi shénme xǐhuan tā?", vi: "Tại sao bạn lại thích anh ấy?", hint: "你...他？" },
+                    { h: "他不仅足球踢得好，性格也不错。", p: "Tā bùjǐn zúqiú tī de hǎo, xìnggé yě búcuò.", vi: "Anh ấy không chỉ đá bóng giỏi, tính cách cũng không tồi.", hint: "他...错。" }
                 ]
             },
             {
                 id: 2,
                 title: "Bài khóa 2",
                 desc: "王静跟李老师聊她要结婚的事情",
+                audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-2.mp3",
                 completed: false,
                 sentences: [
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/02-1.mp3", h: "李老师，我下个月5号就要结婚了。", p: "Lǐ lǎoshī, wǒ xià ge yuè 5 hào jiù yào jiéhūn le.", vi: "Thầy Lý, mùng 5 tháng sau em sắp kết hôn rồi.", hint: "李...了。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/02-2.mp3", h: "你是在开玩笑吧？你们不是才认识一个月？", p: "Nǐ shì zài kāi wánxiào ba? Nǐmen bú shì cái rènshi yí ge yuè?", vi: "Em đang đùa à? Các em không phải mới quen một tháng sao?", hint: "你...月？" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/02-3.mp3", h: "虽然我们认识的时间不长，但我从来没这么快乐过。", p: "Suīrán wǒmen rènshi de shíjiān bù cháng, dàn wǒ cónglái méi zhème kuàilè guò.", vi: "Mặc dù thời gian chúng em quen nhau không dài, nhưng em chưa từng vui vẻ như thế này bao giờ.", hint: "虽...过。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/02-4.mp3", h: "两个人在一起，最好能有共同的兴趣和爱好。", p: "Liǎng ge rén zài yìqǐ, zuìhǎo néng yǒu gòngtóng de xìngqù hé àihào.", vi: "Hai người ở bên nhau, tốt nhất nên có sở thích và đam mê chung.", hint: "两...好。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/02-5.mp3", h: "我们有很多共同的爱好，经常一起打球、唱歌、做菜。", p: "Wǒmen yǒu hěn duō gòngtóng de àihào, jīngcháng yìqǐ dǎqiú, chànggē, zuòcài.", vi: "Chúng em có rất nhiều sở thích chung, thường xuyên cùng nhau đánh bóng, ca hát, nấu ăn.", hint: "我...菜。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/02-6.mp3", h: "看来你真的找到适合你的人了。祝你们幸福！", p: "Kànlái nǐ zhēnde zhǎodào shìhé nǐ de rén le. Zhù nǐmen xìngfú!", vi: "Xem ra em thật sự đã tìm được người phù hợp với mình rồi. Chúc các em hạnh phúc!", hint: "看...福！" }
+                    { h: "李老师，我下个月5号就要结婚了。", p: "Lǐ lǎoshī, wǒ xià ge yuè 5 hào jiù yào jiéhūn le.", vi: "Thầy Lý, mùng 5 tháng sau em sắp kết hôn rồi.", hint: "李...了。" },
+                    { h: "你是在开玩笑吧？你们不是才认识一个月？", p: "Nǐ shì zài kāi wánxiào ba? Nǐmen bú shì cái rènshi yí ge yuè?", vi: "Em đang đùa à? Các em không phải mới quen một tháng sao?", hint: "你...月？" },
+                    { h: "虽然我们认识的时间不长，但我从来没这么快乐过。", p: "Suīrán wǒmen rènshi de shíjiān bù cháng, dàn wǒ cónglái méi zhème kuàilè guò.", vi: "Mặc dù thời gian chúng em quen nhau không dài, nhưng em chưa từng vui vẻ như thế này bao giờ.", hint: "虽...过。" },
+                    { h: "两个人在一起，最好能有共同的兴趣和爱好。", p: "Liǎng ge rén zài yìqǐ, zuìhǎo néng yǒu gòngtóng de xìngqù hé àihào.", vi: "Hai người ở bên nhau, tốt nhất nên có sở thích và đam mê chung.", hint: "两...好。" },
+                    { h: "我们有很多共同的爱好，经常一起打球、唱歌、做菜。", p: "Wǒmen yǒu hěn duō gòngtóng de àihào, jīngcháng yìqǐ dǎqiú, chànggē, zuòcài.", vi: "Chúng em có rất nhiều sở thích chung, thường xuyên cùng nhau đánh bóng, ca hát, nấu ăn.", hint: "我...菜。" },
+                    { h: "看来你真的找到适合你的人了。祝你们幸福！", p: "Kànlái nǐ zhēnde zhǎodào shìhé nǐ de rén le. Zhù nǐmen xìngfú!", vi: "Xem ra em thật sự đã tìm được người phù hợp với mình rồi. Chúc các em hạnh phúc!", hint: "看...福！" }
                 ]
             },
             {
                 id: 3,
                 title: "Bài khóa 3",
                 desc: "高老师和李老师聊结婚后的生活",
+                audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-3.mp3",
                 completed: false,
                 sentences: [
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/03-1.mp3", h: "听说您跟妻子结婚快二十年了？", p: "Tīngshuō nín gēn qīzi jiéhūn kuài èrshí nián le?", vi: "Nghe nói thầy và vợ kết hôn sắp được hai mươi năm rồi?", hint: "听...了？" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/03-2.mp3", h: "到6月9号，我们就结婚二十年了。这么多年，我们的生活一直挺幸福的。", p: "Dào 6 yuè 9 hào, wǒmen jiù jiéhūn èrshí nián le. Zhème duō nián, wǒmen de shēnghuó yìzhí tǐng xìngfú de.", vi: "Đến mùng 9 tháng 6 là chúng tôi kết hôn được hai mươi năm rồi. Bao nhiêu năm nay, cuộc sống của chúng tôi luôn rất hạnh phúc.", hint: "到...的。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/03-3.mp3", h: "我和丈夫刚结婚的时候，每天都觉得很新鲜，在一起有说不完的话。但是现在……", p: "Wǒ hé zhàngfu gāng jiéhūn de shíhou, měitiān dōu juéde hěn xīnxiān, zài yìqǐ yǒu shuō bù wán de huà. Dànshì xiànzài...", vi: "Tôi và chồng lúc mới kết hôn, mỗi ngày đều cảm thấy rất mới mẻ, ở bên nhau có nói không hết chuyện. Nhưng bây giờ...", hint: "我...在……" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/03-4.mp3", h: "两个人共同生活，只有浪漫和新鲜感是不够的。", p: "Liǎng ge rén gòngtóng shēnghuó, zhǐyǒu làngmàn hé xīnxiān gǎn shì bú gòu de.", vi: "Hai người chung sống, chỉ có sự lãng mạn và mới mẻ là không đủ.", hint: "两...的。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/03-5.mp3", h: "您说得对！我现在每天看到的都是他的缺点。", p: "Nín shuō de duì! Wǒ xiànzài měitiān kàndào de dōu shì tā de quēdiǎn.", vi: "Thầy nói đúng! Bây giờ mỗi ngày tôi nhìn thấy đều là khuyết điểm của anh ấy.", hint: "您...点。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/03-6.mp3", h: "两个人在一起时间长了，就会有很多问题。只有接受了他的缺点，你们才能更好地一起生活。", p: "Liǎng ge rén zài yìqǐ shíjiān cháng le, jiù huì yǒu hěn duō wèntí. Zhǐyǒu jiēshòu le tā de quēdiǎn, nǐmen cái néng gèng hǎo de yìqǐ shēnghuó.", vi: "Hai người ở bên nhau thời gian dài rồi, sẽ có rất nhiều vấn đề. Chỉ có chấp nhận khuyết điểm của đối phương, các bạn mới có thể chung sống tốt hơn.", hint: "两...活。" }
+                    { h: "听说您跟妻子结婚快二十年了？", p: "Tīngshuō nín gēn qīzi jiéhūn kuài èrshí nián le?", vi: "Nghe nói thầy và vợ kết hôn sắp được hai mươi năm rồi?", hint: "听...了？" },
+                    { h: "到6月9号，我们就结婚二十年了。这么多年，我们的生活一直挺幸福的。", p: "Dào 6 yuè 9 hào, wǒmen jiù jiéhūn èrshí nián le. Zhème duō nián, wǒmen de shēnghuó yìzhí tǐng xìngfú de.", vi: "Đến mùng 9 tháng 6 là chúng tôi kết hôn được hai mươi năm rồi. Bao nhiêu năm nay, cuộc sống của chúng tôi luôn rất hạnh phúc.", hint: "到...的。" },
+                    { h: "我和丈夫刚结婚的时候，每天都觉得很新鲜，在一起有说不完的话。但是现在……", p: "Wǒ hé zhàngfu gāng jiéhūn de shíhou, měitiān dōu juéde hěn xīnxiān, zài yìqǐ yǒu shuō bù wán de huà. Dànshì xiànzài...", vi: "Tôi và chồng lúc mới kết hôn, mỗi ngày đều cảm thấy rất mới mẻ, ở bên nhau có nói không hết chuyện. Nhưng bây giờ...", hint: "我...在……" },
+                    { h: "两个人共同生活，只有浪漫和新鲜感是不够的。", p: "Liǎng ge rén gòngtóng shēnghuó, zhǐyǒu làngmàn hé xīnxiān gǎn shì bú gòu de.", vi: "Hai người chung sống, chỉ có sự lãng mạn và mới mẻ là không đủ.", hint: "两...的。" },
+                    { h: "您说得对！我现在每天看到的都是他的缺点。", p: "Nín shuō de duì! Wǒ xiànzài měitiān kàndào de dōu shì tā de quēdiǎn.", vi: "Thầy nói đúng! Bây giờ mỗi ngày tôi nhìn thấy đều là khuyết điểm của anh ấy.", hint: "您...点。" },
+                    { h: "两个人在一起时间长了，就会有很多问题。只有接受了他的缺点，你们才能更好地一起生活。", p: "Liǎng ge rén zài yìqǐ shíjiān cháng le, jiù huì yǒu hěn duō wèntí. Zhǐyǒu jiēshòu le tā de quēdiǎn, nǐmen cái néng gèng hǎo de yìqǐ shēnghuó.", vi: "Hai người ở bên nhau thời gian dài rồi, sẽ có rất nhiều vấn đề. Chỉ có chấp nhận khuyết điểm của đối phương, các bạn mới có thể chung sống tốt hơn.", hint: "两...活。" }
                 ]
             },
             {
                 id: 4,
                 title: "Bài khóa 4",
                 desc: "浪漫的爱情",
+                audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-4.mp3",
                 completed: false,
                 sentences: [
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/04-1.mp3", h: "很多女孩子羡慕浪漫的爱情。那什么是浪漫呢？", p: "Hěn duō nǚ háizi xiànmù làngmàn de àiqíng. Nà shénme shì làngmàn ne?", vi: "Rất nhiều cô gái ngưỡng mộ tình yêu lãng mạn. Vậy thế nào là lãng mạn?", hint: "很...呢？" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/04-2.mp3", h: "年轻人说：浪漫是她想要月亮时，你不会给她星星；", p: "Niánqīng rén shuō: Làngmàn shì tā xiǎng yào yuèliang shí, nǐ bú huì gěi tā xīngxing;", vi: "Người trẻ nói: Lãng mạn là khi cô ấy muốn mặt trăng, bạn sẽ không cho cô ấy ngôi sao;", hint: "年...星；" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/04-3.mp3", h: "中年人说：浪漫是即使晚上加班到零点，到家时，自己家里也还亮着灯；", p: "Zhöngnián rén shuō: Làngmàn shì jíshǐ wǎnshang jiābān dào língdiǎn, dào jiā shí, zìjǐ jiālǐ yě hái liàngzhe dēng;", vi: "Người trung niên nói: Lãng mạn là cho dù buổi tối tăng ca đến 12 giờ đêm, lúc về đến nhà, trong nhà mình vẫn còn sáng đèn;", hint: "中...灯；" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/04-4.mp3", h: "老年人说：浪漫其实就像歌中唱的那样，“我能想到最浪漫的事，就是和你一起慢慢变老。”", p: "Lǎonián rén shuō: Làngmàn qíshí jiù xiàng gē zhōng chàng de nàyàng, \"wǒ néng xiǎngdào zuì làngmàn de shì, jiùshì hé nǐ yìqǐ mànmàn biàn lǎo.\"", vi: "Người già nói: Lãng mạn thực ra giống như trong bài hát hát như vậy, \"Điều lãng mạn nhất mà tôi có thể nghĩ đến, chính là cùng em từ từ già đi.\"", hint: "老...老。”" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/04-5.mp3", h: "其实，让我们感动的，就是生活中简单的爱情。有时候，简单就是最大的幸福。", p: "Qíshí, ràng wǒmen gǎndòng de, jiùshì shēnghuó zhōng jiǎndān de àiqíng. Yǒushíhou, jiǎndān jiùshì zuìdà de xìngfú.", vi: "Thực ra, điều khiến chúng ta cảm động chính là tình yêu đơn giản trong cuộc sống. Có đôi khi, đơn giản chính là hạnh phúc lớn nhất.", hint: "其...福。" }
+                    { h: "很多女孩子羡慕浪漫的爱情。那什么是浪漫呢？", p: "Hěn duō nǚ háizi xiànmù làngmàn de àiqíng. Nà shénme shì làngmàn ne?", vi: "Rất nhiều cô gái ngưỡng mộ tình yêu lãng mạn. Vậy thế nào là lãng mạn?", hint: "很...呢？" },
+                    { h: "年轻人说：浪漫是她想要月亮时，你不会给她星星；", p: "Niánqīng rén shuō: Làngmàn shì tā xiǎng yào yuèliang shí, nǐ bú huì gěi tā xīngxing;", vi: "Người trẻ nói: Lãng mạn là khi cô ấy muốn mặt trăng, bạn sẽ không cho cô ấy ngôi sao;", hint: "年...星；" },
+                    { h: "中年人说：浪漫是即使晚上加班到零点，到家时，自己家里也还亮着灯；", p: "Zhöngnián rén shuō: Làngmàn shì jíshǐ wǎnshang jiābān dào língdiǎn, dào jiā shí, zìjǐ jiālǐ yě hái liàngzhe dēng;", vi: "Người trung niên nói: Lãng mạn là cho dù buổi tối tăng ca đến 12 giờ đêm, lúc về đến nhà, trong nhà mình vẫn còn sáng đèn;", hint: "中...灯；" },
+                    { h: "老年人说：浪漫其实就像歌中唱的那样，“我能想到最浪漫的事，就是和你一起慢慢变老。”", p: "Lǎonián rén shuō: Làngmàn qíshí jiù xiàng gē zhōng chàng de nàyàng, \"wǒ néng xiǎngdào zuì làngmàn de shì, jiùshì hé nǐ yìqǐ mànmàn biàn lǎo.\"", vi: "Người già nói: Lãng mạn thực ra giống như trong bài hát hát như vậy, \"Điều lãng mạn nhất mà tôi có thể nghĩ đến, chính là cùng em từ từ già đi.\"", hint: "老...老。”" },
+                    { h: "其实，让我们感动的，就是生活中简单的爱情。有时候，简单就是最大的幸福。", p: "Qíshí, ràng wǒmen gǎndòng de, jiùshì shēnghuó zhōng jiǎndān de àiqíng. Yǒushíhou, jiǎndān jiùshì zuìdà de xìngfú.", vi: "Thực ra, điều khiến chúng ta cảm động chính là tình yêu đơn giản trong cuộc sống. Có đôi khi, đơn giản chính là hạnh phúc lớn nhất.", hint: "其...福。" }
                 ]
             },
             {
                 id: 5,
                 title: "Bài khóa 5",
                 desc: "结婚与爱情",
+                audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/01-5.mp3",
                 completed: false,
                 sentences: [
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/05-1.mp3", h: "说到结婚，人们就会很自然地想起爱情。爱情是结婚的重要原因，但两个人共同生活，不仅需要浪漫的爱情，更需要性格上互相吸引。", p: "Shuōdào jiéhūn, rénmen jiù huì hěn zìrán de xiǎngqǐ àiqíng. Àiqíng shì jiéhūn de zhòngyào yuányīn, dàn liǎng ge rén gòngtóng shēnghuó, bùjǐn xūyào làngmàn de àiqíng, gèng xūyào xìnggé shàng hùxiāng xīyǐn.", vi: "Nhắc đến kết hôn, mọi người sẽ rất tự nhiên nghĩ đến tình yêu. Tình yêu là nguyên nhân kết hôn quan trọng, nhưng hai người cùng chung sống, không chỉ cần tình yêu lãng mạn, càng cần sự thu hút lẫn nhau về tính cách.", hint: "说...引。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/05-2.mp3", h: "我丈夫是一个很幽默的人。即使是很普通的事情，从他嘴里说出来也会变得很有意思。", p: "Wǒ zhàngfu shì yí ge hěn yōumò de rén. Jíshǐ shì hěn pǔtōng de shìqing, cóng tā zuǐ lǐ shuō chūlái yě huì biànde hěn yǒu yìsi.", vi: "Chồng tôi là một người rất hài hước. Dù là chuyện rất bình thường, từ miệng anh ấy nói ra cũng sẽ trở nên rất thú vị.", hint: "我...思。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/05-3.mp3", h: "在我难过的时候，他总是有办法让我高兴起来。", p: "Zài wǒ nánguò de shíhou, tā zǒngshì yǒu bànfǎ ràng wǒ gāoxìng qǐlái.", vi: "Lúc tôi buồn bã, anh ấy luôn có cách làm tôi vui lên.", hint: "在...来。" },
-                    { audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson1/05-4.mp3", h: "而且他的脾气也不错，结婚十年了，我们俩几乎没因为什么事红过脸，很多人都特别羡慕我们。", p: "Érqiě tā de píqi yě búcuò, jiéhūn shí nián le, wǒmen liǎ jīhū méi yīnwèi shénme shì hóng guò liǎn, hěn duō rén dōu tèbié xiànmù wǒmen.", vi: "Hơn nữa tính khí anh ấy cũng không tồi, kết hôn mười năm rồi, hai người chúng tôi hầu như chưa từng đỏ mặt vì chuyện gì, rất nhiều người đều đặc biệt ngưỡng mộ chúng tôi.", hint: "而...们。" }
+                    { h: "说到结婚，人们就会很自然地想起爱情。爱情是结婚的重要原因，但两个人共同生活，不仅需要浪漫的爱情，更需要性格上互相吸引。", p: "Shuōdào jiéhūn, rénmen jiù huì hěn zìrán de xiǎngqǐ àiqíng. Àiqíng shì jiéhūn de zhòngyào yuányīn, dàn liǎng ge rén gòngtóng shēnghuó, bùjǐn xūyào làngmàn de àiqíng, gèng xūyào xìnggé shàng hùxiāng xīyǐn.", vi: "Nhắc đến kết hôn, mọi người sẽ rất tự nhiên nghĩ đến tình yêu. Tình yêu là nguyên nhân kết hôn quan trọng, nhưng hai người cùng chung sống, không chỉ cần tình yêu lãng mạn, càng cần sự thu hút lẫn nhau về tính cách.", hint: "说...引。" },
+                    { h: "我丈夫是一个很幽默的人。即使是很普通的事情，从他嘴里说出来也会变得很有意思。", p: "Wǒ zhàngfu shì yí ge hěn yōumò de rén. Jíshǐ shì hěn pǔtōng de shìqing, cóng tā zuǐ lǐ shuō chūlái yě huì biànde hěn yǒu yìsi.", vi: "Chồng tôi là một người rất hài hước. Dù là chuyện rất bình thường, từ miệng anh ấy nói ra cũng sẽ trở nên rất thú vị.", hint: "我...思。" },
+                    { h: "在我难过的时候，他总是有办法让我高兴起来。", p: "Zài wǒ nánguò de shíhou, tā zǒngshì yǒu bànfǎ ràng wǒ gāoxìng qǐlái.", vi: "Lúc tôi buồn bã, anh ấy luôn có cách làm tôi vui lên.", hint: "在...来。" },
+                    { h: "而且他的脾气也不错，结婚十年了，我们俩几乎没因为什么事红过脸，很多人都特别羡慕我们。", p: "Érqiě tā de píqi yě búcuò, jiéhūn shí nián le, wǒmen liǎ jīhū méi yīnwèi shénme shì hóng guò liǎn, hěn duō rén dōu tèbié xiànmù wǒmen.", vi: "Hơn nữa tính khí anh ấy cũng không tồi, kết hôn mười năm rồi, hai người chúng tôi hầu như chưa từng đỏ mặt vì chuyện gì, rất nhiều người đều đặc biệt ngưỡng mộ chúng tôi.", hint: "而...们。" }
                 ]
             }
         ];
@@ -490,7 +498,6 @@
         // ==========================================
         let currentLessonIdx = -1;
         let dictStep = 0;
-        let systemAudioPlayer = new Audio(); // Trình phát audio động cho từng câu
 
         function openDictationMenu() {
             playAudio('audio-click');
@@ -535,11 +542,16 @@
             document.getElementById('dictation-menu-screen').classList.add('hidden');
             document.getElementById('dictation-screen').classList.remove('hidden');
             
+            // Tải Audio cho toàn bộ Bài Khóa
+            const audioPlayer = document.getElementById('lesson-audio-player');
+            audioPlayer.src = lessonsData[currentLessonIdx].audioSrc;
+            audioPlayer.currentTime = 0;
+            
             loadDictationStep();
         }
 
         function backToDictationMenu() {
-            systemAudioPlayer.pause();
+            document.getElementById('lesson-audio-player').pause();
             openDictationMenu();
         }
 
@@ -550,8 +562,8 @@
             // Thiết lập trạng thái ban đầu của ô nhập
             const inputField = document.getElementById('dict-input');
             inputField.value = "";
-            inputField.disabled = true; // Khóa cho đến khi nghe
-            inputField.placeholder = "Nhấn loa 🔊 để nghe và gõ...";
+            inputField.disabled = false; // Luôn mở khóa để có thể vừa nghe vừa gõ
+            inputField.placeholder = "Gõ chữ Hán vào đây...";
             
             // Reset UI feedback
             const feedback = document.getElementById('dict-feedback');
@@ -561,35 +573,8 @@
             document.getElementById('btn-check-dict').classList.remove('hidden');
             document.getElementById('btn-show-hint').classList.remove('hidden');
             document.getElementById('btn-next-dict').classList.add('hidden');
-
-            // Dừng audio cũ nếu có
-            systemAudioPlayer.pause();
-            systemAudioPlayer.currentTime = 0;
-        }
-
-        function playDictAudio() {
-            const sentenceData = lessonsData[currentLessonIdx].sentences[dictStep];
-            const inputField = document.getElementById('dict-input');
-
-            if(sentenceData.audioSrc && sentenceData.audioSrc.trim() !== "") {
-                systemAudioPlayer.src = sentenceData.audioSrc;
-                
-                // Mở khóa ô nhập ngay khi bắt đầu phát âm thanh
-                systemAudioPlayer.play().then(() => {
-                    inputField.disabled = false;
-                    inputField.focus();
-                    inputField.placeholder = "Gõ chữ Hán vào đây...";
-                }).catch(e => {
-                    // Xử lý nếu trình duyệt chặn auto-play hoặc lỗi link
-                    alert("Không thể phát audio. Link audio bị lỗi hoặc trình duyệt chặn.");
-                    inputField.disabled = false;
-                    inputField.placeholder = "Lỗi âm thanh, hãy xem gợi ý để gõ...";
-                });
-            } else {
-                alert("Bạn chưa dán Link Audio cho câu này!");
-                inputField.disabled = false;
-                inputField.placeholder = "Không có âm thanh, hãy xem gợi ý...";
-            }
+            
+            inputField.focus();
         }
 
         function showDictHint() {
@@ -599,13 +584,7 @@
             document.getElementById('hint-vi').innerText = data.vi;
             document.getElementById('dict-hint').classList.remove('hidden');
             
-            // Mở khóa input phòng trường hợp người dùng bấm xem gợi ý luôn mà không nghe audio
-            const inputField = document.getElementById('dict-input');
-            if (inputField.disabled) {
-                inputField.disabled = false;
-                inputField.placeholder = "Gõ chữ Hán vào đây...";
-            }
-            inputField.focus();
+            document.getElementById('dict-input').focus();
         }
 
         // Hàm xóa sạch dấu câu, khoảng trắng để so sánh chính xác chữ Hán
