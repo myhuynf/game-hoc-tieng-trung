@@ -290,9 +290,9 @@
             { h: "镜子", p: "jìngzi", m: "gương", ex: "她在镜子前整理头发。", exv: "Cô ấy chỉnh lại tóc trước gương." },
             { h: "而", p: "ér", m: "mà", ex: "他聪明而努力。", exv: "Anh ấy thông minh mà chăm chỉ." },
             { h: "当", p: "dāng", m: "khi", ex: "当我到家时，天已经黑了。", exv: "Khi tôi về đến nhà thì trời đã tối." },
-            { h: "困难", p: "kùnnan", m: "khó khăn", ex: "Chúng ta cùng nhau đối mặt với khó khăn。", exv: "Chúng tôi cùng nhau đối mặt với khó khăn." },
+            { h: "困难", p: "kùnnan", m: "khó khăn", ex: "我们一起面对困难。", exv: "Chúng tôi cùng nhau đối mặt với khó khăn." },
             { h: "及时", p: "jíshí", m: "kịp thời", ex: "医生及时救了他。", exv: "Bác sĩ đã kịp thời cứu anh ấy." },
-            { h: "陪", p: "péi", m: "ở bên", ex: "他陪 me đi xem phim。", exv: "Anh ấy ở bên tôi cùng đi xem phim." }
+            { h: "陪", p: "péi", m: "ở bên", ex: "他陪我去看电影。", exv: "Anh ấy ở bên tôi cùng đi xem phim." }
         ];
 
         const lessonsData = [
@@ -302,11 +302,13 @@
                 completed: false,
                 sentences: [
                     { h: "来中国快一年了，你适应这儿的生活了吗？", p: "Lái Zhōngguó kuài yì nián le, nǐ shìyìng zhèr de shēnghuó le ma?", vi: "Đến Trung Quốc gần một năm rồi, bạn đã thích nghi với cuộc sống ở đây chưa?" },
-                    { h: "开始有点儿不习惯，后来就慢慢适应了，最近我还交了一个中国朋友。", p: "Kāishǐ yǒudiǎnr bù xíguàn, hòulái jiù mànmàn shìyìng le, zuìjìn wǒ hái jiāo le yí ge Zhōngguó péngyou.", vi: "Lúc đầu hơi không quen, sau đó dần thích nghi, gần đây tôi còn kết bạn được với một người Trung Quốc." },
+                    { h: "开始有点儿不习惯，后来就慢慢适应了。", p: "Kāishǐ yǒudiǎnr bù xíguàn, hòulái jiù mànmàn shìyìng le.", vi: "Lúc đầu hơi không quen, sau đó dần thích nghi" },
+                    { h: "最近我还交了一个中国朋友。", p: "zuìjìn wǒ hái jiāo le yí ge Zhōngguó péngyou.", vi: "gần đây tôi còn kết bạn được với một người Trung Quốc." },
                     { h: "那就好，快给我讲讲你新交的中国朋友。", p: "Nà jiù hǎo, kuài gěi wǒ jiǎngjiang nǐ xīn jiāo de Zhōngguó péngyou.", vi: "Thế thì tốt quá, mau kể tôi nghe về người bạn Trung Quốc mới quen của bạn đi." },
-                    { h: "我们是在图书馆认识的。平时 chúng tôi thường cùng nhau đọc sách, dạo phố, đá bóng.", p: "Wǒmen shì zài túshūguǎn rènshi de. Píngshí wǒmen chángcháng yìqǐ kànshū, guàngjiē, tī zúqiú.", vi: "Chúng tôi quen nhau ở thư viện. Bình thường chúng tôi thường cùng nhau đọc sách, đi dạo phố, đá bóng." },
+                    { h: "我们是在图书馆认识的。", p: "Wǒmen shì zài túshūguǎn rènshi de. ", vi: "Chúng tôi quen nhau ở thư viện. " },
+                    { h: "平时我们常常一起看书、逛街、踢足球。", p: "Píngshí wǒmen chángcháng yìqǐ kànshū, guàngjiē, tī zúqiú.", vi: " Bình thường chúng tôi thường cùng nhau đọc sách, đi dạo phố, đá bóng." },
                     { h: "有时候他还给我发一些幽默短信。", p: "Yǒushíhou tā hái gěi wǒ fā yìxiē yōumò duǎnxìn.", vi: "Thỉnh thoảng anh ấy còn gửi cho tôi vài tin nhắn hài hước." },
-                    { h: "你的这个朋友真不错！下次 giới thiệu cho chúng tôi làm quen nhé?", p: "Nǐ de zhè ge péngyou zhēn búcuò! Xiàcì jièshào gěi wǒmen rènshi rènshi, zěnmeyàng?", vi: "Người bạn này của bạn thật tốt! Lần tới giới thiệu cho chúng tôi làm quen nhé, thấy sao?" },
+                    { h: "你的这个朋友真不错！下次介绍给我们认识认识，怎么样？ ", p: "Nǐ de zhè ge péngyou zhēn búcuò! Xiàcì jièshào gěi wǒmen rènshi rènshi, zěnmeyàng?", vi: "Người bạn này của bạn thật tốt! Lần tới giới thiệu cho chúng tôi làm quen nhé, thấy sao?" },
                     { h: "没问题！我们下午要去踢足球，正好一起去吧。", p: "Méi wèntí! Wǒmen xiàwǔ yào qù tī zúqiú, zhènghǎo yìqǐ qù ba.", vi: "Không thành vấn đề! Chiều nay chúng tôi đi đá bóng, đúng lúc cùng đi luôn đi." }
                 ]
             },
@@ -317,9 +319,10 @@
                 sentences: [
                     { h: "星期天同学聚会，你能来吗？", p: "Xīngqītiān tóngxué jùhuì, nǐ néng lái ma?", vi: "Chủ nhật họp lớp, bạn có đến được không?" },
                     { h: "能来。班里同学你联系得怎么样了？来多少人？", p: "Néng lái. Bānlǐ tóngxué nǐ liánxì de zěnmeyàng le? Lái duōshao rén?", vi: "Đến được. Các bạn trong lớp bạn liên lạc thế nào rồi? Có bao nhiêu người đến?" },
-                    { h: "差不多一半儿吧，张远还专门 từ nước ngoài bay về đấy。", p: "Chàbuduō yíbànr ba, Zhāng Yuǎn hái zhuānmén cóng guówài fēi huílái ne.", vi: "Gần một nửa đấy, Trương Viễn còn đặc biệt từ nước ngoài bay về nữa." },
+                    { h: "差不多一半儿吧，张远还专门从国外飞回来呢。 ", p: "Chàbuduō yíbànr ba, Zhāng Yuǎn hái zhuānmén cóng guówài fēi huílái ne.", vi: "Gần một nửa đấy, Trương Viễn còn đặc biệt từ nước ngoài bay về nữa." },
                     { h: "是吗？毕业都快十年了，真想大家啊！", p: "Shì ma? Bìyè dōu kuài shí nián le, zhēn xiǎng dàjiā a!", vi: "Thật sao? Tốt nghiệp sắp mười năm rồi, thật nhớ mọi người quá!" },
-                    { h: "对了，今天早上，我在地铁站遇到了王静，她毕业后就去上海工作了，她这次 là đến du lịch。", p: "Duìle, jīntiān zǎoshang, wǒ zài dìtiězhàn yùdào le Wáng Jìng, tā bìyè hòu jiù qù Shànghǎi gōngzuò le, tā zhè cì shì lái lǚyóu de.", vi: "Đúng rồi, sáng nay tôi gặp Vương Tĩnh ở ga tàu điện ngầm, cô ấy tốt nghiệp xong là đi Thượng Hải làm việc luôn, lần này cô ấy đến du lịch." },
+                    { h: "对了，今天早上，我在地铁站遇到了王静", p: "Duìle, jīntiān zǎoshang, wǒ zài dìtiězhàn yùdào le Wáng Jìng", vi: "Đúng rồi, sáng nay tôi gặp Vương Tĩnh ở ga tàu điện ngầm" },
+                    { h: "她毕业后就去上海工作了，她这次是来旅游的。 ", p: "tā bìyè hòu jiù qù Shànghǎi gōngzuò le, tā zhè cì shì lái lǚyóu de.", vi: "cô ấy tốt nghiệp xong là đi Thượng Hải làm việc luôn, lần này cô ấy đến du lịch." },
                     { h: "那太好了！麻烦你跟她联系一下，请她一起来参加同学聚会。", p: "Nà tài hǎo le! Máfan nǐ gēn tā liánxì yíxià, qǐng tā yìqǐ lái cānjiā tóngxué jùhuì.", vi: "Thế thì tốt quá! Làm phiền bạn liên lạc với cô ấy, mời cô ấy cùng đến tham gia họp lớp." },
                     { h: "聚会就在学校门口那个饭店，六点半。别迟到啊！", p: "Jùhuì jiù zài xuéxiào ménkǒu nàge fàndiàn, liù diǎn bàn. Bié chídào a!", vi: "Buổi họp ở ngay nhà hàng chỗ cổng trường, lúc 6 rưỡi. Đừng đến muộn nhé!" }
                 ]
@@ -329,12 +332,20 @@
                 audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson2/02-3.mp3",
                 completed: false,
                 sentences: [
-                    { h: "这是什么时候的照片？你真年轻！", p: "Zhè shì shénme shíhou de zhàopiàn? Nǐ zhēn niánqīng!", vi: "Đây là ảnh từ lúc nào thế? Bạn thật trẻ!" },
-                    { h: "这是上大学时的照片。一看到这张照片，我就想起过去那段快乐的日子，好像重新回到了校园。", p: "Zhè shì shàng dàxué shí de zhàopiàn. Yí kàndào zhè zhāng zhàopiàn, wǒ jiù xiǎngqǐ guòqù nà duàn kuàilè de rìzi, hǎoxiàng chóngxīn huídào le xiàoyuán.", vi: "Đây là ảnh hồi đại học. Cứ nhìn thấy tấm ảnh này là tôi lại nhớ về những ngày tháng vui vẻ trước đây, hình như được quay lại khuôn viên trường vậy." },
-                    { h: "旁边这个人一定是你最好的朋友吧？你们 bây giờ còn liên lạc không?", p: "Pángbiān zhè ge rén yídìng shì nǐ zuì hǎo de péngyou ba? Nǐmen xiànzài hái liánxì ma?", vi: "Người bên cạnh chắc chắn là bạn thân nhất của bạn nhỉ? Bây giờ hai người còn liên lạc không?" },
-                    { h: "当然了，尽管 đã tốt nghiệp nhiều năm thế này, chúng tôi vẫn thường xuyên liên lạc.", p: "Dāngrán le, jǐnguǎn yǐjīng bìyè zhème duō nián, wǒmen háishì jīngcháng liánxì de.", vi: "Tất nhiên rồi, mặc dù đã tốt nghiệp nhiều năm như vậy, chúng tôi vẫn thường xuyên liên lạc." },
-                    { h: "真羡慕你！我上大学时最好的朋友去了南方工作，我们俩已经很久没联系了。", p: "Zhēn xiànmù nǐ! Wǒ shàng dàxué shí zuì hǎo de péngyou qù le nánfāng gōngzuò, wǒmen liǎ yǐjīng hěn jiǔ méi liánxì le.", vi: "Thật ngưỡng mộ bạn! Bạn thân nhất thời đại học của tôi đi miền Nam làm việc rồi, hai chúng tôi lâu lắm không liên lạc." },
-                    { h: "要知道，能有一个真正的朋友，有一段真正的友谊，是多么不容易！", p: "Yào zhīdào, néng yǒu yí ge zhēnzhèng de péngyou, yǒu yí duàn zhēnzhèng de yǒuyì, shì duōme bù róngyì!", vi: "Phải biết rằng, có được một người bạn thực sự, một tình bạn thực sự, là điều không hề dễ dàng!" }
+{ h: "这是什么时候的照片？你真年轻！", p: "Zhè shì shénme shíhou de zhàopiàn? Nǐ zhēn niánqīng!", vi: "Đây là ảnh chụp khi nào vậy? Bạn trông thật trẻ!" },
+{ h: "这是上大学时的照片。", p: "Zhè shì shàng dàxué shí de zhàopiàn.", vi: "Đây là ảnh chụp khi học đại học." },
+{ h: "一看到这张照片，我就想起过去那段快乐的日子。", p: "Yí kàn dào zhè zhāng zhàopiàn, wǒ jiù xiǎngqǐ guòqù nà duàn kuàilè de rìzi.", vi: "Hễ nhìn thấy bức ảnh này là tôi nhớ lại khoảng thời gian vui vẻ trước đây." },
+{ h: "好像重新回到了校园。", p: "Hǎoxiàng chóngxīn huídào le xiàoyuán.", vi: "Cảm giác như được quay lại trường học." },
+{ h: "旁边这个人一定是你最好的朋友吧？", p: "Pángbiān zhè ge rén yídìng shì nǐ zuì hǎo de péngyou ba?", vi: "Người bên cạnh chắc là bạn thân nhất của bạn phải không?" },
+{ h: "你们现在还联系吗？", p: "Nǐmen xiànzài hái liánxì ma?", vi: "Bây giờ hai bạn còn liên lạc không?" },
+{ h: "当然了，尽管已经毕业这么多年。", p: "Dāngrán le, jǐnguǎn yǐjīng bìyè zhème duō nián.", vi: "Tất nhiên rồi, mặc dù đã tốt nghiệp nhiều năm." },
+{ h: "我们还是经常联系的，每次都有说不完的话。", p: "Wǒmen háishi jīngcháng liánxì de, měi cì dōu yǒu shuō bù wán de huà.", vi: "Chúng tôi vẫn thường xuyên liên lạc, mỗi lần đều nói chuyện không hết." },
+{ h: "真羡慕你！", p: "Zhēn xiànmù nǐ!", vi: "Thật ngưỡng mộ bạn!" },
+{ h: "我上大学时最好的朋友去了南方工作。", p: "Wǒ shàng dàxué shí zuì hǎo de péngyou qù le nánfāng gōngzuò.", vi: "Bạn thân nhất của tôi thời đại học đã vào miền Nam làm việc." },
+{ h: "我们俩已经很久没联系了。", p: "Wǒmen liǎ yǐjīng hěn jiǔ méi liánxì le.", vi: "Hai chúng tôi đã lâu không liên lạc." },
+{ h: "我一会儿就给她打个电话。", p: "Wǒ yíhuìr jiù gěi tā dǎ ge diànhuà.", vi: "Lát nữa tôi sẽ gọi điện cho cô ấy." },
+{ h: "对。要知道，能有一个真正的朋友。", p: "Duì. Yào zhīdào, néng yǒu yí gè zhēnzhèng de péngyou.", vi: "Đúng vậy. Phải biết rằng có được một người bạn thật sự." },
+{ h: "有一段真正的友谊，是多么不容易！", p: "Yǒu yí duàn zhēnzhèng de yǒuyì, shì duōme bù róngyì!", vi: "Có được một tình bạn chân thành là điều không hề dễ dàng!" }
                 ]
             },
             {
@@ -342,12 +353,29 @@
                 audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson2/02-4.mp3",
                 completed: false,
                 sentences: [
-                    { h: "每个人都需要朋友，朋友可以丰富我们的生活。", p: "Měi gè rén dōu xūyào péngyou, péngyou kěyǐ fēngfù wǒmen de shēnghuó.", vi: "Mọi người đều cần bạn bè, bạn bè có thể làm phong phú cuộc sống của chúng ta." },
-                    { h: "离开朋友，我们的生活一定会非常无聊。", p: "Líkāi péngyou, wǒmen de shēnghuó yídìng huì fēicháng wúliáo.", vi: "Rời xa bạn bè, cuộc sống của chúng ta chắc chắn sẽ vô cùng nhàm chán." },
-                    { h: "那么，怎样才能交到更多的朋友呢？当然，要有好脾气。", p: "Nàme, zěnyàng cáinéng jiāo dào gèng duō de péngyou ne? Dāngrán, yào yǒu hǎo píqi.", vi: "Vậy thì, làm sao mới có thể kết giao được nhiều bạn hơn? Tất nhiên, phải có tính tình tốt." },
-                    { h: "一个脾气不好的人 mặc dù không nhất định khiến người ta ghét, nhưng lại rất khó kết bạn.", p: "Yí gè píqi bù hǎo de rén suīrán bù yídìng ràng rén tǎoyàn, dànshì què hěn nán gēn rén jiāo péngyou.", vi: "Một người tính tình không tốt mặc dù không hẳn là bị ghét, nhưng lại rất khó kết bạn với mọi người." },
-                    { h: "因为没有人会喜欢跟 một người luôn dễ nổi nóng ở cùng nhau.", p: "Yīnwèi méiyǒu rén huì xǐhuan gēn yí gè zǒngshì róngyì shēngqì de rén zài yìqǐ.", vi: "Bởi vì không ai thích ở cùng với một người lúc nào cũng dễ dàng nổi giận." },
-                    { h: "我们还要经常跟 xung quanh mọi người giao lưu.", p: "Wǒmen hái yào jīngcháng gēn zhōuwéi de rén jiāoliú.", vi: "Chúng ta còn phải thường xuyên giao lưu với những người xung quanh." }
+{ h: "每个人都需要朋友。", p: "Měi gè rén dōu xūyào péngyou.", vi: "Mỗi người đều cần bạn bè." },
+
+{ h: "朋友可以丰富我们的生活。", p: "Péngyou kěyǐ fēngfù wǒmen de shēnghuó.", vi: "Bạn bè có thể làm phong phú cuộc sống của chúng ta." },
+
+{ h: "离开朋友，我们的生活一定会非常无聊。", p: "Líkāi péngyou, wǒmen de shēnghuó yídìng huì fēicháng wúliáo.", vi: "Nếu không có bạn bè, cuộc sống của chúng ta chắc chắn sẽ rất nhàm chán." },
+
+{ h: "那么，怎样才能交到更多的朋友呢？", p: "Nàme, zěnyàng cái néng jiāo dào gèng duō de péngyou ne?", vi: "Vậy làm thế nào để kết bạn được nhiều hơn?" },
+
+{ h: "当然，要有好脾气。", p: "Dāngrán, yào yǒu hǎo píqi.", vi: "Tất nhiên, cần có tính cách tốt." },
+
+{ h: "一个脾气不好的人不一定让人讨厌。", p: "Yí gè píqi bù hǎo de rén bù yídìng ràng rén tǎoyàn.", vi: "Một người tính khí không tốt chưa chắc khiến người khác ghét." },
+
+{ h: "但是却很难跟人交朋友。", p: "Dànshì què hěn nán gēn rén jiāo péngyou.", vi: "Nhưng lại rất khó kết bạn với người khác." },
+
+{ h: "因为没有人会喜欢跟一个总是容易生气的人在一起。", p: "Yīnwèi méiyǒu rén huì xǐhuan gēn yí gè zǒngshì róngyì shēngqì de rén zài yìqǐ.", vi: "Vì không ai thích ở cùng một người luôn dễ nổi giận." },
+
+{ h: "我们还要经常跟周围的人交流。", p: "Wǒmen hái yào jīngcháng gēn zhōuwéi de rén jiāoliú.", vi: "Chúng ta cũng cần thường xuyên giao lưu với những người xung quanh." },
+
+{ h: "交流能让人们互相了解。", p: "Jiāoliú néng ràng rénmen hùxiāng liǎojiě.", vi: "Giao tiếp giúp mọi người hiểu nhau hơn." },
+
+{ h: "如果有共同的兴趣、爱好或者习惯。", p: "Rúguǒ yǒu gòngtóng de xìngqù, àihào huòzhě xíguàn.", vi: "Nếu có những sở thích, đam mê hoặc thói quen chung." },
+
+{ h: "就更容易成为朋友了。", p: "Jiù gèng róngyì chéngwéi péngyou le.", vi: "Thì sẽ càng dễ trở thành bạn bè." }
                 ]
             },
             {
@@ -355,12 +383,29 @@
                 audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson2/02-5.mp3",
                 completed: false,
                 sentences: [
-                    { h: "人的一生可以什么也没有，但不能没有朋友，而且必须要有自己真正的朋友。", p: "Rén de yìshēng kěyǐ shénme méiyǒu, dàn bùnéng méiyǒu péngyou, érqiě bìxū yào yǒu zìjǐ zhēnzhèng de péngyou.", vi: "Một đời người có thể không có gì, nhưng không thể không có bạn bè, và hơn nữa phải có những người bạn thực sự của mình." },
-                    { h: "什么是真正的朋友？不同的人会有不同的理解。", p: "Shénme shì zhēnzhèng de péngyou? Bùtóng de rén huì yǒu bùtóng de lǐjiě.", vi: "Thế nào là một người bạn thực sự? Những người khác nhau sẽ có cách hiểu khác nhau." },
-                    { h: "有些人觉得朋友 chính là người có thể cùng mình vui vẻ.", p: "Yǒuxiē rén juéde péngyou jiùshì néng hé zìjǐ yìqǐ kuàilè de rén;", vi: "Có những người cảm thấy bạn bè chính là người có thể cùng mình vui chơi vui vẻ." },
-                    { h: "有些人觉得朋友应该像镜子，能帮自己看到缺点。", p: "Yǒuxiē rén juéde péngyou yīnggāi xiàng jìngzi, néng bāng zìjǐ kàndào quēdiǎn.", vi: "Có những người lại thấy bạn bè nên giống như tấm gương, có thể giúp mình nhìn ra khuyết điểm." },
-                    { h: "当你遇到困难的时候，真正的朋友会站出来，及时给你帮助。", p: "Dāng nǐ yùdào kùnnan de shíhou, zhēnzhèng de péngyou huì zhàn chūlái, jíshí gěi nǐ bāngzhù.", vi: "Khi bạn gặp khó khăn, người bạn thực sự sẽ đứng ra, kịp thời giúp đỡ bạn." },
-                    { h: "当你无聊 hoặc là buồn bã, người bạn thực sự sẽ ở bên cạnh.", p: "Dāng nǐ wúliáo huòzhě nánguò de shíhou, zhēnzhèng de péngyou huì péi zài shēnbiān.", vi: "Khi bạn thấy nhàm chán hay buồn bã, người bạn thực sự sẽ luôn ở bên cạnh." }
+{ h: "人的一生可以什么也没有，但不能没有朋友。", p: "Rén de yì shēng kěyǐ shénme yě méiyǒu, dàn bùnéng méiyǒu péngyou.", vi: "Cuộc đời một con người có thể không có gì, nhưng không thể không có bạn bè." },
+
+{ h: "而且必须要有自己真正的朋友。", p: "Érqiě bìxū yào yǒu zìjǐ zhēnzhèng de péngyou.", vi: "Hơn nữa nhất định phải có những người bạn thật sự của riêng mình." },
+
+{ h: "什么是真正的朋友？", p: "Shénme shì zhēnzhèng de péngyou?", vi: "Thế nào là một người bạn thật sự?" },
+
+{ h: "不同的人会有不同的理解。", p: "Bùtóng de rén huì yǒu bùtóng de lǐjiě.", vi: "Những người khác nhau sẽ có cách hiểu khác nhau." },
+
+{ h: "有些人觉得朋友就是能和自己一起快乐的人。", p: "Yǒuxiē rén juéde péngyou jiù shì néng hé zìjǐ yìqǐ kuàilè de rén.", vi: "Có người cho rằng bạn bè là người có thể cùng mình vui vẻ." },
+
+{ h: "有些人觉得朋友应该像镜子。", p: "Yǒuxiē rén juéde péngyou yīnggāi xiàng jìngzi.", vi: "Có người cho rằng bạn bè nên giống như một chiếc gương." },
+
+{ h: "能帮自己看到缺点。", p: "Néng bāng zìjǐ kàn dào quēdiǎn.", vi: "Có thể giúp mình nhìn thấy khuyết điểm." },
+
+{ h: "而我的理解是：", p: "Ér wǒ de lǐjiě shì:", vi: "Còn theo quan điểm của tôi là:" },
+
+{ h: "当你遇到困难的时候，真正的朋友会站出来。", p: "Dāng nǐ yùdào kùnnan de shíhou, zhēnzhèng de péngyou huì zhàn chūlái.", vi: "Khi bạn gặp khó khăn, người bạn thật sự sẽ đứng ra giúp đỡ." },
+
+{ h: "及时给你帮助。", p: "Jíshí gěi nǐ bāngzhù.", vi: "Kịp thời giúp đỡ bạn." },
+
+{ h: "当你无聊或者难过的时候，真正的朋友会陪在身边。", p: "Dāng nǐ wúliáo huòzhě nánguò de shíhou, zhēnzhèng de péngyou huì péi zài shēnbiān.", vi: "Khi bạn cảm thấy chán hoặc buồn, người bạn thật sự sẽ ở bên cạnh bạn." },
+
+{ h: "想办法让你感到幸福。", p: "Xiǎng bànfǎ ràng nǐ gǎndào xìngfú.", vi: "Tìm cách để bạn cảm thấy hạnh phúc." }
                 ]
             }
         ];
