@@ -59,10 +59,75 @@
         }
         .flashcard-front { background-color: #fff; }
         .flashcard-back { background-color: #fef3c7; transform: rotateY(180deg); }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
+
+        /* CSS cho phần Dictation */
+        .custom-scroll::-webkit-scrollbar { width: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--ghibli-brown); border-radius: 10px; }
+
+        .circle-stat {
+            position: relative;
+            width: 100px; height: 100px;
+            border-radius: 50%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            border: 8px solid #f3f4f6;
+            background-color: white;
+        }
+        .stat-green { border-color: #a8d5ba; color: #4f7942; }
+        .stat-red { border-color: #fca5a5; color: #b91c1c; }
+        .stat-blue { border-color: #93c5fd; color: #1e3a8a; }
+
+        .dictation-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 3px dashed var(--ghibli-brown);
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .dictation-input:focus {
+            border-color: var(--ghibli-green);
+            background-color: #f0fdf4;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        #toast.show { opacity: 1; }
     </style>
 </head>
 <body>
+
+    <div id="toast">Đã copy kết quả!</div>
+
+    <!-- CUSTOM CONFIRM MODAL CHO RESET DICTATION -->
+    <div id="custom-confirm-modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full mx-4 border-4 border-amber-300 text-center transform transition-all">
+            <div class="text-4xl mb-2">⚠️</div>
+            <h3 class="text-xl font-bold text-amber-900 mb-2">Xác nhận xóa</h3>
+            <p class="text-amber-800 mb-6 font-medium text-sm">Bạn có chắc chắn muốn xóa toàn bộ dữ liệu nghe chép và làm lại từ đầu?</p>
+            <div class="flex gap-3">
+                <button onclick="closeResetModal()" class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-300 transition border-b-4 border-gray-300">Quay lại</button>
+                <button onclick="confirmReset()" class="flex-1 bg-rose-500 text-white py-3 rounded-xl font-bold hover:bg-rose-600 transition border-b-4 border-rose-700">Xóa dữ liệu</button>
+            </div>
+        </div>
+    </div>
 
     <div id="game-container" class="w-full max-w-xl px-4 mt-10 mb-10">
         
@@ -78,10 +143,16 @@
                 <button onclick="startQuiz('p5')" class="btn-ghibli text-lg" style="background-color: #e0f2fe;">⏱️ Phần 5: 对...感兴趣 <span id="check-p5" class="hidden">✅</span></button>
                 <button onclick="startQuiz('p6')" class="btn-ghibli text-lg" style="background-color: #f5f3ff;">🕰️ Phần 6: Thời gian 半/刻/差 <span id="check-p6" class="hidden">✅</span></button>
                 <button id="btn-exercise" onclick="showExercise()" class="btn-ghibli text-lg" style="background-color: #e5e7eb; color: #9ca3af;" disabled>🔒 Bài tập tổng hợp</button>
+                
+                <!-- Dictation button added here -->
+                <button onclick="openDictationMenu()" class="btn-ghibli text-lg" style="background-color: #ede9fe;">🎧 Phần 7: Nghe Chép Bài Khóa <span id="check-dictation" class="hidden">✅</span></button>
+                <button onclick="showFinalStats()" id="btn-show-stats" class="btn-ghibli text-sm py-2 hidden" style="background-color: #e0f2fe; color: #0369a1; border-color: #bae6fd;">📊 Xem Thống Kê Nghe Chép</button>
+
                 <button onclick="window.location.href='index.html'" class="btn-ghibli text-lg mt-4 bg-emerald-600 text-white border-emerald-700">🏡 Quay về vườn</button>
             </div>
         </div>
 
+        <!-- FLASHCARD SCREENS -->
         <div id="flashcard-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between items-center mb-4">
                 <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Quay lại</button>
@@ -132,6 +203,7 @@
             </div>
         </div>
 
+        <!-- VOCAB GAME -->
         <div id="vocab-game-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between mb-4">
                 <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Thoát</button>
@@ -148,6 +220,7 @@
             </div>
         </div>
 
+        <!-- QUIZ SCREENS (GRAMMAR) -->
         <div id="quiz-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between mb-4">
                 <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Thoát</button>
@@ -177,12 +250,13 @@
             </div>
         </div>
 
+        <!-- EXERCISE SCREEN -->
         <div id="exercise-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between items-center mb-4">
                 <h2 class="text-2xl font-bold text-amber-900">📝 Bài Tập Tổng Hợp</h2>
                 <button onclick="returnToStart()" class="text-amber-700 font-bold">🔙 Đóng</button>
             </div>
-            <div class="overflow-y-auto max-h-[60vh] pr-2 text-amber-900 space-y-8">
+            <div class="overflow-y-auto max-h-[60vh] custom-scroll pr-2 text-amber-900 space-y-8">
                 <div>
                     <h3 class="font-bold text-emerald-800 mb-3 bg-emerald-50 p-2 rounded">2. Chọn từ thích hợp điền vào chỗ trống</h3>
                     <div class="bg-amber-50 p-3 rounded mb-4 text-xs font-bold text-center">以前 / 同事 / 兴趣 / 欢迎 / 差</div>
@@ -225,9 +299,101 @@
             <div id="ex-fb" class="mt-4 hidden p-3 bg-emerald-100 text-emerald-800 rounded font-bold text-center"></div>
             <button onclick="submitExercise()" class="btn-ghibli w-full bg-blue-500 text-white mt-4 uppercase">📤 Copy Bài Làm Gửi Cô Giáo</button>
         </div>
+
+        <!-- DICTATION MENU -->
+        <div id="dictation-menu-screen" class="ghibli-card p-6 hidden">
+            <div class="flex justify-between items-center mb-6 border-b-2 border-amber-100 pb-4">
+                <button onclick="returnToStart()" class="text-amber-700 text-sm font-bold hover:underline">🔙 Trang Chủ</button>
+                <h2 class="text-xl font-bold text-emerald-800">Chọn Bài Khóa</h2>
+            </div>
+            <div id="lesson-list" class="grid grid-cols-1 gap-3 max-h-96 overflow-y-auto custom-scroll pr-2"></div>
+            
+            <div class="mt-6 text-center">
+                <button id="btn-finish-all" onclick="showFinalStats()" class="btn-ghibli w-full bg-emerald-500 text-white border-emerald-700 hidden">
+                    🎉 Hoàn thành & Xem Kết Quả
+                </button>
+            </div>
+        </div>
+
+        <!-- DICTATION GAME -->
+        <div id="dictation-screen" class="ghibli-card p-6 hidden">
+            <div class="flex justify-between items-center mb-4 border-b-2 border-amber-100 pb-3">
+                <button onclick="backToDictationMenu()" class="text-amber-700 text-sm font-bold hover:underline">🔙 DS Bài khóa</button>
+                <div class="text-emerald-800 font-bold text-sm bg-emerald-100 px-3 py-1 rounded-full" id="dictation-title-display">Bài 7: <span id="dict-step">1</span>/10</div>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center space-y-4 mt-2">
+                <div class="w-full bg-emerald-50 p-4 rounded-xl border-2 border-emerald-200 shadow-sm">
+                    <audio id="lesson-audio-player" controls class="w-full h-10 outline-none rounded-lg"></audio>
+                </div>
+
+                <div class="w-full bg-white border-2 border-dashed border-amber-300 p-3 rounded-xl text-center">
+                    <p class="text-xs text-amber-800 font-bold mb-1">GỢI Ý CÂU ĐANG NGHE:</p>
+                    <div id="sentence-range-hint" class="chinese-text text-2xl text-emerald-700 tracking-widest">-- ... --</div>
+                </div>
+                
+                <div class="w-full relative mt-2">
+                    <input type="text" id="dict-input" class="dictation-input chinese-text" placeholder="Nghe và gõ lại..." autocomplete="off">
+                </div>
+
+                <div id="dict-answer-box" class="w-full hidden space-y-3">
+                    <div id="dict-feedback" class="w-full p-2 rounded-lg text-center font-bold text-sm"></div>
+                    <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl text-center space-y-2">
+                        <p class="chinese-text text-2xl text-amber-900" id="ans-hanzi"></p>
+                        <p class="text-emerald-700 italic font-semibold text-lg" id="ans-pinyin"></p>
+                        <p class="text-gray-600 border-t border-amber-200 pt-2 text-sm" id="ans-vi"></p>
+                    </div>
+                </div>
+
+                <div class="w-full pt-2">
+                    <button id="btn-next-dict" onclick="nextDictation()" class="btn-ghibli w-full bg-emerald-500 border-emerald-700 text-white hidden py-3 text-lg">Tiếp theo ➡️</button>
+                    <p id="enter-instruction" class="text-[11px] text-gray-400 text-center mt-3 font-bold uppercase tracking-wider">Nhấn <span class="bg-gray-200 text-gray-600 px-2 py-1 rounded">ENTER</span> để kiểm tra</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FINAL STATS & REPORT SCREEN (DICTATION) -->
+        <div id="dictation-end-screen" class="ghibli-card p-6 hidden">
+            <h2 class="text-2xl font-bold text-amber-900 mb-6 text-center border-b-2 border-amber-100 pb-3">Thống Kê Nghe Chép</h2>
+            
+            <div class="flex justify-around items-center mb-8">
+                <div class="circle-stat stat-blue">
+                    <span id="stat-total" class="text-3xl font-bold">0</span>
+                    <span class="text-[10px] uppercase font-bold text-gray-500">Tổng câu</span>
+                </div>
+                <div class="circle-stat stat-green">
+                    <span id="stat-correct" class="text-3xl font-bold">0</span>
+                    <span class="text-[10px] uppercase font-bold">Đúng</span>
+                </div>
+                <div class="circle-stat stat-red">
+                    <span id="stat-wrong" class="text-3xl font-bold">0</span>
+                    <span class="text-[10px] uppercase font-bold">Sai</span>
+                </div>
+            </div>
+
+            <div class="w-full bg-gray-100 rounded-full h-4 mb-2 shadow-inner overflow-hidden">
+                <div id="progress-bar" class="bg-emerald-400 h-4 rounded-full transition-all duration-1000" style="width: 0%"></div>
+            </div>
+            <p class="text-center text-sm font-bold text-emerald-800 mb-8" id="stat-percentage">Tỉ lệ đúng: 0%</p>
+
+            <div class="grid grid-cols-1 gap-3">
+                <button onclick="copyResults()" class="btn-ghibli bg-emerald-600 text-white border-emerald-800 text-lg py-3">
+                    📋 Copy riêng kết quả Nghe Chép
+                </button>
+                <button onclick="showResetModal()" class="btn-ghibli text-lg py-3 bg-amber-100 border-amber-400 text-amber-800 mt-2">
+                    🔄 Xóa dữ liệu & Làm lại từ đầu
+                </button>
+            </div>
+        </div>
+
+        <!-- AUDIO ASSETS -->
+        <audio id="audio-click" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+        <audio id="audio-correct" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
+        <audio id="audio-wrong" src="https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3"></audio>
     </div>
 
 <script>
+    // --- 1. DỮ LIỆU TỪ VỰNG & NGỮ PHÁP ---
     const vocabulary = [
         { h: "同事", p: "tóngshì", m: "đồng nghiệp", ex: "这是我的新同事。", vi: "Đây là đồng nghiệp mới của tôi." },
         { h: "以前", p: "yǐqián", m: "trước đây, trước kia", ex: "我以前没来过中国。", vi: "Trước đây tôi chưa từng đến Trung Quốc." },
@@ -312,18 +478,73 @@
         {q: "10. A: 下个月我们就 ____ 了。 B: 什么？你们不是刚认识吗？", o: ["银行", "结婚", "迟到", "接", "半"]}
     ];
 
+    // --- 2. DỮ LIỆU NGHE CHÉP (DICTATION BÀI 7) ---
+    const lessonsData = [
+        { id: 1, title: "Bài khóa 1", desc: "在办公室 (Trong văn phòng)", audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk3/lesson7/07-1.mp3", completed: false, sentences: [
+            { h: "那个漂亮的新同事是谁？", p: "Nàge piàoliang de xīn tóngshì shì shuí?", vi: "Đồng nghiệp mới xinh đẹp kia là ai vậy?" },
+            { h: "那是小丽。", p: "Nà shì Xiǎolì.", vi: "Đó là Tiểu Lệ." },
+            { h: "她刚来北京吗？", p: "Tā gāng lái Běijīng ma?", vi: "Cô ấy vừa đến Bắc Kinh à?" },
+            { h: "不，她在北京工作三年了。", p: "Bù, tā zài Běijīng gōngzuò sān nián le.", vi: "Không, cô ấy làm việc ở Bắc Kinh được 3 năm rồi." },
+            { h: "以前在哪儿工作？", p: "Yǐqián zài nǎr gōngzuò?", vi: "Trước kia làm việc ở đâu?" },
+            { h: "她在银行工作了两年以后来的我们公司。", p: "Tā zài yínháng gōngzuò le liǎng nián yǐhòu lái de wǒmen gōngsī.", vi: "Cô ấy làm việc ở ngân hàng 2 năm sau đó mới đến công ty chúng ta." }
+        ]},
+        { id: 2, title: "Bài khóa 2", desc: "在休息室 (Trong phòng giải lao)", audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk3/lesson7/07-2.mp3", completed: false, sentences: [
+            { h: "周末你跟小丽去哪儿玩儿了？", p: "Zhōumò nǐ gēn Xiǎolì qù nǎr wánr le?", vi: "Cuối tuần cậu và Tiểu Lệ đi đâu chơi vậy?" },
+            { h: "我们去唱歌了。", p: "Wǒmen qù chànggē le.", vi: "Bọn tớ đi hát." },
+            { h: "你们唱了多久？", p: "Nǐmen chàng le duōjiǔ?", vi: "Các cậu hát bao lâu?" },
+            { h: "我们唱了两个小时，晚上还去听音乐会了。", p: "Wǒmen chàng le liǎng gè xiǎoshí, wǎnshang hái qù tīng yīnyuèhuì le.", vi: "Bọn tớ hát 2 tiếng, buổi tối còn đi nghe hòa nhạc nữa." },
+            { h: "你们都对音乐感兴趣吗？", p: "Nǐmen dōu duì yīnyuè gǎn xìngqù ma?", vi: "Các cậu đều có hứng thú với âm nhạc à?" },
+            { h: "她对音乐感兴趣，我对她更感兴趣。", p: "Tā duì yīnyuè gǎn xìngqù, wǒ duì tā gèng gǎn xìngqù.", vi: "Cô ấy hứng thú với âm nhạc, còn tớ thì hứng thú với cô ấy hơn." }
+        ]},
+        { id: 3, title: "Bài khóa 3", desc: "在休息室 (Trong phòng giải lao)", audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk3/lesson7/07-3.mp3", completed: false, sentences: [
+            { h: "我跟小丽下个月结婚，到时候欢迎你来。", p: "Wǒ gēn Xiǎolì xià gè yuè jiéhūn, dào shíhou huānyíng nǐ lái.", vi: "Tháng sau tớ và Tiểu Lệ kết hôn, đến lúc đó hoan nghênh cậu tới." },
+            { h: "什么？结婚？", p: "Shénme? Jiéhūn?", vi: "Cái gì? Kết hôn?" },
+            { h: "对啊，突然吗？", p: "Duì a, tūrán ma?", vi: "Đúng vậy, bất ngờ không?" },
+            { h: "你们不是刚认识吗？", p: "Nǐmen bú shì gāng rènshi ma?", vi: "Không phải hai người mới quen sao?" },
+            { h: "我跟她都认识五年了。", p: "Wǒ gēn tā dōu rènshi wǔ nián le.", vi: "Tớ và cô ấy đã quen nhau được 5 năm rồi." },
+            { h: "你跟她结婚，那我怎么办啊？", p: "Nǐ gēn tā jiéhūn, nà wǒ zěnme bàn a?", vi: "Cậu kết hôn với cô ấy, vậy tớ phải làm sao đây?" }
+        ]},
+        { id: 4, title: "Bài khóa 4", desc: "在公司门口 (Ở trước cửa công ty)", audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk3/lesson7/07-4.mp3", completed: false, sentences: [
+            { h: "你看看手表，怎么迟到了？", p: "Nǐ kànkan shǒubiǎo, zěnme chídào le?", vi: "Anh xem đồng hồ đi, sao lại đến muộn vậy?" },
+            { h: "没迟到啊。", p: "Méi chídào a.", vi: "Đâu có muộn." },
+            { h: "你不是说七点半来接我吗？你迟到了一刻钟。", p: "Nǐ bú shì shuō qī diǎn bàn lái jiē wǒ ma? Nǐ chídào le yí kè zhōng.", vi: "Chẳng phải anh nói 7 rưỡi đến đón em sao? Anh đến muộn 15 phút rồi." },
+            { h: "现在不是七点半吗？", p: "Xiànzài bú shì qī diǎn bàn ma?", vi: "Bây giờ chẳng phải 7 rưỡi sao?" },
+            { h: "已经差一刻八点了！我都在这儿坐了半个小时了。", p: "Yǐjīng chà yí kè bā diǎn le! Wǒ dōu zài zhèr zuò le bàn gè xiǎoshí le.", vi: "Đã 8 giờ kém 15 rồi! Em ngồi đây cả nửa tiếng rồi." },
+            { h: "不是我迟到了，是你的表快了一刻钟。", p: "Bú shì wǒ chídào le, shì nǐ de biǎo kuài le yí kè zhōng.", vi: "Không phải anh đến muộn, là đồng hồ của em chạy nhanh 15 phút đấy." }
+        ]}
+    ];
+
     let curIdx = 0, curKey = '', selAns = null;
-    let completed = {vocab: false, p3: false, p4: false, p5: false, p6: false};
+    let completed = {vocab: false, p3: false, p4: false, p5: false, p6: false, dictation: false};
     let gameScores = { vocab: 0, p3: 0, p4: 0, p5: 0, p6: 0 };
     
     let currentFlashcardPool = [], knownCards = [], unknownCards = [];
     let selectedWords = [], poolWords = [];
 
-    // --- NAVIGATION ---
+    // Dictation state
+    let userAnswers = {}; // { "lessonIdx-sentenceIdx": { isCorrect: true/false, userInput: "..." } }
+    let currentLessonIdx = -1, dictStep = 0;
+
+    // --- NAVIGATION & AUDIO ---
+    function playAudio(audioId) {
+        const audio = document.getElementById(audioId);
+        if (audio) { audio.currentTime = 0; audio.play().catch(() => {}); }
+    }
+
     function returnToStart() {
+        if(typeof playAudio === 'function') playAudio('audio-click');
+        const audioPlayer = document.getElementById('lesson-audio-player');
+        if (audioPlayer) audioPlayer.pause();
+
         document.querySelectorAll('.ghibli-card').forEach(c => c.classList.add('hidden'));
         document.getElementById('start-screen').classList.remove('hidden');
         checkUnlockExercise();
+
+        if (Object.keys(userAnswers).length > 0) {
+            document.getElementById('btn-show-stats').classList.remove('hidden');
+        } else {
+            document.getElementById('btn-show-stats').classList.add('hidden');
+        }
     }
 
     function checkUnlockExercise() {
@@ -513,6 +734,289 @@
         else { completed[curKey] = true; document.getElementById('check-'+curKey).classList.remove('hidden'); returnToStart(); }
     }
 
+    // --- DICTATION LOGIC ---
+    function openDictationMenu() {
+        playAudio('audio-click');
+        document.querySelectorAll('.ghibli-card').forEach(el => el.classList.add('hidden'));
+        document.getElementById('dictation-menu-screen').classList.remove('hidden');
+        renderLessonList();
+    }
+
+    function renderLessonList() {
+        const listContainer = document.getElementById('lesson-list');
+        listContainer.innerHTML = '';
+        let allCompleted = true;
+        
+        lessonsData.forEach((lesson, index) => {
+            if (!lesson.completed) allCompleted = false;
+            
+            // Đếm tiến độ từng bài
+            let lessonTotal = lesson.sentences.length;
+            let lessonDone = 0;
+            for(let i=0; i<lessonTotal; i++) {
+                if(userAnswers[`${index}-${i}`]) lessonDone++;
+            }
+
+            const btn = document.createElement('button');
+            btn.className = `btn-ghibli text-left py-4 relative flex flex-col items-start ${lesson.completed ? 'opacity-80 bg-emerald-100' : ''}`;
+            btn.onclick = () => startDictationLesson(index);
+            
+            btn.innerHTML = `
+                <div class="w-full flex justify-between items-center">
+                    <span class="font-bold text-lg">${lesson.title}</span>
+                    ${lesson.completed ? '<span class="text-xl">✅</span>' : `<span class="text-xs bg-white px-2 py-1 rounded-md text-amber-700">${lessonDone}/${lessonTotal}</span>`}
+                </div>
+                <span class="text-sm font-normal">${lesson.desc}</span>
+            `;
+            listContainer.appendChild(btn);
+        });
+
+        if (allCompleted && lessonsData.length > 0) {
+            document.getElementById('btn-finish-all').classList.remove('hidden');
+        } else {
+            document.getElementById('btn-finish-all').classList.add('hidden');
+        }
+    }
+
+    function startDictationLesson(index) {
+        playAudio('audio-click');
+        currentLessonIdx = index;
+        
+        // Tìm câu đầu tiên chưa làm
+        dictStep = 0;
+        for(let i=0; i<lessonsData[index].sentences.length; i++) {
+            if(!userAnswers[`${index}-${i}`]) {
+                dictStep = i;
+                break;
+            }
+        }
+
+        document.getElementById('dictation-menu-screen').classList.add('hidden');
+        document.getElementById('dictation-screen').classList.remove('hidden');
+        document.getElementById('lesson-audio-player').src = lessonsData[currentLessonIdx].audioSrc;
+        loadDictationStep();
+    }
+
+    function backToDictationMenu() { 
+        const player = document.getElementById('lesson-audio-player');
+        player.pause();
+        
+        // Đánh dấu bài
+        let isDone = true;
+        for(let i=0; i<lessonsData[currentLessonIdx].sentences.length; i++) {
+            if(!userAnswers[`${currentLessonIdx}-${i}`]) isDone = false;
+        }
+        lessonsData[currentLessonIdx].completed = isDone;
+
+        openDictationMenu(); 
+    }
+
+    function loadDictationStep() {
+        const lesson = lessonsData[currentLessonIdx];
+        const sentenceObj = lesson.sentences[dictStep];
+        document.getElementById('dictation-title-display').innerHTML = `Bài 7: <span class="font-black">${dictStep + 1}</span>/${lesson.sentences.length}`;
+        
+        const rawH = sentenceObj.h.replace(/[，。？！、\s“”：]/g, '');
+        let hint = "-- ... --";
+        if(rawH.length <= 2) hint = "* *";
+        else hint = `${rawH.substring(0, 1)} ... ${rawH.substring(rawH.length - 1)}`;
+        document.getElementById('sentence-range-hint').innerText = hint;
+        
+        const inputField = document.getElementById('dict-input');
+        inputField.value = ""; 
+        inputField.disabled = false;
+        document.getElementById('dict-answer-box').classList.add('hidden');
+        document.getElementById('btn-next-dict').classList.add('hidden');
+        document.getElementById('enter-instruction').classList.remove('hidden');
+        inputField.focus();
+
+        const oldAns = userAnswers[`${currentLessonIdx}-${dictStep}`];
+        if(oldAns) {
+            inputField.value = oldAns.userInput;
+            checkDictation(true); 
+        }
+    }
+
+    function cleanChineseText(text) { 
+        return text.replace(/[^\u4e00-\u9fa5]/g, '').trim(); 
+    }
+
+    function checkDictation(isHistoryLoad = false) {
+        const sentenceObj = lessonsData[currentLessonIdx].sentences[dictStep];
+        const feedback = document.getElementById('dict-feedback');
+        const inputField = document.getElementById('dict-input');
+        const rawUserInput = inputField.value.trim();
+        const userInput = cleanChineseText(rawUserInput);
+        const correctInput = cleanChineseText(sentenceObj.h);
+        
+        const isCorrect = (userInput === correctInput && userInput !== "");
+
+        if(!isHistoryLoad) {
+            if (isCorrect) playAudio('audio-correct');
+            else playAudio('audio-wrong');
+        }
+
+        userAnswers[`${currentLessonIdx}-${dictStep}`] = {
+            isCorrect: isCorrect,
+            userInput: rawUserInput
+        };
+        
+        if (isCorrect) {
+            feedback.innerText = "Chính xác! 🌟";
+            feedback.className = "w-full p-2 rounded-lg text-center bg-emerald-100 text-emerald-800 border border-emerald-300 font-bold";
+        } else {
+            feedback.innerText = "Chưa đúng! Vui lòng đối chiếu đáp án:";
+            feedback.className = "w-full p-2 rounded-lg text-center bg-rose-100 text-rose-800 border border-rose-300 font-bold";
+        }
+
+        document.getElementById('ans-hanzi').innerText = sentenceObj.h;
+        document.getElementById('ans-pinyin').innerText = sentenceObj.p;
+        document.getElementById('ans-vi').innerText = sentenceObj.vi;
+        document.getElementById('dict-answer-box').classList.remove('hidden');
+        
+        inputField.disabled = true;
+        document.getElementById('enter-instruction').classList.add('hidden');
+        
+        const btnNext = document.getElementById('btn-next-dict');
+        if(dictStep === lessonsData[currentLessonIdx].sentences.length - 1) {
+            btnNext.innerText = "Hoàn thành Bài khóa 🏆";
+            btnNext.classList.replace('bg-emerald-500', 'bg-amber-500');
+            btnNext.classList.replace('border-emerald-700', 'border-amber-700');
+        } else {
+            btnNext.innerText = "Câu tiếp theo ➡️";
+            btnNext.classList.replace('bg-amber-500', 'bg-emerald-500');
+            btnNext.classList.replace('border-amber-700', 'border-emerald-700');
+        }
+        btnNext.classList.remove('hidden');
+    }
+
+    function nextDictation() {
+        if (dictStep < lessonsData[currentLessonIdx].sentences.length - 1) {
+            dictStep++;
+            loadDictationStep();
+        } else {
+            backToDictationMenu();
+            let isAllDone = lessonsData.every(l => l.completed);
+            if(isAllDone) {
+                completed.dictation = true;
+                document.getElementById('check-dictation').classList.remove('hidden');
+            }
+        }
+    }
+
+    function showFinalStats() {
+        playAudio('audio-click');
+        document.querySelectorAll('.ghibli-card').forEach(el => el.classList.add('hidden'));
+        document.getElementById('dictation-end-screen').classList.remove('hidden');
+
+        let total = 0, correct = 0, wrong = 0;
+        lessonsData.forEach((lesson, lIdx) => {
+            lesson.sentences.forEach((s, sIdx) => {
+                total++;
+                let ans = userAnswers[`${lIdx}-${sIdx}`];
+                if(ans) {
+                    if(ans.isCorrect) correct++;
+                    else wrong++;
+                } else {
+                    wrong++; // Chưa làm
+                }
+            });
+        });
+
+        document.getElementById('stat-total').innerText = total;
+        document.getElementById('stat-correct').innerText = correct;
+        document.getElementById('stat-wrong').innerText = wrong;
+
+        const percentage = Math.round((correct / total) * 100) || 0;
+        setTimeout(() => {
+            document.getElementById('progress-bar').style.width = percentage + '%';
+        }, 100);
+        document.getElementById('stat-percentage').innerText = `Tỉ lệ đúng: ${percentage}%`;
+        
+        completed.dictation = true;
+        document.getElementById('check-dictation').classList.remove('hidden');
+    }
+
+    function copyResults() {
+        let text = "📊 KẾT QUẢ NGHE CHÉP HSK3 - BÀI 7\n\n";
+        let total = 0, correct = 0;
+        let detailText = "";
+
+        lessonsData.forEach((lesson, lIdx) => {
+            detailText += `--- ${lesson.title} ---\n`;
+            lesson.sentences.forEach((sent, sIdx) => {
+                total++;
+                let ans = userAnswers[`${lIdx}-${sIdx}`];
+                if(ans) {
+                    if(ans.isCorrect) {
+                        correct++;
+                        detailText += `${sIdx+1}. [✅] ${sent.h}\n`;
+                    } else {
+                        let uInput = ans.userInput ? ans.userInput : "[Để trống]";
+                        detailText += `${sIdx+1}. [❌] Đáp án: ${sent.h}\n      (Bạn gõ: ${uInput})\n`;
+                    }
+                } else {
+                        detailText += `${sIdx+1}. [⚪] Chưa làm: ${sent.h}\n`;
+                }
+            });
+            detailText += "\n";
+        });
+
+        const percent = Math.round((correct / total) * 100) || 0;
+        text += `🎯 Tổng: ${total} câu | Đúng: ${correct} | Sai/Chưa làm: ${total - correct} (${percent}%)\n\n`;
+        text += detailText;
+
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+
+        const toast = document.getElementById('toast');
+        toast.innerText = "Đã copy kết quả nghe chép!";
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // --- MODAL XÁC NHẬN XÓA (THAY THẾ CONFIRM) ---
+    function showResetModal() {
+        playAudio('audio-click');
+        document.getElementById('custom-confirm-modal').classList.remove('hidden');
+        document.getElementById('custom-confirm-modal').classList.add('flex');
+    }
+
+    function closeResetModal() {
+        playAudio('audio-click');
+        document.getElementById('custom-confirm-modal').classList.add('hidden');
+        document.getElementById('custom-confirm-modal').classList.remove('flex');
+    }
+
+    function confirmReset() {
+        closeResetModal();
+        userAnswers = {};
+        lessonsData.forEach(l => l.completed = false);
+        document.getElementById('progress-bar').style.width = '0%';
+        completed.dictation = false;
+        document.getElementById('check-dictation').classList.add('hidden');
+        returnToStart();
+    }
+
+    document.addEventListener("keydown", function(e) {
+        const dictScreen = document.getElementById('dictation-screen');
+        if (e.key === "Enter" && !dictScreen.classList.contains('hidden')) {
+            e.preventDefault();
+            const btnNext = document.getElementById('btn-next-dict');
+            const inputField = document.getElementById('dict-input');
+            
+            if (!btnNext.classList.contains('hidden')) {
+                nextDictation();
+            } else if (!inputField.disabled) {
+                checkDictation();
+            }
+        }
+    });
+
     // --- BÀI TẬP TỔNG HỢP ---
     function showExercise() {
         document.getElementById('start-screen').classList.add('hidden');
@@ -556,7 +1060,36 @@
         res += `1. A: 都 ${getVal(0)} 了，快去睡觉吧。 B: 我再玩儿十分钟。 A: 你已经玩儿了好几个小时了，不累吗？ B: 我 ${getVal(1)} 特别感兴趣，一点儿也不累。\n`;
         res += `2. A: 你一直在这家公司工作吗？ B: 对，我已经 ${getVal(2)}。 A: 你 ${getVal(3)}？ B: 我特别喜欢我的工作。\n`;
         res += `3. A: 喂，你在哪儿呢？ B: 我可能会晚 ${getVal(4)}。 A: 快点儿吧，我已经等了 ${getVal(5)}。 B: 好，你别着急，我快到了。\n`;
-        res += `4. A: 你们结婚 ${getVal(6)}？ B: 快50年了。 A: 你们身体怎么这么好？ B: 我们都对 ${getVal(7)}。\n`;
+        res += `4. A: 你们结婚 ${getVal(6)}？ B: 快50年了。 A: 你们身体怎么这么好？ B: 我们都对 ${getVal(7)}。\n\n`;
+
+        // Tích hợp copy cả kết quả dictation Bài 7
+        res += "🎧 PHẦN 7: NGHE CHÉP BÀI KHÓA\n";
+        let dicTotal = 0, dicCorrect = 0;
+        let dicDetail = "";
+
+        lessonsData.forEach((lesson, lIdx) => {
+            dicDetail += `--- ${lesson.title} ---\n`;
+            lesson.sentences.forEach((sent, sIdx) => {
+                dicTotal++;
+                let ans = userAnswers[`${lIdx}-${sIdx}`];
+                if(ans) {
+                    if(ans.isCorrect) {
+                        dicCorrect++;
+                        dicDetail += `${sIdx+1}. [✅] ${sent.h}\n`;
+                    } else {
+                        let uInput = ans.userInput ? ans.userInput : "[Để trống]";
+                        dicDetail += `${sIdx+1}. [❌] Đáp án: ${sent.h}\n      (Bạn gõ: ${uInput})\n`;
+                    }
+                } else {
+                        dicDetail += `${sIdx+1}. [⚪] Chưa làm: ${sent.h}\n`;
+                }
+            });
+            dicDetail += "\n";
+        });
+
+        const percent = Math.round((dicCorrect / dicTotal) * 100) || 0;
+        res += `🎯 Tổng: ${dicTotal} câu | Đúng: ${dicCorrect} | Sai/Chưa làm: ${dicTotal - dicCorrect} (${percent}%)\n\n`;
+        res += dicDetail;
 
         navigator.clipboard.writeText(res).then(() => {
             const fb = document.getElementById('ex-fb'); 
