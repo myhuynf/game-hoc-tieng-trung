@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Khu Vườn Tiếng Trung - Học HSK qua Game cùng Nga</title>
     <meta name="description" content="Trang web tổng hợp game học tiếng Trung HSK thú vị, tài liệu giáo trình chuẩn HSK 1-6 và HSK 3.0 miễn phí từ cô giáo Nga.">
-    <meta name="keywords" content="học tiếng trung, game hsk, giáo trình hsk 3.0, hsk 1, nga học hsk, tài liệu tiếng trung">
+    <meta name="keywords" content="học tiếng trung, game hsk, giáo trình hsk 3.0, hsk 1, nga học hsk, tài liệu tiếng trung, khóa học hsk">
     <meta property="og:title" content="Khu Vườn Tiếng Trung - Vừa Chơi Vừa Học HSK">
-    <meta property="og:description" content="Khám phá kho game và tài liệu HSK miễn phí của Nga.">
+    <meta property="og:description" content="Khám phá kho game, khóa học và tài liệu HSK miễn phí của Nga.">
     <meta property="og:image" content="anh-nga.jpg.jpg"> 
     <meta property="og:type" content="website">
-    
-    <meta name="google-site-verification" content="uCBOw525gPGHqJ6d4n2e92T0eOnirCEQs9uPa8kQ0dM" />
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --ghibli-green: #9dc183;
@@ -22,6 +19,10 @@
             --ghibli-wood: #8b5a2b;
             --ghibli-leaf: #7fb069;
             --ghibli-pink: #ffb7c5;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --hover-shadow: 0 15px 35px rgba(79, 121, 66, 0.2);
         }
 
         body {
@@ -29,333 +30,665 @@
             font-family: 'Quicksand', sans-serif;
             background: var(--ghibli-sky);
             background-image: 
-                linear-gradient(to bottom, rgba(255,255,255,0.4), rgba(255,255,255,0)),
+                linear-gradient(to bottom, rgba(255,255,255,0.7), rgba(255,255,255,0.3)),
                 url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover; background-attachment: fixed;
+            background-size: cover; background-attachment: fixed; background-position: center;
             color: #333; display: flex; flex-direction: column; align-items: center;
             min-height: 100vh; overflow-x: hidden; position: relative;
         }
 
+        /* --- BACKGROUND ANIMATION --- */
         #leaves-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 0; overflow: hidden; }
-        .leaf { position: absolute; top: -10%; pointer-events: none; user-select: none; animation: fall linear infinite, sway ease-in-out infinite alternate; }
+        .leaf { position: absolute; top: -10%; pointer-events: none; user-select: none; animation: fall linear infinite, sway ease-in-out infinite alternate; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
         @keyframes fall { 0% { top: -10%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 110%; opacity: 0; } }
-        @keyframes sway { 0% { transform: translateX(0px) rotate(0deg); } 100% { transform: translateX(30px) rotate(45deg); } }
+        @keyframes sway { 0% { transform: translateX(0px) rotate(0deg); } 100% { transform: translateX(40px) rotate(45deg); } }
 
-        header {
-            text-align: center; padding: 20px 15px; background: rgba(255, 255, 255, 0.75);
-            width: 100%; border-bottom: 5px solid var(--ghibli-green);
-            backdrop-filter: blur(5px); z-index: 10; box-sizing: border-box;
+        /* --- NAVBAR --- */
+        .navbar {
+            position: sticky; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border-bottom: 3px solid var(--ghibli-green);
         }
-
-        h1 { margin: 0; color: var(--ghibli-dark-green); font-size: clamp(1.3rem, 4vw, 2rem); }
-        .sub-title-box { display: inline-block; margin: 8px 0; padding: 4px 15px; border: 2px dashed var(--ghibli-dark-green); border-radius: 12px; background-color: rgba(255, 183, 197, 0.3); color: var(--ghibli-dark-green); font-weight: 600; font-size: 0.85rem; }
-
-        .about-me-card {
-            background: rgba(255, 255, 255, 0.85); border-radius: 25px; padding: 15px;
-            max-width: 800px; width: 92%; margin: 20px auto;
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 15px 20px 10px;
             display: flex; flex-direction: column; align-items: center; gap: 15px;
-            border: 2px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-            backdrop-filter: blur(10px); z-index: 10; position: relative;
         }
-        @media (min-width: 768px) { .about-me-card { flex-direction: row; text-align: left; padding: 25px; } }
-        .profile-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--ghibli-green); object-fit: cover; flex-shrink: 0; background-color: #f0f0f0; }
-        .about-info h2 { margin: 0 0 5px 0; color: var(--ghibli-dark-green); font-size: 1.2rem; }
-        .about-info p { line-height: 1.6; color: #444; margin: 10px 0; font-size: 0.95rem; }
-
-        .main-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 20px; z-index: 10; width: 95%; }
-        .tab-btn { padding: 10px 25px; border-radius: 25px; border: none; background: white; color: var(--ghibli-dark-green); font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-family: inherit; }
-        .tab-btn.active { background: var(--ghibli-dark-green); color: white; }
-
-        .sub-tabs-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 20px; width: 90%; z-index: 10; }
-        .sub-tab-btn { padding: 6px 15px; border-radius: 15px; border: 1px solid var(--ghibli-green); background: rgba(255,255,255,0.8); color: var(--ghibli-dark-green); font-size: 0.85rem; cursor: pointer; transition: 0.2s; font-family: inherit; }
-        .sub-tab-btn.active { background: var(--ghibli-leaf); color: white; }
-
-        .search-wrapper { position: relative; width: 85%; max-width: 320px; margin: 0 auto 20px; z-index: 20; }
-        #gameSearch { width: 100%; padding: 8px 15px 8px 40px; border-radius: 20px; border: 2px solid var(--ghibli-green); outline: none; box-sizing: border-box; font-family: 'Quicksand'; }
-        .koala-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 20px; }
-
-        .container { display: none; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 1100px; width: 94%; padding-bottom: 30px; z-index: 10; }
-        .container.active { display: grid; }
+        .logo { 
+            font-family: 'Nunito', sans-serif; font-size: 2.2rem; font-weight: 800; 
+            color: var(--ghibli-dark-green); cursor: pointer; display: flex; align-items: center; gap: 10px;
+            text-transform: uppercase; letter-spacing: 1px; text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .logo:hover { transform: scale(1.02); }
+        .logo-icon { font-size: 2.5rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
         
-        @media (min-width: 768px) { 
-            .container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; } 
-            .game-card { padding: 25px 15px !important; }
-            .game-icon { font-size: 40px !important; }
-            .game-title { font-size: 0.9rem !important; }
+        .nav-links { 
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; 
+            list-style: none; margin: 0; padding: 0; width: 100%;
+        }
+        .nav-links li a { 
+            text-decoration: none; color: var(--ghibli-dark-green); font-weight: 700; font-size: 1.05rem;
+            padding: 10px 16px; border-radius: 25px; transition: all 0.3s ease;
+            display: inline-block; border: 2px solid transparent;
+        }
+        .nav-links li a:hover, .nav-links li a.active-nav { 
+            background: var(--ghibli-green); color: white; border-color: var(--ghibli-leaf);
+            box-shadow: 0 4px 10px rgba(157, 193, 131, 0.4);
         }
         
-        .game-card { background: white; border-radius: 18px; padding: 18px 10px; text-align: center; transition: 0.3s; text-decoration: none; color: inherit; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; box-shadow: 0 5px 12px rgba(0,0,0,0.05); border: 2px solid transparent; }
-        .game-card:hover { transform: translateY(-5px); border-color: var(--ghibli-leaf); background-color: #f9fff6; }
-        .game-icon { font-size: 35px; margin-bottom: 8px; }
-        .game-title { font-weight: 600; font-size: 0.8rem; color: var(--ghibli-wood); text-transform: uppercase; line-height: 1.2; }
-        .new-badge { position: absolute; top: 8px; right: -25px; background: #ff6b6b; color: white; font-size: 0.55rem; padding: 2px 25px; transform: rotate(45deg); font-weight: bold; }
+        /* Dropdown Menu */
+        .dropdown { position: relative; }
+        .dropdown-content {
+            display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            background: white; min-width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-radius: 16px; overflow: hidden; border: 2px solid var(--ghibli-green); padding: 8px 0; z-index: 1001;
+        }
+        .dropdown:hover .dropdown-content { display: block; animation: fadeInDown 0.3s ease; }
+        .dropdown-content a { display: block; padding: 12px 20px; color: #444; border-radius: 0; font-weight: 600; border: none !important; font-size: 0.95rem; }
+        .dropdown-content a:hover { background: var(--ghibli-sky) !important; color: var(--ghibli-dark-green) !important; padding-left: 25px; box-shadow: none !important; }
 
-        .doc-list { display: none; width: 92%; max-width: 800px; flex-direction: column; gap: 12px; z-index: 10; margin-bottom: 30px;}
+        @keyframes fadeInDown { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+        /* --- COMMON LAYOUT --- */
+        .main-wrapper { width: 100%; max-width: 1200px; z-index: 10; display: flex; flex-direction: column; align-items: center; padding-bottom: 50px; }
+        .section-content { display: none; width: 100%; flex-direction: column; align-items: center; animation: fadeInSection 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .section-content.active { display: flex; }
+        @keyframes fadeInSection { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 1. HERO SECTION (TRANG CHỦ) --- */
+        .hero-section {
+            width: 92%; max-width: 1100px; margin: 40px auto;
+            display: flex; flex-direction: column; align-items: center; gap: 40px;
+            z-index: 10; position: relative;
+        }
+        @media (min-width: 850px) { 
+            .hero-section { flex-direction: row; justify-content: space-between; align-items: center; margin: 60px auto; } 
+        }
+
+        .hero-text-content {
+            flex: 1; text-align: center; background: var(--glass-bg); backdrop-filter: blur(12px);
+            padding: 40px; border-radius: 30px; border: 2px solid var(--glass-border);
+            box-shadow: var(--shadow);
+        }
+        @media (min-width: 850px) { .hero-text-content { text-align: left; } }
+
+        .hero-badge { 
+            display: inline-block; padding: 8px 20px; border-radius: 25px; 
+            background: rgba(255, 183, 197, 0.6); color: #d6336c; font-weight: 800; font-size: 0.9rem; 
+            margin-bottom: 20px; border: 2px solid #ffb7c5; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .hero-text-content h1 { 
+            margin: 0 0 15px 0; color: var(--ghibli-dark-green); font-size: clamp(1.8rem, 4vw, 2.5rem); 
+            font-family: 'Nunito', sans-serif; line-height: 1.3;
+        }
+        .highlight-text { color: #d6336c; display: block; margin-top: 5px; font-size: clamp(1.2rem, 3vw, 1.5rem); }
+        .hero-text-content p { 
+            line-height: 1.8; color: #555; margin: 15px 0; font-size: 1.05rem; font-weight: 600;
+        }
+        .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
+        @media (min-width: 850px) { .hero-buttons { justify-content: flex-start; } }
+        
+        .btn-primary {
+            background: var(--ghibli-dark-green); color: white; padding: 14px 28px; border-radius: 30px;
+            font-weight: 700; font-size: 1.05rem; border: none; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(79, 121, 66, 0.3); display: flex; align-items: center; gap: 8px;
+        }
+        .btn-primary:hover { background: var(--ghibli-leaf); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(79, 121, 66, 0.4); }
+        .btn-secondary {
+            background: white; color: var(--ghibli-dark-green); padding: 14px 28px; border-radius: 30px;
+            font-weight: 700; font-size: 1.05rem; border: 2px solid var(--ghibli-dark-green); cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 8px;
+        }
+        .btn-secondary:hover { background: var(--ghibli-sky); transform: translateY(-3px); }
+
+        .hero-image-wrapper {
+            position: relative; width: 280px; height: 280px; flex-shrink: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+        @media (min-width: 850px) { .hero-image-wrapper { width: 380px; height: 380px; } }
+        
+        .hero-image-wrapper::before {
+            content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
+            background: linear-gradient(45deg, var(--ghibli-green), var(--ghibli-sky));
+            border-radius: 50%; z-index: -1; filter: blur(20px); opacity: 0.7;
+        }
+        .profile-img { 
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
+            border: 8px solid white; box-shadow: var(--shadow); position: relative; z-index: 1;
+        }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
+
+        /* --- 2. GAME & DOCS STYLES --- */
+        .sub-tabs-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin: 20px 0 30px; width: 92%; }
+        .sub-tab-btn { padding: 10px 22px; border-radius: 25px; border: 2px solid var(--ghibli-green); background: rgba(255,255,255,0.9); color: var(--ghibli-dark-green); font-size: 1rem; font-weight: 700; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .sub-tab-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .sub-tab-btn.active { background: var(--ghibli-dark-green); color: white; border-color: var(--ghibli-dark-green); }
+
+        .search-wrapper { position: relative; width: 90%; max-width: 500px; margin-bottom: 40px; margin-top: 10px; }
+        #globalSearch { width: 100%; padding: 16px 20px 16px 50px; border-radius: 30px; border: 2px solid var(--ghibli-green); outline: none; box-sizing: border-box; font-family: 'Quicksand'; font-size: 1.1rem; font-weight: 600; background: rgba(255,255,255,0.95); box-shadow: 0 6px 15px rgba(0,0,0,0.08); transition: 0.3s; }
+        #globalSearch:focus { border-color: var(--ghibli-dark-green); box-shadow: var(--hover-shadow); }
+        .search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 1.4rem; }
+
+        .grid-container { display: none; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 94%; max-width: 1150px; }
+        .grid-container.active { display: grid; }
+        @media (min-width: 700px) { .grid-container { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+        @media (min-width: 950px) { .grid-container { grid-template-columns: repeat(4, 1fr); gap: 25px; } }
+        
+        .game-card { background: var(--glass-bg); backdrop-filter: blur(10px); border-radius: 20px; padding: 25px 15px; text-align: center; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; color: inherit; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; border: 2px solid white; box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
+        .game-card:hover { transform: translateY(-10px); border-color: var(--ghibli-leaf); background-color: white; box-shadow: var(--hover-shadow); }
+        .game-icon { font-size: 45px; margin-bottom: 12px; transition: 0.3s; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        .game-card:hover .game-icon { transform: scale(1.15) rotate(5deg); }
+        .game-title { font-weight: 800; font-size: 1.15rem; color: var(--ghibli-dark-green); margin-bottom: 4px; font-family: 'Nunito', sans-serif; line-height: 1.3; }
+        .game-trans { font-size: 0.85rem; color: #777; font-weight: 600; font-style: italic; margin-bottom: 10px; min-height: 38px; display: flex; align-items: center; text-align: center; }
+        .game-desc { font-size: 0.8rem; color: var(--ghibli-wood); font-weight: 700; background: rgba(139, 90, 43, 0.08); padding: 5px 12px; border-radius: 12px; margin-top: auto; }
+        .new-badge { position: absolute; top: 12px; right: -35px; background: #ff6b6b; color: white; font-size: 0.7rem; padding: 5px 40px; transform: rotate(45deg); font-weight: 800; box-shadow: 0 2px 5px rgba(0,0,0,0.2); letter-spacing: 1px; z-index: 2; }
+
+        .doc-list { display: none; width: 94%; max-width: 950px; flex-direction: column; gap: 20px; }
         .doc-list.active { display: flex; }
-        .doc-card { background: white; padding: 18px; border-radius: 15px; border-left: 6px solid var(--ghibli-green); box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .doc-card { background: white; padding: 25px 30px; border-radius: 20px; border-left: 10px solid var(--ghibli-green); box-shadow: 0 6px 20px rgba(0,0,0,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; transition: 0.3s; }
+        .doc-card:hover { transform: translateX(8px); border-left-color: var(--ghibli-dark-green); box-shadow: var(--hover-shadow); }
         .doc-info { flex: 1; min-width: 250px; }
-        .doc-info h3 { margin: 0 0 5px 0; font-size: 1.1rem; color: var(--ghibli-dark-green); }
-        .doc-info p { margin: 0; font-size: 0.9rem; color: #666; line-height: 1.4; }
-        
-        .btn-download { background: var(--ghibli-dark-green); color: white; text-decoration: none; padding: 10px 20px; border-radius: 12px; font-size: 0.85rem; font-weight: bold; transition: 0.3s; box-shadow: 0 4px 0 #2d4d28; }
-        .btn-download:hover { background: var(--ghibli-leaf); transform: translateY(-2px); }
-        .btn-download:active { transform: translateY(2px); box-shadow: none; }
+        .doc-info h3 { margin: 0 0 10px 0; font-size: 1.3rem; color: var(--ghibli-dark-green); font-family: 'Nunito', sans-serif; font-weight: 800; }
+        .doc-info p { margin: 0; font-size: 1rem; color: #555; line-height: 1.6; font-weight: 600; }
+        .btn-download { background: var(--ghibli-dark-green); color: white; text-decoration: none; padding: 14px 30px; border-radius: 15px; font-size: 1rem; font-weight: 800; transition: 0.3s; box-shadow: 0 5px 0 #2d4d28; display: flex; align-items: center; gap: 8px; }
+        .btn-download:hover { background: var(--ghibli-leaf); transform: translateY(-2px); box-shadow: 0 5px 0 #3a6b34; }
 
-        footer { margin-top: auto; width: 100%; background: rgba(255, 255, 255, 0.8); border-top: 2px solid var(--ghibli-green); padding: 12px; backdrop-filter: blur(10px); z-index: 10; box-sizing: border-box; }
-        .footer-content { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .contact-title { color: var(--ghibli-dark-green); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
-        .qr-container { display: flex; justify-content: center; gap: 15px; }
-        .qr-item { display: flex; flex-direction: column; align-items: center; gap: 3px; }
-        .qr-code { width: 75px; height: 75px; background: #f0f0f0; padding: 3px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); object-fit: contain; }
-        .qr-label { font-size: 0.65rem; font-weight: 600; color: var(--ghibli-wood); }
-        .copyright { font-size: 0.7rem; color: var(--ghibli-dark-green); text-align: center; border-top: 1px solid rgba(0,0,0,0.05); width: 100%; padding-top: 8px; }
-        .hidden { display: none !important; }
+        /* --- 3. KHÓA HỌC STYLES (NEW) --- */
+        .course-grid { display: grid; grid-template-columns: 1fr; gap: 25px; width: 92%; max-width: 1000px; margin: 0 auto; }
+        @media (min-width: 768px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
+        
+        .course-card {
+            background: white; border-radius: 25px; padding: 35px 30px; text-align: left; text-decoration: none; color: inherit;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: 0.4s; position: relative; overflow: hidden; border: 2px solid transparent;
+            display: flex; flex-direction: column;
+        }
+        .course-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 8px;
+            background: linear-gradient(90deg, var(--ghibli-green), var(--ghibli-sky));
+        }
+        .course-card:hover { transform: translateY(-8px); border-color: var(--ghibli-sky); box-shadow: var(--hover-shadow); }
+        .course-level { background: var(--ghibli-sky); color: var(--ghibli-dark-green); padding: 6px 15px; border-radius: 15px; font-weight: 800; font-size: 0.9rem; align-self: flex-start; margin-bottom: 15px; display: inline-block;}
+        .course-card h3 { color: var(--ghibli-dark-green); font-family: 'Nunito', sans-serif; font-size: 1.6rem; margin: 0 0 15px 0; }
+        .course-card p { color: #555; line-height: 1.6; font-size: 1.05rem; font-weight: 600; margin: 0 0 25px 0; flex-grow: 1; }
+        .course-btn { color: var(--ghibli-dark-green); font-weight: 800; display: flex; align-items: center; gap: 8px; font-size: 1.05rem; transition: 0.3s; }
+        .course-card:hover .course-btn { gap: 15px; color: var(--ghibli-leaf); }
+
+        /* --- 4. LIÊN HỆ STYLES --- */
+        .contact-wrapper {
+            width: 92%; max-width: 1000px; margin: 20px auto 50px; background: var(--glass-bg);
+            backdrop-filter: blur(15px); border-radius: 30px; border: 2px solid white; box-shadow: var(--shadow);
+            padding: 40px; display: grid; grid-template-columns: 1fr; gap: 40px;
+        }
+        @media (min-width: 800px) { .contact-wrapper { grid-template-columns: 1fr 1fr; } }
+        .contact-info-left h2 { color: var(--ghibli-dark-green); font-family: 'Nunito', sans-serif; font-size: 2rem; margin-top: 0; }
+        .contact-info-left p { font-size: 1.1rem; color: #555; line-height: 1.6; margin-bottom: 25px; font-weight: 600; }
+        .info-line { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-size: 1.15rem; font-weight: 700; color: var(--ghibli-wood); background: white; padding: 15px 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); border-left: 5px solid var(--ghibli-green); }
+        .info-icon { font-size: 1.5rem; }
+        .social-qr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 20px; }
+        .qr-card { background: white; padding: 15px; border-radius: 20px; text-align: center; text-decoration: none; color: inherit; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; border: 2px solid transparent; display: flex; flex-direction: column; align-items: center; }
+        .qr-card:hover { transform: translateY(-8px); border-color: var(--ghibli-green); box-shadow: var(--hover-shadow); }
+        .qr-card img { width: 100px; height: 100px; object-fit: contain; border-radius: 10px; margin-bottom: 10px; background: #f9f9f9; padding: 5px; }
+        .qr-card span { font-weight: 800; color: var(--ghibli-dark-green); font-size: 0.95rem; }
+        .qr-card .platform { font-size: 0.8rem; color: #888; margin-bottom: 5px; }
+
+        /* --- FOOTER MINI --- */
+        #footer-mini { margin-top: auto; width: 100%; background: var(--glass-bg); border-top: 2px solid var(--ghibli-green); padding: 15px; backdrop-filter: blur(10px); z-index: 10; text-align: center; }
+        #footer-mini p { margin: 0; font-size: 0.95rem; color: var(--ghibli-dark-green); font-weight: 700; letter-spacing: 0.5px; }
+
     </style>
 </head>
 <body>
 
 <div id="leaves-container"></div>
 
-<header>
-    <h1>Khu Vườn Tiếng Trung 🌿</h1>
-    <div class="sub-title-box">Bản quyền thuộc về: Nga Học HSK</div>
-</header>
-
-<section class="about-me-card">
-    <img src="anh-nga.jpg.jpg" alt="Nga Profile" class="profile-img">
-    <div class="about-info">
-        <h2>Chào bạn, mình là Nga! ✨</h2>
-        <p>Tốt nghiệp <b>Đại học Kinh tế Quốc dân (NEU)</b> chuyên ngành Quản trị Du lịch & Khách sạn. Là một trong những người đầu tiên ở Việt Nam thi đỗ <b>HSK6 tiêu chuẩn 3.0 & HSKK Cao cấp</b> và kinh nghiệm tiếp xúc đa ngôn ngữ, mình đam mê mang đến phương pháp học tiếng Trung qua <b>Game (Gamification)</b> đầy thú vị.</p>
-        <p>Mỗi bài học tại đây đều bám sát giáo trình chuẩn HSK, giúp bạn "vừa chơi vừa học" hiệu quả. Nếu gặp bất kỳ lỗi nhỏ nào, hãy giúp mình <b>chụp màn hình</b> và liên hệ để mình hoàn thiện khu vườn này nhé!</p>
+<!-- THANH ĐIỀU HƯỚNG MỚI BỔ SUNG "KHÓA HỌC" -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo" onclick="switchMainTab('section-home', document.querySelector('.nav-btn'))">
+            <span class="logo-icon">🌿</span> Khu Vườn Của Nga
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-btn active-nav" onclick="switchMainTab('section-home', this)">Trang Chủ</a></li>
+            <li class="dropdown">
+                <a href="#" class="nav-btn" onclick="switchMainTab('section-game', this)">Học Qua Game ▾</a>
+                <div class="dropdown-content">
+                    <a href="#" onclick="navigateToGame('game-intro')">Nhập môn (Pinyin, Bộ thủ)</a>
+                    <a href="#" onclick="navigateToGame('game-hsk1')">HSK Cấp 1</a>
+                    <a href="#" onclick="navigateToGame('game-hsk2')">HSK Cấp 2</a>
+                    <a href="#" onclick="navigateToGame('game-hsk3')">HSK Cấp 3</a>
+                    <a href="#" onclick="navigateToGame('game-hsk4')">HSK Cấp 4</a>
+                    <a href="#" onclick="navigateToGame('game-hsk5')">HSK Cấp 5</a>
+                    <a href="#" onclick="navigateToGame('game-hsk6')">HSK Cấp 6</a>
+                </div>
+            </li>
+            <li><a href="#" class="nav-btn" onclick="switchMainTab('section-english', this)">Tiếng Anh</a></li>
+            <li><a href="#" class="nav-btn" onclick="switchMainTab('section-doc', this)">Tài Liệu Tự Học</a></li>
+            <li><a href="#" class="nav-btn" onclick="switchMainTab('section-course', this)">Khóa Học HSK</a></li>
+            <li><a href="#" class="nav-btn" onclick="switchMainTab('section-contact', this)">Liên Hệ</a></li>
+        </ul>
     </div>
-</section>
+</nav>
 
-<div class="main-tabs">
-    <button class="tab-btn active" onclick="switchMainTab('game-section')">🎮 TRÒ CHƠI TIẾNG TRUNG</button>
-    <button class="tab-btn" onclick="switchMainTab('english-section')">TIẾNG ANH</button>
-    <button class="tab-btn" onclick="switchMainTab('doc-section')">📚 TÀI LIỆU TỰ HỌC</button>
+<div class="main-wrapper">
+
+    <!-- 1. HERO SECTION (TRANG CHỦ) -->
+    <section id="section-home" class="section-content active">
+        <div class="hero-section">
+            <div class="hero-text-content">
+                <div class="hero-badge">Chào bạn, mình là Nga! ✨</div>
+                <h1>Học Tiếng Trung Không Nhàm Chán</h1>
+                <span class="highlight-text">Học Thật • Thi Thật • Ứng Dụng Thật</span>
+                <p>Tốt nghiệp Đại học Kinh tế Quốc dân (NEU) chuyên ngành Quản trị Du lịch & Khách sạn. Là một trong những người đầu tiên ở Việt Nam thi đỗ HSK6 tiêu chuẩn 3.0 & HSKK Cao cấp và kinh nghiệm tiếp xúc đa ngôn ngữ, mình đam mê mang đến phương pháp học tiếng Trung qua Game (Gamification) đầy thú vị.</p>
+                <p>Mỗi bài học tại đây đều bám sát giáo trình chuẩn HSK, giúp bạn "vừa chơi vừa học" hiệu quả. Nếu gặp bất kỳ lỗi nhỏ nào, hãy giúp mình chụp màn hình và liên hệ để mình hoàn thiện khu vườn này nhé!</p>
+                
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="navigateToGame('game-intro')">🎮 Bắt Đầu Chơi Game</button>
+                    <button class="btn-secondary" onclick="switchMainTab('section-course', document.querySelectorAll('.nav-btn')[4])">🎓 Tham Khảo Khóa Học</button>
+                </div>
+            </div>
+            <div class="hero-image-wrapper">
+                <img src="anh-nga.jpg.jpg" alt="Nga Học HSK" class="profile-img" onerror="this.src='https://via.placeholder.com/380?text=anh-nga.jpg.jpg'">
+            </div>
+        </div>
+    </section>
+
+    <!-- THANH TÌM KIẾM -->
+    <div class="search-wrapper" id="global-search-area" style="display: none;">
+        <input type="text" id="globalSearch" placeholder="Tìm kiếm bài học, cấp độ, tài liệu...">
+        <div class="search-icon">🔍</div>
+    </div>
+
+    <!-- 2. KHU VỰC GAME HSK -->
+    <section id="section-game" class="section-content">
+        <div class="sub-tabs-container">
+            <button class="sub-tab-btn active" data-target="game-intro">Nhập môn</button>
+            <button class="sub-tab-btn" data-target="game-hsk1">HSK 1</button>
+            <button class="sub-tab-btn" data-target="game-hsk2">HSK 2</button>
+            <button class="sub-tab-btn" data-target="game-hsk3">HSK 3</button>
+            <button class="sub-tab-btn" data-target="game-hsk4">HSK 4</button>
+            <button class="sub-tab-btn" data-target="game-hsk5">HSK 5</button>
+            <button class="sub-tab-btn" data-target="game-hsk6">HSK 6</button>
+        </div>
+        
+        <div id="game-intro" class="grid-container active"></div>
+        <div id="game-hsk1" class="grid-container"></div>
+        <div id="game-hsk2" class="grid-container"></div>
+        <div id="game-hsk3" class="grid-container"></div>
+        <div id="game-hsk4" class="grid-container"></div>
+        <div id="game-hsk5" class="grid-container"></div>
+        <div id="game-hsk6" class="grid-container"></div>
+    </section>
+
+    <!-- 3. KHU VỰC TIẾNG ANH -->
+    <section id="section-english" class="section-content">
+        <div style="margin: 20px 0; background: var(--glass-bg); padding: 20px 40px; border-radius: 20px; box-shadow: var(--shadow); text-align: center;">
+            <h2 style="color: var(--ghibli-dark-green); margin: 0; font-family: 'Nunito', sans-serif; font-size: 1.8rem;">Khóa học Tiếng Anh Qua Game 🎧</h2>
+        </div>
+        <div id="english-grid" class="grid-container active"></div>
+    </section>
+
+    <!-- 4. KHU VỰC TÀI LIỆU -->
+    <section id="section-doc" class="section-content">
+        <div class="sub-tabs-container">
+            <button class="sub-tab-btn active" data-target="doc-hsk1">HSK 1</button>
+            <button class="sub-tab-btn" data-target="doc-hsk2">HSK 2</button>
+            <button class="sub-tab-btn" data-target="doc-hsk3">HSK 3</button>
+            <button class="sub-tab-btn" data-target="doc-hsk4">HSK 4</button>
+            <button class="sub-tab-btn" data-target="doc-hsk5">HSK 5</button>
+            <button class="sub-tab-btn" data-target="doc-hsk6">HSK 6</button>
+            <button class="sub-tab-btn" data-target="doc-hsk30" style="color: #ff3b3b; border-color: #ffb7c5; background: #fff0f3;">HSK 3.0 MỚI</button>
+        </div>
+
+        <div id="doc-hsk1" class="doc-list active"></div>
+        <div id="doc-hsk2" class="doc-list"></div>
+        <div id="doc-hsk3" class="doc-list"></div>
+        <div id="doc-hsk4" class="doc-list"></div>
+        <div id="doc-hsk5" class="doc-list"></div>
+        <div id="doc-hsk6" class="doc-list"></div>
+        <div id="doc-hsk30" class="doc-list"></div>
+    </section>
+
+    <!-- 5. KHU VỰC KHÓA HỌC HSK (MỚI BỔ SUNG) -->
+    <section id="section-course" class="section-content">
+        <div style="text-align: center; margin-bottom: 40px; background: var(--glass-bg); padding: 30px; border-radius: 20px; box-shadow: var(--shadow); width: 92%; max-width: 1000px;">
+            <h2 style="color: var(--ghibli-dark-green); font-family: 'Nunito', sans-serif; font-size: 2.2rem; margin: 0 0 10px 0;">Lộ Trình Khóa Học HSK Bài Bản 🎓</h2>
+            <p style="color: #555; font-size: 1.1rem; font-weight: 600; margin: 0;">Khóa học tương tác thực tế giúp bạn nhanh chóng đạt mục tiêu ngôn ngữ.</p>
+        </div>
+
+        <div class="course-grid">
+            <a href="https://www.tiktok.com/@studyhskwithnga" target="_blank" class="course-card">
+                <div class="course-level">HSK 1 - HSK 2</div>
+                <h3>Lớp Nền Tảng Sơ Cấp</h3>
+                <p>Khóa học lý tưởng cho người mới bắt đầu. Nắm chắc phát âm chuẩn Pinyin, bộ thủ và giao tiếp sinh hoạt hàng ngày cơ bản.</p>
+                <span class="course-btn">Xem Chi Tiết Lớp Học ➔</span>
+            </a>
+
+            <a href="https://www.tiktok.com/@studyhskwithnga" target="_blank" class="course-card">
+                <div class="course-level">HSK 3</div>
+                <h3>Lớp Giao Tiếp Trung Cấp</h3>
+                <p>Khóa học HSK 3 giúp học viên nắm vững hơn 2200 từ vựng, 210 chủ điểm ngữ pháp, và nâng cao khả năng giao tiếp tiếng Trung trong học tập, công việc, đời sống, chuẩn bị vững chắc cho kỳ thi HSK 3.</p>
+                <span class="course-btn">Xem Chi Tiết Lớp Học ➔</span>
+            </a>
+
+            <a href="https://www.tiktok.com/@studyhskwithnga" target="_blank" class="course-card">
+                <div class="course-level">HSK 4</div>
+                <h3>Lớp Thành Thạo Tiếng Trung</h3>
+                <p>Khóa học HSK 4 giúp học viên nâng cao 4 kỹ năng tiếng Trung, tích lũy trên 3200 từ vựng, đủ kiến thức ngữ pháp và văn hóa xã hội Trung Quốc để thi HSK4 và tiếp tục học các khóa nâng cao.</p>
+                <span class="course-btn">Xem Chi Tiết Lớp Học ➔</span>
+            </a>
+
+            <a href="https://www.tiktok.com/@studyhskwithnga" target="_blank" class="course-card">
+                <div class="course-level">HSK 5</div>
+                <h3>Lớp Cao Cấp & Dịch Thuật</h3>
+                <p>Khóa học HSK 5 giúp học viên nâng cao 6 kỹ năng nghe, nói, đọc, viết, dịch và đánh máy, với hơn 4300 từ vựng và 357 chủ điểm ngữ pháp, chuẩn bị tốt cho kỳ thi HSK 5 và các công việc yêu cầu tiếng Trung chuyên nghiệp.</p>
+                <span class="course-btn">Xem Chi Tiết Lớp Học ➔</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- 6. KHU VỰC LIÊN HỆ -->
+    <section id="section-contact" class="section-content">
+        <div class="contact-wrapper">
+            <div class="contact-info-left">
+                <h2>Cùng Giao Lưu Với Nga Nhé! 🌿</h2>
+                <p>Bạn có câu hỏi, thắc mắc về lộ trình học, hay đơn giản là muốn chia sẻ niềm vui khi "phá đảo" một game HSK? Hãy liên hệ ngay với mình qua các kênh dưới đây.</p>
+                
+                <div class="info-line">
+                    <span class="info-icon">📧</span>
+                    <span>Email: Ngabui94@gmail.com</span>
+                </div>
+                <div class="info-line">
+                    <span class="info-icon">📞</span>
+                    <span>Hotline: 0979.393.427</span>
+                </div>
+            </div>
+
+            <div class="social-qr-grid">
+                <a href="https://www.tiktok.com/@studyhskwithnga" target="_blank" class="qr-card">
+                    <span class="platform">Kênh Video</span>
+                    <img src="qr-tiktok.png" alt="TikTok Nga Học HSK" onerror="this.src='https://via.placeholder.com/100?text=TikTok'">
+                    <span>TikTok: Nga Học HSK</span>
+                </a>
+                
+                <a href="https://www.youtube.com/@studyhskwithnga" target="_blank" class="qr-card">
+                    <span class="platform">Bài Giảng Dài</span>
+                    <img src="qr-youtube.png.png" alt="YouTube Nga Học HSK" onerror="this.src='https://via.placeholder.com/100?text=YouTube'">
+                    <span>YouTube: Nga Học HSK</span>
+                </a>
+                
+                <a href="#" target="_blank" class="qr-card" title="Quét mã để nhắn tin Zalo">
+                    <span class="platform">Hỗ trợ Trực tiếp</span>
+                    <img src="qr-zalo.png.jpg" alt="Zalo Nga Học HSK" onerror="this.src='https://via.placeholder.com/100?text=Zalo'">
+                    <span>Zalo Cá Nhân</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
 </div>
 
-<!-- SECTION: TIẾNG TRUNG -->
-<div id="game-section" class="tab-content" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-    <div class="sub-tabs-container">
-        <button class="sub-tab-btn active" onclick="filterSub('game', 'game-intro')">Nhập môn</button>
-        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk1')">HSK 1</button>
-        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk2')">HSK 2</button>
-        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk3')">HSK 3</button>
-        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk4')">HSK 4</button>
-        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk5')">HSK 5</button>
-        <button class="sub-tab-btn" onclick="filterSub('game', 'game-hsk6')">HSK 6</button>
-    </div>
-
-    <div class="search-wrapper">
-        <input type="text" id="gameSearch" placeholder="Tìm bài học...">
-        <div class="koala-icon">🐨</div>
-    </div>
-
-    <div id="game-intro" class="container active">
-        <a href="pinyin.html" class="game-card"><div class="new-badge" style="background: #ffcc00; color: #333;">HOT</div><div class="game-icon">🎹</div><div class="game-title">Bảng phát âm</div></a>
-        <a href="BO THU 1.html" class="game-card"><div class="game-icon">🌱</div><div class="game-title">Bộ thủ 1</div></a>
-        <a href="BO THU 2.html" class="game-card"><div class="game-icon">🌿</div><div class="game-title">Bộ thủ 2</div></a>
-        <a href="BO THU 3.html" class="game-card"><div class="game-icon">☘️</div><div class="game-title">Bộ thủ 3</div></a>
-        <a href="BO THU 4.html" class="game-card"><div class="game-icon">🍀</div><div class="game-title">Bộ thủ 4</div></a>
-        <a href="BO THU 5.html" class="game-card"><div class="game-icon">🍃</div><div class="game-title">Bộ thủ 5</div></a>
-        <a href="BO THU 6.html" class="game-card"><div class="game-icon">🌳</div><div class="game-title">Bộ thủ 6</div></a>
-    </div>
-
-    <div id="game-hsk1" class="container">
-        <script>
-            const hsk1Data = [
-                { id: "1-2", icon: "📚" }, { id: "3", icon: "📖" }, { id: "4", icon: "🏠" },
-                { id: "5", icon: "👨‍👩‍👧" }, { id: "6", icon: "🗣️" }, { id: "7", icon: "🗓️" },
-                { id: "8", icon: "☕" }, { id: "9", icon: "🐱" }, { id: "10", icon: "🪑" },
-                { id: "11", icon: "⏰" }, { id: "12", icon: "🌤️" }, { id: "13", icon: "🍵" },
-                { id: "14", icon: "🛍️" }, { id: "15", icon: "✈️" }
-            ];
-            hsk1Data.forEach(item => {
-                document.write(`<a href="HSK1-LESSON${item.id}.html" class="game-card"><div class="game-icon">${item.icon}</div><div class="game-title">HSK1: Bài ${item.id}</div></a>`);
-            });
-        </script>
-    </div>
-
-    <div id="game-hsk2" class="container">
-        <script>
-            const hsk2Icons = ["🌲", "🚲", "🍎", "🌸", "🍏", "🔍", "🤝", "📍", "🗣️", "📐", "❄️", "🥢", "🍚", "🚶", "🏞️"];
-            for(let i=1; i<=15; i++) {
-                document.write(`<a href="HSK2-LESSON${i}.html" class="game-card"><div class="game-icon">${hsk2Icons[i-1] || "🎋"}</div><div class="game-title">HSK2: Bài ${i}</div></a>`);
-            }
-        </script>
-    </div>
-
-    <div id="game-hsk3" class="container">
-        <script>
-            // Giữ nguyên các bài cũ và bổ sung tới bài 20
-            const hsk3Custom = {
-                1: { icon: "🌲" }, 2: { icon: "🚲" }, 3: { icon: "🍎" }, 4: { icon: "🌸", badge: "MỚI" },
-                5: { icon: "🍏" }, 6: { icon: "🔍" }, 7: { icon: "🤝" }, 8: { icon: "📍" },
-                9: { icon: "🗣️" }, 10: { icon: "📐" }, 11: { icon: "❄️" }
-            };
-            for(let i=1; i<=20; i++) {
-                const data = hsk3Custom[i] || { icon: "🎋" };
-                const badgeHtml = data.badge ? `<div class="new-badge">${data.badge}</div>` : "";
-                document.write(`<a href="HSK3-LESSON${i}.html" class="game-card">${badgeHtml}<div class="game-icon">${data.icon}</div><div class="game-title">HSK3: Bài ${i}</div></a>`);
-            }
-        </script>
-    </div>
-
-    <div id="game-hsk4" class="container">
-        <script>
-            for(let i=1; i<=20; i++) {
-                document.write(`<a href="HSK4-LESSON${i}.html" class="game-card"><div class="game-icon">🍁</div><div class="game-title">HSK4: Bài ${i}</div></a>`);
-            }
-        </script>
-    </div>
-
-    <div id="game-hsk5" class="container">
-        <script>
-            for(let i=1; i<=36; i++) {
-                document.write(`<a href="HSK5-LESSON${i}.html" class="game-card"><div class="game-icon">🏯</div><div class="game-title">HSK5: Bài ${i}</div></a>`);
-            }
-        </script>
-    </div>
-
-    <div id="game-hsk6" class="container">
-        <script>
-            for(let i=1; i<=40; i++) {
-                document.write(`<a href="HSK6-LESSON${i}.html" class="game-card"><div class="game-icon">🐲</div><div class="game-title">HSK6: Bài ${i}</div></a>`);
-            }
-        </script>
-    </div>
-</div>
-
-<!-- SECTION: TIẾNG ANH -->
-<div id="english-section" class="tab-content hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 20px;">
-    <div id="english-grid" class="container active">
-        <script>
-            for(let i=1; i<=36; i++) {
-                document.write(`
-                    <a href="ENGLISH-LESSON${i}.html" class="game-card">
-                        <div class="game-icon">🎧</div>
-                        <div class="game-title">English: Lesson ${i}</div>
-                    </a>
-                `);
-            }
-        </script>
-    </div>
-</div>
-
-<!-- SECTION: TÀI LIỆU -->
-<div id="doc-section" class="tab-content hidden" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
-    <div class="sub-tabs-container">
-        <button class="sub-tab-btn active" onclick="filterSub('doc', 'doc-hsk1')">HSK 1</button>
-        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk2')">HSK 2</button>
-        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk3')">HSK 3</button>
-        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk4')">HSK 4</button>
-        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk5')">HSK 5</button>
-        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk6')">HSK 6</button>
-        <button class="sub-tab-btn" onclick="filterSub('doc', 'doc-hsk30')" style="color: #ff6b6b; font-weight: bold;">HSK 3.0</button>
-    </div>
-
-    <div id="doc-hsk1" class="doc-list active">
-        <div class="doc-card">
-            <div class="doc-info">
-                <h3>Giáo trình chuẩn HSK 1 (Full bộ) 📚</h3>
-                <p>Trọn bộ tài liệu bao gồm Sách bài học, Sách bài tập và File nghe Audio.</p>
-            </div>
-            <a href="https://drive.google.com/drive/folders/1NsBSkqHFmWaBs3fFbnY0NS7N4qx9ziOz" target="_blank" class="btn-download">Tải về 📥</a>
-        </div>
-        <div class="doc-card">
-            <div class="doc-info">
-                <h3>Bảng 150 từ vựng HSK 1 📝</h3>
-                <p>Danh sách từ vựng kèm phiên âm, nghĩa tiếng Việt và ví dụ cụ thể.</p>
-            </div>
-            <a href="#" class="btn-download">Tải về 📥</a>
-        </div>
-    </div>
-
-    <div id="doc-hsk30" class="doc-list">
-        <div class="doc-card">
-            <div class="doc-info">
-                <h3>Giáo trình chuẩn HSK 3.0 - Quyển 1 (新HSK教程1) 🏆</h3>
-                <p><b>Mô tả:</b> Giáo trình HSK 1 theo chuẩn HSK 3.0 được thiết kế với 15 bài học, khoảng 300 từ vựng.</p>
-            </div>
-            <a href="https://drive.google.com/drive/folders/1yjy6g10i9a0lBfKMFH3vlYuM0H-nXrTG?usp=drive_link" target="_blank" class="btn-download">Tải về 📥</a>
-        </div>
-        <!-- Thêm tài liệu HSK 2 - 3.0 -->
-        <div class="doc-card">
-            <div class="doc-info">
-                <h3>Giáo trình chuẩn HSK 3.0 - Quyển 2 (新HSK教程2) 🏆</h3>
-                <p><b>Mô tả:</b> Giáo trình HSK 2 theo chuẩn HSK 3.0 giúp mở rộng vốn từ vựng và ngữ pháp trung cấp thấp.</p>
-            </div>
-            <a href="https://drive.google.com/file/d/1PTa1CgZ4RncTIQIpScLo1I0xObSCczBS/view?usp=sharing" target="_blank" class="btn-download">Tải về 📥</a>
-        </div>
-        <!-- Thêm tài liệu HSK 3 - 3.0 -->
-        <div class="doc-card">
-            <div class="doc-info">
-                <h3>Giáo trình chuẩn HSK 3.0 - Quyển 3 (新HSK教程3) 🏆</h3>
-                <p><b>Mô tả:</b> Giáo trình HSK 3 theo chuẩn HSK 3.0 tập trung vào kỹ năng giao tiếp và ngữ pháp trung cấp.</p>
-            </div>
-            <a href="https://drive.google.com/file/d/1TTDW7UUVKajsw78W7otiGWit-y8ur-qj/view?usp=sharing" target="_blank" class="btn-download">Tải về 📥</a>
-        </div>
-    </div>
-</div>
-
-<footer>
-    <div class="footer-content">
-        <div class="contact-title">Liên hệ hỗ trợ</div>
-        <div class="qr-container">
-            <div class="qr-item"><img src="qr-zalo.png.jpg" alt="Zalo" class="qr-code"><span class="qr-label">Zalo</span></div>
-            <div class="qr-item"><img src="qr-tiktok.png" alt="TikTok" class="qr-code"><span class="qr-label">TikTok</span></div>
-            <div class="qr-item"><img src="qr-youtube.png.png" alt="YouTube" class="qr-code"><span class="qr-label">YouTube</span></div>
-        </div>
-        <div class="copyright">© 2026 - Khu Vườn Của Nga 🌸</div>
-    </div>
+<!-- FOOTER -->
+<footer id="footer-mini">
+    <p>© 2026 - Khu Vườn Của Nga 🌸 |Học Thật - Thi Thật - Ứng Dụng Thật</p>
 </footer>
 
+<!-- KHU VỰC DỮ LIỆU & LOGIC -->
 <script>
-    function switchMainTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
-        document.getElementById(tabId).classList.remove('hidden');
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+    // --- HÀM XỬ LÝ DỮ LIỆU GAME ĐỂ TÁCH CHỮ HÁN VÀ TIẾNG VIỆT ---
+    function parseLevelData(level, rawDataArray) {
+        const icons = ["🌱", "🌿", "☘️", "🍀", "🍃", "🌳", "🍄", "🌸", "🌺", "🌻", "🍎", "🍊", "🍓", "🍉", "🍇", "🌲", "🍵", "📚", "☕", "✈️"];
+        return rawDataArray.map((str, index) => {
+            // Tách chuỗi dựa trên dấu gạch ngang (có thể là gạch ngắn hoặc gạch dài)
+            const parts = str.split(/\s*[-–]\s*/); 
+            const zhTitle = parts[0] ? parts[0].trim() : `Bài ${index + 1}`;
+            const viTrans = parts[1] ? parts[1].trim() : "";
+            
+            return {
+                link: `HSK${level}-LESSON${index + 1}.html`,
+                icon: icons[index % icons.length],
+                title: zhTitle,
+                translation: viTrans,
+                desc: `HSK ${level} - Bài ${index + 1}`
+            };
+        });
     }
 
-    function filterSub(type, subId) {
-        const parentId = type === 'game' ? 'game-section' : 'doc-section';
-        const itemClass = type === 'game' ? '.container' : '.doc-list';
-        document.querySelectorAll(`#${parentId} ${itemClass}`).forEach(item => item.classList.remove('active'));
-        document.getElementById(subId).classList.add('active');
-        document.querySelectorAll(`#${parentId} .sub-tab-btn`).forEach(btn => btn.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+    // --- 1. DỮ LIỆU TRÒ CHƠI HSK ---
+    const gamesData = {
+        "game-intro": [
+            { link: "pinyin.html", icon: "🎹", title: "Bảng phát âm", desc: "Học Pinyin chuẩn", badge: "HOT" },
+            { link: "BO THU 1.html", icon: "🌱", title: "Bộ thủ 1", desc: "Nền tảng chữ Hán" },
+            { link: "BO THU 2.html", icon: "🌿", title: "Bộ thủ 2", desc: "Nền tảng chữ Hán" },
+            { link: "BO THU 3.html", icon: "☘️", title: "Bộ thủ 3", desc: "Nền tảng chữ Hán" },
+            { link: "BO THU 4.html", icon: "🍀", title: "Bộ thủ 4", desc: "Nền tảng chữ Hán" },
+            { link: "BO THU 5.html", icon: "🍃", title: "Bộ thủ 5", desc: "Nền tảng chữ Hán" },
+            { link: "BO THU 6.html", icon: "🌳", title: "Bộ thủ 6", desc: "Nền tảng chữ Hán" }
+        ],
+        
+        "game-hsk1": parseLevelData(1, [
+            "你好 – Xin chào", "谢谢你 – Cảm ơn bạn", "你叫什么名字 – Tên bạn là gì?", 
+            "她是我的汉语老师 – Cô ấy là giáo viên tiếng Trung của tôi", "她女儿今年二十岁 – Con gái cô ấy năm nay 20 tuổi", 
+            "我会说汉语 – Tôi biết nói tiếng Trung", "今天几号 – Hôm nay ngày mấy?", "我想喝茶 – Tôi muốn uống trà", 
+            "你儿子在哪里工作 – Con trai bạn làm việc ở đâu?", "我能坐这儿吗 – Tôi có thể ngồi đây không?", 
+            "现在几点 – Bây giờ là mấy giờ?", "明天天气怎么样 – Ngày mai thời tiết thế nào?", 
+            "他在学做中国菜呢 – Anh ấy đang học nấu món Trung Quốc", "她买了不少衣服 – Cô ấy đã mua khá nhiều quần áo", 
+            "我是坐飞机来的 – Tôi đến bằng máy bay"
+        ]),
+        
+        "game-hsk2": parseLevelData(2, [
+            "九月去北京旅游最好 – Tháng 9 đi Bắc Kinh du lịch là tốt nhất", "我每天六点起床 – Tôi mỗi ngày dậy lúc 6 giờ", 
+            "左边那个红色的是我的 – Cái màu đỏ bên trái là của tôi", "这个工作是他帮我介绍的 – Công việc này là anh ấy giới thiệu cho tôi", 
+            "就买这个吧 – Mua cái này đi", "你怎么不吃了 – Sao bạn không ăn nữa?", 
+            "你家离公司远吗 – Nhà bạn xa công ty không?", "让我想再告诉你 – Để tôi nghĩ rồi nói lại bạn", 
+            "题太多，我没做完 – Bài nhiều quá, tôi chưa làm xong", "别找了，手机在桌子上呢 – Đừng tìm nữa, điện thoại ở trên bàn", 
+            "他比我大三岁 – Anh ấy hơn tôi 3 tuổi", "你穿得太少了 – Bạn mặc ít quá", 
+            "门开着呢 – Cửa đang mở", "你看过那个电影吗 – Bạn đã xem phim đó chưa?", "新年就要到了 – Năm mới sắp đến rồi"
+        ]),
+
+        "game-hsk3": parseLevelData(3, [
+            "周末你有什么打算？ – Cuối tuần bạn có kế hoạch gì?", "他什么时候回来？ – Khi nào anh ấy quay lại?", 
+            "桌子上放着很多饮料 – Trên bàn có nhiều đồ uống", "她总是笑着跟客人说话 – Cô ấy luôn cười khi nói chuyện với khách", 
+            "我最近越来越胖了 – Dạo này tôi càng ngày càng béo", "怎么突然找不到了？ – Sao đột nhiên không tìm thấy nữa?", 
+            "我跟她都认识五年了 – Tôi và cô ấy quen nhau 5 năm rồi", "你去哪儿我就去哪儿 – Bạn đi đâu tôi đi đó", 
+            "她的汉语说得跟中国人一样好 – Cô ấy nói tiếng Trung như người Trung Quốc", "数学比历史难多了 – Toán khó hơn Lịch sử nhiều", 
+            "别忘了把空调关了 – Đừng quên tắt điều hòa", "把重要的东西放在我这儿吧 – Để đồ quan trọng ở chỗ tôi", 
+            "我是走回来的 – Tôi đi bộ về", "你把水果拿过来 – Bạn mang hoa quả qua đây", 
+            "其他都没什么问题 – Những cái khác đều không có vấn đề", "我现在累得下了班就想睡觉 – Tôi mệt đến mức tan làm là muốn ngủ", 
+            "谁都有办法看好你的“病” – Ai cũng có cách chữa “bệnh” cho bạn", "我相信他们会同意的 – Tôi tin họ sẽ đồng ý", 
+            "你没看出来吗？ – Bạn không nhận ra sao?", "我被他影响了 – Tôi bị anh ấy ảnh hưởng"
+        ]),
+
+        "game-hsk4": parseLevelData(4, [
+            "简单的爱情 – Tình yêu giản đơn", "真正的朋友 – Người bạn chân chính", "经理对我印象不错 – Giám đốc có ấn tượng tốt với tôi", 
+            "不要太着急赚钱 – Đừng vội kiếm tiền", "只买对的，不买贵的 – Chỉ mua đúng, không mua đắt", 
+            "一分钱一分货 – Tiền nào của nấy", "最好的医生是自己 – Bác sĩ tốt nhất là chính mình", 
+            "生活中不缺少美 – Cuộc sống không thiếu cái đẹp", "阳光总在风雨后 – Sau mưa trời lại sáng", 
+            "幸福的标准 – Tiêu chuẩn của hạnh phúc", "读书好，读好书，好读书 – Đọc sách tốt, đọc sách hay, thích đọc sách", 
+            "用心发现世界 – Khám phá thế giới bằng trái tim", "喝着茶看京剧 – Uống trà xem kinh kịch", 
+            "保护地球母亲 – Bảo vệ Trái Đất", "教育孩子的艺术 – Nghệ thuật dạy con", 
+            "生活可以更美好 – Cuộc sống có thể tốt đẹp hơn", "人与自然 – Con người và thiên nhiên", 
+            "科技与世界 – Công nghệ và thế giới", "生活的味道 – Hương vị cuộc sống", "路上的风景 – Phong cảnh trên đường"
+        ]),
+
+        "game-hsk5": parseLevelData(5, [
+            "爱情的细节 – Chi tiết trong tình yêu", "留串钥匙给父母 – Để lại chìa khóa cho bố mẹ", 
+            "人生有选择一切可改变 – Cuộc đời có lựa chọn, mọi thứ có thể thay đổi", "子路背米 – Tử Lộ vác gạo", 
+            "济国的泉水 – Suối nước Tế Nam", "除夕的由来 – Nguồn gốc đêm giao thừa", 
+            "成语故事两则 – Hai câu chuyện thành ngữ", "朝三暮四的古今义 – Nghĩa xưa và nay của “Sáng ba chiều bốn”", 
+            "别样鲁迅 – Một Lỗ Tấn khác", "争论的奇迹 – Kỳ tích của tranh luận", "闹钟的危害 – Tác hại của đồng hồ báo thức", 
+            "海外用户玩儿微信 – Người nước ngoài dùng WeChat", "锯掉生活的筐底 – Cắt bỏ “đáy giỏ” cuộc sống", 
+            "北京的四合院 – Tứ hợp viện Bắc Kinh", "纸上谈兵 – Bàn chuyện binh trên giấy", 
+            "体重与节食 – Cân nặng và ăn kiêng", "在最美的时刻离开 – Rời đi lúc đẹp nhất", 
+            "抽象艺术美不美 – Nghệ thuật trừu tượng đẹp không", "家乡的萝卜饼 – Bánh củ cải quê hương", 
+            "小人书摊 – Sạp truyện tranh", "一个美国人的汉字情缘 – Tình yêu chữ Hán của người Mỹ", 
+            "阅读与思考 – Đọc và suy nghĩ", "放手 – Buông tay", "支教行动 – Hoạt động tình nguyện", 
+            "给自己加满水 – Làm đầy bản thân", "你属于哪一种忙 – Bạn thuộc kiểu bận nào", "下棋 – Đánh cờ", 
+            "最受欢迎的毕业生 – Sinh viên được yêu thích nhất", "培养对手 – Nuôi dưỡng đối thủ", 
+            "竞争让市场更高效 – Cạnh tranh làm thị trường hiệu quả hơn", "登门槛效应 – Hiệu ứng “bước chân vào cửa”", 
+            "身边的环保 – Bảo vệ môi trường xung quanh", "以堵治堵 – Giảm tắc nghẽn bằng “tắc nghẽn”", 
+            "鸟儿的护肤术 – Cách chim chăm sóc da", "植物会出汗 – Thực vật cũng “đổ mồ hôi”", "老舍与养花 – Lão Xá và việc trồng hoa"
+        ]),
+
+        "game-hsk6": parseLevelData(6, [
+            "孩子给我们的启示 – Điều trẻ em dạy chúng ta", "父母之爱 – Tình yêu cha mẹ", "一盒月饼 – Một hộp bánh trung thu", 
+            "完美的胜利 – Chiến thắng hoàn hảo", "学一门外语需要理由吗 – Học ngoại ngữ cần lý do không", 
+            "当好职场插班生 – Làm tốt “người mới” nơi làm việc", "我的人生我做主 – Tôi làm chủ cuộc đời", 
+            "遇见原来的我 – Gặp lại chính mình", "不用手机的日子 – Những ngày không dùng điện thoại", 
+            "全球化视野中的中国饮食 – Ẩm thực Trung Quốc trong toàn cầu hóa", "我不在时，猫在干什么 – Khi tôi không ở nhà, mèo làm gì", 
+            "我们都爱白噪音 – Chúng ta đều thích tiếng ồn trắng", "从旅游指南看世事变迁 – Nhìn đời qua sách du lịch", 
+            "背着电饭锅去北极 – Mang nồi cơm điện đến Bắc Cực", "山脉上的雕刻 – Điêu khắc trên núi", 
+            "徐健和他的野生动物摄影老师 – Từ Kiện và nhiếp ảnh động vật", "小动物眼中的慢世界 – Thế giới chậm trong mắt động vật", 
+            "神奇的丝瓜 – Quả mướp kỳ diệu", "无阳光的深海世界 – Biển sâu không ánh sáng", "金鸡窝 – Ổ gà vàng", 
+            "未来商店 – Cửa hàng tương lai", "2050年的汽车什么样 – Xe năm 2050 thế nào", "大数据时代 – Thời đại dữ liệu lớn", 
+            "体育明星们的离奇遭遇 – Chuyện kỳ lạ của sao thể thao", "草船借箭 – Thuyền cỏ mượn tên", "奇异的灯光 – Ánh sáng kỳ lạ", 
+            "完璧归赵 – Trả ngọc cho nước Triệu", "高山流水遇知音 – Gặp tri âm", "“笑”的备忘录 – Ghi chú về “cười”", 
+            "你睡好了吗 – Bạn ngủ ngon không", "运动的学问 – Kiến thức vận động", "有时，不妨悲伤 – Đôi khi cũng nên buồn", 
+            "怀念慢生活 – Nhớ cuộc sống chậm", "为文物而生的人 – Người sống vì di sản", "走近木版年画 – Tranh Tết mộc bản", 
+            "中国古代书院 – Thư viện cổ Trung Quốc", "警察的故事 – Câu chuyện cảnh sát", "慧眼捕捉生机 – Nắm bắt cơ hội", 
+            "互联网时代的生活 – Cuộc sống thời Internet", "人类超能力会改变世界记录吗 – Siêu năng lực có thay đổi thế giới không"
+        ])
+    };
+
+    // --- 2. DỮ LIỆU TIẾNG ANH ---
+    const englishData = Array.from({length: 36}, (_, i) => ({
+        link: `ENGLISH-LESSON${i+1}.html`, icon: "🎧", title: `English Lesson ${i+1}`, desc: "Learn via Games"
+    }));
+
+    // --- 3. DỮ LIỆU TÀI LIỆU ---
+    const docsData = {
+        "doc-hsk1": [
+            { title: "Giáo trình chuẩn HSK 1 (Full bộ) 📚", desc: "Sách bài học, Bài tập và Audio.", link: "https://drive.google.com/drive/folders/1NsBSkqHFmWaBs3fFbnY0NS7N4qx9ziOz" },
+            { title: "Bảng 150 từ vựng HSK 1 📝", desc: "Từ vựng kèm phiên âm, nghĩa và ví dụ.", link: "#" }
+        ],
+        "doc-hsk2": [ { title: "Giáo trình chuẩn HSK 2 📚", desc: "Sách bài học và Audio.", link: "#" } ],
+        "doc-hsk3": [ { title: "Giáo trình chuẩn HSK 3 📚", desc: "Sách bài học và Audio.", link: "#" } ],
+        "doc-hsk4": [ { title: "Giáo trình chuẩn HSK 4 📚", desc: "Sách bài học, tập 1 và 2.", link: "#" } ],
+        "doc-hsk5": [ { title: "Giáo trình chuẩn HSK 5 📚", desc: "Sách bài học, tập 1 và 2.", link: "#" } ],
+        "doc-hsk6": [ { title: "Giáo trình chuẩn HSK 6 📚", desc: "Tài liệu cao cấp nhất.", link: "#" } ],
+        "doc-hsk30": [
+            { title: "Giáo trình HSK 3.0 - Quyển 1 🏆", desc: "Chuẩn HSK 3.0 thiết kế 15 bài học, ~300 từ vựng.", link: "https://drive.google.com/drive/folders/1yjy6g10i9a0lBfKMFH3vlYuM0H-nXrTG" },
+            { title: "Giáo trình HSK 3.0 - Quyển 2 🏆", desc: "Mở rộng vốn từ vựng sơ cấp.", link: "https://drive.google.com/file/d/1PTa1CgZ4RncTIQIpScLo1I0xObSCczBS/view" },
+            { title: "Giáo trình HSK 3.0 - Quyển 3 🏆", desc: "Kỹ năng giao tiếp trung cấp.", link: "https://drive.google.com/file/d/1TTDW7UUVKajsw78W7otiGWit-y8ur-qj/view" }
+        ]
+    };
+
+    // --- LOGIC HIỂN THỊ ---
+    
+    function createGameCard(data) {
+        const badgeHTML = data.badge ? `<div class="new-badge">${data.badge}</div>` : '';
+        const transHTML = data.translation ? `<div class="game-trans">${data.translation}</div>` : '';
+        return `
+            <a href="${data.link}" class="game-card">
+                ${badgeHTML}
+                <div class="game-icon">${data.icon}</div>
+                <div class="game-title">${data.title}</div>
+                ${transHTML}
+                <div class="game-desc">${data.desc}</div>
+            </a>
+        `;
+    }
+
+    function createDocCard(data) {
+        return `
+            <div class="doc-card">
+                <div class="doc-info">
+                    <h3>${data.title}</h3>
+                    <p>${data.desc}</p>
+                </div>
+                <a href="${data.link}" target="_blank" class="btn-download">Tải về 📥</a>
+            </div>
+        `;
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-        const searchInput = document.getElementById('gameSearch');
-        searchInput.addEventListener('input', function() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            const activeContainer = document.querySelector('#game-section .container.active');
-            if(activeContainer) {
-                const cards = activeContainer.querySelectorAll('.game-card');
-                cards.forEach(card => {
-                    const title = card.querySelector('.game-title').textContent.toLowerCase();
-                    card.style.display = title.includes(searchTerm) ? "flex" : "none";
-                });
-            }
+        // Tự động sinh dữ liệu ra HTML
+        for (const [key, items] of Object.entries(gamesData)) {
+            const container = document.getElementById(key);
+            if (container) container.innerHTML = items.map(createGameCard).join('');
+        }
+        document.getElementById('english-grid').innerHTML = englishData.map(createGameCard).join('');
+        for (const [key, items] of Object.entries(docsData)) {
+            const container = document.getElementById(key);
+            if (container) container.innerHTML = items.map(createDocCard).join('');
+        }
+
+        // Logic của Sub-Tabs trong Game & Tài liệu
+        document.querySelectorAll('.sub-tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const parentSection = this.closest('.section-content');
+                parentSection.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const isGame = targetId.startsWith('game');
+                const containerClass = isGame ? '.grid-container' : '.doc-list';
+                parentSection.querySelectorAll(containerClass).forEach(c => c.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+            });
         });
 
-        const container = document.getElementById('leaves-container');
+        // Xử lý Tìm kiếm
+        const searchInput = document.getElementById('globalSearch');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const activeGrids = document.querySelectorAll('.section-content.active .grid-container.active, .section-content.active .doc-list.active');
+            activeGrids.forEach(container => {
+                const cards = container.querySelectorAll('.game-card, .doc-card');
+                cards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    card.style.display = text.includes(searchTerm) ? "flex" : "none";
+                });
+            });
+        });
+
+        // Khởi tạo lá bay
+        const leafContainer = document.getElementById('leaves-container');
         const leafIcons = ['🍃', '🍂', '🌿', '🌸', '✨'];
         for (let i = 0; i < 15; i++) {
             let leaf = document.createElement('div');
             leaf.classList.add('leaf');
             leaf.innerText = leafIcons[Math.floor(Math.random() * leafIcons.length)];
             leaf.style.left = Math.random() * 100 + 'vw';
-            leaf.style.fontSize = (Math.random() * 12 + 10) + 'px';
+            leaf.style.fontSize = (Math.random() * 15 + 12) + 'px';
             leaf.style.animationDuration = `${Math.random() * 7 + 8}s, ${Math.random() * 3 + 3}s`;
             leaf.style.animationDelay = `-${Math.random() * 10}s`;
-            container.appendChild(leaf);
+            leafContainer.appendChild(leaf);
         }
     });
+
+    // Hàm chuyển đổi Tab chính trên Menu
+    function switchMainTab(sectionId, clickedElement = null) {
+        const showSearch = sectionId === 'section-game' || sectionId === 'section-doc' || sectionId === 'section-english';
+        document.getElementById('global-search-area').style.display = showSearch ? 'block' : 'none';
+        
+        document.querySelectorAll('.section-content').forEach(s => s.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        
+        if(clickedElement) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active-nav'));
+            if(clickedElement.closest('.dropdown')) {
+                document.querySelector('.dropdown .nav-btn').classList.add('active-nav');
+            } else {
+                clickedElement.classList.add('active-nav');
+            }
+        }
+        
+        document.getElementById('globalSearch').value = '';
+        document.querySelectorAll('.game-card, .doc-card').forEach(card => card.style.display = 'flex');
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Hàm dẫn thẳng vào các Game HSK cụ thể từ Dropdown
+    function navigateToGame(targetId) {
+        const gameNavBtn = document.querySelector('.dropdown .nav-btn');
+        switchMainTab('section-game', gameNavBtn);
+        setTimeout(() => {
+            const btn = document.querySelector(`.sub-tab-btn[data-target="${targetId}"]`);
+            if(btn) btn.click();
+        }, 50);
+    }
 </script>
 </body>
 </html>
