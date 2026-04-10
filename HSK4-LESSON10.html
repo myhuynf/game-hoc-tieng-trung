@@ -128,7 +128,6 @@
     <button onclick="window.location.href='index.html'" class="btn-home" title="Về Vườn">🏡</button>
 
     <div id="game-container" class="w-full max-w-xl px-4 mt-16 mb-10">
-        <!-- START SCREEN -->
         <div id="start-screen" class="ghibli-card p-8 text-center">
             <h1 class="text-3xl font-bold text-amber-900 mb-2">HSK4 - Bài 10</h1>
             <h2 class="text-2xl text-emerald-700 font-bold mb-4 chinese-text">幸福的标准</h2>
@@ -150,7 +149,6 @@
             </div>
         </div>
 
-        <!-- FLASHCARD SCREEN -->
         <div id="flashcard-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between items-center mb-4">
                 <button onclick="returnToStart()" class="text-amber-700 text-sm font-bold hover:underline">🔙 Về Menu</button>
@@ -181,7 +179,6 @@
             </div>
         </div>
 
-        <!-- FLASHCARD STATS -->
         <div id="flashcard-stat-screen" class="ghibli-card p-8 text-center hidden">
              <h2 class="text-3xl font-bold text-amber-900 mb-8">Kết quả ghi nhớ</h2>
              <div class="flex justify-around items-center mb-8">
@@ -204,7 +201,6 @@
              </div>
         </div>
 
-        <!-- DICTATION MENU -->
         <div id="dictation-menu-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between items-center mb-6">
                 <button onclick="returnToStart()" class="text-amber-700 text-sm font-bold hover:underline">🔙 Về Menu Chính</button>
@@ -213,7 +209,6 @@
             <div id="lesson-list" class="grid grid-cols-1 gap-3"></div>
         </div>
 
-        <!-- DICTATION GAME -->
         <div id="dictation-screen" class="ghibli-card p-6 hidden">
             <div class="flex justify-between items-center mb-4">
                 <button onclick="backToDictationMenu()" class="text-amber-700 text-sm font-bold hover:underline">🔙 Về DS Bài khóa</button>
@@ -250,7 +245,16 @@
             </div>
         </div>
 
-        <!-- FINAL SUCCESS -->
+        <div id="dictation-lesson-result-screen" class="ghibli-card p-6 hidden">
+            <h2 class="text-2xl font-bold text-amber-900 mb-4 text-center" id="lesson-result-title">Kết quả Bài khóa</h2>
+            <div id="lesson-result-list" class="max-h-64 overflow-y-auto custom-scroll space-y-3 mb-6 bg-amber-50 p-4 rounded-xl border border-amber-200">
+                </div>
+            <div class="grid grid-cols-1 gap-3">
+                <button onclick="copyLessonResult()" class="btn-ghibli w-full bg-emerald-500 border-emerald-700 text-white">📋 Copy kết quả chi tiết</button>
+                <button onclick="finishLessonAndReturn()" class="btn-ghibli w-full">🔙 Về DS Bài khóa</button>
+            </div>
+        </div>
+
         <div id="dictation-end-screen" class="ghibli-card p-8 text-center hidden">
             <h2 class="text-3xl font-bold text-amber-900 mb-4">Tuyệt vời!</h2>
             <div class="text-6xl mb-4">🏆</div>
@@ -259,7 +263,6 @@
         </div>
     </div>
 
-    <!-- AUDIO ASSETS -->
     <audio id="audio-click" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
     <audio id="audio-correct" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
     <audio id="audio-wrong" src="https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3"></audio>
@@ -455,6 +458,8 @@
         ];
 
         let currentFlashList = [], flashcardIdx = 0, learnedCount = 0, unlearnedItems = [];
+        let currentLessonResults = []; // Lưu kết quả nghe chép của bài hiện tại
+
         function startFlashcards(list) {
             playAudio('audio-click');
             currentFlashList = [...list];
@@ -525,6 +530,7 @@
             playAudio('audio-click');
             currentLessonIdx = index;
             dictStep = 0;
+            currentLessonResults = []; // Reset dữ liệu nghe chép của bài mới
             document.getElementById('dictation-menu-screen').classList.add('hidden');
             document.getElementById('dictation-screen').classList.remove('hidden');
             document.getElementById('lesson-audio-player').src = lessonsData[currentLessonIdx].audioSrc;
@@ -551,10 +557,12 @@
         function checkDictation() {
             const sentenceObj = lessonsData[currentLessonIdx].sentences[dictStep];
             const feedback = document.getElementById('dict-feedback');
-            const userInput = cleanChineseText(document.getElementById('dict-input').value);
+            const userRawInput = document.getElementById('dict-input').value;
+            const userInput = cleanChineseText(userRawInput);
             const correctInput = cleanChineseText(sentenceObj.h);
+            const isCorrect = (userInput === correctInput);
             
-            if (userInput === correctInput) {
+            if (isCorrect) {
                 playAudio('audio-correct');
                 feedback.innerText = "Chính xác! 🌟";
                 feedback.className = "w-full p-2 rounded-lg text-center bg-emerald-100 text-emerald-700 font-bold";
@@ -563,6 +571,16 @@
                 feedback.innerText = "Chưa đúng! Đáp án:";
                 feedback.className = "w-full p-2 rounded-lg text-center bg-rose-100 text-rose-700 font-bold";
             }
+
+            // Lưu lịch sử bài tập của câu này
+            currentLessonResults[dictStep] = {
+                correct: sentenceObj.h,
+                pinyin: sentenceObj.p,
+                vi: sentenceObj.vi,
+                user: userRawInput,
+                isCorrect: isCorrect
+            };
+
             document.getElementById('ans-hanzi').innerText = sentenceObj.h;
             document.getElementById('ans-pinyin').innerText = sentenceObj.p;
             document.getElementById('ans-vi').innerText = sentenceObj.vi;
@@ -573,15 +591,65 @@
             btnNext.innerText = (dictStep === lessonsData[currentLessonIdx].sentences.length - 1) ? "Hoàn thành Bài khóa 🏆" : "Câu tiếp theo ➡️";
             btnNext.classList.remove('hidden');
         }
+
         function nextDictation() {
             if (dictStep < lessonsData[currentLessonIdx].sentences.length - 1) {
                 dictStep++;
                 loadDictationStep();
             } else {
-                lessonsData[currentLessonIdx].completed = true;
-                openDictationMenu();
+                showLessonResultScreen();
             }
         }
+
+        // TÍNH NĂNG MỚI: Hiển thị màn hình kết quả riêng của bài khóa hiện tại
+        function showLessonResultScreen() {
+            document.querySelectorAll('.ghibli-card').forEach(el => el.classList.add('hidden'));
+            document.getElementById('dictation-lesson-result-screen').classList.remove('hidden');
+
+            const lesson = lessonsData[currentLessonIdx];
+            document.getElementById('lesson-result-title').innerText = `Kết quả: ${lesson.title}`;
+
+            const listContainer = document.getElementById('lesson-result-list');
+            listContainer.innerHTML = '';
+            
+            currentLessonResults.forEach((res, i) => {
+                const colorCls = res.isCorrect ? 'text-emerald-700' : 'text-rose-700';
+                listContainer.innerHTML += `
+                    <div class="border-b border-amber-200 pb-2 last:border-0">
+                        <p class="font-bold text-sm text-amber-900">Câu ${i + 1}:</p>
+                        <p class="text-xs text-gray-600 mb-1">Gốc: <span class="chinese-text text-sm text-emerald-800">${res.correct}</span></p>
+                        <p class="text-xs text-gray-600">Bạn gõ: <span class="chinese-text text-sm ${colorCls}">${res.user || '(bỏ trống)'}</span> ${res.isCorrect ? '✅' : '❌'}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function copyLessonResult() {
+            const lesson = lessonsData[currentLessonIdx];
+            let textToCopy = `Kết quả nghe chép: ${lesson.title} - ${lesson.desc}\n`;
+            textToCopy += `-------------------\n`;
+            let correctCount = 0;
+            currentLessonResults.forEach((res, i) => {
+                if(res.isCorrect) correctCount++;
+                textToCopy += `Câu ${i + 1}:\n`;
+                textToCopy += `- Đáp án: ${res.correct} (${res.pinyin})\n`;
+                textToCopy += `- Bạn gõ: ${res.user || '(bỏ trống)'} ${res.isCorrect ? '✅' : '❌'}\n`;
+                textToCopy += `- Nghĩa: ${res.vi}\n\n`;
+            });
+            textToCopy += `=> Đúng: ${correctCount}/${currentLessonResults.length}\n`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert("Đã copy kết quả chi tiết vào khay nhớ tạm!");
+            }).catch(err => {
+                alert("Lỗi copy: " + err);
+            });
+        }
+
+        function finishLessonAndReturn() {
+            lessonsData[currentLessonIdx].completed = true;
+            openDictationMenu();
+        }
+
         function endDictationSession() { completedStatus.dictation = true; document.getElementById('check-dictation').classList.remove('hidden'); checkUnlockForm(); returnToStart(); }
 
         function checkUnlockForm() {
