@@ -135,6 +135,7 @@
         .modal-title { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
         .modal-title.t-correct { color: var(--primary-dark); }
         .modal-title.t-wrong { color: #F44336; }
+        .modal-desc { font-size: 1.05rem; color: #555; margin-bottom: 20px; line-height: 1.5; }
         .btn-next {
             background: var(--primary); color: white; border: none; padding: 12px 30px;
             border-radius: 25px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px;
@@ -283,7 +284,8 @@
             </div>
 
             <div class="dict-audio-box">
-                <audio id="dict-audio-player" controls controlsList="nodownload"></audio>
+                <!-- AUDIO SOURCE: Update link bài nghe thật vào thuộc tính src dưới đây -->
+                <audio id="dict-audio-player" controls controlsList="nodownload" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
                 <p style="font-size: 0.75rem; color: #888; margin-top: 5px;">(Click play để nghe âm thanh bài khóa)</p>
             </div>
 
@@ -293,7 +295,10 @@
             </div>
 
             <input type="text" id="dict-input" class="dict-input" placeholder="Nghe và gõ lại..." autocomplete="off">
-            <div class="dict-instruction" id="dict-instruct">Nhấn <span class="dict-key">ENTER</span> để kiểm tra</div>
+            
+            <div class="dict-instruction" id="dict-instruct">Nhấn <span class="dict-key">ENTER</span> hoặc bấm Kiểm tra</div>
+            <!-- Nút kiểm tra tối ưu cho Mobile (Thay vì bắt buộc ấn Enter) -->
+            <button class="btn-primary" id="btn-check-dict" style="margin-top: 10px; width: 100%; display: none;" onclick="checkDictation()">Kiểm tra ❯</button>
 
             <div class="dict-feedback-box" id="dict-fb-box">
                 <div class="dict-fb-status" id="dict-fb-status">Chính xác! 🌟</div>
@@ -332,6 +337,7 @@
         <div class="modal-content">
             <div id="modal-icon" class="modal-icon">✅</div>
             <h3 id="modal-title" class="modal-title">Đúng rồi!</h3>
+            <p id="modal-desc" class="modal-desc"></p>
             <button class="btn-next" onclick="nextQuestion()">Tiếp tục ❯</button>
         </div>
     </div>
@@ -358,7 +364,7 @@
             { word: '送', pinyin: 'sòng', meaning: 'Giao, đưa, tặng', ex_cn: '谁送牛奶来了？', ex_py: 'Shéi sòng niúnǎi lái le?', ex_vn: 'Ai giao sữa đến vậy?' },
             { word: '一下', pinyin: 'yíxià', meaning: 'Một lát, một chút', ex_cn: '我看一下。', ex_py: 'Wǒ kàn yíxià.', ex_vn: 'Để tôi xem một chút.' },
             { word: '牛奶', pinyin: 'niúnǎi', meaning: 'Sữa bò', ex_cn: '喝牛奶对身体好。', ex_py: 'Hē niúnǎi duì shēntǐ hǎo.', ex_vn: 'Uống sữa bò tốt cho sức khỏe.' },
-            { word: '房间', pinyin: 'fángjiān', meaning: 'Phòng', ex_cn: '这是我女儿的房间。', ex_py: 'Zhè shì wǒ nǚ'ér de fángjiān.', ex_vn: 'Đây là phòng con gái tôi.' },
+            { word: '房间', pinyin: 'fángjiān', meaning: 'Phòng', ex_cn: '这是我女儿的房间。', ex_py: 'Zhè shì wǒ nǚ\'ér de fángjiān.', ex_vn: 'Đây là phòng con gái tôi.' },
             { word: '丈夫', pinyin: 'zhàngfu', meaning: 'Chồng', ex_cn: '她丈夫是医生。', ex_py: 'Tā zhàngfu shì yīshēng.', ex_vn: 'Chồng cô ấy là bác sĩ.' },
             { word: '旁边', pinyin: 'pángbiān', meaning: 'Bên cạnh', ex_cn: '学校旁边有个医院。', ex_py: 'Xuéxiào pángbiān yǒu ge yīyuàn.', ex_vn: 'Bên cạnh trường có một bệnh viện.' },
             { word: '真', pinyin: 'zhēn', meaning: 'Thật, thật là', ex_cn: '这个房间真漂亮！', ex_py: 'Zhè ge fángjiān zhēn piàoliang!', ex_vn: 'Căn phòng này đẹp thật!' },
@@ -368,46 +374,46 @@
             { word: '红色', pinyin: 'hóngsè', meaning: 'Màu đỏ', ex_cn: '那个红色的杯子是我的。', ex_py: 'Nà ge hóngsè de bēizi shì wǒ de.', ex_vn: 'Cái ly màu đỏ đó là của tôi.' }
         ];
 
-        // --- DỮ LIỆU LUYỆN TẬP (15 Câu HSK2 Bài 3) ---
+        // --- DỮ LIỆU LUYỆN TẬP CÓ GIẢI THÍCH (15 Câu HSK2 Bài 3) ---
         const quizQuestions = [
-            { q: 'Từ "Đồng hồ đeo tay" tiếng Trung là gì?', options: ['旁边 (pángbiān)', '报纸 (bàozhǐ)', '手表 (shǒubiǎo)', '杯子 (bēizi)'], answer: 2 },
-            { q: '"Màu hồng" tiếng Trung là gì?', options: ['红色 (hóngsè)', '颜色 (yánsè)', '黑色 (hēisè)', '粉色 (fěnsè)'], answer: 3 },
-            { q: 'Điền từ: 你看一下，是不是 _ 报纸的来了？ (giao)', options: ['买 (mǎi)', '卖 (mài)', '送 (sòng)', '看 (kàn)'], answer: 2 },
-            { q: '"Bên cạnh" tiếng Trung là gì?', options: ['左边 (zuǒbian)', '右边 (yòubian)', '旁边 (pángbiān)', '上边 (shàngbian)'], answer: 2 },
-            { q: 'Dịch câu: "Ly màu đỏ ở bên trái là của tôi."', options: ['右边那个红色的是我的。', '左边那个红色的是我的。', '左边那个粉色的是我的。', '前面那个红色的是我的。'], answer: 1 },
-            { q: '"Chồng" tiếng Trung là gì?', options: ['妻子 (qīzi)', '儿子 (érzi)', '哥哥 (gēge)', '丈夫 (zhàngfu)'], answer: 3 },
-            { q: 'Điền từ: 这个房间 _ 漂亮！ (thật là)', options: ['太 (tài)', '真 (zhēn)', '很 (hěn)', '最 (zuì)'], answer: 1 },
-            { q: 'Pinyin của từ "Phòng" (房间) là gì?', options: ['fāngjiān', 'fángjiàn', 'fángjiān', 'fàngjiān'], answer: 2 },
-            { q: 'Số 3000 (Ba nghìn) đọc là gì?', options: ['三百 (sān bǎi)', '三万 (sān wàn)', '三千 (sān qiān)', '三十 (sān shí)'], answer: 2 },
-            { q: '"Màu sắc" tiếng Trung là gì?', options: ['颜色 (yánsè)', '粉色 (fěnsè)', '红色 (hóngsè)', '眼睛 (yǎnjing)'], answer: 0 },
-            { q: 'Dịch: "Đây là tờ báo của sáng hôm nay phải không?"', options: ['这是昨天早上的报纸吗？', '这是今天上午的报纸吗？', '这是今天早上的杯子吗？', '这是今天早上的报纸吗？'], answer: 3 },
-            { q: 'Điền từ: 我看 _ 。不是，是送牛奶的。', options: ['一点 (yìdiǎn)', '一下 (yíxià)', '一会 (yíhuì)', '一直 (yìzhí)'], answer: 1 },
-            { q: 'Từ <span class="question-highlight">牛奶</span> nghĩa là gì?', options: ['Báo chí', 'Trà sữa', 'Sữa bò', 'Sữa chua'], answer: 2 },
-            { q: 'Câu hỏi "Mua hết bao nhiêu tiền?" nói thế nào?', options: ['多少钱买的？', '什么钱买的？', '买多少钱了？', '多少钱去买？'], answer: 0 },
-            { q: '"Bên trái" tiếng Trung là gì?', options: ['旁边 (pángbiān)', '左边 (zuǒbian)', '右边 (yòubian)', '下面 (xiàmiàn)'], answer: 1 }
+            { q: 'Từ "Đồng hồ đeo tay" tiếng Trung là gì?', options: ['旁边 (pángbiān)', '报纸 (bàozhǐ)', '手表 (shǒubiǎo)', '杯子 (bēizi)'], answer: 2, exp: '手表 (shǒubiǎo) được ghép từ 手 (tay) và 表 (đồng hồ).' },
+            { q: '"Màu hồng" tiếng Trung là gì?', options: ['红色 (hóngsè)', '颜色 (yánsè)', '黑色 (hēisè)', '粉色 (fěnsè)'], answer: 3, exp: '粉 (phấn) + 色 (màu) = 粉色 (Màu hồng).' },
+            { q: 'Điền từ: 你看一下，是不是 _ 报纸的来了？ (giao)', options: ['买 (mǎi)', '卖 (mài)', '送 (sòng)', '看 (kàn)'], answer: 2, exp: '送 (sòng) mang nghĩa tặng, đưa, hoặc giao đồ (送报纸: giao báo).' },
+            { q: '"Bên cạnh" tiếng Trung là gì?', options: ['左边 (zuǒbian)', '右边 (yòubian)', '旁边 (pángbiān)', '上边 (shàngbian)'], answer: 2, exp: '旁边 (pángbiān) nghĩa là bên cạnh.' },
+            { q: 'Dịch câu: "Ly màu đỏ ở bên trái là của tôi."', options: ['右边那个红色的是我的。', '左边那个红色的是我的。', '左边那个粉色的是我的。', '前面那个红色的是我的。'], answer: 1, exp: '左边 (bên trái) + 红色 (màu đỏ) + 的 + 是我的 (là của tôi).' },
+            { q: '"Chồng" tiếng Trung là gì?', options: ['妻子 (qīzi)', '儿子 (érzi)', '哥哥 (gēge)', '丈夫 (zhàngfu)'], answer: 3, exp: '丈夫 (zhàngfu) nghĩa là chồng. Vợ là 妻子 (qīzi).' },
+            { q: 'Điền từ: 这个房间 _ 漂亮！ (thật là)', options: ['太 (tài)', '真 (zhēn)', '很 (hěn)', '最 (zuì)'], answer: 1, exp: '真 (zhēn) + Tính từ: Thật là... (真漂亮: thật đẹp).' },
+            { q: 'Pinyin của từ "Phòng" (房间) là gì?', options: ['fāngjiān', 'fángjiàn', 'fángjiān', 'fàngjiān'], answer: 2, exp: '房间 (phòng) đọc là fángjiān.' },
+            { q: 'Số 3000 (Ba nghìn) đọc là gì?', options: ['三百 (sān bǎi)', '三万 (sān wàn)', '三千 (sān qiān)', '三十 (sān shí)'], answer: 2, exp: '千 (qiān) là nghìn. Ba nghìn là 三千.' },
+            { q: '"Màu sắc" tiếng Trung là gì?', options: ['颜色 (yánsè)', '粉色 (fěnsè)', '红色 (hóngsè)', '眼睛 (yǎnjing)'], answer: 0, exp: '颜色 (yánsè) nghĩa là màu sắc.' },
+            { q: 'Dịch: "Đây là tờ báo của sáng hôm nay phải không?"', options: ['这是昨天早上的报纸吗？', '这是今天上午的报纸吗？', '这是今天早上的杯子吗？', '这是今天早上的报纸吗？'], answer: 3, exp: '今天早上 (sáng nay) + 的 + 报纸 (báo).' },
+            { q: 'Điền từ: 我看 _ 。不是，是送牛奶的。', options: ['一点 (yìdiǎn)', '一下 (yíxià)', '一会 (yíhuì)', '一直 (yìzhí)'], answer: 1, exp: 'Động từ + 一下 biểu thị làm việc gì đó một chút, một lát (看一下: xem một chút).' },
+            { q: 'Từ <span class="question-highlight">牛奶</span> nghĩa là gì?', options: ['Báo chí', 'Trà sữa', 'Sữa bò', 'Sữa chua'], answer: 2, exp: '牛 (bò) + 奶 (sữa) = 牛奶 (sữa bò).' },
+            { q: 'Câu hỏi "Mua hết bao nhiêu tiền?" nói thế nào?', options: ['多少钱买的？', '什么钱买的？', '买多少钱了？', '多少钱去买？'], answer: 0, exp: '多少 (bao nhiêu) + 钱 (tiền) + 买的 (mua).' },
+            { q: '"Bên trái" tiếng Trung là gì?', options: ['旁边 (pángbiān)', '左边 (zuǒbian)', '右边 (yòubian)', '下面 (xiàmiàn)'], answer: 1, exp: '左 (trái) + 边 (bên) = 左边 (bên trái). Ngược lại là 右边 (yòubian - bên phải).' }
         ];
 
         // --- DỮ LIỆU NGHE CHÉP (HSK2 Bài 3) ---
         const dictationData = [
-            { id: 0, title: "Bài khóa 1", desc: "在房间 (Trong phòng)", completed: false, audioSrc: "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3", sentences: [
+            { id: 0, title: "Bài khóa 1", desc: "在房间 (Trong phòng)", completed: false, sentences: [
                 { h: "这块手表是你的吗？", p: "Zhè kuài shǒubiǎo shì nǐ de ma?", vi: "Chiếc đồng hồ đeo tay này là của anh phải không?" },
                 { h: "不是我的。是我爸爸的。", p: "Bú shì wǒ de. Shì wǒ bàba de.", vi: "Không phải, đồng hồ đó là của cha tôi." },
                 { h: "多少钱买的？", p: "Duōshao qián mǎi de?", vi: "Mua hết bao nhiêu tiền vậy?" },
                 { h: "三千多块。", p: "Sān qiān duō kuài.", vi: "Hơn 3.000 đồng." }
             ]},
-            { id: 1, title: "Bài khóa 2", desc: "在家里 (Ở nhà)", completed: false, audioSrc: "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3", sentences: [
+            { id: 1, title: "Bài khóa 2", desc: "在家里 (Ở nhà)", completed: false, sentences: [
                 { h: "这是今天早上的报纸吗？", p: "Zhè shì jīntiān zǎoshang de bàozhǐ ma?", vi: "Đây là tờ báo sáng nay phải không?" },
                 { h: "不是，是昨天的。", p: "Bú shì, shì zuótiān de.", vi: "Không phải, báo đó là của ngày hôm qua." },
                 { h: "你听，是不是送报纸的来了？", p: "Nǐ tīng, shì bú shì sòng bàozhǐ de lái le?", vi: "Em nghe thử xem, có phải người giao báo đến không?" },
                 { h: "我看一下。不是，是送牛奶的。", p: "Wǒ kàn yíxià. Bú shì, shì sòng niúnǎi de.", vi: "Để em xem nào. Không phải đâu, đó là người giao sữa bò." }
             ]},
-            { id: 2, title: "Bài khóa 3", desc: "在家里 (Ở nhà)", completed: false, audioSrc: "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3", sentences: [
+            { id: 2, title: "Bài khóa 3", desc: "在家里 (Ở nhà)", completed: false, sentences: [
                 { h: "这是谁的房间？", p: "Zhè shì shéi de fángjiān?", vi: "Đây là phòng của ai vậy?" },
                 { h: "是我和我丈夫的，旁边那个小的房间是我女儿的。", p: "Shì wǒ hé wǒ zhàngfu de, pángbiān nà ge xiǎo de fángjiān shì wǒ nǚ'ér de.", vi: "Đó là phòng của vợ chồng tôi, còn phòng nhỏ bên cạnh là của con gái tôi." },
                 { h: "你女儿的房间真漂亮！都是粉色的。", p: "Nǐ nǚ'ér de fángjiān zhēn piàoliang! Dōu shì fěnsè de.", vi: "Phòng của con gái chị đẹp thật! Toàn là màu hồng." },
                 { h: "是啊，粉色是我女儿最喜欢的颜色。", p: "Shì a, fěnsè shì wǒ nǚ'ér zuì xǐhuan de yánsè.", vi: "Đúng vậy, con bé thích màu hồng nhất." }
             ]},
-            { id: 3, title: "Bài khóa 4", desc: "在办公室 (Trong văn phòng)", completed: false, audioSrc: "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3", sentences: [
+            { id: 3, title: "Bài khóa 4", desc: "在办公室 (Trong văn phòng)", completed: false, sentences: [
                 { h: "你看见我的杯子了吗？", p: "Nǐ kànjiàn wǒ de bēizi le ma?", vi: "Anh có thấy cái ly của tôi không?" },
                 { h: "这里有几个杯子，哪个是你的？", p: "Zhèlǐ yǒu jǐ ge bēizi, nǎ ge shì nǐ de?", vi: "Chỗ này có mấy cái ly, cái nào là của cô vậy?" },
                 { h: "左边那个红色的是我的。", p: "Zuǒbian nà ge hóngsè de shì wǒ de.", vi: "Ly màu đỏ ở bên trái là của tôi." },
@@ -467,8 +473,8 @@
             answering = false;
             const q = quizQuestions[currentQ];
             document.getElementById('score-display').innerText = `Điểm: ${score}`;
-            document.getElementById('question-count').innerText = `Câu: ${currentQ+1}/15`;
-            document.getElementById('progress').style.width = `${(currentQ/15)*100}%`;
+            document.getElementById('question-count').innerText = `Câu: ${currentQ+1}/${quizQuestions.length}`;
+            document.getElementById('progress').style.width = `${(currentQ/quizQuestions.length)*100}%`;
             document.getElementById('question-text').innerHTML = `${currentQ+1}. ${q.q}`;
             
             const container = document.getElementById('options-container');
@@ -496,13 +502,14 @@
             document.getElementById('modal-icon').innerText = correct ? "✅" : "❌";
             document.getElementById('modal-title').innerText = correct ? "Đúng rồi!" : "Tiếc quá!";
             document.getElementById('modal-title').className = `modal-title ${correct ? 't-correct' : 't-wrong'}`;
+            document.getElementById('modal-desc').innerText = quizQuestions[currentQ].exp;
             m.style.display = 'flex';
         }
 
         function nextQuestion() {
             document.getElementById('explanation-modal').style.display = 'none';
             currentQ++;
-            if(currentQ < 15) loadQ();
+            if(currentQ < quizQuestions.length) loadQ();
             else {
                 document.getElementById('quiz-area').style.display = 'none';
                 document.getElementById('result-area').style.display = 'flex';
@@ -570,7 +577,9 @@
 
             document.getElementById('dict-menu').style.display = 'none';
             document.getElementById('dict-play').style.display = 'block';
-            document.getElementById('dict-audio-player').src = dictationData[dictLessonIdx].audioSrc;
+            
+            // Re-assign audio if needed (Replace link for actual audio if available)
+            // document.getElementById('dict-audio-player').src = dictationData[dictLessonIdx].audioSrc;
             
             loadDictStep();
         }
@@ -597,9 +606,12 @@
             const inputField = document.getElementById('dict-input');
             inputField.value = "";
             inputField.disabled = false;
+            
             document.getElementById('dict-fb-box').style.display = 'none';
             document.getElementById('btn-next-dict').style.display = 'none';
             document.getElementById('dict-instruct').style.display = 'block';
+            document.getElementById('btn-check-dict').style.display = 'block'; // Hiện lại nút kiểm tra
+            
             inputField.focus();
 
             // Nếu đã từng làm, hiển thị lại kết quả
@@ -650,9 +662,10 @@
             document.getElementById('dict-fb-py').innerText = sentObj.p;
             document.getElementById('dict-fb-vi').innerText = sentObj.vi;
 
-            // Chuyển nút
+            // Chuyển UI
             inputField.disabled = true;
             document.getElementById('dict-instruct').style.display = 'none';
+            document.getElementById('btn-check-dict').style.display = 'none'; // Ẩn nút kiểm tra
             
             const btnNext = document.getElementById('btn-next-dict');
             if(dictStep === dictationData[dictLessonIdx].sentences.length - 1) {
