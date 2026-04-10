@@ -524,45 +524,93 @@
 
         // --- DICTATION DATA (HSK4 L17) ---
         const lessonsData = [
-            { id: 1, title: "Bài khóa 1", desc: "小夏和安娜在聊天气", audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-1.mp3", completed: false, sentences: [
-                { h: "最近天气越来越凉快了，风一刮，草地上就会有一层厚厚的黄叶，看来秋天已经到了。", p: "Zuìjìn tiānqì yuè lái yuè liángkuai le, fēng yì guā, cǎodì shang jiù huì yǒu yì céng hòuhòu de huáng yè, kànlái qiūtiān yǐjīng dào le.", vi: "Gần đây thời tiết ngày càng mát mẻ, gió vừa thổi, trên bãi cỏ liền có một lớp lá vàng dày, xem ra mùa thu đã đến rồi." },
-                { h: "这几天香山特别热闹，随着气温的降低，那里许多植物的叶子都由绿变黄或者变红，吸引了很多游客参观，咱们今天也去看看吧。", p: "Zhè jǐ tiān Xiāng Shān tèbié rènao, suízhe qìwēn de jiàngdī, nàlǐ xǔduō zhíwù de yèzi dōu yóu lǜ biàn huáng huòzhě biàn hóng, xīyǐnle hěn duō yóukè cānguān, zánmen jīntiān yě qù kànkan ba.", vi: "Mấy ngày nay Hương Sơn đặc biệt náo nhiệt, cùng với sự giảm xuống của nhiệt độ, lá của rất nhiều thực vật ở đó đều từ xanh chuyển sang vàng hoặc đỏ, thu hút rất nhiều du khách đến tham quan, chúng ta hôm nay cũng đi xem đi." },
-                { h: "你看天上的云，今天肯定有大雨。再说，香山上看红叶的人太多了。咱们改天去长城吧，广播里说那里也有不少专门看红叶的好地方。", p: "Nǐ kàn tiān shang de yún, jīntiān kěndìng yǒu dàyǔ. Zàishuō, Xiāng Shān shang kàn hóngyè de rén tài duō le. Zánmen gǎitiān qù Chángchéng ba, guǎngbō lǐ shuō nàlǐ yě yǒu bùshǎo zhuānmén kàn hóngyè de hǎo dìfang.", vi: "Bạn xem mây trên trời kìa, hôm nay chắc chắn có mưa to. Hơn nữa, người trên Hương Sơn xem lá đỏ quá nhiều. Hôm khác chúng ta đi Vạn Lý Trường Thành nhé, trên đài phát thanh nói ở đó cũng có không ít chỗ chuyên ngắm lá đỏ rất đẹp." },
-                { h: "真可惜，我还想多照点儿香山的照片呢。去长城倒是一个好主意，那我们明天去吧。", p: "Zhēn kěxī, wǒ hái xiǎng duō zhào diǎnr Xiāng Shān de zhàopiàn ne. Qù Chángchéng dào shì yí gè hǎo zhǔyì, nà wǒmen míngtiān qù ba.", vi: "Thật đáng tiếc, tôi còn muốn chụp thêm mấy tấm ảnh Hương Sơn nữa. Đi Vạn Lý Trường Thành ngược lại là một ý kiến hay, vậy chúng ta ngày mai đi nhé." },
-                { h: "明天恐怕也不行，明天是我爸的生日。", p: "Míngtiān kǒngpà yě bùxíng, míngtiān shì wǒ bà de shēngrì.", vi: "Ngày mai e là cũng không được, ngày mai là sinh nhật bố tôi." },
-                { h: "没关系，那我们再约时间。", p: "Méi guānxì, nà wǒmen zài yuē shíjiān.", vi: "Không sao, vậy chúng ta hẹn thời gian sau." }
-            ]},
-            { id: 2, title: "Bài khóa 2", desc: "小林和小李在聊小李的狗", audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-2.mp3", completed: false, sentences: [
-                { h: "你的这只大黑狗真漂亮，而且这么聪明，每次见了都想抱一抱它。", p: "Nǐ de zhè zhī dà hēigǒu zhēn piàoliang, érqiě zhème cōngmíng, měicì jiànle dōu xiǎng bào yí bào tā.", vi: "Con chó đen lớn này của bạn đẹp thật, hơn nữa lại thông minh như vậy, mỗi lần thấy đều muốn ôm nó một cái." },
-                { h: "狗是很聪明的动物，只要稍微花点儿时间教教它，它就能学会很多东西。", p: "Gǒu shì hěn cōngmíng de dòngwù, zhǐyào shāowēi huā diǎnr shíjiān jiāojiao tā, tā jiù néng xuéhuì hěn duō dōngxi.", vi: "Chó là loài động vật rất thông minh, chỉ cần dành chút thời gian dạy nó, nó liền có thể học được rất nhiều thứ." },
-                { h: "听你这么一说，我现在也想养一只狗了。每次你让它干什么，它就像能听懂你的话一样去做。你教它是不是用了什么特别的方法？", p: "Tīng nǐ zhème yì shuō, wǒ xiànzài yě xiǎng yǎng yì zhī gǒu le. Měicì nǐ ràng tā gàn shénme, tā jiù xiàng néng tīngdǒng nǐ de huà yíyàng qù zuò. Nǐ jiāo tā shì bú shì yòngle shénme tèbié de fāngfǎ?", vi: "Nghe bạn nói vậy, tôi bây giờ cũng muốn nuôi một con chó rồi. Mỗi lần bạn bảo nó làm gì, nó giống như có thể nghe hiểu lời bạn mà đi làm. Bạn dạy nó có phải dùng phương pháp gì đặc biệt không?" },
-                { h: "要让它完成一些任务，只教一次是不够的，应该耐心地一遍一遍地教给它，使它熟悉，然后它就会严格按照你的要求做了。", p: "Yào ràng tā wánchéng yìxiē rènwu, zhǐ jiāo yí cì shì bú gòu de, yīnggāi nàixīn de yí biàn yí biàn de jiāo gěi tā, shǐ tā shúxī, ránhòu tā jiù huì yángé ànzhào nǐ de yāoqiú zuò le.", vi: "Muốn nó hoàn thành một số nhiệm vụ, chỉ dạy một lần là không đủ, nên kiên nhẫn hết lần này đến lần khác dạy cho nó, làm nó quen, sau đó nó liền sẽ làm nghiêm ngặt theo yêu cầu của bạn." },
-                { h: "看来没有想的那么容易。", p: "Kànlái méiyǒu xiǎng de nàme róngyì.", vi: "Xem ra không dễ như đã nghĩ." },
-                { h: "狗是我们的好朋友，它能听懂人的话，明白人的心情。在你心里难受的时候，它会一直陪着你。", p: "Gǒu shì wǒmen de hǎo péngyou, tā néng tīngdǒng rén de huà, míngbai rén de xīnqíng. Zài nǐ xīn lǐ nánshòu de shíhou, tā huì yìzhí péizhe nǐ.", vi: "Chó là người bạn tốt của chúng ta, nó có thể nghe hiểu tiếng người, hiểu được tâm trạng của người. Lúc trong lòng bạn khó chịu, nó sẽ luôn ở bên bạn." }
-            ]},
-            { id: 3, title: "Bài khóa 3", desc: "马克和小夏在聊动物", audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-3.mp3", completed: false, sentences: [
-                { h: "上个月我去了趟北京动物园，那里约有500种动物，听导游说北京动物园是亚洲最大的动物园之一。", p: "Shàng gè yuè wǒ qùle tàng Běijīng Dòngwùyuán, nàlǐ yuē yǒu wǔbǎi zhǒng dòngwù, tīng dǎoyóu shuō Běijīng Dòngwùyuán shì Yàzhōu zuì dà de dòngwùyuán zhī yī.", vi: "Tháng trước tôi đi một chuyến đến Sở thú Bắc Kinh, ở đó có khoảng 500 loài động vật, nghe hướng dẫn viên nói Sở thú Bắc Kinh là một trong những sở thú lớn nhất châu Á." },
-                { h: "去年放暑假的时候，我也去过一次，在那儿看了马、熊猫、老虎等动物。我特别喜欢熊猫，可惜它们当时大多在睡觉。", p: "Qùnián fàng shǔjià de shíhou, wǒ yě qùguo yí cì, zài nàr kànle mǎ, xióngmāo, lǎohǔ děng dòngwù. Wǒ tèbié xǐhuan xióngmāo, kěxī tāmen dāngshí dàduō zài shuìjiào.", vi: "Kỳ nghỉ hè năm ngoái tôi cũng từng đi một lần, ở đó đã xem ngựa, gấu trúc, hổ... Tôi đặc biệt thích gấu trúc, tiếc là lúc đó đa số chúng đang ngủ." },
-                { h: "我去的那天正赶上六一儿童节，许多父母带着孩子去动物园。入口处排队的人很多，动物园里热闹极了。熊猫也变得特别活泼，我还给它们照了不少照片呢。", p: "Wǒ qù de nà tiān zhèng gǎnshàng Liùyī Értóngjié, xǔduō fùmǔ dàizhe háizi qù dòngwùyuán. Rùkǒu chù páiduì de rén hěn duō, dòngwùyuán lǐ rènao jí le. Xióngmāo yě biàn de tèbié huópō, wǒ hái gěi tāmen zhàole bùshǎo zhàopiàn ne.", vi: "Ngày tôi đi đúng dịp Tết thiếu nhi 1/6, rất nhiều bố mẹ đưa con đi sở thú. Ở lối vào người xếp hàng rất đông, trong sở thú cực kỳ náo nhiệt. Gấu trúc cũng trở nên đặc biệt hoạt bát, tôi còn chụp cho chúng không ít ảnh nữa." },
-                { h: "大熊猫身子胖胖的，样子可爱极了。", p: "Dàxióngmāo shēnzi pàngpàng de, yàngzi kě'ài jí le.", vi: "Gấu trúc lớn thân hình mập mạp, dáng vẻ cực kỳ đáng yêu." },
-                { h: "不过，它们数量不多，现在全世界一共才有一千多只吧。", p: "Búguò, tāmen shùliàng bù duō, xiànzài quán shìjiè yígòng cái yǒu yìqiān duō zhī ba.", vi: "Tuy nhiên, số lượng chúng không nhiều, bây giờ toàn thế giới tổng cộng mới có hơn một nghìn con thôi." },
-                { h: "以前只有中国有大熊猫，为了表示友好，从1957年开始，中国把大熊猫作为礼物送给其他一些国家。现在，很多国家的人们在本国都能看到大熊猫了。", p: "Yǐqián zhǐyǒu Zhōngguó yǒu dàxióngmāo, wèile biǎoshì yǒuhǎo, cóng 1957 nián kāishǐ, Zhōngguó bǎ dàxióngmāo zuòwéi lǐwù sòng gěi qítā yìxiē guójiā. Xiànzài, hěn duō guójiā de rénmen zài běnguó dōu néng kàndào dàxióngmāo le.", vi: "Trước đây chỉ Trung Quốc có gấu trúc lớn, để thể hiện sự hữu nghị, từ năm 1957, Trung Quốc đem gấu trúc lớn làm quà tặng cho một số quốc gia khác. Hiện nay, người dân nhiều nước đều có thể thấy gấu trúc lớn ngay tại nước mình rồi." }
-            ]},
-            { id: 4, title: "Bài khóa 4", desc: "植物的竞争", audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-4.mp3", completed: false, sentences: [
-                { h: "不仅社会上的人与人之间有竞争，森林里的各种植物之间也有竞争，这一点儿也不奇怪。", p: "Bùjǐn shèhuì shang de rén yǔ rén zhījiān yǒu jìngzhēng, sēnlín lǐ de gèzhǒng zhíwù zhījiān yě yǒu jìngzhēng, zhè yìdiǎnr yě bù qíguài.", vi: "Không chỉ giữa người với người trong xã hội có sự cạnh tranh, giữa các loại thực vật trong rừng cũng có cạnh tranh, điều này một chút cũng không kỳ lạ." },
-                { h: "植物会为了阳光、空气和水而竞争。", p: "Zhíwù huì wèile yángguāng, kōngqì hé shuǐ ér jìngzhēng.", vi: "Thực vật sẽ cạnh tranh vì ánh sáng, không khí và nước." },
-                { h: "一些高大的植物往往能获得更多的阳光、空气和水，而剩下的一些比较矮小的植物就只能长在这些高大植物的下面。", p: "Yìxiē gāodà de zhíwù wǎngwǎng néng huòdé gèng duō de yángguāng, kōngqì hé shuǐ, ér shèngxià de yìxiē bǐjiào ǎixiǎo de zhíwù jiù zhǐ néng zhǎng zài zhèxiē gāodà zhíwù de xiàmiàn.", vi: "Một số thực vật cao lớn thường có thể nhận được nhiều ánh sáng, không khí và nước hơn, mà một số thực vật khá thấp bé còn lại thì chỉ có thể mọc dưới những thực vật cao lớn này." },
-                { h: "由于气候条件不同，世界各地植物叶子的样子也很不相同。", p: "Yóuyú qìhòu tiáojiàn bùtóng, shìjiè gèdì zhíwù yèzi de yàngzi yě hěn bù xiāngtóng.", vi: "Do điều kiện khí hậu khác nhau, hình dáng lá cây của thực vật ở các nơi trên thế giới cũng rất không giống nhau." },
-                { h: "在暖和、水分比较多的地方，叶子往往长得又大又厚；在阳光特别厉害、水分少的地方，叶子就会长得又细又长。", p: "Zài nuǎnhuo, shuǐfèn bǐjiào duō de dìfang, yèzi wǎngwǎng zhǎng de yòu dà yòu hòu; zài yángguāng tèbié lìhai, shuǐfèn shǎo de dìfang, yèzi jiù huì zhǎng de yòu xì yòu cháng.", vi: "Ở nơi ấm áp, độ ẩm khá nhiều, lá cây thường mọc vừa to vừa dày; ở nơi ánh nắng đặc biệt gay gắt, độ ẩm ít, lá cây sẽ mọc vừa nhỏ vừa dài." }
-            ]},
-            { id: 5, title: "Bài khóa 5", desc: "海底世界", audioSrc: "https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-5.mp3", completed: false, sentences: [
-                { h: "地球上大约71%的地方是蓝色的海洋，在美丽的海底世界里，生活着各种各样的植物和动物。", p: "Dìqiú shang dàyuē bǎi fēn zhī qīshíyī de dìfang shì lánsè de hǎiyáng, zài měilì de hǎidǐ shìjiè lǐ, shēnghuózhe gèzhǒnggèyàng de zhíwù hé dòngwù.", vi: "Trên trái đất khoảng 71% diện tích là đại dương xanh thẳm, trong thế giới dưới đáy biển tươi đẹp, có đủ các loại thực vật và động vật sinh sống." },
-                { h: "我们小时候都听过美人鱼的故事，其实真正的海底世界比故事里写的更美。", p: "Wǒmen xiǎoshíhou dōu tīngguo měirényú de gùshi, qíshí zhēnzhèng de hǎidǐ shìjiè bǐ gùshi lǐ xiě de gèng měi.", vi: "Hồi nhỏ chúng ta đều nghe qua câu chuyện nàng tiên cá, thực ra thế giới đáy biển chân thực còn đẹp hơn trong truyện viết." },
-                { h: "科学研究发现，海洋底部看上去非常安静，然而却不是一点儿声音也没有，海底的动物们一直在“说话”，只不过人的耳朵是听不到的。", p: "Kēxué yánjiū fāxiàn, hǎiyáng dǐbù kàn shàngqù fēicháng ānjìng, rán'ér què bú shì yìdiǎnr shēngyīn yě méiyǒu, hǎidǐ de dòngwùmen yìzhí zài “shuōhuà”, zhǐ búguò rén de ěrduo shì tīngbúdào de.", vi: "Nghiên cứu khoa học phát hiện, dưới đáy đại dương nhìn có vẻ vô cùng tĩnh lặng, tuy nhiên lại không phải một chút âm thanh cũng không có, các động vật dưới đáy biển vẫn luôn đang \"nói chuyện\", chỉ là tai con người không nghe được mà thôi." },
-                { h: "另外，就算在几公里深的海底也仍然能看到东西，许多鱼会发出各种颜色的亮光，像一个个排列起来的灯，美极了，就像在梦里一样。", p: "Lìngwài, jiùsuàn zài jǐ gōnglǐ shēn de hǎidǐ yě réngrán néng kàndào dōngxi, xǔduō yú huì fāchū gè zhǒng yánsè de liàngguāng, xiàng yí gègè páiliè qǐlái de dēng, měi jí le, jiù xiàng zài mèng lǐ yíyàng.", vi: "Ngoài ra, cho dù ở đáy biển sâu vài km cũng vẫn có thể nhìn thấy đồ vật, nhiều loài cá sẽ phát ra ánh sáng đủ loại màu sắc, giống như từng chiếc đèn được xếp thành hàng, đẹp cực kỳ, cứ như ở trong mơ vậy." }
-            ]}
-        ];
-
+{ id:1,title:"Bài khóa 1",desc:"小夏和安娜在聊天气",audioSrc:"https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-1.mp3",completed:false,sentences:[
+{h:"最近天气越来越凉快了。",p:"Zuìjìn tiānqì yuè lái yuè liángkuai le.",vi:"Gần đây thời tiết ngày càng mát mẻ."},
+{h:"风一刮，草地上就会有一层厚厚的黄叶。",p:"Fēng yì guā, cǎodì shang jiù huì yǒu yì céng hòuhòu de huáng yè.",vi:"Gió thổi, trên bãi cỏ có một lớp lá vàng dày."},
+{h:"看来秋天已经到了。",p:"Kànlái qiūtiān yǐjīng dào le.",vi:"Xem ra mùa thu đã đến."},
+{h:"这几天香山特别热闹。",p:"Zhè jǐ tiān Xiāng Shān tèbié rènao.",vi:"Mấy ngày nay Hương Sơn rất náo nhiệt."},
+{h:"随着气温的降低，许多植物的叶子都变了颜色。",p:"Suízhe qìwēn de jiàngdī, xǔduō zhíwù de yèzi dōu biàn le yánsè.",vi:"Nhiệt độ giảm, lá cây đổi màu."},
+{h:"有的由绿变黄，有的变红。",p:"Yǒu de yóu lǜ biàn huáng, yǒu de biàn hóng.",vi:"Có lá vàng, có lá đỏ."},
+{h:"吸引了很多游客参观。",p:"Xīyǐn le hěn duō yóukè cānguān.",vi:"Thu hút nhiều du khách."},
+{h:"咱们今天也去看看吧。",p:"Zánmen jīntiān yě qù kànkan ba.",vi:"Hôm nay mình đi xem nhé."},
+{h:"你看天上的云，今天肯定有大雨。",p:"Nǐ kàn tiān shang de yún, jīntiān kěndìng yǒu dàyǔ.",vi:"Nhìn mây, hôm nay chắc mưa to."},
+{h:"香山上看红叶的人太多了。",p:"Xiāng Shān shang kàn hóngyè de rén tài duō le.",vi:"Người xem lá đỏ quá đông."},
+{h:"咱们改天去长城吧。",p:"Zánmen gǎitiān qù Chángchéng ba.",vi:"Hôm khác đi Trường Thành nhé."},
+{h:"那里也有很多看红叶的好地方。",p:"Nàlǐ yě yǒu hěn duō kàn hóngyè de hǎo dìfang.",vi:"Ở đó cũng có nhiều chỗ đẹp."},
+{h:"真可惜，我还想多照点儿照片呢。",p:"Zhēn kěxī, wǒ hái xiǎng duō zhào diǎnr zhàopiàn ne.",vi:"Tiếc thật, tôi còn muốn chụp thêm."},
+{h:"去长城是个好主意。",p:"Qù Chángchéng shì gè hǎo zhǔyì.",vi:"Đi Trường Thành là ý hay."},
+{h:"那我们明天去吧。",p:"Nà wǒmen míngtiān qù ba.",vi:"Mai đi nhé."},
+{h:"明天恐怕不行。",p:"Míngtiān kǒngpà bùxíng.",vi:"Mai e không được."},
+{h:"明天是我爸的生日。",p:"Míngtiān shì wǒ bà de shēngrì.",vi:"Mai sinh nhật bố tôi."},
+{h:"没关系，我们再约时间。",p:"Méi guānxì, wǒmen zài yuē shíjiān.",vi:"Không sao, hẹn lại."}
+]},
+{ id:2,title:"Bài khóa 2",desc:"小林和小李在聊小李的狗",audioSrc:"https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-2.mp3",completed:false,sentences:[
+{h:"你的这只大黑狗真漂亮。",p:"Nǐ de zhè zhī dà hēigǒu zhēn piàoliang.",vi:"Con chó đen này rất đẹp."},
+{h:"而且很聪明。",p:"Érqiě hěn cōngmíng.",vi:"Lại còn thông minh."},
+{h:"每次见了都想抱一抱它。",p:"Měicì jiànle dōu xiǎng bào yí bào tā.",vi:"Lúc nào cũng muốn ôm."},
+{h:"狗是很聪明的动物。",p:"Gǒu shì hěn cōngmíng de dòngwù.",vi:"Chó rất thông minh."},
+{h:"只要花点时间教它，它就能学会很多东西。",p:"Zhǐyào huā diǎn shíjiān jiāo tā, tā jiù néng xuéhuì hěn duō dōngxi.",vi:"Dạy là học được."},
+{h:"听你这么说，我也想养一只狗了。",p:"Tīng nǐ zhème shuō, wǒ yě xiǎng yǎng yì zhī gǒu le.",vi:"Tôi cũng muốn nuôi chó."},
+{h:"你让它干什么，它就去做。",p:"Nǐ ràng tā gàn shénme, tā jiù qù zuò.",vi:"Bảo gì làm nấy."},
+{h:"好像能听懂话一样。",p:"Hǎoxiàng néng tīngdǒng huà yíyàng.",vi:"Như hiểu tiếng người."},
+{h:"你是不是用了特别的方法？",p:"Nǐ shì bú shì yòngle tèbié de fāngfǎ?",vi:"Bạn dùng cách đặc biệt à?"},
+{h:"只教一次是不够的。",p:"Zhǐ jiāo yí cì shì bú gòu de.",vi:"Dạy 1 lần không đủ."},
+{h:"要一遍一遍耐心教。",p:"Yào yí biàn yí biàn nàixīn jiāo.",vi:"Phải dạy nhiều lần."},
+{h:"让它熟悉。",p:"Ràng tā shúxī.",vi:"Cho nó quen."},
+{h:"它就会按要求做。",p:"Tā jiù huì àn yāoqiú zuò.",vi:"Sẽ làm đúng."},
+{h:"看来不容易。",p:"Kànlái bù róngyì.",vi:"Không dễ."},
+{h:"狗是好朋友。",p:"Gǒu shì hǎo péngyou.",vi:"Chó là bạn tốt."},
+{h:"它能听懂人的话。",p:"Tā néng tīngdǒng rén de huà.",vi:"Hiểu tiếng người."},
+{h:"也懂人的心情。",p:"Yě dǒng rén de xīnqíng.",vi:"Hiểu cảm xúc."},
+{h:"难受时会陪着你。",p:"Nánshòu shí huì péizhe nǐ.",vi:"Luôn ở bên bạn."}
+]},
+{ id:3,title:"Bài khóa 3",desc:"马克和小夏在聊动物",audioSrc:"https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-3.mp3",completed:false,sentences:[
+{h:"上个月我去了北京动物园。",p:"Shàng gè yuè wǒ qùle Běijīng Dòngwùyuán.",vi:"Tháng trước tôi đi sở thú."},
+{h:"那里大约有500种动物。",p:"Nàlǐ dàyuē yǒu 500 zhǒng dòngwù.",vi:"Có khoảng 500 loài."},
+{h:"它是亚洲最大的动物园之一。",p:"Tā shì Yàzhōu zuì dà de dòngwùyuán zhī yī.",vi:"Lớn nhất châu Á."},
+{h:"我也去过一次。",p:"Wǒ yě qùguo yí cì.",vi:"Tôi cũng từng đi."},
+{h:"看了马、熊猫、老虎等动物。",p:"Kànle mǎ, xióngmāo, lǎohǔ děng dòngwù.",vi:"Xem nhiều con vật."},
+{h:"我特别喜欢熊猫。",p:"Wǒ tèbié xǐhuan xióngmāo.",vi:"Tôi thích gấu trúc."},
+{h:"可惜它们在睡觉。",p:"Kěxī tāmen zài shuìjiào.",vi:"Nhưng đang ngủ."},
+{h:"我去时正好是儿童节。",p:"Wǒ qù shí zhènghǎo shì Értóngjié.",vi:"Đúng 1/6."},
+{h:"很多人带孩子来。",p:"Hěn duō rén dài háizi lái.",vi:"Rất đông người."},
+{h:"排队的人很多。",p:"Páiduì de rén hěn duō.",vi:"Xếp hàng dài."},
+{h:"动物园很热闹。",p:"Dòngwùyuán hěn rènao.",vi:"Rất náo nhiệt."},
+{h:"熊猫很活泼。",p:"Xióngmāo hěn huópō.",vi:"Rất hoạt bát."},
+{h:"我拍了很多照片。",p:"Wǒ pāile hěn duō zhàopiàn.",vi:"Chụp nhiều ảnh."},
+{h:"熊猫胖胖的，很可爱。",p:"Xióngmāo pàngpàng de, hěn kě'ài.",vi:"Mập và đáng yêu."},
+{h:"不过数量不多。",p:"Búguò shùliàng bù duō.",vi:"Nhưng ít."},
+{h:"全世界只有一千多只。",p:"Quán shìjiè zhǐyǒu yìqiān duō zhī.",vi:"Chỉ hơn 1000 con."},
+{h:"以前只有中国有。",p:"Yǐqián zhǐyǒu Zhōngguó yǒu.",vi:"Trước chỉ Trung Quốc có."},
+{h:"后来送给其他国家。",p:"Hòulái sòng gěi qítā guójiā.",vi:"Sau đem tặng."},
+{h:"现在很多国家都能看到。",p:"Xiànzài hěn duō guójiā dōu néng kàndào.",vi:"Giờ nhiều nước có."}
+]},
+{ id:4,title:"Bài khóa 4",desc:"植物的竞争",audioSrc:"https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-4.mp3",completed:false,sentences:[
+{h:"人与人之间有竞争。",p:"Rén yǔ rén zhījiān yǒu jìngzhēng.",vi:"Người với người có cạnh tranh."},
+{h:"植物之间也有竞争。",p:"Zhíwù zhījiān yě yǒu jìngzhēng.",vi:"Cây cũng vậy."},
+{h:"这不奇怪。",p:"Zhè bù qíguài.",vi:"Không lạ."},
+{h:"它们为了阳光、空气和水竞争。",p:"Tāmen wèile yángguāng, kōngqì hé shuǐ jìngzhēng.",vi:"Tranh ánh sáng, nước."},
+{h:"高大的植物得到更多资源。",p:"Gāodà de zhíwù dédào gèng duō zīyuán.",vi:"Cây cao lợi thế."},
+{h:"矮小的只能在下面生长。",p:"Ǎixiǎo de zhǐ néng zài xiàmiàn shēngzhǎng.",vi:"Cây thấp ở dưới."},
+{h:"气候不同，叶子不同。",p:"Qìhòu bùtóng, yèzi bùtóng.",vi:"Khí hậu khác → lá khác."},
+{h:"温暖湿润的地方，叶子大而厚。",p:"Wēnnuǎn shīrùn de dìfang, yèzi dà ér hòu.",vi:"Nơi ẩm → lá to."},
+{h:"干燥炎热的地方，叶子细而长。",p:"Gānzào yánrè de dìfang, yèzi xì ér cháng.",vi:"Nơi khô → lá nhỏ dài."}
+]},
+{ id:5,title:"Bài khóa 5",desc:"海底世界",audioSrc:"https://raw.githubusercontent.com/ngabui94-create/game-hoc-tieng-trung/main/audio/hsk4/lesson17/17-5.mp3",completed:false,sentences:[
+{h:"地球71%是海洋。",p:"Dìqiú 71% shì hǎiyáng.",vi:"71% là biển."},
+{h:"海底有很多动植物。",p:"Hǎidǐ yǒu hěn duō dòngzhíwù.",vi:"Có nhiều sinh vật."},
+{h:"我们都听过美人鱼故事。",p:"Wǒmen dōu tīngguo měirényú gùshi.",vi:"Đã nghe nàng tiên cá."},
+{h:"真实海底更美。",p:"Zhēnshí hǎidǐ gèng měi.",vi:"Thực tế đẹp hơn."},
+{h:"海底看起来很安静。",p:"Hǎidǐ kàn qǐlái hěn ānjìng.",vi:"Nhìn yên tĩnh."},
+{h:"其实有声音。",p:"Qíshí yǒu shēngyīn.",vi:"Thực ra có âm thanh."},
+{h:"动物一直在“说话”。",p:"Dòngwù yìzhí zài shuōhuà.",vi:"Động vật đang nói chuyện."},
+{h:"人听不到。",p:"Rén tīng bú dào.",vi:"Người không nghe được."},
+{h:"深海也能看到东西。",p:"Shēnhǎi yě néng kàndào dōngxi.",vi:"Sâu vẫn thấy."},
+{h:"鱼会发光。",p:"Yú huì fāguāng.",vi:"Cá phát sáng."},
+{h:"像一排灯。",p:"Xiàng yì pái dēng.",vi:"Như dãy đèn."},
+{h:"美得像梦一样。",p:"Měi de xiàng mèng yíyàng.",vi:"Đẹp như mơ."}
+]}
+];
         let currentLessonIdx = -1, dictStep = 0;
         let currentLessonResults = []; 
 
