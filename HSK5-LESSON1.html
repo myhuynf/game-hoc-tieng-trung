@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HSK5 Bài 1 - 爱的细节 | Nga Học HSK</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+SC:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Nunito:wght@400;600;700;800&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #8bc34a; 
@@ -17,7 +17,8 @@
             --text-main: #33691e;
             --text-muted: #5d4037;
             --hanzi-color: #d84315;
-            --font-cn: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; 
+            /* Cập nhật font chữ Hán bo tròn, dễ đọc */
+            --font-cn: "Varela Round", "Nunito", "Noto Sans SC", "Microsoft YaHei", sans-serif; 
         }
 
         * {
@@ -57,7 +58,7 @@
             display: flex; align-items: center; gap: 5px; border: 1px solid rgba(255,255,255,0.5); cursor: pointer;
         }
 
-        .header h2 { font-size: 1.15rem; text-align: center; flex: 1; margin: 0 10px; font-family: var(--font-cn); font-weight: bold; }
+        .header h2 { font-size: 1.15rem; text-align: center; flex: 1; margin: 0 10px; font-family: var(--font-cn); font-weight: 900; }
         .header-spacer { width: 80px; }
 
         .tabs {
@@ -102,7 +103,7 @@
         }
 
         /* --- FLASHCARD SPECIFIC --- */
-        .chinese-text { font-family: var(--font-cn); font-weight: 700; }
+        .chinese-text { font-family: var(--font-cn); font-weight: 700; letter-spacing: 0.5px; }
         .chinese-sub { font-family: var(--font-cn); }
 
         .flashcard-inner {
@@ -131,26 +132,34 @@
         .stat-green { border-color: var(--primary); color: var(--primary-dark); }
         .stat-red { border-color: #fca5a5; color: #b91c1c; }
 
-        /* --- AUDIO SYNC TEXT SPECIFIC --- */
-        .sync-text {
-            cursor: pointer; transition: all 0.2s ease-in-out;
-            padding: 2px 4px; border-radius: 6px;
-            border: 1px solid transparent;
+        /* --- RUBY (PINYIN) SPECIFIC CHO BÀI KHÓA --- */
+        .text-content-area {
+            /* Giúp khoảng cách các dòng thông thoáng */
+            line-height: 2.8; 
+            font-size: 1.25rem;
         }
-        .sync-text:hover { background-color: #f1f8e9; border-color: var(--primary); }
-        .sync-active {
-            background-color: #ffecb3; 
-            color: var(--hanzi-color); 
-            border-color: #ffca28;
-            box-shadow: 0 2px 5px rgba(255, 183, 77, 0.3);
-            transform: scale(1.02);
-            display: inline-block;
+        ruby { ruby-position: over; margin: 0 2px; }
+        rt { 
+            font-size: 0.65rem; 
+            color: #1565c0; 
+            font-family: 'Nunito', sans-serif; 
+            font-weight: 700; 
+            transform: translateY(-2px);
+            transition: opacity 0.2s;
+        }
+        
+        /* Khi tắt Pinyin */
+        .hide-pinyin rt {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .hide-pinyin .text-content-area {
+            line-height: 2.2; /* Tự thu gọn khoảng cách khi tắt Pinyin */
         }
 
-        /* --- RUBY (PINYIN) SPECIFIC --- */
-        ruby { ruby-position: over; margin: 0 1px; }
-        rt { font-size: 0.9rem; color: #1565c0; font-family: 'Nunito', sans-serif; font-weight: 800; transform: translateY(-2px); }
-        .ruby-char { font-size: 1.6rem; line-height: 1.8; }
+        /* --- TOGGLE BUTTON SPECIFIC --- */
+        input:checked ~ .toggle-bg { background-color: var(--primary); }
+        input:checked ~ .toggle-dot { transform: translateX(100%); }
 
         /* --- QUIZ SPECIFIC --- */
         .quiz-option {
@@ -193,15 +202,15 @@
             <div id="vocab-start" class="card-container text-center">
                 <h2 class="text-2xl font-bold mb-2" style="color: var(--primary-dark);">Từ Vựng Bài 1</h2>
                 <div class="text-6xl mb-6 mt-4">🚀</div>
-                <p class="text-[var(--text-muted)] font-bold mb-6">Bộ từ vựng gồm 36 từ. Hãy ghi nhớ thật kỹ nhé!</p>
+                <p class="text-[var(--text-muted)] font-bold mb-6">Hãy đọc cả từ vựng và câu ví dụ để hiểu rõ cách dùng từ nhé!</p>
                 <button onclick="startFlashcards()" class="btn-primary w-full">Bắt đầu học ❯</button>
             </div>
 
             <div id="flashcard-screen" class="card-container hidden">
                 <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <button onclick="resetVocabTab()" class="text-sm font-bold hover:underline" style="color: var(--secondary-dark);">❮ Bỏ dở</button>
+                    <button onclick="resetVocabTab()" class="text-sm font-bold hover:underline" style="color: var(--secondary-dark);">❮ Quay Lại</button>
                     <div class="font-bold px-3 py-1 rounded-full text-xs" style="background: #e8f5e9; color: var(--primary-dark);">
-                        Thẻ: <span id="card-index">1</span> / <span id="card-total">36</span>
+                        Thẻ: <span id="card-index">1</span> / <span id="card-total">0</span>
                     </div>
                 </div>
                 
@@ -253,66 +262,29 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- TAB 2: BÀI KHÓA (PINYIN VIEWER) -->
+        <!-- TAB 2: BÀI KHÓA (RUBY PINYIN & TOGGLE) -->
         <!-- ============================================== -->
         <div id="section-text" class="w-full hidden">
-            <div class="card-container">
-                <h2 class="text-2xl font-bold text-center mb-4 chinese-text" style="color: var(--primary-dark);">爱的细节</h2>
+            <div class="card-container" id="text-wrapper">
+                <h2 class="text-2xl font-bold text-center mb-6 chinese-text" style="color: var(--primary-dark);">爱的细节</h2>
                 
-                <!-- Audio Player & Pinyin Area -->
-                <div class="sticky top-0 z-10 bg-white pb-3 pt-1 border-b-2 mb-4" style="border-color: var(--primary);">
-                    <p class="text-xs font-bold text-center text-gray-500 mb-2">Bấm vào câu để xem Pinyin. Bấm lần nữa để tắt.</p>
-                    <audio id="lesson-audio" controls class="w-full h-10 outline-none rounded-lg" src="audio/hsk5/lesson1/01-1.mp3"></audio>
+                <!-- Audio Player & Pinyin Toggle -->
+                <div class="sticky top-0 z-10 bg-white pb-3 pt-1 border-b-2 mb-6 flex justify-between items-center gap-3" style="border-color: var(--primary);">
+                    <audio id="lesson-audio" controls class="h-10 outline-none rounded-lg flex-1" src="audio/hsk5/lesson1/01-1.mp3"></audio>
                     
-                    <!-- Pinyin Display Box -->
-                    <div id="pinyin-display" class="mt-4 p-4 rounded-xl bg-[#fffde7] border-2 border-[#ffe082] text-center hidden shadow-sm transition-all duration-300">
-                    </div>
+                    <label class="flex items-center cursor-pointer select-none">
+                        <div class="relative">
+                            <input type="checkbox" id="toggle-pinyin" class="sr-only" checked onchange="togglePinyin()">
+                            <div class="block bg-gray-300 w-12 h-7 rounded-full toggle-bg transition"></div>
+                            <div class="dot absolute left-1 top-1 bg-white w-5 h-5 rounded-full transition transform toggle-dot"></div>
+                        </div>
+                        <div class="ml-2 font-bold text-sm text-[var(--primary-dark)]">Pinyin</div>
+                    </label>
                 </div>
 
-                <!-- Text Content -->
-                <div class="chinese-text text-xl leading-relaxed text-gray-800 space-y-4 custom-scroll max-h-[50vh] overflow-y-auto pb-4 px-1" id="sync-container">
-                    
-                    <p class="indent-8">
-                        <span class="sync-text" data-start="0" data-end="3">电台要选出一对最恩爱的夫妻。</span>
-                        <span class="sync-text" data-start="3" data-end="6">对比后，有三对夫妻入围。</span>
-                        <span class="sync-text" data-start="6" data-end="9">评委叫第一对夫妻说说他俩是如何恩爱的。</span>
-                        <span class="sync-text" data-start="9" data-end="14">妻子说，前几年她全身瘫痪了，医生说她站起来的可能性很小。</span>
-                        <span class="sync-text" data-start="14" data-end="17">别人都觉得她的丈夫会跟她离婚，</span>
-                        <span class="sync-text" data-start="17" data-end="19">她也想过自杀。</span>
-                        <span class="sync-text" data-start="19" data-end="23">但丈夫一直鼓励她，为她不知找了多少家医院，</span>
-                        <span class="sync-text" data-start="23" data-end="27">并且几年如一日地照顾她，从不抱怨。</span>
-                        <span class="sync-text" data-start="27" data-end="31">在丈夫的爱护和努力下，她终于又站了起来。</span>
-                        <span class="sync-text" data-start="31" data-end="35">他的故事让很多评委感动得流下了眼泪。</span>
-                    </p>
-                    
-                    <p class="indent-8">
-                        <span class="sync-text" data-start="35" data-end="38">随后进来的是第二对夫妻，</span>
-                        <span class="sync-text" data-start="38" data-end="44">他俩说，十几年的婚姻生活中，他们从来没为任何事红过脸、吵过架，</span>
-                        <span class="sync-text" data-start="44" data-end="46">一直相敬如宾，</span>
-                        <span class="sync-text" data-start="46" data-end="48">评委听了暗暗点头。</span>
-                    </p>
-
-                    <p class="indent-8">
-                        <span class="sync-text" data-start="48" data-end="50">轮到第三对夫妻了，</span>
-                        <span class="sync-text" data-start="50" data-end="52">却很长时间不见人。</span>
-                        <span class="sync-text" data-start="52" data-end="56">评委们等得有些不耐烦，就走出来看个究竟。</span>
-                        <span class="sync-text" data-start="56" data-end="59">只见第三对夫妻仍然坐在门外，</span>
-                        <span class="sync-text" data-start="59" data-end="63">男人的头靠在女人的肩膀上，睡着了。</span>
-                        <span class="sync-text" data-start="63" data-end="68">评委要喊，女的却伸出手指，做了个小声的动作，</span>
-                        <span class="sync-text" data-start="68" data-end="74">然后小心地从包里拿出笔，用左手歪歪扭扭写下一行字递给评委，</span>
-                        <span class="sync-text" data-start="74" data-end="77">而右肩一直让丈夫的脑袋靠着。</span>
-                        <span class="sync-text" data-start="77" data-end="80">评委们看那纸条上面写着：</span>
-                        <span class="sync-text" data-start="80" data-end="85">别出声，他昨晚没睡好。半夜蚊子叮我，他一直为我赶蚊子。</span>
-                    </p>
-
-                    <p class="indent-8">
-                        <span class="sync-text" data-start="85" data-end="90">一个评委开玩笑地说：但是女士，我们得听你们叙述你们是如何恩爱的啊。</span>
-                        <span class="sync-text" data-start="90" data-end="93">女人笑了笑，答道：</span>
-                        <span class="sync-text" data-start="93" data-end="95">难道这还不够吗？</span>
-                        <span class="sync-text" data-start="95" data-end="98">评委们听了，居然一时语塞。</span>
-                        <span class="sync-text" data-start="98" data-end="102">最后，电台增加了一项奖项，</span>
-                        <span class="sync-text" data-start="102" data-end="106">将“最恩爱夫妻”奖给了第三对夫妻。</span>
-                    </p>
+                <!-- Text Content (Rendered via JS) -->
+                <div class="chinese-text text-gray-800 custom-scroll max-h-[55vh] overflow-y-auto pb-4 px-1 text-content-area transition-all duration-300" id="sync-container">
+                    <!-- Nội dung bài khóa sẽ được render vào đây -->
                 </div>
             </div>
         </div>
@@ -325,7 +297,7 @@
             <div id="quiz-start" class="card-container text-center">
                 <div class="text-6xl mb-4">🕵️‍♂️</div>
                 <h2 class="text-2xl font-bold mb-4" style="color: var(--primary-dark);">Thử Thách Đọc Hiểu</h2>
-                <p class="mb-6 font-semibold" style="color: var(--text-muted);">Gồm 20 câu hỏi khai thác chi tiết bài khóa. Chọn đáp án sẽ có ngay giải thích.</p>
+                <p class="mb-6 font-semibold" style="color: var(--text-muted);">Gồm 20 câu hỏi khai thác chi tiết bài khóa. </p>
                 <button onclick="startQuiz()" class="btn-primary w-full py-4 text-xl">Bắt đầu ngay ❯</button>
             </div>
 
@@ -376,7 +348,6 @@
                 <div class="text-6xl mb-4">📝</div>
                 <h2 class="text-2xl font-bold mb-4" style="color: var(--primary-dark);">Bài Tập Tổng Hợp</h2>
                 <p class="mb-8 font-semibold" style="color: var(--text-muted);">Củng cố lại toàn bộ ngữ pháp và từ vựng Bài 1 (HSK5) thông qua bài trắc nghiệm Google Form.</p>
-                <!-- Đổi link Google Form ở đây -->
                 <button onclick="window.open('https://forms.google.com/', '_blank')" class="btn-primary w-full py-4 text-xl">Làm Bài Tập Ngay ❯</button>
             </div>
         </div>
@@ -406,51 +377,63 @@
             document.getElementById('section-' + tabId).classList.remove('hidden');
             document.getElementById('tab-' + tabId).classList.add('active');
 
-            // Pause bài khóa nếu chuyển tab
             const lessonAudio = document.getElementById('lesson-audio');
             if(lessonAudio && tabId !== 'text') lessonAudio.pause();
 
             if(tabId === 'vocab') resetVocabTab();
         }
 
-        // --- VOCABULARY DATA (HSK5 L1) ---
+        // --- VOCABULARY DATA (UPDATED) ---
         const hsk5L1Vocab = [
             { h: "细节", p: "xìjié", m: "Chi tiết", ex: "这本书描写了很多爱的细节。", exp: "Zhè běn shū miáoxiě le hěn duō ài de xìjié.", exv: "Cuốn sách này miêu tả rất nhiều chi tiết của tình yêu." },
             { h: "电台", p: "diàntái", m: "Đài phát thanh", ex: "电台正在举办一个活动。", exp: "Diàntái zhèngzài jǔbàn yí gè huódòng.", exv: "Đài phát thanh đang tổ chức một sự kiện." },
-            { h: "恩爱", p: "ēn'ài", m: "Ân ái, yêu thương nhau", ex: "他们是一对恩爱夫妻。", exp: "Tāmen shì yí duì ēn'ài fūqī.", exv: "Họ là một cặp vợ chồng ân ái." },
+            { h: "恩爱", p: "ēn'ài", m: "Ân ái, đằm thắm", ex: "他们是一对恩爱夫妻。", exp: "Tāmen shì yí duì ēn'ài fūqī.", exv: "Họ là một cặp vợ chồng ân ái." },
             { h: "对比", p: "duìbǐ", m: "So sánh", ex: "对比之后，我们做出了决定。", exp: "Duìbǐ zhīhòu, wǒmen zuò chū le juédìng.", exv: "Sau khi so sánh, chúng tôi đã đưa ra quyết định." },
-            { h: "入围", p: "rùwéi", m: "Lọt vào vòng trong", ex: "有三对夫妻入围了决赛。", exp: "Yǒu sān duì fūqī rùwéi le juésài.", exv: "Có ba cặp vợ chồng đã lọt vào chung kết." },
-            { h: "评委", p: "píngwěi", m: "Giám khảo", ex: "评委被他们的故事感动了。", exp: "Píngwěi bèi tāmen de gùshi gǎndòng le.", exv: "Giám khảo đã bị câu chuyện của họ làm cảm động." },
+            { h: "入围", p: "rùwéi", m: "Vượt qua vòng sơ tuyển", ex: "有三对夫妻入围了决赛。", exp: "Yǒu sān duì fūqī rùwéi le juésài.", exv: "Có ba cặp vợ chồng đã lọt vào chung kết." },
+            { h: "评委", p: "píngwěi", m: "Ban giám khảo", ex: "评委被他们的故事感动了。", exp: "Píngwěi bèi tāmen de gùshi gǎndòng le.", exv: "Giám khảo đã bị câu chuyện của họ làm cảm động." },
             { h: "如何", p: "rúhé", m: "Như thế nào", ex: "评委问他们是如何恩爱的。", exp: "Píngwěi wèn tāmen shì rúhé ēn'ài de.", exv: "Giám khảo hỏi họ đã yêu thương nhau như thế nào." },
-            { h: "瘫痪", p: "tānhuàn", m: "Bại liệt", ex: "前几年她全身瘫痪了。", exp: "Qián jǐ nián tā quánshēn tānhuàn le.", exv: "Mấy năm trước cô ấy bị liệt toàn thân." },
+            { h: "如", p: "rú", m: "Giống như", ex: "他几年如一日地照顾她。", exp: "Tā jǐ nián rú yī rì de zhàogù tā.", exv: "Anh ấy chăm sóc cô ấy mấy năm như một ngày." },
+            { h: "瘫痪", p: "tānhuàn", m: "Bị liệt", ex: "前几年她全身瘫痪了。", exp: "Qián jǐ nián tā quánshēn tānhuàn le.", exv: "Mấy năm trước cô ấy bị liệt toàn thân." },
             { h: "离婚", p: "líhūn", m: "Ly hôn", ex: "别人以为丈夫会跟她离婚。", exp: "Biérén yǐwéi zhàngfu huì gēn tā líhūn.", exv: "Người khác tưởng rằng chồng sẽ ly hôn với cô ấy." },
-            { h: "自杀", p: "zìshā", m: "Tự sát", ex: "她曾经想过自杀。", exp: "Tā céngjīng xiǎng guò zìshā.", exv: "Cô ấy từng nghĩ đến việc tự sát." },
+            { h: "自杀", p: "zìshā", m: "Tự tử", ex: "她曾经想过自杀。", exp: "Tā céngjīng xiǎng guò zìshā.", exv: "Cô ấy từng nghĩ đến việc tự sát." },
             { h: "抱怨", p: "bàoyuàn", m: "Oán trách, phàn nàn", ex: "丈夫照顾她，从不抱怨。", exp: "Zhàngfu zhàogù tā, cóng bù bàoyuàn.", exv: "Chồng chăm sóc cô ấy, chưa từng phàn nàn." },
-            { h: "爱护", p: "àihù", m: "Yêu thương bảo vệ", ex: "在丈夫的爱护下她站了起来。", exp: "Zài zhàngfu de àihù xià tā zhàn le qǐlái.", exv: "Dưới sự yêu thương chăm sóc của chồng, cô ấy đã đứng lên được." },
+            { h: "爱护", p: "àihù", m: "Yêu quý, quý trọng", ex: "在丈夫的爱护下她站了起来。", exp: "Zài zhàngfu de àihù xià tā zhàn le qǐlái.", exv: "Dưới sự yêu thương chăm sóc của chồng, cô ấy đã đứng lên được." },
             { h: "婚姻", p: "hūnyīn", m: "Hôn nhân", ex: "他们的婚姻很幸福。", exp: "Tāmen de hūnyīn hěn xìngfú.", exv: "Hôn nhân của họ rất hạnh phúc." },
             { h: "吵架", p: "chǎojià", m: "Cãi nhau", ex: "他们从来不吵架。", exp: "Tāmen cónglái bù chǎojià.", exv: "Họ chưa bao giờ cãi nhau." },
-            { h: "相敬如宾", p: "xiāngjìng rú bīn", m: "Tương kính như tân (tôn trọng nhau như khách)", ex: "他们结婚多年，一直相敬如宾。", exp: "Tāmen jiéhūn duōnián, yìzhí xiāngjìng rú bīn.", exv: "Họ kết hôn nhiều năm, luôn tôn trọng nhau như khách." },
-            { h: "暗暗", p: "àn'àn", m: "Ngầm, thầm", ex: "评委听了暗暗点头。", exp: "Píngwěi tīng le àn'àn diǎntóu.", exv: "Giám khảo nghe xong âm thầm gật đầu." },
-            { h: "轮", p: "lún", m: "Đến lượt", ex: "现在轮到第三对夫妻了。", exp: "Xiànzài lún dào dì sān duì fūqī le.", exv: "Bây giờ đến lượt cặp vợ chồng thứ ba rồi." },
-            { h: "不耐烦", p: "bú nàifán", m: "Mất kiên nhẫn", ex: "评委们等得有些不耐烦。", exp: "Píngwěi men děng de yǒuxiē bú nàifán.", exv: "Các giám khảo chờ đến có chút mất kiên nhẫn." },
-            { h: "靠", p: "kào", m: "Dựa vào", ex: "他靠在椅子上睡着了。", exp: "Tā kào zài yǐzi shàng shuì zháo le.", exv: "Anh ấy dựa vào ghế ngủ thiếp đi." },
+            { h: "相敬如宾", p: "xiāngjìng rúbīn", m: "Tôn trọng nhau như khách", ex: "他们结婚多年，一直相敬如宾。", exp: "Tāmen jiéhūn duōnián, yìzhí xiāngjìng rúbīn.", exv: "Họ kết hôn nhiều năm, luôn tôn trọng nhau như khách." },
+            { h: "暗暗", p: "àn'àn", m: "Thầm, ngầm", ex: "评委听了暗暗点头。", exp: "Píngwěi tīng le àn'àn diǎntóu.", exv: "Giám khảo nghe xong âm thầm gật đầu." },
+            { h: "轮", p: "lún", m: "Luân phiên, thay phiên", ex: "现在轮到第三对夫妻了。", exp: "Xiànzài lún dào dì sān duì fūqī le.", exv: "Bây giờ đến lượt cặp vợ chồng thứ ba rồi." },
+            { h: "不耐烦", p: "bù nàifán", m: "Sốt ruột, bực mình", ex: "评委们等得有些不耐烦。", exp: "Píngwěi men děng de yǒuxiē bù nàifán.", exv: "Các giám khảo chờ đến có chút mất kiên nhẫn." },
+            { h: "看个究竟", p: "kàn gè jiūjìng", m: "Xem cho rõ ràng, xem thực hư", ex: "评委走出来看个究竟。", exp: "Píngwěi zǒuchūlái kàn gè jiūjìng.", exv: "Giám khảo bước ra ngoài để xem thực hư ra sao." },
+            { h: "靠", p: "kào", m: "Dựa, tựa", ex: "他靠在椅子上睡着了。", exp: "Tā kào zài yǐzi shàng shuì zháo le.", exv: "Anh ấy dựa vào ghế ngủ thiếp đi." },
             { h: "肩膀", p: "jiānbǎng", m: "Bờ vai", ex: "男人的头靠在女人的肩膀上。", exp: "Nánrén de tóu kào zài nǚrén de jiānbǎng shàng.", exv: "Đầu của người đàn ông tựa lên vai người phụ nữ." },
-            { h: "喊", p: "hǎn", m: "Kêu, gọi", ex: "评委正要开口喊他们。", exp: "Píngwěi zhèng yào kāikǒu hǎn tāmen.", exv: "Giám khảo đang định mở miệng gọi họ." },
-            { h: "伸", p: "shēn", m: "Duỗi, đưa ra", ex: "她伸出手指，做了个小声的动作。", exp: "Tā shēnchū shǒuzhǐ, zuò le gè xiǎoshēng de dòngzuò.", exv: "Cô ấy đưa ngón tay ra, làm động tác giữ im lặng." },
+            { h: "喊", p: "hǎn", m: "Gọi, hét lên", ex: "评委正要开口喊他们。", exp: "Píngwěi zhèng yào kāikǒu hǎn tāmen.", exv: "Giám khảo đang định mở miệng gọi họ." },
+            { h: "伸", p: "shēn", m: "Duỗi, chìa", ex: "她伸出手指，做了个小声的动作。", exp: "Tā shēnchū shǒuzhǐ, zuò le gè xiǎoshēng de dòngzuò.", exv: "Cô ấy đưa ngón tay ra, làm động tác giữ im lặng." },
             { h: "手指", p: "shǒuzhǐ", m: "Ngón tay", ex: "他不小心弄伤了手指。", exp: "Tā bù xiǎoxīn nòng shāng le shǒuzhǐ.", exv: "Anh ấy không cẩn thận làm thương ngón tay." },
-            { h: "歪歪扭扭", p: "wāiwāiniǔniǔ", m: "Ngoằn ngoèo, xiêu vẹo", ex: "字写得歪歪扭扭的。", exp: "Zì xiě de wāiwāiniǔniǔ de.", exv: "Chữ viết ngoằn ngoèo xiêu vẹo." },
-            { h: "递", p: "dì", m: "Đưa, chuyển cho", ex: "她写下一行字递给评委。", exp: "Tā xiě xià yì háng zì dì gěi píngwěi.", exv: "Cô ấy viết một dòng chữ rồi đưa cho giám khảo." },
-            { h: "脑袋", p: "nǎodai", m: "Cái đầu", ex: "丈夫的脑袋一直靠在她的右肩上。", exp: "Zhàngfu de nǎodai yìzhí kào zài tā de yòujiān shàng.", exv: "Đầu của chồng vẫn luôn tựa lên vai phải của cô ấy." },
-            { h: "女士", p: "nǚshì", m: "Phu nhân, quý bà (lịch sự)", ex: "但是女士，我们需要听你们的叙述。", exp: "Dànshì nǚshì, wǒmen xūyào tīng nǐmen de xùshù.", exv: "Nhưng thưa bà, chúng tôi cần nghe lời kể của hai người." },
-            { h: "叙述", p: "xùshù", m: "Trần thuật, kể lại", ex: "请叙述一下事情的经过。", exp: "Qǐng xùshù yíxià shìqíng de jīngguò.", exv: "Vui lòng kể lại quá trình sự việc." },
-            { h: "居然", p: "jūrán", m: "Lại có thể (bất ngờ)", ex: "评委们听了，居然一时语塞。", exp: "Píngwěimen tīng le, jūrán yìshí yǔsè.", exv: "Giám khảo nghe xong, lại bất ngờ cạn lời." },
+            { h: "歪歪扭扭", p: "wāiwāiniǔniǔ", m: "Xiêu vẹo, nguệch ngoạc", ex: "字写得歪歪扭扭的。", exp: "Zì xiě de wāiwāiniǔniǔ de.", exv: "Chữ viết ngoằn ngoèo xiêu vẹo." },
+            { h: "递", p: "dì", m: "Đưa, chuyền", ex: "她写下一行字递给评委。", exp: "Tā xiě xià yì háng zì dì gěi píngwěi.", exv: "Cô ấy viết một dòng chữ rồi đưa cho giám khảo." },
+            { h: "脑袋", p: "nǎodai", m: "Cái đầu", ex: "丈夫的脑袋一直靠在她的肩上。", exp: "Zhàngfu de nǎodai yìzhí kào zài tā de jiān shàng.", exv: "Đầu của chồng vẫn luôn tựa lên vai cô ấy." },
+            { h: "女士", p: "nǚshì", m: "Bà (lịch sự)", ex: "女士，请这边走。", exp: "Nǚshì, qǐng zhèbiān zǒu.", exv: "Thưa bà, mời đi lối này." },
+            { h: "叙述", p: "xùshù", m: "Thuật lại", ex: "请叙述一下事情的经过。", exp: "Qǐng xùshù yíxià shìqíng de jīngguò.", exv: "Vui lòng thuật lại quá trình sự việc." },
+            { h: "居然", p: "jūrán", m: "Lại có thể (bất ngờ)", ex: "评委们听了居然一时语塞。", exp: "Píngwěimen tīng le jūrán yìshí yǔsè.", exv: "Giám khảo nghe xong lại bất ngờ cạn lời." },
             { h: "催", p: "cuī", m: "Thúc giục", ex: "你别一直催我。", exp: "Nǐ bié yìzhí cuī wǒ.", exv: "Bạn đừng liên tục giục tôi." },
-            { h: "等待", p: "děngdài", m: "Chờ đợi", ex: "大家都在等待结果。", exp: "Dàjiā dōu zài děngdài jiéguǒ.", exv: "Mọi người đều đang chờ đợi kết quả." },
+            { h: "等待", p: "děngdài", m: "Đợi, chờ", ex: "大家都在等待结果。", exp: "Dàjiā dōu zài děngdài jiéguǒ.", exv: "Mọi người đều đang chờ đợi kết quả." },
             { h: "蚊子", p: "wénzi", m: "Con muỗi", ex: "夏天蚊子很多。", exp: "Xiàtiān wénzi hěn duō.", exv: "Mùa hè có rất nhiều muỗi." },
-            { h: "半夜", p: "bànyè", m: "Nửa đêm", ex: "半夜蚊子叮我。", exp: "Bànyè wénzi dīng wǒ.", exv: "Nửa đêm muỗi đốt tôi." },
+            { h: "半夜", p: "bànyè", m: "Nửa đêm", ex: "昨晚半夜我被吵醒了。", exp: "Zuówǎn bànyè wǒ bèi chǎoxǐng le.", exv: "Nửa đêm qua tôi bị đánh thức." },
             { h: "叮", p: "dīng", m: "Đốt, chích", ex: "我被蚊子叮了一下。", exp: "Wǒ bèi wénzi dīng le yí xià.", exv: "Tôi bị muỗi đốt một phát." },
-            { h: "吵", p: "chǎo", m: "Ồn ào / làm ồn", ex: "别吵，他昨晚没睡好。", exp: "Bié chǎo, tā zuówǎn méi shuì hǎo.", exv: "Đừng làm ồn, tối qua anh ấy ngủ không ngon." },
-            { h: "项", p: "xiàng", m: "Hạng mục (Lượng từ)", ex: "电台增加了一项奖项。", exp: "Diàntái zēngjiā le yí xiàng jiǎngxiàng.", exv: "Đài phát thanh đã thêm một hạng mục giải thưởng." }
+            { h: "老婆", p: "lǎopo", m: "Vợ", ex: "我老婆对我很好。", exp: "Wǒ lǎopo duì wǒ hěn hǎo.", exv: "Vợ tôi đối xử với tôi rất tốt." },
+            { h: "吵", p: "chǎo", m: "Làm ồn, ồn ào", ex: "别吵，他昨晚没睡好。", exp: "Bié chǎo, tā zuówǎn méi shuì hǎo.", exv: "Đừng làm ồn, tối qua anh ấy ngủ không ngon." },
+            { h: "项", p: "xiàng", m: "Hạng mục (Lượng từ)", ex: "电台增加了一项奖项。", exp: "Diàntái zēngjiā le yí xiàng jiǎngxiàng.", exv: "Đài phát thanh đã thêm một hạng mục giải thưởng." },
+            { h: "将", p: "jiāng", m: "Đem, lấy (giới từ)", ex: "将第一对夫妻评为患难与共。", exp: "Jiāng dì yī duì fūqī píng wéi huànnàn yǔgòng.", exv: "Bình chọn cặp vợ chồng thứ nhất là hoạn nạn có nhau." },
+            { h: "患难与共", p: "huànnàn yǔgòng", m: "Hoạn nạn có nhau", ex: "他们是一对患难与共的夫妻。", exp: "Tāmen shì yí duì huànnàn yǔgòng de fūqī.", exv: "Họ là một cặp vợ chồng hoạn nạn có nhau." },
+            { h: "眼泪", p: "yǎnlèi", m: "Nước mắt", ex: "她感动得流下了眼泪。", exp: "Tā gǎndòng de liúxià le yǎnlèi.", exv: "Cô ấy cảm động đến rơi nước mắt." },
+            { h: "脖子", p: "bózi", m: "Cổ", ex: "我的脖子有点疼。", exp: "Wǒ de bózi yǒudiǎn téng.", exv: "Cổ của tôi hơi đau." },
+            { h: "胸", p: "xiōng", m: "Ngực", ex: "他觉得胸口闷。", exp: "Tā juéde xiōngkǒu mèn.", exv: "Anh ấy cảm thấy tức ngực." },
+            { h: "腰", p: "yāo", m: "Eo, thắt lưng", ex: "我弯下腰捡东西。", exp: "Wǒ wānxià yāo jiǎn dōngxi.", exv: "Tôi cúi eo xuống nhặt đồ." },
+            { h: "后背", p: "hòubèi", m: "Lưng", ex: "他的后背受了伤。", exp: "Tā de hòubèi shòu le shāng.", exv: "Lưng của anh ấy bị thương." },
+            { h: "眉毛", p: "méimao", m: "Lông mày", ex: "她的眉毛很浓。", exp: "Tā de méimao hěn nóng.", exv: "Lông mày của cô ấy rất đậm." },
+            { h: "嗓子", p: "sǎngzi", m: "Cổ họng, giọng", ex: "我感冒了，嗓子疼。", exp: "Wǒ gǎnmào le, sǎngzi téng.", exv: "Tôi bị cảm rồi, đau họng." },
+            { h: "牙齿", p: "yáchǐ", m: "Răng", ex: "每天都要刷牙齿。", exp: "Měitiān dōu yào shuā yáchǐ.", exv: "Mỗi ngày đều phải đánh răng." }
         ];
 
         // FLASHCARD VARIABLES
@@ -517,89 +500,64 @@
 
         function relearnUnlearned() { startFlashcards(unlearnedItems); }
 
-        // --- AUDIO PLAY & PINYIN SHOWING LOGIC ---
+        // --- RENDER BÀI KHÓA VÀ PINYIN CHUYÊN SÂU ---
+        
+        // Dữ liệu bài khóa mới đã được gán Pinyin chuẩn xác từng chữ
+        const lessonTextData = [
+            "电[diàn]台[tái]要[yào]选[xuǎn]出[chū]一[yí]对[duì]最[zuì]恩[ēn]爱[ài]的[de]夫[fū]妻[qī]。对[duì]比[bǐ]后[hòu]，有[yǒu]三[sān]对[duì]夫[fū]妻[qī]入[rù]围[wéi]。评[píng]委[wěi]叫[jiào]第[dì]一[yī]对[duì]夫[fū]妻[qī]说[shuō]说[shuō]他[tā]俩[liǎng]是[shì]如[rú]何[hé]恩[ēn]爱[ài]的[de]。妻[qī]子[zi]说[shuō]，前[qián]几[jǐ]年[nián]她[tā]全[quán]身[shēn]瘫[tān]痪[huàn]了[le]，医[yī]生[shēng]说[shuō]她[tā]站[zhàn]起[qǐ]来[lái]的[de]可[kě]能[néng]性[xìng]很[hěn]小[xiǎo]。别[bié]人[rén]都[dōu]觉[jué]得[de]她[tā]的[de]丈[zhàng]夫[fu]会[huì]跟[gēn]她[tā]离[lí]婚[hūn]，她[tā]也[yě]想[xiǎng]过[guò]要[yào]自[zì]杀[shā]。但[dàn]丈[zhàng]夫[fu]一[yì]直[zhí]鼓[gǔ]励[lì]她[tā]，为[wèi]她[tā]不[bù]知[zhī]找[zhǎo]了[le]多[duō]少[shǎo]家[jiā]医[yī]院[yuàn]，并[bìng]且[qiě]几[jǐ]年[nián]如[rú]一[yì]日[rì]地[de]照[zhào]顾[gù]她[tā]，从[cóng]不[bú]抱[bào]怨[yuàn]。在[zài]丈[zhàng]夫[fu]的[de]爱[ài]护[hù]和[hé]努[nǔ]力[lì]下[xià]，她[tā]终[zhōng]于[yú]又[yòu]站[zhàn]了[le]起[qǐ]来[lái]。她[tā]的[de]故[gù]事[shi]十[shí]分[fēn]感[gǎn]人[rén]，评[píng]委[wěi]们[men]听[tīng]了[le]都[dōu]很[hěn]感[gǎn]动[dòng]。",
+            
+            "随[suí]后[hòu]进[jìn]来[lái]的[de]是[shì]第[dì]二[èr]对[duì]夫[fū]妻[qī]，他[tā]俩[liǎng]十[shí]几[jǐ]年[nián]的[de]婚[hūn]姻[yīn]生[shēng]活[huó]中[zhōng]，他[tā]们[men]从[cóng]来[lái]没[méi]为[wèi]任[rèn]何[hé]事[shì]红[hóng]过[guò]脸[liǎn]、吵[chǎo]过[guò]架[jià]，一[yì]直[zhí]相[xiāng]亲[qīn]相[xiāng]爱[ài]、相[xiāng]敬[jìng]如[rú]宾[bīn]。评[píng]委[wěi]们[men]听[tīng]了[le]暗[àn]暗[àn]点[diǎn]头[tóu]。",
+
+            "轮[lún]到[dào]第[dì]三[sān]对[duì]夫[fū]妻[qī]了[le]，却[què]很[hěn]长[cháng]时[shí]间[jiān]不[bú]见[jiàn]人[rén]。评[píng]委[wěi]们[men]等[děng]得[de]有[yǒu]些[xiē]不[bú]耐[nài]烦[fán]，就[jiù]走[zǒu]出[chū]来[lái]看[kàn]个[gè]究[jiū]竟[jìng]。只[zhǐ]见[jiàn]第[dì]三[sān]对[duì]夫[fū]妻[qī]仍[réng]然[rán]坐[zuò]在[zài]门[mén]口[kǒu]，男[nán]人[rén]的[de]头[tóu]靠[kào]在[zài]女[nǚ]人[rén]的[de]肩[jiān]膀[bǎng]上[shàng]，睡[shuì]着[zháo]了[le]。一[yí]个[gè]评[píng]委[wěi]要[yào]上[shàng]前[qián]喊[hǎn]醒[xǐng]那[nà]个[gè]男[nán]的[de]，女[nǚ]的[de]却[què]伸[shēn]出[chū]手[shǒu]指[zhǐ]做[zuò]了[le]个[gè]小[xiǎo]声[shēng]的[de]动[dòng]作[zuò]，然[rán]后[hòu]小[xiǎo]心[xīn]地[de]从[cóng]包[bāo]里[lǐ]拿[ná]出[chū]纸[zhǐ]笔[bǐ]，用[yòng]左[zuǒ]手[shǒu]歪[wāi]歪[wāi]扭[niǔ]扭[niǔ]写[xiě]下[xià]一[yì]行[háng]字[zì]递[dì]给[gěi]评[píng]委[wěi]，而[ér]她[tā]的[de]右[yòu]肩[jiān]一[yì]直[zhí]让[ràng]丈[zhàng]夫[fu]的[de]脑[nǎo]袋[dai]靠[kào]着[zhe]。评[píng]委[wěi]们[men]看[kàn]那[nà]纸[zhǐ]条[tiáo]上[shàng]面[miàn]写[xiě]着[zhe]：别[bié]出[chū]声[shēng]，他[tā]昨[zuó]晚[wǎn]没[méi]睡[shuì]好[hǎo]。一[yí]个[gè]评[píng]委[wěi]提[tí]起[qǐ]笔[bǐ]在[zài]后[hòu]面[miàn]续[xù]写[xiě]了[le]一[yí]句[jù]话[huà]：但[dàn]是[shì]女[nǚ]士[shì]，我[wǒ]们[men]得[děi]听[tīng]你[nǐ]们[men]夫[fū]妻[qī]俩[liǎng]的[de]叙[xù]述[shù]啊[a]！女[nǚ]人[rén]又[yòu]写[xiě]：那[nà]我[wǒ]们[men]就[jiù]不[bù]参[cān]加[jiā]了[le]。大[dà]家[jiā]很[hěn]吃[chī]惊[jīng]，这[zhè]个[gè]女[nǚ]人[rén]为[wèi]了[le]不[bù]影[yǐng]响[xiǎng]丈[zhàng]夫[fu]睡[shuì]觉[jiào]，居[jū]然[rán]放[fàng]弃[qì]这[zhè]次[cì]机[jī]会[huì]！但[dàn]评[píng]委[wěi]们[men]还[hái]是[shì]决[jué]定[dìng]先[xiān]不[bù]催[cuī]他[tā]们[men]，而[ér]是[shì]再[zài]等[děng]待[dài]一[yí]段[duàn]时[shí]间[jiān]。",
+
+            "过[guò]了[le]一[yí]会[huì]儿[r]，男[nán]人[rén]醒[xǐng]了[le]。评[píng]委[wěi]们[men]问[wèn]他[tā]怎[zěn]么[me]那[nà]么[me]累[lèi]。男[nán]人[rén]不[bù]好[hǎo]意[yì]思[si]地[de]笑[xiào]笑[xiào]说[shuō]：“我[wǒ]家[jiā]住[zhù]一[yī]楼[lóu]，蚊[wén]子[zi]多[duō]。昨[zuó]晚[wǎn]半[bàn]夜[yè]我[wǒ]被[bèi]蚊[wén]子[zi]叮[dīng]醒[xǐng]了[le]，我[wǒ]怕[pà]我[wǒ]老[lǎo]婆[po]再[zài]被[bèi]吵[chǎo]醒[xǐng]，所[suǒ]以[yǐ]后[hòu]半[bàn]夜[yè]就[jiù]在[zài]为[wèi]她[tā]赶[gǎn]蚊[wén]子[zi]。”最[zuì]后[hòu]的[de]结[jié]果[guǒ]是[shì]电[diàn]台[tái]增[zēng]加[jiā]了[le]两[liǎng]项[xiàng]奖[jiǎng]项[xiàng]，将[jiāng]第[dì]一[yī]对[duì]夫[fū]妻[qī]评[píng]为[wéi]患[huàn]难[nàn]与[yǔ]共[gòng]夫[fū]妻[qī]，将[jiāng]第[dì]二[èr]对[duì]夫[fū]妻[qī]评[píng]为[wéi]相[xiāng]敬[jìng]如[rú]宾[bīn]夫[fū]妻[qī]，而[ér]真[zhēn]正[zhèng]的[de]最[zuì]恩[ēn]爱[ài]夫[fū]妻[qī]奖[jiǎng]却[què]给[gěi]了[le]第[dì]三[sān]对[duì]夫[fū]妻[qī]。"
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
-            const spans = document.querySelectorAll('.sync-text');
-
-            // Từ điển Pinyin map khớp chính xác với từng câu trong bài khóa HSK5 Bài 1
-            const pinyinDict = {
-                "电台要选出一对最恩爱的夫妻。": ["diàn", "tái", "yào", "xuǎn", "chū", "yí", "duì", "zuì", "ēn", "ài", "de", "fū", "qī", ""],
-                "对比后，有三对夫妻入围。": ["duì", "bǐ", "hòu", "", "yǒu", "sān", "duì", "fū", "qī", "rù", "wéi", ""],
-                "评委叫第一对夫妻说说他俩是如何恩爱的。": ["píng", "wěi", "jiào", "dì", "yī", "duì", "fū", "qī", "shuō", "shuō", "tā", "liǎng", "shì", "rú", "hé", "ēn", "ài", "de", ""],
-                "妻子说，前几年她全身瘫痪了，医生说她站起来的可能性很小。": ["qī", "zǐ", "shuō", "", "qián", "jǐ", "nián", "tā", "quán", "shēn", "tān", "huàn", "le", "", "yī", "shēng", "shuō", "tā", "zhàn", "qǐ", "lái", "de", "kě", "néng", "xìng", "hěn", "xiǎo", ""],
-                "别人都觉得她的丈夫会跟她离婚，": ["bié", "rén", "dōu", "jué", "de", "tā", "de", "zhàng", "fu", "huì", "gēn", "tā", "lí", "hūn", ""],
-                "她也想过自杀。": ["tā", "yě", "xiǎng", "guò", "zì", "shā", ""],
-                "但丈夫一直鼓励她，为她不知找了多少家医院，": ["dàn", "zhàng", "fu", "yì", "zhí", "gǔ", "lì", "tā", "", "wèi", "tā", "bù", "zhī", "zhǎo", "le", "duō", "shao", "jiā", "yī", "yuàn", ""],
-                "并且几年如一日地照顾她，从不抱怨。": ["bìng", "qiě", "jǐ", "nián", "rú", "yī", "rì", "de", "zhào", "gù", "tā", "", "cóng", "bù", "bào", "yuàn", ""],
-                "在丈夫的爱护和努力下，她终于又站了起来。": ["zài", "zhàng", "fu", "de", "ài", "hù", "hé", "nǔ", "lì", "xià", "", "tā", "zhōng", "yú", "yòu", "zhàn", "le", "qǐ", "lái", ""],
-                "他的故事让很多评委感动得流下了眼泪。": ["tā", "de", "gù", "shi", "ràng", "hěn", "duō", "píng", "wěi", "gǎn", "dòng", "de", "liú", "xià", "le", "yǎn", "lèi", ""],
-                "随后进来的是第二对夫妻，": ["suí", "hòu", "jìn", "lái", "de", "shì", "dì", "èr", "duì", "fū", "qī", ""],
-                "他俩说，十几年的婚姻生活中，他们从来没为任何事红过脸、吵过架，": ["tā", "liǎng", "shuō", "", "shí", "jǐ", "nián", "de", "hūn", "yīn", "shēng", "huó", "zhōng", "", "tā", "men", "cóng", "lái", "méi", "wèi", "rèn", "hé", "shì", "hóng", "guò", "liǎn", "", "chǎo", "guò", "jià", ""],
-                "一直相敬如宾，": ["yì", "zhí", "xiāng", "jìng", "rú", "bīn", ""],
-                "评委听了暗暗点头。": ["píng", "wěi", "tīng", "le", "àn", "àn", "diǎn", "tóu", ""],
-                "轮到第三对夫妻了，": ["lún", "dào", "dì", "sān", "duì", "fū", "qī", "le", ""],
-                "却很长时间不见人。": ["què", "hěn", "cháng", "shí", "jiān", "bú", "jiàn", "rén", ""],
-                "评委们等得有些不耐烦，就走出来看个究竟。": ["píng", "wěi", "men", "děng", "de", "yǒu", "xiē", "bú", "nài", "fán", "", "jiù", "zǒu", "chū", "lái", "kàn", "gè", "jiū", "jìng", ""],
-                "只见第三对夫妻仍然坐在门外，": ["zhǐ", "jiàn", "dì", "sān", "duì", "fū", "qī", "réng", "rán", "zuò", "zài", "mén", "wài", ""],
-                "男人的头靠在女人的肩膀上，睡着了。": ["nán", "rén", "de", "tóu", "kào", "zài", "nǚ", "rén", "de", "jiān", "bǎng", "shàng", "", "shuì", "zháo", "le", ""],
-                "评委要喊，女的却伸出手指，做了个小声的动作，": ["píng", "wěi", "yào", "hǎn", "", "nǚ", "de", "què", "shēn", "chū", "shǒu", "zhǐ", "", "zuò", "le", "gè", "xiǎo", "shēng", "de", "dòng", "zuò", ""],
-                "然后小心地从包里拿出笔，用左手歪歪扭扭写下一行字递给评委，": ["rán", "hòu", "xiǎo", "xīn", "de", "cóng", "bāo", "lǐ", "ná", "chū", "bǐ", "", "yòng", "zuǒ", "shǒu", "wāi", "wāi", "niǔ", "niǔ", "xiě", "xià", "yì", "háng", "zì", "dì", "gěi", "píng", "wěi", ""],
-                "而右肩一直让丈夫的脑袋靠着。": ["ér", "yòu", "jiān", "yì", "zhí", "ràng", "zhàng", "fu", "de", "nǎo", "dai", "kào", "zhe", ""],
-                "评委们看那纸条上面写着：": ["píng", "wěi", "men", "kàn", "nà", "zhǐ", "tiáo", "shàng", "miàn", "xiě", "zhe", ""],
-                "别出声，他昨晚没睡好。半夜蚊子叮我，他一直为我赶蚊子。": ["bié", "chū", "shēng", "", "tā", "zuó", "wǎn", "méi", "shuì", "hǎo", "", "bàn", "yè", "wén", "zi", "dīng", "wǒ", "", "tā", "yì", "zhí", "wèi", "wǒ", "gǎn", "wén", "zi", ""],
-                "一个评委开玩笑地说：但是女士，我们得听你们叙述你们是如何恩爱的啊。": ["yí", "gè", "píng", "wěi", "kāi", "wán", "xiào", "de", "shuō", "", "dàn", "shì", "nǚ", "shì", "", "wǒ", "men", "děi", "tīng", "nǐ", "men", "xù", "shù", "nǐ", "men", "shì", "rú", "hé", "ēn", "ài", "de", "a", ""],
-                "女人笑了笑，答道：": ["nǚ", "rén", "xiào", "le", "xiào", "", "dá", "dào", ""],
-                "难道这还不够吗？": ["nán", "dào", "zhè", "hái", "bú", "gòu", "ma", ""],
-                "评委们听了，居然一时语塞。": ["píng", "wěi", "men", "tīng", "le", "", "jū", "rán", "yì", "shí", "yǔ", "sè", ""],
-                "最后，电台增加了一项奖项，": ["zuì", "hòu", "", "diàn", "tái", "zēng", "jiā", "le", "yí", "xiàng", "jiǎng", "xiàng", ""],
-                "将“最恩爱夫妻”奖给了第三对夫妻。": ["jiāng", "", "zuì", "ēn", "ài", "fū", "qī", "", "jiǎng", "gěi", "le", "dì", "sān", "duì", "fū", "qī", ""]
-            };
-
-            // Click vào câu nào, hiện thị Pinyin (Audio cứ phát bình thường, không bị tua/ngắt)
-            spans.forEach(span => {
-                span.addEventListener('click', function() {
+            const container = document.getElementById('sync-container');
+            let htmlContent = '';
+            
+            lessonTextData.forEach(p => {
+                let pHtml = '<p class="indent-8 mb-6">';
+                for(let i = 0; i < p.length; i++) {
+                    // Nếu là dấu ngoặc kép hoặc các dấu câu thông thường
+                    if (p[i] === '"' || p[i] === '”' || p[i] === '“') {
+                        pHtml += p[i];
+                        continue;
+                    }
                     
-                    const displayBox = document.getElementById('pinyin-display');
-
-                    // Nếu câu đang được chọn lại được bấm lần nữa -> Tắt Pinyin, trả về như ban đầu
-                    if (this.classList.contains('sync-active')) {
-                        this.classList.remove('sync-active');
-                        displayBox.classList.add('hidden');
-                        displayBox.innerHTML = '';
-                        return; // Kết thúc sớm sự kiện
-                    }
-
-                    // Đổi màu câu đang chọn (Xóa highlight ở các câu khác)
-                    spans.forEach(s => s.classList.remove('sync-active'));
-                    this.classList.add('sync-active');
-
-                    // Lấy nội dung chữ và hiển thị Pinyin
-                    const text = this.innerText;
-                    const pinyinArr = pinyinDict[text];
-
-                    if(pinyinArr) {
-                        let html = '<div class="flex flex-wrap justify-center items-end gap-x-1 gap-y-4">';
-                        for(let i=0; i<text.length; i++) {
-                            const char = text[i];
-                            const py = pinyinArr[i] || '';
-                            if(py) {
-                                html += `<ruby class="ruby-char chinese-text">${char}<rt>${py}</rt></ruby>`;
-                            } else {
-                                html += `<span class="ruby-char chinese-text" style="color: var(--text-main); font-weight:bold; margin: 0 2px;">${char}</span>`;
-                            }
-                        }
-                        html += '</div>';
-                        displayBox.innerHTML = html;
-                        displayBox.classList.remove('hidden');
+                    // Nếu có Pinyin đi kèm [pinyin]
+                    if (p[i+1] === '[') {
+                        let endIdx = p.indexOf(']', i+1);
+                        let pinyin = p.substring(i+2, endIdx);
+                        pHtml += `<ruby>${p[i]}<rt>${pinyin}</rt></ruby>`;
+                        i = endIdx; // Nhảy qua đoạn Pinyin
                     } else {
-                         displayBox.innerHTML = `<span class="ruby-char chinese-text" style="color: var(--text-main); font-weight:bold;">${text}</span>`;
-                         displayBox.classList.remove('hidden');
+                        // Chữ không có Pinyin (thường là dấu câu)
+                        pHtml += p[i];
                     }
-                });
+                }
+                pHtml += '</p>';
+                htmlContent += pHtml;
             });
+            
+            container.innerHTML = htmlContent;
         });
 
+        // Hàm bật tắt Pinyin
+        function togglePinyin() {
+            const wrapper = document.getElementById('text-wrapper');
+            const checkbox = document.getElementById('toggle-pinyin');
+            if (checkbox.checked) {
+                wrapper.classList.remove('hide-pinyin');
+            } else {
+                wrapper.classList.add('hide-pinyin');
+            }
+        }
+
+
         // --- QUIZ DATA & LOGIC ---
+        // Giữ nguyên 100% quiz gốc
         const quizData = [
             { q: "电台举办活动是为了选出什么？", opts: ["最漂亮的夫妻", "最恩爱的夫妻", "最富有的夫妻", "最聪明的夫妻"], correct: 1, exp: "Đoạn 1 có ghi: '电台要选出一对最恩爱的夫妻' (Đài phát thanh muốn chọn ra một cặp vợ chồng ân ái nhất)." },
             { q: "经过对比后，共有几对夫妻入围？", opts: ["两对", "三对", "四对", "五对"], correct: 1, exp: "Bài khóa nhắc đến: '对比后，有三对夫妻入围' (Sau khi đối chiếu, có 3 cặp lọt vào vòng trong)." },
@@ -608,7 +566,7 @@
             { q: "在妻子瘫痪时，别人以为丈夫会怎么做？", opts: ["会跟她离婚", "会和她一起自杀", "会去外地工作", "会找护工照顾她"], correct: 0, exp: "Chi tiết: '别人都觉得她的丈夫会跟她离婚' (Người khác đều cảm thấy chồng cô sẽ ly hôn với cô)." },
             { q: "瘫痪的妻子曾经有过什么极端的想法？", opts: ["离家出走", "跟丈夫离婚", "想过自杀", "再也不去医院"], correct: 2, exp: "Chi tiết: '她也想过自杀' (Cô ấy cũng từng nghĩ đến việc tự sát)." },
             { q: "第一对夫妻的丈夫是如何照顾妻子的？", opts: ["偶尔照顾，经常抱怨", "几年如一日地照顾，从不抱怨", "花钱请护士照顾", "只找了一家医院治疗"], correct: 1, exp: "Chi tiết: '几年如一日地照顾她，从不抱怨' (Chăm sóc cô vài năm như một ngày, không hề oán than)." },
-            { q: "听到第一对夫妻的故事后，评委有什么反应？", opts: ["感动得流下了眼泪", "暗暗点头", "一时语塞", "觉得很普通"], correct: 0, exp: "Chi tiết: '他的故事让很多评委感动得流下了眼泪' (Câu chuyện của họ làm nhiều giám khảo cảm động rơi nước mắt)." },
+            { q: "听到第一对夫妻的故事后，评委有什么反应？", opts: ["感动得流下了眼泪", "暗暗点头", "一时语塞", "觉得很普通"], correct: 0, exp: "Chi tiết: Câu chuyện rất cảm động, giám khảo nghe đều rất cảm động." },
             { q: "第二对夫妻的婚姻生活最大的特点是什么？", opts: ["经常浪漫地旅行", "一起经历了生死", "从来没红过脸、吵过架", "妻子照顾生病的丈夫"], correct: 2, exp: "Cặp thứ 2 chia sẻ: '从来没为任何事红过脸、吵过架' (Chưa từng vì chuyện gì mà đỏ mặt, cãi vã)." },
             { q: "课文用哪个成语来形容第二对夫妻的关系？", opts: ["白头偕老", "相敬如宾", "恩重如山", "马马虎虎"], correct: 1, exp: "Họ luôn '相敬如宾' (Tương kính như tân - Tôn trọng nhau như khách)." },
             { q: "为什么第三对夫妻很长时间没有进门接受采访？", opts: ["他们迟到了", "他们走错房间了", "丈夫睡着了", "妻子生病了"], correct: 2, exp: "Khi giám khảo ra ngoài xem, thấy '男人的头靠在女人的肩膀上，睡着了' (Đầu người đàn ông tựa vào vai vợ ngủ thiếp đi)." },
@@ -616,11 +574,11 @@
             { q: "评委想喊他们时，女人做了什么动作？", opts: ["大声叫醒丈夫", "伸出手指，做了个小声的动作", "马上站起来", "向评委招手"], correct: 1, exp: "Chi tiết: '女的却伸出手指，做了个小声的动作' (Người phụ nữ đưa ngón tay ra, làm động tác ra hiệu nhỏ tiếng)." },
             { q: "女人为什么用左手写字？", opts: ["因为她是左撇子", "因为右肩让丈夫的脑袋靠着", "因为右手受伤了", "因为左手写字好看"], correct: 1, exp: "Vì vai phải đang để cho chồng tựa vào ngủ: '而右肩一直让丈夫的脑袋靠着'." },
             { q: "女人递给评委的纸条上面写了什么？", opts: ["我们弃权了", "别出声，他昨晚没睡好", "请再等我们十分钟", "他生病了，需要休息"], correct: 1, exp: "Trên giấy viết: '别出声，他昨晚没睡好' (Đừng lên tiếng, tối qua ông ấy ngủ không ngon)." },
-            { q: "为什么第三对夫妻中的丈夫昨晚没睡好？", opts: ["因为他看电视看晚了", "因为他一直在工作", "因为他在为妻子赶蚊子", "因为他有失眠症"], correct: 2, exp: "Trong giấy ghi lý do: '半夜蚊子叮我，他一直为我赶蚊子' (Nửa đêm muỗi đốt tôi, ông ấy cứ thức đuổi muỗi cho tôi)." },
-            { q: "一个评委开玩笑地提出了什么要求？", opts: ["要求叫醒丈夫", "要求他们退出比赛", "要求听他们叙述如何恩爱", "要求他们回家睡觉"], correct: 2, exp: "Giám khảo nói: '但是女士，我们得听你们叙述你们是如何恩爱的啊' (Nhưng thưa bà, chúng tôi phải nghe hai người kể chuyện ân ái chứ)." },
-            { q: "女人对评委的玩笑是怎么回答的？", opts: ["等他醒了再说", "难道这还不够吗？", "我们没什么好说的", "我们的故事很长"], correct: 1, exp: "Người phụ nữ cười đáp: '难道这还不够吗？' (Lẽ nào như vậy vẫn chưa đủ sao?)." },
-            { q: "听到女人的回答后，评委们的反应是什么？", opts: ["哈哈大笑", "非常生气", "居然一时语塞", "继续追问"], correct: 2, exp: "Chi tiết: '评委们听了，居然一时语塞' (Giám khảo nghe xong, lại bất ngờ cạn lời/không biết nói gì thêm)." },
-            { q: "最终哪对夫妻获得了“最恩爱夫妻”奖？", opts: ["第一对", "第二对", "第三对", "没有选出"], correct: 2, exp: "Chi tiết cuối bài: '将“最恩爱夫妻”奖给了第三对夫妻' (Trao giải 'Vợ chồng ân ái nhất' cho cặp thứ 3)." }
+            { q: "为什么第三对夫妻中的丈夫昨晚没睡好？", opts: ["因为他看电视看晚了", "因为他一直在工作", "因为他在为妻子赶蚊子", "因为他有失眠症"], correct: 2, exp: "Chồng kể lại lý do: '半夜蚊子叮我，他一直为我赶蚊子' (Nửa đêm muỗi đốt tôi, ông ấy cứ thức đuổi muỗi cho tôi)." },
+            { q: "一个评委开玩笑地提出了什么要求？", opts: ["要求叫醒丈夫", "要求他们退出比赛", "要求听他们叙述如何恩爱", "要求他们回家睡觉"], correct: 2, exp: "Giám khảo viết: '但是女士，我们得听你们夫妻俩的叙述啊!' (Nhưng thưa bà, chúng tôi phải nghe hai người kể chuyện ân ái chứ)." },
+            { q: "女人对评委的玩笑是怎么回答的？", opts: ["等他醒了再说", "难道这还不够吗？", "我们没什么好说的", "那我们就不参加了"], correct: 3, exp: "Lần này người phụ nữ lại viết: '那我们就不参加了' (Vậy chúng tôi không tham gia nữa)." },
+            { q: "听到女人的回答后，评委们的反应是什么？", opts: ["哈哈大笑", "非常生气", "居然一时语塞", "继续追问"], correct: 2, exp: "Trong bài gốc: '评委们听了，居然一时语塞' (Giám khảo nghe xong, lại bất ngờ cạn lời/không biết nói gì thêm)." },
+            { q: "最终哪对夫妻获得了“最恩爱夫妻”奖？", opts: ["第一对", "第二对", "第三对", "没有选出"], correct: 2, exp: "Chi tiết cuối bài: '真正的最恩爱夫妻奖却给了第三对夫妻' (Trao giải 'Vợ chồng ân ái nhất' cho cặp thứ 3)." }
         ];
 
         let currentQuizIdx = 0, quizScore = 0;
@@ -659,7 +617,6 @@
             const isCorrect = (selectedIndex === qData.correct);
             const allBtns = document.querySelectorAll('.quiz-option');
             
-            // Disable all options
             allBtns.forEach(b => b.disabled = true);
 
             if (isCorrect) {
@@ -673,11 +630,9 @@
                 allBtns[qData.correct].classList.add('opt-correct');
             }
 
-            // Show explanation
             document.getElementById('quiz-explain-text').innerText = qData.exp;
             document.getElementById('quiz-explanation').classList.remove('hidden');
             
-            // Show next button
             const nextBtn = document.getElementById('btn-next-quiz');
             nextBtn.innerText = (currentQuizIdx === quizData.length - 1) ? "Xem kết quả 🏆" : "Câu tiếp theo ❯";
             nextBtn.classList.remove('hidden');
@@ -703,7 +658,7 @@
                 evalText = "Xuất sắc! Bạn đã hiểu rất sâu sắc từng chi tiết tinh tế của bài khóa. Trình độ đọc hiểu của bạn cực kỳ tốt!";
                 emoji = "🏆";
             } else if (quizScore >= 14) {
-                evalText = "Rất tốt! Bạn nắm được nội dung chính và hầu hết các chi tiết quan trọng. Cố gắng một chút nữa là hoàn hảo!";
+                evalText = "Bạn nắm được nội dung chính và hầu hết các chi tiết quan trọng. Cố gắng một chút nữa là hoàn hảo!";
                 emoji = "🌟";
             } else if (quizScore >= 10) {
                 evalText = "Khá ổn! Tuy nhiên bạn còn nhầm lẫn ở một số chi tiết nhỏ. Hãy xem lại bài khóa và đọc kỹ phần giải thích nhé!";
