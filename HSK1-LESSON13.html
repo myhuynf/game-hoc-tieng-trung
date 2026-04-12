@@ -1,384 +1,444 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiệm Trà của Nga - Học HSK 1 Bài 13</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HSK 1 - Bài 13: 他在学做中国菜呢 | Nga Học HSK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --ghibli-green: #a8d5ba;
-            --ghibli-brown: #d4a373;
-            --ghibli-sky: #caf0f8;
-            --ghibli-wood: #6d4c41;
+            /* Tông màu Lavender & Sand: Ấm cúng, thư giãn (bối cảnh ở nhà) */
+            --primary: #9c27b0; /* Tím Lavender */
+            --primary-dark: #7b1fa2;
+            --secondary: #ffb300; /* Vàng Cát / Amber */
+            --bg-color: #f3e5f5; /* Tím nhạt background */
+            --card-bg: #ffffff;
+            --text-main: #4a148c;
+            --text-muted: #6a1b9a;
+            --hanzi-color: #e65100;
+            --font-cn: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; 
+        }
+
+        * {
+            box-sizing: border-box; margin: 0; padding: 0;
+            font-family: 'Nunito', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(180deg, var(--ghibli-sky) 0%, #fff 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#ce93d8 1.5px, transparent 1.5px);
+            background-size: 25px 25px;
+            color: var(--text-main);
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; padding-bottom: 50px;
         }
 
-        .chinese-text { font-family: 'ZCOOL+XiaoWei', serif; }
-
-        .ghibli-card {
-            background: rgba(255, 255, 255, 0.95);
-            border: 4px solid var(--ghibli-wood);
-            border-radius: 20px;
-            box-shadow: 0 10px 0 var(--ghibli-brown);
+        .branding {
+            width: 100%; background: #fff; text-align: center; padding: 6px 0;
+            font-size: 0.8rem; font-weight: 800; color: var(--primary-dark);
+            letter-spacing: 1px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-transform: uppercase;
         }
 
-        .btn-ghibli {
-            background-color: var(--ghibli-green);
-            color: var(--ghibli-wood);
-            border: 2px solid var(--ghibli-wood);
-            border-radius: 12px;
-            transition: all 0.2s;
-            font-weight: bold;
-            padding: 12px;
+        .header {
+            width: 100%; max-width: 800px; padding: 15px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; border-radius: 0 0 20px 20px;
+            box-shadow: 0 5px 15px rgba(156, 39, 176, 0.3);
         }
 
-        .btn-ghibli:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 0 var(--ghibli-brown);
-            background-color: #95c7a9;
+        .btn-back {
+            background: rgba(255,255,255,0.2); color: white; text-decoration: none;
+            padding: 8px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 5px; border: 1px solid rgba(255,255,255,0.5);
         }
 
+        .header h2 { font-size: 1.1rem; text-align: center; flex: 1; margin: 0 10px; }
+        .header-spacer { width: 80px; }
+
+        .tabs {
+            display: flex; justify-content: space-between; gap: 5px;
+            margin: 20px auto; background: white; padding: 6px;
+            border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            width: 95%; max-width: 600px;
+        }
+
+        .tab-btn {
+            flex: 1; border: none; background: transparent;
+            padding: 10px 0; border-radius: 25px;
+            font-size: 0.9rem; font-weight: 700; color: var(--text-muted);
+            cursor: pointer; transition: all 0.2s;
+            text-align: center; white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: var(--secondary); color: white;
+            box-shadow: 0 4px 10px rgba(255, 179, 0, 0.4);
+        }
+
+        .section { display: none; width: 100%; max-width: 800px; padding: 0 15px; animation: fadeIn 0.4s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hanzi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .hanzi-card {
+            background: var(--card-bg); border-radius: 15px; padding: 20px;
+            text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-top: 4px solid var(--primary);
+        }
+        .char-display { font-family: var(--font-cn); font-size: 4rem; color: var(--hanzi-color); line-height: 1.2; }
+        .pinyin {
+            background: #f3e5f5; color: #7b1fa2; padding: 4px 15px; border-radius: 12px;
+            font-weight: 800; font-size: 1.1rem; display: inline-block; margin-bottom: 10px;
+        }
+        .meaning { font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; color: var(--text-muted); }
+        
+        .hanzi-details {
+            background: #f5f5f5; border-radius: 10px; padding: 12px; margin-bottom: 10px;
+            text-align: left; font-size: 0.95rem; color: #424242; border-left: 4px solid var(--primary);
+        }
+        .hanzi-details p { margin-bottom: 5px; }
+        .hanzi-details b { color: var(--primary-dark); }
+        .memo { font-size: 0.95rem; background: #fff8e1; padding: 12px; border-radius: 10px; color: #e65100; text-align: left; border-left: 4px solid var(--secondary); line-height: 1.4;}
+
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; }
+        .flashcard { width: 100%; height: 260px; perspective: 1000px; cursor: pointer; }
         .flashcard-inner {
-            position: relative; width: 100%; height: 320px;
-            transition: transform 0.6s; transform-style: preserve-3d;
-            cursor: pointer;
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.5s; transform-style: preserve-3d;
         }
-
-        .flashcard-inner.is-flipped { transform: rotateY(180deg); }
-
+        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
         .flashcard-front, .flashcard-back {
-            position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; border-radius: 15px;
-            padding: 24px; border: 2px solid var(--ghibli-wood);
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px;
+        }
+        .flashcard-front { background: #fff; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .flashcard-front .word-cn { font-family: var(--font-cn); font-size: 3.5rem; color: var(--text-main); }
+        .flashcard-front .hint { position: absolute; bottom: 10px; font-size: 0.8rem; color: #aaa; }
+        .flashcard-back { background: #fffde7; transform: rotateY(180deg); border: 2px solid var(--secondary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .flashcard-back .py { font-size: 1.3rem; font-weight: bold; color: var(--primary-dark); margin-bottom: 5px; }
+        .flashcard-back .mn { font-size: 1.2rem; font-weight: 800; color: #e65100; margin-bottom: 15px; }
+        .example-box { background: white; padding: 10px; border-radius: 10px; width: 100%; }
+        .ex-cn { font-family: var(--font-cn); font-size: 1.1rem; color: #333; margin-bottom: 2px; }
+        .ex-py { font-size: 0.9rem; color: #666; margin-bottom: 2px; }
+        .ex-vn { font-size: 0.9rem; color: var(--primary-dark); font-style: italic; }
+
+        .game-container { background: white; border-radius: 20px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); text-align: center; }
+        .game-header { display: flex; justify-content: space-between; margin-bottom: 15px; font-weight: 800; color: var(--primary-dark); font-size: 1rem; }
+        .progress-bar { width: 100%; height: 10px; background: #eee; border-radius: 5px; margin-bottom: 25px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; transition: width 0.3s; }
+        .question-text { font-size: 1.2rem; font-weight: 700; margin-bottom: 25px; color: var(--text-muted); line-height: 1.4; }
+        .question-highlight { font-family: var(--font-cn); font-size: 2.5rem; color: var(--hanzi-color); display: block; margin: 10px 0; font-weight: normal; }
+        
+        .options-grid { display: flex; flex-direction: column; gap: 12px; }
+        .option-btn {
+            background: #f8f9fa; border: 2px solid #e0e0e0; padding: 15px; border-radius: 12px;
+            font-size: 1.1rem; font-weight: bold; color: #424242; cursor: pointer; transition: all 0.2s; font-family: var(--font-cn);
+        }
+        .option-btn:active { transform: scale(0.98); }
+        .option-btn.correct { background: #4CAF50 !important; color: white !important; border-color: #388E3C !important; }
+        .option-btn.wrong { background: #F44336 !important; color: white !important; border-color: #D32F2F !important; }
+
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: white; width: 90%; max-width: 400px; padding: 25px;
+            border-radius: 20px; text-align: center; animation: popIn 0.3s;
+        }
+        .modal-icon { font-size: 4rem; margin-bottom: 10px; line-height: 1; }
+        .modal-title { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
+        .modal-title.t-correct { color: #4CAF50; }
+        .modal-title.t-wrong { color: #F44336; }
+        .modal-desc { font-size: 1.05rem; color: #555; margin-bottom: 20px; line-height: 1.5; }
+        .btn-next {
+            background: var(--primary); color: white; border: none; padding: 12px 30px;
+            border-radius: 25px; font-size: 1.1rem; font-weight: bold; cursor: pointer; width: 100%;
         }
 
-        .flashcard-front { background-color: #fff; }
-        .flashcard-back { background-color: #fef3c7; transform: rotateY(180deg); }
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        .result-bar { height: 24px; border-radius: 12px; display: flex; overflow: hidden; border: 1px solid var(--ghibli-wood); }
-
-        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
+        .game-result { display: none; flex-direction: column; align-items: center; gap: 15px; }
+        .score-circle {
+            width: 100px; height: 100px; border-radius: 50%; border: 5px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: 900; color: var(--primary-dark); margin: 10px 0;
         }
-
-        .btn-back-home {
-            position: fixed; top: 15px; left: 15px;
-            background: white; padding: 8px 15px; border-radius: 20px;
-            border: 2px solid var(--ghibli-wood); font-weight: bold;
-            display: flex; align-items: center; gap: 8px; z-index: 100;
+        .btn-play-again {
+            background: var(--secondary); color: white; border: none; padding: 12px 30px;
+            border-radius: 25px; font-size: 1.1rem; font-weight: 800; cursor: pointer; margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="btn-back-home text-amber-900 hover:bg-amber-50 shadow-sm">
-        🏡 <span>Quay về vườn</span>
-    </a>
+    <div class="branding">© Bản Quyền Thuộc Về Nga Học HSK</div>
 
-    <div id="game-container" class="w-full max-w-xl px-4 mt-16 mb-10">
-        <!-- Start Screen -->
-        <div id="start-screen" class="ghibli-card p-8 text-center">
-            <h1 class="text-3xl font-bold text-amber-900 mb-4">Tiệm Trà của Nga</h1>
-            <div class="mx-auto mb-4 text-6xl animate-bounce">🍵</div>
-            <p class="text-amber-800 mb-6 italic">Chào mừng các bạn đến học HSK 1 Bài 13 cùng Nga!</p>
-            
-            <div class="grid grid-cols-1 gap-4">
-                <button onclick="startFlashcards()" class="btn-ghibli text-lg">🎴 Luyện Flashcards (Từ mới)</button>
-                <button onclick="startGame()" class="btn-ghibli text-lg" style="background-color: #fef3c7;">🍃 Làm bài kiểm tra 20 câu</button>
+    <header class="header">
+        <a href="index.html" class="btn-back">❮ Về Vườn</a>
+        <h2>Bài 13: 他在学做中国菜呢</h2>
+        <div class="header-spacer"></div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('hanzi')">✏️ Hán Tự</button>
+        <button class="tab-btn" onclick="switchTab('vocab')">🃏 Từ Vựng</button>
+        <button class="tab-btn" onclick="switchTab('game')">🎮 Luyện Tập</button>
+    </div>
+
+    <!-- HÁN TỰ -->
+    <section id="hanzi" class="section active">
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 15px; font-size: 0.9rem;">
+            * Các chữ Hán trọng tâm của Bài 13
+        </p>
+        <div class="hanzi-grid" id="hanzi-container"></div>
+    </section>
+
+    <!-- TỪ VỰNG -->
+    <section id="vocab" class="section">
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 15px; font-size: 0.9rem;">
+            * Chạm vào thẻ để lật xem mặt sau
+        </p>
+        <div class="vocab-grid" id="vocab-container"></div>
+    </section>
+
+    <!-- LUYỆN TẬP -->
+    <section id="game" class="section">
+        <div class="game-container" id="quiz-area">
+            <div class="game-header">
+                <span id="score-display">Điểm: 0</span>
+                <span id="question-count">Câu: 1/15</span>
             </div>
-            <p class="mt-4 text-xs text-amber-700 font-bold opacity-70">Tip: Bật âm thanh để trải nghiệm tốt nhất!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            <div id="question-text" class="question-text"></div>
+            <div class="options-grid" id="options-container"></div>
         </div>
 
-        <!-- Flashcard Screen -->
-        <div id="flashcard-screen" class="ghibli-card p-6 hidden">
-            <div class="flex justify-between items-center mb-4">
-                <button onclick="returnToStart()" class="text-amber-700 text-sm font-bold">← Trang chủ</button>
-                <div class="text-amber-900 font-bold">Thẻ: <span id="card-index">1</span>/<span id="card-total">10</span></div>
-            </div>
-            <div class="mb-6">
-                <div id="flashcard-inner" class="flashcard-inner" onclick="flipCard()">
-                    <div class="flashcard-front shadow-lg">
-                        <h2 id="card-hanzi" class="chinese-text text-8xl text-amber-900"></h2>
-                    </div>
-                    <div class="flashcard-back shadow-lg overflow-y-auto">
-                        <h3 id="card-pinyin" class="text-3xl font-bold text-emerald-700 mb-2"></h3>
-                        <p id="card-mean" class="text-xl text-amber-900 mb-4 font-bold"></p>
-                        <div class="text-left w-full border-t border-amber-300 pt-3">
-                            <p id="card-example-cn" class="chinese-text text-2xl mb-1"></p>
-                            <p id="card-example-py" class="text-sm text-emerald-600 italic mb-1"></p>
-                            <p id="card-example-vi" class="text-sm text-gray-700"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="markCard(false)" class="bg-red-100 border-2 border-red-400 text-red-700 p-4 rounded-xl font-bold hover:bg-red-200 transition-colors">Chưa thuộc ❌</button>
-                <button onclick="markCard(true)" class="bg-emerald-100 border-2 border-emerald-400 text-emerald-700 p-4 rounded-xl font-bold hover:bg-emerald-200 transition-colors">Đã thuộc ✅</button>
-            </div>
+        <div class="game-container game-result" id="result-area">
+            <div style="font-size: 5rem;" id="medal-emoji">🏆</div>
+            <div class="score-circle" id="final-score">150</div>
+            <h2 id="result-title">Xuất sắc!</h2>
+            <p id="result-desc" style="color: #555;">Bạn đã nắm vững cách hỏi và đáp về hành động đang xảy ra.</p>
+            <button class="btn-play-again" onclick="startGame()">↻ Chơi lại nhé</button>
         </div>
+    </section>
 
-        <!-- Flashcard Result -->
-        <div id="flashcard-result" class="ghibli-card p-8 text-center hidden">
-            <h2 class="text-2xl font-bold text-amber-900 mb-4">Kết quả luyện tập</h2>
-            <div class="mb-6">
-                <div class="result-bar mb-2">
-                    <div id="bar-learned" class="bg-emerald-400 h-full"></div>
-                    <div id="bar-unlearned" class="bg-red-400 h-full"></div>
-                </div>
-                <div class="flex justify-between text-sm font-bold">
-                    <span class="text-emerald-700">Đã thuộc: <span id="percent-learned">0</span>%</span>
-                    <span class="text-red-700">Chưa thuộc: <span id="percent-unlearned">0</span>%</span>
-                </div>
-            </div>
-            <div id="unlearned-list" class="bg-white p-4 rounded-lg border border-amber-200 max-h-48 overflow-y-auto mb-6 text-left"></div>
-            <div class="flex flex-col gap-3">
-                <button id="retry-unlearned-btn" onclick="retryUnlearned()" class="btn-ghibli w-full">Học lại từ chưa thuộc</button>
-                <button onclick="startFlashcards()" class="btn-ghibli w-full" style="background-color: #fff;">Học lại tất cả</button>
-                <button onclick="returnToStart()" class="text-amber-700 font-bold mt-2 underline">Quay lại màn hình học</button>
-            </div>
-        </div>
-
-        <!-- Quiz Screen -->
-        <div id="play-screen" class="ghibli-card p-6 hidden">
-            <div class="flex justify-between items-center mb-4">
-                <div class="text-amber-900 font-bold text-sm">Câu: <span id="quiz-count">0</span>/20</div>
-                <div class="flex-1 mx-4">
-                    <div class="h-3 bg-gray-200 rounded-full overflow-hidden"><div id="progress" class="h-full bg-emerald-400 transition-all duration-300"></div></div>
-                </div>
-                <div class="font-bold text-emerald-700 text-sm">Đúng: <span id="quiz-score">0</span></div>
-            </div>
-            <div id="question-box" class="min-h-[140px] flex flex-col justify-center items-center text-center p-4 bg-white rounded-xl border-2 border-dashed border-amber-300 mb-6">
-                <p id="question-text" class="text-lg text-amber-900 font-bold mb-2"></p>
-                <p id="chinese-hint" class="chinese-text text-3xl text-emerald-700"></p>
-            </div>
-            <div id="options-container" class="grid grid-cols-1 gap-3"></div>
-            <div id="explanation-container" class="bg-amber-50 border-l-4 border-amber-500 p-4 mt-4 hidden rounded">
-                <p id="feedback-title" class="font-bold"></p>
-                <p id="explanation-text" class="text-sm italic"></p>
-                <button onclick="showNextQuestion()" class="mt-3 bg-amber-600 text-white px-4 py-2 rounded-lg w-full font-bold">Tiếp theo</button>
-            </div>
-        </div>
-
-        <!-- End Screen Quiz -->
-        <div id="end-screen" class="ghibli-card p-8 text-center hidden">
-            <h2 class="text-3xl font-bold text-amber-900 mb-4" id="result-title"></h2>
-            <div class="text-6xl mb-4">✨🌸✨</div>
-            <p class="text-amber-800 mb-6" id="result-text"></p>
-            <button onclick="returnToStart()" class="btn-ghibli px-10 py-3 text-xl w-full">Học tiếp bài khác</button>
+    <!-- MODAL EXPLANATION -->
+    <div id="explanation-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="modal-icon" class="modal-icon">✅</div>
+            <h3 id="modal-title" class="modal-title">Đúng rồi!</h3>
+            <p id="modal-desc" class="modal-desc"></p>
+            <button class="btn-next" onclick="nextQuestion()">Tiếp tục ❯</button>
         </div>
     </div>
 
-    <!-- Audio Elements -->
-    <audio id="audio-click" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
-    <audio id="audio-correct" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
-    <audio id="audio-wrong" src="https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3"></audio>
-    <audio id="audio-flip" src="https://assets.mixkit.co/active_storage/sfx/2045/2045-preview.mp3"></audio>
-
     <script>
-        const flashcardData = [
-            { h: "喂", p: "wèi", m: "A lô, này", ex: "喂，李老师在吗？", exp: "wèi, Lǐ lǎoshī zài ma?", exv: "A lô, thầy Lý có ở đó không?" },
-            { h: "也", p: "yě", m: "Cũng", ex: "他也学习做中国菜。", "exp": "tā yě xuéxí zuò Zhōngguó cài.", exv: "Anh ấy cũng học nấu món Trung Quốc." },
-            { h: "学习", p: "xuéxí", m: "Học, học tập", ex: "我在学习汉语。", "exp": "wǒ zài xuéxí Hànyǔ.", exv: "Tôi đang học tiếng Trung." },
-            { h: "上午", p: "shàngwǔ", m: "Buổi sáng", ex: "你上午在做什么？", "exp": "nǐ shàngwǔ zài zuò shénme?", exv: "Sáng nay bạn đang làm gì vậy?" },
-            { h: "睡觉", p: "shuì jiào", m: "Ngủ", ex: "他在睡觉呢。", "exp": "tā zài shuì jiào ne.", exv: "Anh ấy đang ngủ đấy." },
-            { h: "电视", p: "diànshì", m: "Tivi", ex: "我不喜欢看电视。", "exp": "wǒ bù xǐhuan kàn diànshì.", exv: "Tôi không thích xem tivi." },
-            { h: "喜欢", p: "xǐhuan", m: "Thích", ex: "你喜欢中国菜吗？", "exp": "nǐ xǐhuan Zhōngguó cài ma?", exv: "Bạn có thích món ăn Trung Quốc không?" },
-            { h: "给", p: "gěi", m: "Cho", ex: "我给你打电话。", "exp": "wǒ gěi nǐ dǎ diànhuà.", exv: "Tôi gọi điện thoại cho bạn." },
-            { h: "打电话", p: "dǎ diànhuà", m: "Gọi điện thoại", ex: "他在打电话呢。", "exp": "tā dǎ diànhuà ne.", exv: "Anh ấy đang gọi điện thoại." },
-            { h: "吧", p: "ba", m: "nhé, đi (trợ từ)", ex: "请坐吧。", "exp": "qǐng zuò ba.", exv: "Mời ngồi ạ." }
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        function playSound(type) {
+            if (!audioCtx) audioCtx = new AudioContext();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            const now = audioCtx.currentTime;
+            if (type === 'click') { osc.frequency.setValueAtTime(600, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1); osc.start(); osc.stop(now + 0.1); }
+            else if (type === 'correct') { osc.frequency.setValueAtTime(523, now); osc.frequency.exponentialRampToValueAtTime(659, now + 0.2); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3); osc.start(); osc.stop(now + 0.3); }
+            else if (type === 'wrong') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3); osc.start(); osc.stop(now + 0.3); }
+        }
+
+        // --- DỮ LIỆU BÀI 13 ---
+        const hanziData = [
+            { char: '喂', pinyin: 'wèi', meaning: 'a lô, này', radical: '口 (Khẩu)', memo: 'Khi gọi điện thoại nói A LÔ (喂) phải dùng Miệng (口).' },
+            { char: '也', pinyin: 'yě', meaning: 'cũng', radical: '乚 (Ất)', memo: 'Chữ tượng hình, ban đầu vẽ hình cái phễu (CŨNG là một vật dụng).' },
+            { char: '习', pinyin: 'xí', meaning: 'tập, ôn tập', radical: '乙 (Ất)', memo: 'Tượng hình con chim non đang TẬP vỗ cánh (羽 - vũ) bay lên.' },
+            { char: '觉', pinyin: 'jiào / jué', meaning: 'ngủ / cảm giác', radical: '见 (Kiến)', memo: 'Ban đêm NGỦ say, lúc tỉnh dậy mới thấy (见) mặt trời.' },
+            { char: '视', pinyin: 'shì', meaning: 'nhìn, xem', radical: '见 (Kiến)', memo: 'Chữ này có bộ Kiến (见 - nhìn, thấy). 电视 là tivi (xem bằng mắt).' },
+            { char: '欢', pinyin: 'huān', meaning: 'hoan hỉ, vui vẻ', radical: '欠 (Khiếm)', memo: 'Mở miệng (欠) cười nói VUI VẺ, HOAN hỉ (又 - hựu).' },
+            { char: '给', pinyin: 'gěi', meaning: 'cho', radical: '纟 (Mịch)', memo: 'Giao CHO ai đó những sợi tơ (纟) dệt cẩn thận.' }
         ];
 
-        const questions = [
-            { q: "A lô dùng từ nào?", hint: "A lô...", options: ["喂 (wèi)", "成 (chéng)", "吧 (ba)", "也 (yě)"], correct: 0, exp: "喂 (wèi) dùng khi trả lời điện thoại." },
-            { q: "Số 1 trong số điện thoại đọc là?", hint: "138...", options: ["yī", "yāo", "yì", "yòng"], correct: 1, exp: "Đọc là yāo để không nhầm với qī (số 7)." },
-            { q: "Tôi đang ngủ?", hint: "S + (在) + V + 呢", options: ["我睡觉。", "我在睡觉呢。", "我也睡觉吧。", "我不睡觉。"], correct: 1, exp: "(在)...呢 diễn tả đang xảy ra." },
-            { q: "Tivi là gì?", hint: "Màn hình...", options: ["Máy tính", "Điện thoại", "电视 (diànshì)", "Sách"], correct: 2, exp: "电视 là tivi." },
-            { q: "Phó từ 'cũng'?", hint: "Anh ấy cũng học...", options: ["也 (yě)", "在", "吧", "给"], correct: 0, exp: "也 đứng trước động từ." },
-            { q: "Phủ định của 'đang làm gì'?", hint: "Tôi không đang học.", options: ["不", "没 (méi)", "没有呢", "别"], correct: 1, exp: "Dùng 没 và không có 呢." },
-            { q: "Mời ngồi nhé?", hint: "Lời mời...", options: ["吗", "呢", "吧 (ba)", "了"], correct: 2, exp: "吧 biểu thị sự đề nghị." },
-            { q: "8610 đọc là?", hint: "Số 1...", options: ["bā liù yī líng", "bā liù yāo líng", "bā liù yāo shí", "bā qī yāo líng"], correct: 1, exp: "bā liù yāo líng." },
-            { q: "Học tập là?", hint: "Study...", options: ["Ngủ", "Thích", "学习 (xuéxí)", "Làm"], correct: 2, exp: "学习 là học tập." },
-            { q: "Gọi điện cho ai đó?", hint: "Cho... gọi", options: ["给 A 打电话", "在 A 打电话", "打电话 A", "也 A 打电话"], correct: 0, exp: "A 给 B 打电话." },
-            { q: "Buổi sáng?", hint: "AM...", options: ["中午", "下午", "上午 (shàngwǔ)", "晚上"], correct: 2, exp: "上午 là buổi sáng." },
-            { q: "Thích là gì?", hint: "Like...", options: ["学习", "睡觉", "喜欢 (xǐhuan)", "工作"], correct: 2, exp: "喜欢 là thích." },
-            { q: "Câu nào sai?", hint: "Phủ định...", options: ["他在看电视呢。", "我在学呢。", "他没看电视呢。", "他没看电视。"], correct: 2, exp: "Câu phủ định không có 呢." },
-            { q: "Đang làm việc nè?", hint: "Working...", options: ["吗", "呢 (ne)", "吧", "也"], correct: 1, exp: "呢 nhấn mạnh đang diễn ra." },
-            { q: "Đọc số điện thoại?", hint: "123...", options: ["Rời từng số", "Hàng trăm", "4 số cuối", "3 số đầu"], correct: 0, exp: "Đọc rời từng số." },
-            { q: "Ngủ là gì?", hint: "Sleep...", options: ["Học", "睡觉 (shuì jiào)", "Ăn", "Xem"], correct: 1, exp: "睡觉 là ngủ." },
-            { q: "Trong '他在学', '在' là gì?", hint: "Trước V...", options: ["Địa điểm", "Phó từ đang diễn ra", "Động từ", "Trợ từ"], correct: 1, exp: "Trong cấu trúc này '在' là phó từ." },
-            { q: "Từ '给' là?", hint: "Giới từ...", options: ["Cho", "Của", "Với", "Tại"], correct: 0, exp: "给 (gěi) là cho." },
-            { q: "Ăn cơm ở nhà nhé?", hint: "Đề nghị...", options: ["...呢。", "...吧。", "...吗？", "...也。"], correct: 1, exp: "Dùng 吧 để đề nghị." },
-            { q: "Từ khác loại?", hint: "V vs N", options: ["看电视", "打电话", "睡觉", "上午"], correct: 3, exp: "上午 là danh từ chỉ thời gian." }
+        const vocabData = [
+            { word: '喂', pinyin: 'wèi', meaning: 'A lô', ex_cn: '喂，你在做什么呢？', ex_py: 'Wèi, nǐ zài zuò shénme ne?', ex_vn: 'A lô, bạn đang làm gì đấy?' },
+            { word: '也', pinyin: 'yě', meaning: 'Cũng', ex_cn: '我也喜欢看电视。', ex_py: 'Wǒ yě xǐhuan kàn diànshì.', ex_vn: 'Tôi cũng thích xem tivi.' },
+            { word: '学习', pinyin: 'xuéxí', meaning: 'Học tập', ex_cn: '他在学习汉语。', ex_py: 'Tā zài xuéxí Hànyǔ.', ex_vn: 'Anh ấy đang học tiếng Trung.' },
+            { word: '上午', pinyin: 'shàngwǔ', meaning: 'Buổi sáng', ex_cn: '上午我在家。', ex_py: 'Shàngwǔ wǒ zài jiā.', ex_vn: 'Buổi sáng tôi ở nhà.' },
+            { word: '睡觉', pinyin: 'shuì jiào', meaning: 'Ngủ', ex_cn: '昨天晚上我没睡觉。', ex_py: 'Zuótiān wǎnshang wǒ méi shuì jiào.', ex_vn: 'Tối qua tôi không ngủ.' },
+            { word: '电视', pinyin: 'diànshì', meaning: 'Tivi', ex_cn: '我不喜欢看电视。', ex_py: 'Wǒ bù xǐhuan kàn diànshì.', ex_vn: 'Tôi không thích xem tivi.' },
+            { word: '喜欢', pinyin: 'xǐhuan', meaning: 'Thích', ex_cn: '你喜欢喝什么？', ex_py: 'Nǐ xǐhuan hē shénme?', ex_vn: 'Bạn thích uống gì?' },
+            { word: '给', pinyin: 'gěi', meaning: 'Cho (ai đó)', ex_cn: '我给她打电话。', ex_py: 'Wǒ gěi tā dǎ diànhuà.', ex_vn: 'Tôi gọi điện thoại cho cô ấy.' },
+            { word: '打电话', pinyin: 'dǎ diànhuà', meaning: 'Gọi điện thoại', ex_cn: '大卫在打电话呢。', ex_py: 'Dàwèi zài dǎ diànhuà ne.', ex_vn: 'David đang gọi điện thoại.' },
+            { word: '吧', pinyin: 'ba', meaning: 'Nhé, đi (trợ từ)', ex_cn: '我们去看电影吧。', ex_py: 'Wǒmen qù kàn diànyǐng ba.', ex_vn: 'Chúng ta đi xem phim đi/nhé.' },
+            { word: '大卫', pinyin: 'Dàwèi', meaning: 'David (Tên)', ex_cn: '大卫是美国人。', ex_py: 'Dàwèi shì Měiguórén.', ex_vn: 'David là người Mỹ.' }
         ];
 
-        let currentFlashcards = [];
-        let flashcardIdx = 0;
-        let unlearnedItems = [];
-        let learnedCount = 0;
+        const quizQuestions = [
+            { q: 'Để biểu thị hành động ĐANG diễn ra, ta dùng cấu trúc nào?', options: ['会......了', '在......呢', '太......了', '很......吗'], answer: 1, exp: 'Cấu trúc: 在 + Động từ + 呢 (đang làm gì đó).' },
+            { q: 'Dịch câu "A lô, bạn đang làm gì đấy?" sang tiếng Trung.', options: ['喂，你做什么？', '喂，你在做什么呢？', '请问，做什么你呢？', '喂，你在哪里？'], answer: 1, exp: '喂 (A lô), 你在 (bạn đang) 做什么 (làm gì) 呢 (trợ từ).' },
+            { q: 'Khi đọc số điện thoại 138..., số 1 sẽ được đọc là gì?', options: ['yī', 'yāo', 'yào', 'qī'], answer: 1, exp: 'Trong số điện thoại, số 1 đọc là "yāo" để tránh nhầm lẫn với số 7 (qī).' },
+            { q: 'Chữ <span class="question-highlight">喂</span> (wèi - a lô) có bộ thủ gì?', options: ['Bộ Thủy (氵)', 'Bộ Khẩu (口)', 'Bộ Nhân (亻)', 'Bộ Mộc (木)'], answer: 1, exp: 'Vì là thán từ dùng miệng để gọi nên có bộ Khẩu (口).' },
+            { q: '"Gọi điện thoại" trong tiếng Trung là cụm từ nào?', options: ['看电视 (kàn diànshì)', '打电话 (dǎ diànhuà)', '看书 (kàn shū)', '学习 (xuéxí)'], answer: 1, exp: '打电话 (dǎ diànhuà) nghĩa là gọi điện thoại.' },
+            { q: 'Cấu trúc "Gọi điện thoại CHO ai đó" là gì?', options: ['打电话给他', '给打电话他', '给他打电话', '他给打电话'], answer: 2, exp: 'Cấu trúc: 给 + Người nhận + 打电话.' },
+            { q: 'Điền từ: 我是学生，他 ____ 是学生。 (Tôi là học sinh, anh ấy CŨNG là học sinh).', options: ['在 (zài)', '也 (yě)', '和 (hé)', '不 (bù)'], answer: 1, exp: '也 (yě) là phó từ mang nghĩa "Cũng".' },
+            { q: 'Trợ từ <span class="question-highlight">吧</span> (ba) thường đứng ở đâu trong câu?', options: ['Đầu câu', 'Giữa câu', 'Trước động từ', 'Cuối câu'], answer: 3, exp: 'Trợ từ ngữ khí 吧 luôn đứng ở cuối câu (ví dụ: 我们走吧 - Chúng ta đi thôi).' },
+            { q: '"Thích" trong tiếng Trung đọc là gì?', options: ['xǐhuan', 'xuéxí', 'shuìjiào', 'gōngzuò'], answer: 0, exp: '喜欢 (xǐhuan) có nghĩa là Thích.' },
+            { q: 'Từ nào mang nghĩa là "Ngủ"?', options: ['吃饭 (chī fàn)', '学习 (xuéxí)', '睡觉 (shuì jiào)', '喝水 (hē shuǐ)'], answer: 2, exp: '睡觉 (shuì jiào) nghĩa là ngủ.' },
+            { q: 'Dịch câu "Chúng ta đi ăn cơm nhé." sang tiếng Trung.', options: ['我们去吃饭吧。', '你们去吃饭吧。', '我们去吃饭吗？', '我们去不吃饭。'], answer: 0, exp: 'Dùng 吧 ở cuối để đưa ra lời đề nghị nhẹ nhàng "nhé/đi".' },
+            { q: 'Từ <span class="question-highlight">电视</span> (diànshì) nghĩa là gì?', options: ['Điện thoại', 'Máy tính', 'Tivi', 'Phim ảnh'], answer: 2, exp: '电 (Điện) + 视 (Thị/Nhìn) = Tivi.' },
+            { q: 'Phủ định của "Đang làm gì đó" (在...呢) là từ nào?', options: ['不 (bù)', '没有 (méiyǒu) hoặc 没 (méi)', '也 (yě)', '太 (tài)'], answer: 1, exp: 'Để phủ định hành động đang xảy ra, ta dùng 没 (在)... (Ví dụ: 我没在看电视 - Tôi không đang xem tivi).' },
+            { q: '上午 (shàngwǔ) là buổi nào trong ngày?', options: ['Buổi sáng', 'Buổi trưa', 'Buổi chiều', 'Buổi tối'], answer: 0, exp: '上午 là Buổi sáng (trước 12h trưa).' },
+            { q: 'Sắp xếp câu: 也 / 我 / 喜欢 / 猫 / 。', options: ['我也喜欢猫。', '我喜欢猫也。', '也我喜欢猫。', '我喜欢也猫。'], answer: 0, exp: 'Phó từ 也 (cũng) phải đứng TRƯỚC động từ chính (喜欢).' }
+        ];
 
-        function playAudio(id) {
-            const audio = document.getElementById(id);
-            audio.currentTime = 0;
-            audio.play().catch(e => console.log("Audio play blocked"));
+        // --- RENDER FUNCTIONS ---
+        function render() {
+            const hanziContainer = document.getElementById('hanzi-container');
+            hanziContainer.innerHTML = hanziData.map(h => `
+                <div class="hanzi-card">
+                    <div class="char-display">${h.char}</div>
+                    <div class="pinyin">${h.pinyin}</div>
+                    <div class="meaning">${h.meaning}</div>
+                    <div class="hanzi-details">
+                        <p><b>🧩 Bộ thủ:</b> ${h.radical}</p>
+                    </div>
+                    <div class="memo">💡 ${h.memo}</div>
+                </div>
+            `).join('');
+
+            const vocabContainer = document.getElementById('vocab-container');
+            vocabContainer.innerHTML = vocabData.map(v => `
+                <div class="flashcard" onclick="playSound('click'); this.classList.toggle('flipped')">
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="word-cn">${v.word}</div>
+                            <div class="hint">👆 Chạm để lật</div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="py">${v.pinyin}</div>
+                            <div class="mn">${v.meaning}</div>
+                            <div class="example-box">
+                                <div class="ex-cn">${v.ex_cn}</div>
+                                <div class="ex-py">${v.ex_py}</div>
+                                <div class="ex-vn">${v.ex_vn}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function startFlashcards() {
-            playAudio('audio-click');
-            currentFlashcards = [...flashcardData];
-            flashcardIdx = 0; unlearnedItems = []; learnedCount = 0;
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('flashcard-result').classList.add('hidden');
-            document.getElementById('flashcard-screen').classList.remove('hidden');
-            updateFlashcard();
+        // --- GAME LOGIC ---
+        let currentQ = 0;
+        let score = 0;
+        let answering = false;
+
+        function switchTab(tabId) {
+            playSound('click');
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+            
+            if (tabId === 'game') startGame();
         }
-
-        function updateFlashcard() {
-            const card = currentFlashcards[flashcardIdx];
-            document.getElementById('card-index').innerText = flashcardIdx + 1;
-            document.getElementById('card-total').innerText = currentFlashcards.length;
-            document.getElementById('card-hanzi').innerText = card.h;
-            document.getElementById('card-pinyin').innerText = card.p;
-            document.getElementById('card-mean').innerText = card.m;
-            document.getElementById('card-example-cn').innerText = card.ex;
-            document.getElementById('card-example-py').innerText = card.exp;
-            document.getElementById('card-example-vi').innerText = card.exv;
-            document.getElementById('flashcard-inner').classList.remove('is-flipped');
-        }
-
-        function flipCard() {
-            playAudio('audio-flip');
-            document.getElementById('flashcard-inner').classList.toggle('is-flipped');
-        }
-
-        function markCard(isLearned) {
-            if (isLearned) {
-                playAudio('audio-correct');
-                learnedCount++;
-            } else {
-                playAudio('audio-wrong');
-                unlearnedItems.push(currentFlashcards[flashcardIdx]);
-            }
-            flashcardIdx++;
-            if (flashcardIdx < currentFlashcards.length) updateFlashcard();
-            else showFlashcardResult();
-        }
-
-        function showFlashcardResult() {
-            document.getElementById('flashcard-screen').classList.add('hidden');
-            document.getElementById('flashcard-result').classList.remove('hidden');
-            const total = currentFlashcards.length;
-            const learnedPercent = Math.round((learnedCount / total) * 100);
-            document.getElementById('percent-learned').innerText = learnedPercent;
-            document.getElementById('percent-unlearned').innerText = 100 - learnedPercent;
-            document.getElementById('bar-learned').style.width = learnedPercent + '%';
-            document.getElementById('bar-unlearned').style.width = (100 - learnedPercent) + '%';
-
-            const list = document.getElementById('unlearned-list');
-            list.innerHTML = unlearnedItems.length > 0 ? "<p class='font-bold text-red-600 mb-2'>Từ chưa thuộc:</p>" : "<p class='text-emerald-600 font-bold text-center'>Tuyệt vời! Bạn thuộc hết rồi! 🍵</p>";
-            unlearnedItems.forEach(item => {
-                const div = document.createElement('div');
-                div.className = "flex justify-between border-b py-1";
-                div.innerHTML = `<span><b class="chinese-text text-lg">${item.h}</b></span> <span>${item.m}</span>`;
-                list.appendChild(div);
-            });
-            document.getElementById('retry-unlearned-btn').classList.toggle('hidden', unlearnedItems.length === 0);
-        }
-
-        function retryUnlearned() {
-            playAudio('audio-click');
-            currentFlashcards = [...unlearnedItems];
-            unlearnedItems = []; learnedCount = 0; flashcardIdx = 0;
-            document.getElementById('flashcard-result').classList.add('hidden');
-            document.getElementById('flashcard-screen').classList.remove('hidden');
-            updateFlashcard();
-        }
-
-        let quizIdx = 0; let quizScore = 0; let quizAnswered = false;
 
         function startGame() {
-            playAudio('audio-click');
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('play-screen').classList.remove('hidden');
-            quizIdx = 0; quizScore = 0;
-            showQuizQuestion();
+            currentQ = 0;
+            score = 0;
+            document.getElementById('quiz-area').style.display = 'block';
+            document.getElementById('result-area').style.display = 'none';
+            loadQuestion();
         }
 
-        function showQuizQuestion() {
-            quizAnswered = false;
-            const q = questions[quizIdx];
-            document.getElementById('quiz-score').innerText = quizScore;
-            document.getElementById('quiz-count').innerText = quizIdx + 1;
-            document.getElementById('progress').style.width = (quizIdx / questions.length * 100) + '%';
-            document.getElementById('question-text').innerText = q.q;
-            document.getElementById('chinese-hint').innerText = q.hint;
-            document.getElementById('explanation-container').classList.add('hidden');
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            q.options.forEach((opt, i) => {
+        function loadQuestion() {
+            answering = false;
+            const q = quizQuestions[currentQ];
+            document.getElementById('score-display').innerText = `Điểm: ${score}`;
+            document.getElementById('question-count').innerText = `Câu: ${currentQ + 1}/15`;
+            document.getElementById('progress').style.width = `${((currentQ) / 15) * 100}%`;
+            
+            document.getElementById('question-text').innerHTML = q.q;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((opt, index) => {
                 const btn = document.createElement('button');
-                btn.className = "btn-ghibli text-left";
-                btn.innerText = (i+1) + ". " + opt;
-                btn.onclick = () => checkQuiz(i, btn);
-                container.appendChild(btn);
+                btn.className = 'option-btn';
+                btn.innerHTML = opt;
+                btn.onclick = () => checkAnswer(index);
+                optionsContainer.appendChild(btn);
             });
         }
 
-        function checkQuiz(idx, btn) {
-            if (quizAnswered) return;
-            quizAnswered = true;
-            const q = questions[quizIdx];
-            document.getElementById('explanation-container').classList.remove('hidden');
-            if (idx === q.correct) {
-                playAudio('audio-correct');
-                quizScore++;
-                document.getElementById('feedback-title').innerText = "Chính xác! 🍃";
-                document.getElementById('feedback-title').className = "font-bold text-emerald-600";
-                btn.style.backgroundColor = "#22c55e"; btn.style.color = "white";
+        function checkAnswer(choice) {
+            if (answering) return;
+            answering = true;
+            
+            const q = quizQuestions[currentQ];
+            const btns = document.querySelectorAll('.option-btn');
+            
+            if (choice === q.answer) {
+                btns[choice].classList.add('correct');
+                score += 10;
+                playSound('correct');
+                showModal(true);
             } else {
-                playAudio('audio-wrong');
-                document.getElementById('feedback-title').innerText = "Chưa đúng! ❌";
-                document.getElementById('feedback-title').className = "font-bold text-red-600";
-                btn.style.backgroundColor = "#ef4444"; btn.style.color = "white";
-                document.getElementById('play-screen').classList.add('shake');
-                setTimeout(()=>document.getElementById('play-screen').classList.remove('shake'), 500);
+                btns[choice].classList.add('wrong');
+                btns[q.answer].classList.add('correct');
+                playSound('wrong');
+                showModal(false);
             }
-            document.getElementById('explanation-text').innerText = q.exp;
         }
 
-        function showNextQuestion() {
-            playAudio('audio-click');
-            quizIdx++;
-            if (quizIdx < questions.length) showQuizQuestion();
-            else showEndScreen();
+        function showModal(isCorrect) {
+            const modal = document.getElementById('explanation-modal');
+            const icon = document.getElementById('modal-icon');
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc');
+            
+            icon.innerText = isCorrect ? "✅" : "❌";
+            title.innerText = isCorrect ? "Đúng rồi!" : "Tiếc quá!";
+            title.className = `modal-title ${isCorrect ? 't-correct' : 't-wrong'}`;
+            desc.innerText = quizQuestions[currentQ].exp;
+            
+            modal.style.display = 'flex';
         }
 
-        function showEndScreen() {
-            document.getElementById('play-screen').classList.add('hidden');
-            document.getElementById('end-screen').classList.remove('hidden');
-            document.getElementById('result-title').innerText = quizScore >= 18 ? "Xuất sắc!" : "Cố gắng lên!";
-            document.getElementById('result-text').innerText = `Kết quả: ${quizScore}/20. Chúc bạn học tốt!`;
+        function nextQuestion() {
+            document.getElementById('explanation-modal').style.display = 'none';
+            currentQ++;
+            if (currentQ < 15) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
         }
 
-        function returnToStart() {
-            playAudio('audio-click');
-            document.querySelectorAll('.ghibli-card').forEach(el => el.classList.add('hidden'));
-            document.getElementById('start-screen').classList.remove('hidden');
+        function showResult() {
+            document.getElementById('quiz-area').style.display = 'none';
+            document.getElementById('result-area').style.display = 'flex';
+            document.getElementById('final-score').innerText = score;
+            
+            const medal = document.getElementById('medal-emoji');
+            const title = document.getElementById('result-title');
+            if (score >= 140) { medal.innerText = "🏆"; title.innerText = "Tuyệt đỉnh!"; }
+            else if (score >= 100) { medal.innerText = "🥈"; title.innerText = "Rất tốt!"; }
+            else { medal.innerText = "🥉"; title.innerText = "Cố gắng lên!"; }
         }
+
+        // Khởi tạo ứng dụng
+        window.onload = render;
     </script>
 </body>
 </html>
+
+
+
