@@ -243,7 +243,7 @@
 
 <div id="leaves-container"></div>
 
-<!-- THANH ĐIỀU HƯỚNG MỚI BỔ SUNG "KHÓA HỌC" -->
+<!-- THANH ĐIỀU HƯỚNG -->
 <nav class="navbar">
     <div class="nav-container">
         <div class="logo" onclick="switchMainTab('section-home', document.querySelector('.nav-btn'))">
@@ -261,6 +261,7 @@
                     <a href="#" onclick="navigateToGame('game-hsk4')">HSK Cấp 4</a>
                     <a href="#" onclick="navigateToGame('game-hsk5')">HSK Cấp 5</a>
                     <a href="#" onclick="navigateToGame('game-hsk6')">HSK Cấp 6</a>
+                    <a href="#" onclick="navigateToGame('game-hsk79')">HSK Cấp 7-9</a>
                 </div>
             </li>
             <li><a href="#" class="nav-btn" onclick="switchMainTab('section-english', this)">Tiếng Anh</a></li>
@@ -310,6 +311,7 @@
             <button class="sub-tab-btn" data-target="game-hsk4">HSK 4</button>
             <button class="sub-tab-btn" data-target="game-hsk5">HSK 5</button>
             <button class="sub-tab-btn" data-target="game-hsk6">HSK 6</button>
+            <button class="sub-tab-btn" data-target="game-hsk79" style="color: #d6336c; border-color: #ffb7c5; background: #fff0f3;">HSK 7-9 (MỚI)</button>
         </div>
         
         <div id="game-intro" class="grid-container active"></div>
@@ -319,6 +321,7 @@
         <div id="game-hsk4" class="grid-container"></div>
         <div id="game-hsk5" class="grid-container"></div>
         <div id="game-hsk6" class="grid-container"></div>
+        <div id="game-hsk79" class="grid-container"></div>
     </section>
 
     <!-- 3. KHU VỰC TIẾNG ANH -->
@@ -548,7 +551,42 @@
             "怀念慢生活 – Nhớ cuộc sống chậm", "为文物而生的人 – Người sống vì di sản", "走近木版年画 – Tranh Tết mộc bản", 
             "中国古代书院 – Thư viện cổ Trung Quốc", "警察的故事 – Câu chuyện cảnh sát", "慧眼捕捉生机 – Nắm bắt cơ hội", 
             "互联网时代的生活 – Cuộc sống thời Internet", "人类超能力会改变世界记录吗 – Siêu năng lực có thay đổi thế giới không"
-        ])
+        ]),
+
+        "game-hsk79": [
+            // Chương 1: Giáo dục
+            { link: "HSK79-U1-L1.html", icon: "🎓", title: "没有高考，你怎么拼得过富二代？", translation: "Không có Cao khảo, làm sao bạn đấu lại con nhà giàu?", desc: "顶石中文 - Chương 1 - Bài 1" },
+            { link: "HSK79-U1-L2.html", icon: "🏫", title: "学区房情结怎么破？", translation: "Làm sao phá bỏ tâm lý sính 'nhà gần trường tốt'?", desc: "顶石中文 - Chương 1 - Bài 2" },
+            { link: "HSK79-U1-L3.html", icon: "🎒", title: "“高考移民”动了谁的奶酪？", translation: "'Di cư Cao khảo' đã động chạm đến quyền lợi của ai?", desc: "顶石中文 - Chương 1 - Bài 3" },
+            // Chương 2: Thời đại
+            { link: "HSK79-U2-L1.html", icon: "🏙️", title: "融不进的城市，回不去的农村", translation: "Thành phố khó hòa nhập, nông thôn chẳng thể về", desc: "顶石中文 - Chương 2 - Bài 1" },
+            { link: "HSK79-U2-L2.html", icon: "💻", title: "信息化社会：“一个都不能少”", translation: "Xã hội thông tin: 'Không để một ai bị bỏ lại'", desc: "顶石中文 - Chương 2 - Bài 2" },
+            { link: "HSK79-U2-L3.html", icon: "📱", title: "群体性孤独：网络社交正在扼杀深度关系", translation: "Cô đơn tập thể: Mạng xã hội đang giết chết các mối quan hệ sâu sắc", desc: "顶石中文 - Chương 2 - Bài 3" },
+            // Chương 3: Bảo vệ môi trường
+            { link: "HSK79-U3-L1.html", icon: "🌍", title: "碳排放的“蛋糕”怎么切？", translation: "Chia 'chiếc bánh' phát thải carbon như thế nào?", desc: "顶石中文 - Chương 3 - Bài 1" },
+            { link: "HSK79-U3-L2.html", icon: "♻️", title: "“随手扔”还是“随手分”，你“拎得清”吗？", translation: "'Tiện tay vứt' hay 'Tiện tay phân loại', bạn có hiểu rõ không?", desc: "顶石中文 - Chương 3 - Bài 2" },
+            { link: "HSK79-U3-L3.html", icon: "🛍️", title: "“塑战”能否速决？", translation: "Liệu 'cuộc chiến nhựa' có thể giải quyết nhanh chóng?", desc: "顶石中文 - Chương 3 - Bài 3" },
+            // Chương 4: Khoa học công nghệ
+            { link: "HSK79-U4-L1.html", icon: "🔒", title: "真的，你的隐私只值一分钱！", translation: "Thật đấy, quyền riêng tư của bạn chỉ đáng giá một xu!", desc: "顶石中文 - Chương 4 - Bài 1" },
+            { link: "HSK79-U4-L2.html", icon: "🤖", title: "机器人医生，简直神了！", translation: "Bác sĩ robot, thật là thần kỳ!", desc: "顶石中文 - Chương 4 - Bài 2" },
+            { link: "HSK79-U4-L3.html", icon: "⚙️", title: "算法时代：谁是你的菜？", translation: "Thời đại thuật toán: Ai mới là 'gu' của bạn?", desc: "顶石中文 - Chương 4 - Bài 3" },
+            // Chương 5: Gia đình
+            { link: "HSK79-U5-L1.html", icon: "🚫", title: "对家暴必须“零容忍”", translation: "Phải 'không khoan nhượng' đối với bạo lực gia đình", desc: "顶石中文 - Chương 5 - Bài 1" },
+            { link: "HSK79-U5-L2.html", icon: "👨‍👩‍👦", title: "“养儿防老”变“养子啃老”?", translation: "'Nuôi con phòng tuổi già' biến thành 'nuôi con ăn bám'?", desc: "顶石中文 - Chương 5 - Bài 2" },
+            { link: "HSK79-U5-L3.html", icon: "💔", title: "相亲鄙视链：爱情被黑得惨不忍睹", translation: "Chuỗi khinh miệt khi xem mắt: Tình yêu bị bôi đen thảm hại", desc: "顶石中文 - Chương 5 - Bài 3" },
+            // Chương 6: Nghề nghiệp
+            { link: "HSK79-U6-L1.html", icon: "🏢", title: "职场 996", translation: "Văn hóa làm việc 996 nơi công sở", desc: "顶石中文 - Chương 6 - Bài 1" },
+            { link: "HSK79-U6-L2.html", icon: "🚀", title: "谁能站在新职业风口？", translation: "Ai có thể đón đầu xu hướng nghề nghiệp mới?", desc: "顶石中文 - Chương 6 - Bài 2" },
+            { link: "HSK79-U6-L3.html", icon: "👩‍💼", title: "30 岁的职场姐姐如何乘风破浪？", translation: "Những 'người chị' công sở tuổi 30 vượt sóng ra khơi như thế nào?", desc: "顶石中文 - Chương 6 - Bài 3" },
+            // Chương 7: Kinh tế
+            { link: "HSK79-U7-L1.html", icon: "🤝", title: "闲置经济是真正的共享经济", translation: "Kinh tế đồ cũ mới là kinh tế chia sẻ thực sự", desc: "顶石中文 - Chương 7 - Bài 1" },
+            { link: "HSK79-U7-L2.html", icon: "🍽️", title: "天下没有永远免费的午餐", translation: "Trên đời không có bữa trưa nào miễn phí mãi mãi", desc: "顶石中文 - Chương 7 - Bài 2" },
+            { link: "HSK79-U7-L3.html", icon: "📈", title: "中国扶贫的道路选择", translation: "Lựa chọn con đường xóa đói giảm nghèo của Trung Quốc", desc: "顶石中文 - Chương 7 - Bài 3" },
+            // Chương 8: Pháp luật
+            { link: "HSK79-U8-L1.html", icon: "⚖️", title: "“大头条”对簿“小油条”", translation: "'Toutiao lớn' kiện 'Tiểu Quẩy' ra tòa - Vụ kiện thương hiệu", desc: "顶石中文 - Chương 8 - Bài 1" },
+            { link: "HSK79-U8-L2.html", icon: "🏛️", title: "高通：打官司打出的“江山”", translation: "Qualcomm: 'Giang sơn' gây dựng từ những vụ kiện", desc: "顶石中文 - Chương 8 - Bài 2" },
+            { link: "HSK79-U8-L3.html", icon: "🕊️", title: "善终也是一种权利", translation: "Chết thanh thản cũng là một quyền lợi", desc: "顶石中文 - Chương 8 - Bài 3" }
+        ]
     };
 
     // --- 2. DỮ LIỆU TIẾNG ANH ---
